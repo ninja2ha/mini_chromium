@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\src\examples\crbase-no-destructor\crbase-no-destructor.cc" />
+    <ClCompile Include="..\..\..\..\src\examples\crbase\crbase-optional.cc" />
+    <ClCompile Include="..\..\..\..\src\examples\crbase\crbase-strings-stringprintf.cc" />
+    <ClCompile Include="..\..\..\..\src\examples\crbase\crbase-strings-num-conversions.cc" />
+    <ClCompile Include="..\..\..\..\src\examples\crbase\crbase-message-loop.cc" />
+  </ItemGroup>
+</Project>
