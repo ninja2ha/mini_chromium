@@ -465,7 +465,7 @@ bool MaybeHasSHA256Support() {
   if (os_info->version() == Version::SERVER_2003)
     return false;
 
-  assert(os_info->version() >= Version::VISTA);
+  CR_DASSERT(os_info->version() >= Version::VISTA);
   return true;  // New enough to have SHA-256 support.
 }
 

@@ -36,6 +36,8 @@ struct _tagpropertykey;
 namespace cr {
 namespace win {
 
+#define CR_MAKEINTATOM(i)  (LPCWSTR)((ULONG_PTR)((WORD)(i)))
+
 typedef _tagpropertykey PROPERTYKEY;
 
 // This is the same as NONCLIENTMETRICS except that the
@@ -161,10 +163,6 @@ CRBASE_EXPORT bool IsKeyboardPresentOnSlate(std::string* reason);
 // did not work, so adding calls to this method to guard them simply avoids
 // unnecessary method calls.
 CRBASE_EXPORT bool IsUser32AndGdi32Available();
-
-// Used by tests to mock any wanted state. Call with |state| set to true to
-// simulate being in a domain and false otherwise.
-CRBASE_EXPORT void SetDomainStateForTesting(bool state);
 
 // Returns true if the current operating system has support for SHA-256
 // certificates. As its name indicates, this function provides a best-effort

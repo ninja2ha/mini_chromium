@@ -8,10 +8,9 @@
 #include "crbase/logging.h"
 #include "crbase/win/current_module.h"
 #include "crbase/win/wrapped_window_proc.h"
+#include "crbase/win/win_util.h"
 
 const wchar_t kMessageWindowClassName[] = L"Chrome_MessageWindow";
-
-#define MAKEINTATOMW(i)  (LPCWSTR)((ULONG_PTR)((WORD)(i)))
 
 namespace cr {
 namespace win {
@@ -61,7 +60,7 @@ MessageWindow::WindowClass::WindowClass()
 
 MessageWindow::WindowClass::~WindowClass() {
   if (atom_ != 0) {
-    BOOL result = UnregisterClassW(MAKEINTATOMW(atom_), instance_);
+    BOOL result = UnregisterClassW(CR_MAKEINTATOM(atom_), instance_);
     // Hitting this DCHECK usually means that some MessageWindow objects were
     // leaked. For example not calling
     // ui::Clipboard::DestroyClipboardForCurrentThread() results in a leaked
@@ -107,8 +106,8 @@ bool MessageWindow::DoCreate(MessageCallback message_callback,
   message_callback_ = std::move(message_callback);
 
   WindowClass& window_class = g_window_class.Get();
-  window_ = CreateWindowW(
-      MAKEINTATOMW(window_class.atom()), window_name, 0, 0, 0,
+  window_ = ::CreateWindowW(
+      CR_MAKEINTATOM(window_class.atom()), window_name, 0, 0, 0,
       0, 0, HWND_MESSAGE, 0, window_class.instance(), this);
   if (!window_) {
     CR_PLOG(Error) << "Failed to create a message-only window";
