@@ -65,18 +65,6 @@
     <ClInclude Include="..\..\..\src\crbase\strings\utf_string_conversions.h">
       <Filter>strings</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions.h">
-      <Filter>numerics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_impl.h">
-      <Filter>numerics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math.h">
-      <Filter>numerics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_impl.h">
-      <Filter>numerics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\crbase\strings\string_number_conversions.h">
       <Filter>strings</Filter>
     </ClInclude>
@@ -466,6 +454,48 @@
     <ClInclude Include="..\..\..\src\crbase\containers\stack_container.h">
       <Filter>containers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\checked_math.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\checked_math_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\clamped_math.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\clamped_math_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\math_constants.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\ranges.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_arm_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_arm_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_clang_gcc_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_shared_impl.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\memory\singleton.h">
+      <Filter>memory</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />
@@ -822,9 +852,6 @@
     <Filter Include="third_party\superfasthash">
       <UniqueIdentifier>{155d40d0-2e6e-439d-83e7-5ff2672a3922}</UniqueIdentifier>
     </Filter>
-    <Filter Include="numerics">
-      <UniqueIdentifier>{55c951fc-2d2d-47f3-88b7-f57fdbb347f2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="third_party\double_conversion">
       <UniqueIdentifier>{6200d284-12c6-465b-84aa-35b9e01adfc3}</UniqueIdentifier>
     </Filter>
@@ -881,6 +908,9 @@
     </Filter>
     <Filter Include="buffer">
       <UniqueIdentifier>{96c3ba4d-ffeb-45d2-bf7c-a5ba7080e39a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="numerics">
+      <UniqueIdentifier>{51310153-6293-44cd-a2a0-b64ebe01603c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

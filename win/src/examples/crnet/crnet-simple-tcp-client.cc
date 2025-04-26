@@ -1,6 +1,7 @@
 // Copyright (c) 2025 Ninja2ha. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+
 #include <iostream>
 #include <string>
 #include <memory>
@@ -11,10 +12,6 @@
 #include "crbase/atomic/atomic_flag.h"
 #include "crbase/win/msvc_import_libs.h"
 #include "crbase/build_platform.h"
-
-#if defined(MINI_CHROMIUM_OS_WIN)
-#include <winsock2.h>
-#endif
 
 #include "crnet/base/ip_address.h"
 #include "crnet/base/address_list.h"
@@ -43,7 +40,7 @@ class SimpleTCPClient : public crnet::TCPClient::Delegate {
   void HandleConnectResult(int rv);
 
  protected:
-  // TCPServer::Delegate implements.
+  // TCPClient::Delegate implements.
   // called on io thread.
   void OnConnect(int rv) override;
   int OnTranslateData(const char* data, int data_len) override;

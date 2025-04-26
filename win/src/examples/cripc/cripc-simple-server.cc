@@ -74,7 +74,7 @@ void SimpleIPCServer::Start(const std::string& channel_id) {
   }
 
   // checks whether on the io thread.
-  CR_DCHECK(io_thread_.IsCurrentlyThread());
+  CR_DCHECK(io_thread_.IsOnCurrentlyThread());
 
   cripc::ChannelHandle handle(channel_id);
   channel_ = cripc::Channel::CreateNamedServer(handle, this);
