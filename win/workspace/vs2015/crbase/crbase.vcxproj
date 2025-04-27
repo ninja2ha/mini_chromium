@@ -36,11 +36,19 @@
     <ClInclude Include="..\..\..\src\crbase\build_platform.h" />
     <ClInclude Include="..\..\..\src\crbase\byte_order.h" />
     <ClInclude Include="..\..\..\src\crbase\compiler_specific.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\circular_deque.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\flat_map.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\flat_set.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\flat_tree.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\linked_list.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\optional.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\queue.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\span.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\stack.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\stack_container.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\tuple.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\util.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\vector_buffer.h" />
     <ClInclude Include="..\..\..\src\crbase\debug\alias.h" />
     <ClInclude Include="..\..\..\src\crbase\debug\immediate_crash.h" />
     <ClInclude Include="..\..\..\src\crbase\endecoding\base64.h" />
@@ -64,6 +72,7 @@
     <ClInclude Include="..\..\..\src\crbase\functional\cancelable_callback.h" />
     <ClInclude Include="..\..\..\src\crbase\functional\critical_closure.h" />
     <ClInclude Include="..\..\..\src\crbase\guid.h" />
+    <ClInclude Include="..\..\..\src\crbase\hash\hash.h" />
     <ClInclude Include="..\..\..\src\crbase\hash\md5.h" />
     <ClInclude Include="..\..\..\src\crbase\hash\sha1.h" />
     <ClInclude Include="..\..\..\src\crbase\helper\scoped_clear_last_error.h" />
@@ -217,6 +226,7 @@
     <ClCompile Include="..\..\..\src\crbase\functional\callback_helpers.cc" />
     <ClCompile Include="..\..\..\src\crbase\functional\callback_internal.cc" />
     <ClCompile Include="..\..\..\src\crbase\guid.cc" />
+    <ClCompile Include="..\..\..\src\crbase\hash\hash.cc" />
     <ClCompile Include="..\..\..\src\crbase\hash\md5.cc" />
     <ClCompile Include="..\..\..\src\crbase\hash\sha1.cc" />
     <ClCompile Include="..\..\..\src\crbase\helper\scoped_clear_last_error_win.cc" />

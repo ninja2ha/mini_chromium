@@ -9,7 +9,7 @@
 #include <string>
 #include <queue>
 
-///#include "crbase/containers/queue.h"
+#include "crbase/containers/queue.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/buffer/io_buffer.h"
 #include "crbase/memory/weak_ptr.h"
@@ -115,7 +115,7 @@ class TCPConnection {
 
     // This needs to indirect since we need pointer stability for the payload
     // chunks, as they may be handed out via cr::IOBuffer::data().
-    std::queue<std::unique_ptr<std::string>> pending_data_;
+    cr::queue<std::unique_ptr<std::string>> pending_data_;
     int total_size_;
     int max_buffer_size_;
   };

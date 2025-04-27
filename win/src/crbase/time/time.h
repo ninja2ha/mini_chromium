@@ -290,20 +290,20 @@ namespace time_internal {
 template<class TimeClass>
 class TimeBase {
  public:
-  static const int64_t kHoursPerDay = 24;
-  static const int64_t kMillisecondsPerSecond = 1000;
-  static const int64_t kMillisecondsPerDay =
+  static constexpr int64_t kHoursPerDay = 24;
+  static constexpr int64_t kMillisecondsPerSecond = 1000;
+  static constexpr int64_t kMillisecondsPerDay =
       kMillisecondsPerSecond * 60 * 60 * kHoursPerDay;
-  static const int64_t kMicrosecondsPerMillisecond = 1000;
-  static const int64_t kMicrosecondsPerSecond =
+  static constexpr int64_t kMicrosecondsPerMillisecond = 1000;
+  static constexpr int64_t kMicrosecondsPerSecond =
       kMicrosecondsPerMillisecond * kMillisecondsPerSecond;
-  static const int64_t kMicrosecondsPerMinute = kMicrosecondsPerSecond * 60;
-  static const int64_t kMicrosecondsPerHour = kMicrosecondsPerMinute * 60;
-  static const int64_t kMicrosecondsPerDay =
+  static constexpr int64_t kMicrosecondsPerMinute = kMicrosecondsPerSecond * 60;
+  static constexpr int64_t kMicrosecondsPerHour = kMicrosecondsPerMinute * 60;
+  static constexpr int64_t kMicrosecondsPerDay =
       kMicrosecondsPerHour * kHoursPerDay;
-  static const int64_t kMicrosecondsPerWeek = kMicrosecondsPerDay * 7;
-  static const int64_t kNanosecondsPerMicrosecond = 1000;
-  static const int64_t kNanosecondsPerSecond =
+  static constexpr int64_t kMicrosecondsPerWeek = kMicrosecondsPerDay * 7;
+  static constexpr int64_t kNanosecondsPerMicrosecond = 1000;
+  static constexpr int64_t kNanosecondsPerSecond =
       kNanosecondsPerMicrosecond * kMicrosecondsPerSecond;
 
   // Returns true if this object has not been initialized.
@@ -311,22 +311,36 @@ class TimeBase {
   // Warning: Be careful when writing code that performs math on time values,
   // since it's possible to produce a valid "zero" result that should not be
   // interpreted as a "null" value.
-  bool is_null() const {
+  constexpr bool is_null() const {
     return us_ == 0;
   }
 
   // Returns true if this object represents the maximum/minimum time.
-  bool is_max() const { return us_ == std::numeric_limits<int64_t>::max(); }
-  bool is_min() const { return us_ == std::numeric_limits<int64_t>::min(); }
+  constexpr bool is_max() const { 
+    return us_ == std::numeric_limits<int64_t>::max(); 
+  }
+  constexpr bool is_min() const { 
+    return us_ == std::numeric_limits<int64_t>::min(); 
+  }
 
   // Returns the maximum/minimum times, which should be greater/less than than
   // any reasonable time with which we might compare it.
-  static TimeClass Max() {
+  static constexpr TimeClass Max() {
     return TimeClass(std::numeric_limits<int64_t>::max());
   }
 
-  static TimeClass Min() {
+  static constexpr TimeClass Min() {
     return TimeClass(std::numeric_limits<int64_t>::min());
+  }
+
+  // The amount of time since the origin (or "zero") point. This is a syntactic
+  // convenience to aid in code readability, mainly for debugging/testing use
+  // cases.
+  //
+  // Warning: While the Time subclass has a fixed origin point, the origin for
+  // the other subclasses can vary each time the application is restarted.
+  constexpr TimeDelta since_origin() const {
+    return TimeDelta::FromMicroseconds(us_);
   }
 
   TimeClass& operator=(TimeClass other) {

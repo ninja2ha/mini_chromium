@@ -13,6 +13,7 @@
 #include "crbase/memory/weak_ptr.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/containers/tuple.h"
+#include "crbase/helper/template_util.h"
 #include "crbase/functional/bind_helpers.h"
 #include "crbase/functional/callback_internal.h"
 #include "crbase/build_platform.h"
@@ -45,11 +46,6 @@ namespace internal {
 //  BindState<> -- Stores the curried parameters, and is the main entry point
 //                 into the Bind() system.
 
-template <typename...>
-struct make_void {
-  using type = void;
-};
-
 template <typename T>
 struct NeedsScopedRefptrButGetsRawPtr {
   enum {
@@ -77,14 +73,6 @@ struct ParamsUseScopedRefptrCorrectly<std::tuple<Head, Tail...>> {
   enum { value = !NeedsScopedRefptrButGetsRawPtr<Head>::value &&
                   ParamsUseScopedRefptrCorrectly<std::tuple<Tail...>>::value };
 };
-
-// A clone of C++17 std::void_t.
-// Unlike the original version, we need |make_void| as a helper struct to avoid
-// a C++14 defect.
-// ref: http://en.cppreference.com/w/cpp/types/void_t
-// ref: http://open-std.org/JTC1/SC22/WG21/docs/cwg_defects.html#1558
-template <typename... Ts>
-using void_t = typename make_void<Ts...>::type;
 
 template <typename Callable,
           typename Signature = decltype(&Callable::operator())>

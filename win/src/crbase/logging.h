@@ -573,6 +573,7 @@ CRBASE_EXPORT extern std::ostream* g_swallow_stream;
   CR_DLOG_IF(Fatal, !(assertion))  << "Assert failed: " #assertion ". "
 
 #define CR_NOTREACHED() CR_DLOG(Warning) << "NOT REACHED. "
+#define CR_NOTIMPLEMENTED() CR_DLOG(Warning) << "NOT IMPLEMENTED. "
 
 //  -- cr logging: end ---------------------------------------------------------
 

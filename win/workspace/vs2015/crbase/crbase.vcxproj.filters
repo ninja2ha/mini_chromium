@@ -496,6 +496,33 @@
     <ClInclude Include="..\..\..\src\crbase\memory\singleton.h">
       <Filter>memory</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\flat_tree.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\flat_map.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\flat_set.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\hash\hash.h">
+      <Filter>hash</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\stack.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\circular_deque.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\util.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\vector_buffer.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\queue.h">
+      <Filter>containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />
@@ -819,6 +846,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\strings\escape.cc">
       <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\hash\hash.cc">
+      <Filter>hash</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

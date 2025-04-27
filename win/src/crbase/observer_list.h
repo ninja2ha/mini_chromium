@@ -268,7 +268,8 @@ void ObserverListBase<ObserverType>::Iter<ContainerType>::EnsureValidIndex() {
 template <class ObserverType>
 void ObserverListBase<ObserverType>::AddObserver(ObserverType* obs) {
   CR_DCHECK(obs);
-  if (ContainsValue(observers_, obs)) {
+  if (cr::Contains(observers_, obs)) {
+  ///if (ContainsValue(observers_, obs)) {
     CR_NOTREACHED() << "Observers can only be added once!";
     return;
   }
