@@ -523,6 +523,13 @@
     <ClInclude Include="..\..\..\src\crbase\containers\queue.h">
       <Filter>containers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\strings\strcat.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\adapters.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\scoped_observer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />
@@ -849,6 +856,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\hash\hash.cc">
       <Filter>hash</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\strings\strcat.cc">
+      <Filter>strings</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

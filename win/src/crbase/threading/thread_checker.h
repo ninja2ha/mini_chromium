@@ -69,7 +69,7 @@
 //   }
 
 #if CR_DCHECK_IS_ON()
-#define CR_THREAD_CHECKER(name) cr::ThreadChecker name
+#define CR_THREAD_CHECKER(name) cr::ThreadChecker name;
 #define CR_DCHECK_CALLED_ON_VALID_THREAD(name) \
     CR_DCHECK((name).CalledOnValidThread())
 #define CR_DETACH_FROM_THREAD(name) (name).DetachFromThread()

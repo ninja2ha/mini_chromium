@@ -36,6 +36,7 @@
     <ClInclude Include="..\..\..\src\crbase\build_platform.h" />
     <ClInclude Include="..\..\..\src\crbase\byte_order.h" />
     <ClInclude Include="..\..\..\src\crbase\compiler_specific.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\adapters.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\circular_deque.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\flat_map.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\flat_set.h" />
@@ -121,7 +122,9 @@
     <ClInclude Include="..\..\..\src\crbase\process\process_handle.h" />
     <ClInclude Include="..\..\..\src\crbase\process\process_iterator.h" />
     <ClInclude Include="..\..\..\src\crbase\rand_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\scoped_observer.h" />
     <ClInclude Include="..\..\..\src\crbase\strings\escape.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\strcat.h" />
     <ClInclude Include="..\..\..\src\crbase\strings\string16.h" />
     <ClInclude Include="..\..\..\src\crbase\strings\stringprintf.h" />
     <ClInclude Include="..\..\..\src\crbase\strings\string_number_conversions.h" />
@@ -255,6 +258,7 @@
     <ClCompile Include="..\..\..\src\crbase\rand_util.cc" />
     <ClCompile Include="..\..\..\src\crbase\rand_util_win.cc" />
     <ClCompile Include="..\..\..\src\crbase\strings\escape.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\strcat.cc" />
     <ClCompile Include="..\..\..\src\crbase\strings\stringprintf.cc" />
     <ClCompile Include="..\..\..\src\crbase\strings\string_number_conversions.cc" />
     <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc" />

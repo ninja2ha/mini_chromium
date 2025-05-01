@@ -114,14 +114,14 @@ class CallbackListBase {
   }
 
   // Sets a callback which will be run when a subscription list is changed.
-  void set_removal_callback(const Closure& callback) {
+  void set_removal_callback(const RepeatingClosure& callback) {
     removal_callback_ = callback;
   }
 
   // Returns true if there are no subscriptions. This is only valid to call when
   // not looping through the list.
   bool empty() {
-    CR_DCHECK_EQ(0, active_iterator_count_);
+    CR_DCHECK(0 == active_iterator_count_);
     return callbacks_.empty();
   }
 
