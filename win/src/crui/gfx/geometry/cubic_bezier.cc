@@ -179,7 +179,7 @@ double CubicBezier::SolveCurveX(double x, double epsilon) const {
   int i;
 
 #ifndef NDEBUG
-  DCHECK(monotonically_increasing_);
+  CR_DCHECK(monotonically_increasing_);
 #endif
 
   // Linear interpolation of spline curve for initial guess.

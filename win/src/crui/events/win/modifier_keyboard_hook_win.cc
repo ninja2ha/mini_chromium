@@ -181,7 +181,7 @@ bool ModifierKeyboardHookWinImpl::Register() {
 void ModifierKeyboardHookWinImpl::ClearModifierStates() {
   BYTE keyboard_state[kKeyboardStateArraySize] = {0};
   if (!GetKeyboardState(keyboard_state)) {
-    CR_DPLOG(ERROR) << "GetKeyboardState() failed: ";
+    CR_DPLOG(Error) << "GetKeyboardState() failed: ";
     return;
   }
 
@@ -196,7 +196,7 @@ void ModifierKeyboardHookWinImpl::ClearModifierStates() {
   keyboard_state[VK_RWIN] = kKeyUp;
 
   if (!SetKeyboardState(keyboard_state))
-    CR_DPLOG(ERROR) << "SetKeyboardState() failed: ";
+    CR_DPLOG(Error) << "SetKeyboardState() failed: ";
 }
 
 bool ModifierKeyboardHookWinImpl::ProcessKeyEventMessage(WPARAM w_param,

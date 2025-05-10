@@ -49,7 +49,7 @@ uint32_t DomKeyboardLayoutMapWin::GetKeyboardLayoutCount() {
   keyboard_layout_handles_.clear();
   const size_t keyboard_layout_count = ::GetKeyboardLayoutList(0, nullptr);
   if (!keyboard_layout_count) {
-    CR_DPLOG(ERROR) << "GetKeyboardLayoutList failed: ";
+    CR_DPLOG(Error) << "GetKeyboardLayoutList failed: ";
     return false;
   }
 
@@ -57,7 +57,7 @@ uint32_t DomKeyboardLayoutMapWin::GetKeyboardLayoutCount() {
   const size_t copy_count = ::GetKeyboardLayoutList(
       keyboard_layout_handles_.size(), keyboard_layout_handles_.data());
   if (!copy_count) {
-    CR_DPLOG(ERROR) << "GetKeyboardLayoutList failed: ";
+    CR_DPLOG(Error) << "GetKeyboardLayoutList failed: ";
     return false;
   }
   CR_DCHECK(keyboard_layout_count == copy_count);
@@ -84,10 +84,10 @@ crui::DomKey DomKeyboardLayoutMapWin::GetDomKeyFromDomCodeForLayout(
   HKL keyboard_layout = keyboard_layout_handles_[keyboard_layout_index];
   int32_t scan_code = crui::KeycodeConverter::DomCodeToNativeKeycode(dom_code);
   uint32_t virtual_key_code =
-      MapVirtualKeyEx(scan_code, MAPVK_VSC_TO_VK_EX, keyboard_layout);
+      ::MapVirtualKeyExW(scan_code, MAPVK_VSC_TO_VK_EX, keyboard_layout);
   if (!virtual_key_code) {
     if (GetLastError() != 0)
-      CR_DPLOG(ERROR) << "MapVirtualKeyEx failed: ";
+      CR_DPLOG(Error) << "MapVirtualKeyEx failed: ";
     return crui::DomKey::NONE;
   }
 

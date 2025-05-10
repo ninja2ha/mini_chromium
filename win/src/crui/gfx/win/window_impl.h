@@ -5,12 +5,14 @@
 #ifndef UI_GFX_WIN_WINDOW_IMPL_H_
 #define UI_GFX_WIN_WINDOW_IMPL_H_
 
+#include <windows.h>
+
 #include <string>
 
 #include "crbase/logging.h"
 #include "crui/base/ui_export.h"
 #include "crui/gfx/geometry/rect.h"
-#include "crui/gfx/native_widget_types.h"
+///#include "crui/gfx/native_widget_types.h"
 #include "crui/gfx/win/msg_util.h"
 
 namespace crui {

@@ -8,7 +8,7 @@
 #include "crbase/build_platform.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN) 
-#define MINI_CHROMIUM_USE_AURA 1
+///#define MINI_CHROMIUM_USE_AURA 1
 #elif defined(MINI_CHROMIUM_OS_LINUX)
 #define MINI_CHROMIUM_USE_AURA 1
 #define MINI_CHROMIUM_USER_X11 1

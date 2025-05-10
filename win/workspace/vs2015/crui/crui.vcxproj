@@ -19,8 +19,65 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_history.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_manager.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\global_media_keys_listener_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_listener.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_listener_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_util.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\menu_label_accelerator_util.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\system_media_controls_media_keys_listener2.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\base_window.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\class_property.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\hit_test.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\ui_base_types.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\view_prop.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\accessibility_misc_utils.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\foreground_helper.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\hidden_window.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\hwnd_metrics.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\hwnd_subclass.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\internal_constants.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\lock_state.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\message_box_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\mouse_wheel_util.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\scoped_ole_initializer.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\session_change_observer.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\shell.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\touch_input.cc" />
+    <ClCompile Include="..\..\..\src\crui\base\win\window_event_target.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\display.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\display_change_notifier.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\display_layout.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\display_layout_builder.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\display_observer.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\screen.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\color_profile_reader.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\display_info.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\dpi.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\scaling_util.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\screen_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\screen_win_display.cc" />
+    <ClCompile Include="..\..\..\src\crui\display\win\uwp_text_scale_factor.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\events\base_event_utils.cc" />
     <ClCompile Include="..\..\..\src\crui\events\event.cc" />
+    <ClCompile Include="..\..\..\src\crui\events\events_stub.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\events\event_dispatcher.cc" />
     <ClCompile Include="..\..\..\src\crui\events\event_handler.cc" />
     <ClCompile Include="..\..\..\src\crui\events\event_modifiers.cc" />
@@ -42,6 +99,8 @@
     <ClCompile Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.cc" />
     <ClCompile Include="..\..\..\src\crui\events\mobile_scroller.cc" />
     <ClCompile Include="..\..\..\src\crui\events\null_event_targeter.cc" />
+    <ClCompile Include="..\..\..\src\crui\events\platform\platform_event_source.cc" />
+    <ClCompile Include="..\..\..\src\crui\events\platform\scoped_event_dispatcher.cc" />
     <ClCompile Include="..\..\..\src\crui\events\pointer_details.cc" />
     <ClCompile Include="..\..\..\src\crui\events\scoped_target_handler.cc" />
     <ClCompile Include="..\..\..\src\crui\events\win\events_win.cc" />
@@ -53,10 +112,12 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\box_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\dip_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix3_f.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix4_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point3_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_conversions.cc" />
@@ -67,19 +128,98 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rect_conversions.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rect_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\scroll_offset.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_conversions.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_f.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\transform.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\transform_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector4d_f.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\sequential_id_generator.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\window_impl.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\views_delegate.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_private.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_delegate.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_deletion_observer.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_focus_manager.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_getter.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\window\window_resize_utils.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\win\fullscreen_handler.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\win\hwnd_message_handler.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\win\pen_event_processor.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_history.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_manager.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\global_media_keys_listener_win.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\media_keys_listener.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\media_keys_util.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\menu_label_accelerator_util.h" />
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\system_media_controls_media_keys_listener2.h" />
+    <ClInclude Include="..\..\..\src\crui\base\base_window.h" />
     <ClInclude Include="..\..\..\src\crui\base\build_platform.h" />
+    <ClInclude Include="..\..\..\src\crui\base\class_property.h" />
+    <ClInclude Include="..\..\..\src\crui\base\hit_test.h" />
+    <ClInclude Include="..\..\..\src\crui\base\ui_base_types.h" />
     <ClInclude Include="..\..\..\src\crui\base\ui_export.h" />
+    <ClInclude Include="..\..\..\src\crui\base\view_prop.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\accessibility_ids_win.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\accessibility_misc_utils.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\atl_module.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\foreground_helper.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\hidden_window.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\hwnd_metrics.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\hwnd_subclass.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\internal_constants.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\lock_state.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\message_box_win.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\mouse_wheel_util.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_gdi_object.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_hdc.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_ole_initializer.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_select_gdi_object.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\session_change_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\shell.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\touch_input.h" />
+    <ClInclude Include="..\..\..\src\crui\base\win\window_event_target.h" />
+    <ClInclude Include="..\..\..\src\crui\display\display.h" />
+    <ClInclude Include="..\..\..\src\crui\display\display_change_notifier.h" />
+    <ClInclude Include="..\..\..\src\crui\display\display_layout.h" />
+    <ClInclude Include="..\..\..\src\crui\display\display_layout_builder.h" />
+    <ClInclude Include="..\..\..\src\crui\display\display_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\display\screen.h" />
+    <ClInclude Include="..\..\..\src\crui\display\types\display_constants.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\color_profile_reader.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\display_info.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\dpi.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\scaling_util.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\screen_win.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\screen_win_display.h" />
+    <ClInclude Include="..\..\..\src\crui\display\win\uwp_text_scale_factor.h" />
     <ClInclude Include="..\..\..\src\crui\events\base_event_utils.h" />
     <ClInclude Include="..\..\..\src\crui\events\event.h" />
     <ClInclude Include="..\..\..\src\crui\events\event_constants.h" />
@@ -117,6 +257,10 @@
     <ClInclude Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.h" />
     <ClInclude Include="..\..\..\src\crui\events\mobile_scroller.h" />
     <ClInclude Include="..\..\..\src\crui\events\null_event_targeter.h" />
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_dispatcher.h" />
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_source.h" />
+    <ClInclude Include="..\..\..\src\crui\events\platform\scoped_event_dispatcher.h" />
     <ClInclude Include="..\..\..\src\crui\events\platform_event.h" />
     <ClInclude Include="..\..\..\src\crui\events\pointer_details.h" />
     <ClInclude Include="..\..\..\src\crui\events\scoped_target_handler.h" />
@@ -127,11 +271,14 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\angle_conversions.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\box_f.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\clamp_float_geometry.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\dip_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix3_f.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix4_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point3_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_conversions.h" />
@@ -142,22 +289,58 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rect_conversions.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rect_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\safe_integer_conversions.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\scalar.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\scroll_offset.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\sin_cos_degrees.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\size.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_conversions.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_f.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\transform.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\transform_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector3d_f.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector4d_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\native_widget_types.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\sequential_id_generator.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\hwnd_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\msg_util.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\window_impl.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\src\crui\events\keycodes\dom\dom_code_data.inc" />
-    <None Include="..\..\..\src\crui\events\keycodes\dom\dom_key_data.inc" />
+    <ClInclude Include="..\..\..\src\crui\views\views_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_private.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_win.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_deletion_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_focus_manager.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_getter.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_removals_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\views\window\window_resize_utils.h" />
+    <ClInclude Include="..\..\..\src\crui\views\win\fullscreen_handler.h" />
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler.h" />
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\views\win\pen_event_processor.h" />
+    <ClInclude Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}</ProjectGuid>
@@ -234,10 +417,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NOMINMAX;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -247,10 +435,15 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NOMINMAX;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -262,12 +455,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
@@ -279,12 +477,17 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NOMINMAX;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
+    <PreBuildEvent>
+      <Command>
+      </Command>
+    </PreBuildEvent>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

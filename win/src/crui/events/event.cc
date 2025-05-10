@@ -22,8 +22,8 @@
 #include "crui/gfx/geometry/point3_f.h"
 #include "crui/gfx/geometry/point_conversions.h"
 #include "crui/gfx/geometry/safe_integer_conversions.h"
-///#include "crui/gfx/transform.h"
-///#include "crui/gfx/transform_util.h"
+#include "crui/gfx/geometry/transform.h"
+#include "crui/gfx/geometry/transform_util.h"
 #include "crui/base/build_platform.h"
 
 #if defined(MINI_CHROMIUM_USE_X11)
@@ -137,6 +137,7 @@ std::string MomentumPhaseToString(EventMomentumPhase phase) {
     case EventMomentumPhase::BLOCKED:
       return "BLOCKED";
   }
+  return std::string();
 }
 
 std::string ScrollEventPhaseToString(ScrollEventPhase phase) {
@@ -150,6 +151,7 @@ std::string ScrollEventPhaseToString(ScrollEventPhase phase) {
     case ScrollEventPhase::kEnd:
       return "kEnd";
   }
+  return std::string();
 }
 
 }  // namespace
@@ -218,7 +220,7 @@ const CancelModeEvent* Event::AsCancelModeEvent() const {
 ///}
 
 ///const GestureEvent* Event::AsGestureEvent() const {
-///  CHECK(IsGestureEvent());
+///  CR_CHECK(IsGestureEvent());
 ///  return static_cast<const GestureEvent*>(this);
 ///}
 
@@ -431,24 +433,24 @@ LocatedEvent::LocatedEvent(EventType type,
 
 LocatedEvent::LocatedEvent(const LocatedEvent& copy) = default;
 
-///void LocatedEvent::UpdateForRootTransform(
-///    const gfx::Transform& reversed_root_transform,
-///    const gfx::Transform& reversed_local_transform) {
-///  if (target()) {
-///    gfx::Point3F transformed_location(location_);
-///    reversed_local_transform.TransformPoint(&transformed_location);
-///    location_ = transformed_location.AsPointF();
-///
-///    gfx::Point3F transformed_root_location(root_location_);
-///    reversed_root_transform.TransformPoint(&transformed_root_location);
-///    root_location_ = transformed_root_location.AsPointF();
-///  } else {
-///    // This mirrors what the code previously did.
-///    gfx::Point3F transformed_location(location_);
-///    reversed_root_transform.TransformPoint(&transformed_location);
-///    root_location_ = location_ = transformed_location.AsPointF();
-///  }
-///}
+void LocatedEvent::UpdateForRootTransform(
+    const gfx::Transform& reversed_root_transform,
+    const gfx::Transform& reversed_local_transform) {
+  ///if (target()) {
+  ///  gfx::Point3F transformed_location(location_);
+  ///  reversed_local_transform.TransformPoint(&transformed_location);
+  ///  location_ = transformed_location.AsPointF();
+  ///
+  ///  gfx::Point3F transformed_root_location(root_location_);
+  ///  reversed_root_transform.TransformPoint(&transformed_root_location);
+  ///  root_location_ = transformed_root_location.AsPointF();
+  ///} else {
+  ///  // This mirrors what the code previously did.
+  ///  gfx::Point3F transformed_location(location_);
+  ///  reversed_root_transform.TransformPoint(&transformed_location);
+  ///  root_location_ = location_ = transformed_location.AsPointF();
+  ///}
+}
 
 std::string LocatedEvent::ToString() const {
   std::string s = Event::ToString();
@@ -489,7 +491,7 @@ MouseEvent::MouseEvent(EventType type,
       pointer_details_(pointer_details) {
   CR_DCHECK(ET_MOUSEWHEEL != type);
   CR_DCHECK(changed_button_flags_ ==
-            changed_button_flags_ & kChangedButtonFlagMask);
+            (changed_button_flags_ & kChangedButtonFlagMask));
   ///latency()->set_source_event_type(ui::SourceEventType::MOUSE);
   ///latency()->AddLatencyNumber(INPUT_EVENT_LATENCY_UI_COMPONENT);
   if (this->type() == ET_MOUSE_MOVED && IsAnyButton())
@@ -756,19 +758,19 @@ TouchEvent::~TouchEvent() {
 #endif
 }
 
-///void TouchEvent::UpdateForRootTransform(
-///    const gfx::Transform& inverted_root_transform,
-///    const gfx::Transform& inverted_local_transform) {
-///  LocatedEvent::UpdateForRootTransform(inverted_root_transform,
-///                                       inverted_local_transform);
-///  gfx::DecomposedTransform decomp;
-///  bool success = gfx::DecomposeTransform(&decomp, inverted_root_transform);
-///  CR_DCHECK(success);
-///  if (decomp.scale[0])
-///    pointer_details_.radius_x *= decomp.scale[0];
-///  if (decomp.scale[1])
-///    pointer_details_.radius_y *= decomp.scale[1];
-///}
+void TouchEvent::UpdateForRootTransform(
+    const gfx::Transform& inverted_root_transform,
+    const gfx::Transform& inverted_local_transform) {
+  ///LocatedEvent::UpdateForRootTransform(inverted_root_transform,
+  ///                                     inverted_local_transform);
+  ///gfx::DecomposedTransform decomp;
+  ///bool success = gfx::DecomposeTransform(&decomp, inverted_root_transform);
+  ///CR_DCHECK(success);
+  ///if (decomp.scale[0])
+  ///  pointer_details_.radius_x *= decomp.scale[0];
+  ///if (decomp.scale[1])
+  ///  pointer_details_.radius_y *= decomp.scale[1];
+}
 
 void TouchEvent::DisableSynchronousHandling() {
   DispatcherApi dispatcher_api(this);

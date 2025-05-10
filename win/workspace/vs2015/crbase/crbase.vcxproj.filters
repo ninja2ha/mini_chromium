@@ -530,6 +530,20 @@
       <Filter>containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase\scoped_observer.h" />
+    <ClInclude Include="..\..\..\src\crbase\native_library.h" />
+    <ClInclude Include="..\..\..\src\crbase\base_paths.h" />
+    <ClInclude Include="..\..\..\src\crbase\base_paths_win.h" />
+    <ClInclude Include="..\..\..\src\crbase\path_service.h" />
+    <ClInclude Include="..\..\..\src\crbase\environment.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\atl.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_hstring.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\com\core_winrt_util.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />
@@ -859,6 +873,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\strings\strcat.cc">
       <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\native_library.cc" />
+    <ClCompile Include="..\..\..\src\crbase\native_library_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\base_paths.cc" />
+    <ClCompile Include="..\..\..\src\crbase\base_paths_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\path_service.cc" />
+    <ClCompile Include="..\..\..\src\crbase\environment.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\com\scoped_hstring.cc">
+      <Filter>win\com</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\win\com\core_winrt_util.cc">
+      <Filter>win\com</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -1,17 +1,39 @@
-// Copyright 2013 The Chromium Authors. All rights reserved.
+// Copyright 2013 The Chromium Authors
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "crui/gfx/geometry/axis_transform2d.h"
 
+#include "crbase/logging.h"
 #include "crbase/strings/stringprintf.h"
+#include "crui/gfx/geometry/decomposed_transform.h"
 
 namespace crui {
 namespace gfx {
 
+DecomposedTransform AxisTransform2d::Decompose() const {
+  DecomposedTransform decomp;
+
+  decomp.translate[0] = translation_.x();
+  decomp.translate[1] = translation_.y();
+
+  if (scale_.x() >= 0 || scale_.y() >= 0) {
+    decomp.scale[0] = scale_.x();
+    decomp.scale[1] = scale_.y();
+  } else {
+    // If both scales are negative, decompose to positive scales with a 180deg
+    // rotation.
+    decomp.scale[0] = -scale_.x();
+    decomp.scale[1] = -scale_.y();
+    decomp.quaternion.set_z(1);
+    decomp.quaternion.set_w(0);
+  }
+  return decomp;
+}
+
 std::string AxisTransform2d::ToString() const {
-  return cr::StringPrintf("[%f, %s]", scale_,
-                          translation_.ToString().c_str());
+  return cr::StringPrintf("[%s, %s]", scale_.ToString().c_str(),
+                           translation_.ToString().c_str());
 }
 
 }  // namespace gfx

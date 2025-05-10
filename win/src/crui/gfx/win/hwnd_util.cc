@@ -22,7 +22,7 @@ void AdjustWindowToFit(HWND hwnd, const RECT& bounds, bool fit_to_monitor) {
     if (hmon) {
       MONITORINFO mi;
       mi.cbSize = sizeof(mi);
-      GetMonitorInfo(hmon, &mi);
+      ::GetMonitorInfoW(hmon, &mi);
       Rect window_rect(bounds);
       Rect monitor_rect(mi.rcWork);
       Rect new_window_rect = window_rect;
@@ -94,14 +94,14 @@ WNDPROC SetWindowProc(HWND hwnd, WNDPROC proc) {
   // the orignal window procedure and not the current one. I don't know if it is
   // a bug or an intended feature.
   WNDPROC oldwindow_proc =
-      reinterpret_cast<WNDPROC>(GetWindowLongPtr(hwnd, GWLP_WNDPROC));
-  SetWindowLongPtr(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(proc));
+      reinterpret_cast<WNDPROC>(::GetWindowLongPtrW(hwnd, GWLP_WNDPROC));
+  ::SetWindowLongPtrW(hwnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(proc));
   return oldwindow_proc;
 }
 
 void* SetWindowUserData(HWND hwnd, void* user_data) {
   return
-      reinterpret_cast<void*>(SetWindowLongPtr(hwnd, GWLP_USERDATA,
+      reinterpret_cast<void*>(::SetWindowLongPtrW(hwnd, GWLP_USERDATA,
           reinterpret_cast<LONG_PTR>(user_data)));
 }
 
@@ -111,7 +111,7 @@ void* GetWindowUserData(HWND hwnd) {
   // A window outside the current process needs to be ignored.
   if (process_id != ::GetCurrentProcessId())
     return NULL;
-  return reinterpret_cast<void*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+  return reinterpret_cast<void*>(::GetWindowLongPtrW(hwnd, GWLP_USERDATA));
 }
 
 #pragma warning(pop)
@@ -145,7 +145,7 @@ void CenterAndSizeWindow(HWND parent,
     if (monitor) {
       MONITORINFO mi = {0};
       mi.cbSize = sizeof(mi);
-      GetMonitorInfo(monitor, &mi);
+      ::GetMonitorInfoW(monitor, &mi);
       center_bounds = mi.rcWork;
     } else {
       CR_NOTREACHED() << "Unable to get default monitor";
@@ -169,7 +169,7 @@ void CenterAndSizeWindow(HWND parent,
   // If we're centering a child window, we are positioning in client
   // coordinates, and as such we need to offset the target rectangle by the
   // position of the parent window.
-  if (::GetWindowLong(window, GWL_STYLE) & WS_CHILD) {
+  if (::GetWindowLongW(window, GWL_STYLE) & WS_CHILD) {
     CR_DCHECK(parent && ::GetParent(window) == parent);
     POINT topleft = { window_bounds.left, window_bounds.top };
     ::MapWindowPoints(HWND_DESKTOP, parent, &topleft, 1);

@@ -11,7 +11,7 @@
 
 #include "crbase/strings/string16.h"
 #include "crui/base/ui_export.h"
-///#include "crui/display/display.h"
+#include "crui/display/display.h"
 #include "crui/events/base_event_utils.h"
 #include "crui/events/event.h"
 #include "crui/events/event_constants.h"
@@ -155,10 +155,10 @@ CRUI_EXPORT bool GetScrollOffsets(const PlatformEvent& native_event,
                                   EventMomentumPhase* momentum_phase);
 
 // Returns whether natural scrolling should be used for touchpad.
-///CRUI_EXPORT bool ShouldDefaultToNaturalScroll();
+CRUI_EXPORT bool ShouldDefaultToNaturalScroll();
 
 // Returns whether or not the internal display produces touch events.
-///CRUI_EXPORT display::Display::TouchSupport GetInternalDisplayTouchSupport();
+CRUI_EXPORT display::Display::TouchSupport GetInternalDisplayTouchSupport();
 
 ///CRUI_EXPORT void ComputeEventLatencyOS(const PlatformEvent& native_event);
 

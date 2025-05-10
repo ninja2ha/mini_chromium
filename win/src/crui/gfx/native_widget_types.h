@@ -51,6 +51,7 @@ class Event;
 #endif  // defined(MINI_CHROMIUM_OS_WIN) || defined(MINI_CHROMIUM_OS_LINUX)
 
 #if defined(MINI_CHROMIUM_OS_WIN)
+#include <windows.h>
 typedef struct HFONT__* HFONT;
 struct IAccessible;
 #elif defined(MINI_CHROMIUM_OS_MACOSX)
@@ -91,6 +92,13 @@ typedef crui::Cursor NativeCursor;
 typedef aura::Window* NativeView;
 typedef aura::Window* NativeWindow;
 typedef crui::Event* NativeEvent;
+constexpr NativeView kNullNativeView = nullptr;
+constexpr NativeWindow kNullNativeWindow = nullptr;
+#elif defined(MINI_CHROMIUM_OS_WIN)
+typedef HCURSOR NativeCursor;
+typedef HWND NativeView;
+typedef HWND NativeWindow;
+typedef MSG NativeEvent;
 constexpr NativeView kNullNativeView = nullptr;
 constexpr NativeWindow kNullNativeWindow = nullptr;
 #elif defined(MINI_CHROMIUM_OS_MACOSX)

@@ -11,6 +11,7 @@
 #include <shellapi.h>
 #include <shlobj.h>
 #include <shobjidl.h>  // Must be before propkey.
+#include <shellscalingapi.h>
 #include <initguid.h>
 #include <propkey.h>
 #include <propvarutil.h>
@@ -26,6 +27,7 @@
 #include "crbase/strings/string_util.h"
 #include "crbase/strings/stringprintf.h"
 #include "crbase/strings/utf_string_conversions.h"
+#include "crbase/native_library.h"
 #include "crbase/win/registry.h"
 #include "crbase/win/com/scoped_co_mem.h"
 #include "crbase/win/com/scoped_propvariant.h"
@@ -79,6 +81,15 @@ POWER_PLATFORM_ROLE GetPlatformRole() {
 
   return static_cast<POWER_PLATFORM_ROLE>(value);
   // return PowerDeterminePlatformRoleEx(POWER_PLATFORM_ROLE_V2);
+}
+
+NativeLibrary PinUser32Internal(NativeLibraryLoadError* error) {
+  static NativeLibraryLoadError load_error;
+  static const NativeLibrary user32_module =
+      PinSystemLibrary(FILE_PATH_LITERAL("user32.dll"), &load_error);
+  if (!user32_module && error)
+    error->code = load_error.code;
+  return user32_module;
 }
 
 }  // namespace
@@ -421,6 +432,33 @@ bool IsEnrolledToDomain() {
   return g_domain_state == ENROLLED;
 }
 
+
+bool IsProcessPerMonitorDpiAware() {
+  enum class PerMonitorDpiAware {
+    UNKNOWN = 0,
+    PER_MONITOR_DPI_UNAWARE,
+    PER_MONITOR_DPI_AWARE,
+  };
+  static PerMonitorDpiAware per_monitor_dpi_aware = PerMonitorDpiAware::UNKNOWN;
+  if (per_monitor_dpi_aware == PerMonitorDpiAware::UNKNOWN) {
+    per_monitor_dpi_aware = PerMonitorDpiAware::PER_MONITOR_DPI_UNAWARE;
+    HMODULE shcore_dll = ::LoadLibraryW(L"shcore.dll");
+    if (shcore_dll) {
+      auto get_process_dpi_awareness_func =
+          reinterpret_cast<decltype(::GetProcessDpiAwareness)*>(
+              ::GetProcAddress(shcore_dll, "GetProcessDpiAwareness"));
+      if (get_process_dpi_awareness_func) {
+        PROCESS_DPI_AWARENESS awareness;
+        if (SUCCEEDED(get_process_dpi_awareness_func(nullptr, &awareness)) &&
+            awareness == PROCESS_PER_MONITOR_DPI_AWARE)
+          per_monitor_dpi_aware = PerMonitorDpiAware::PER_MONITOR_DPI_AWARE;
+      }
+    }
+  }
+  return per_monitor_dpi_aware == PerMonitorDpiAware::PER_MONITOR_DPI_AWARE;
+}
+
+
 bool IsUser32AndGdi32Available() {
   static auto is_user32_and_gdi32_available = []() {
     // If win32k syscalls aren't disabled, then user32 and gdi32 are available.
@@ -448,6 +486,14 @@ bool IsUser32AndGdi32Available() {
     return true;
   }();
   return is_user32_and_gdi32_available;
+}
+
+void* GetUser32FunctionPointer(const char* function_name,
+                               NativeLibraryLoadError* error) {
+  NativeLibrary user32_module = PinUser32Internal(error);
+  if (user32_module)
+    return GetFunctionPointerFromNativeLibrary(user32_module, function_name);
+  return nullptr;
 }
 
 bool MaybeHasSHA256Support() {

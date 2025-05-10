@@ -34,6 +34,9 @@ struct IPropertyStore;
 struct _tagpropertykey;
 
 namespace cr {
+
+struct NativeLibraryLoadError;
+
 namespace win {
 
 #define CR_MAKEINTATOM(i)  (LPCWSTR)((ULONG_PTR)((WORD)(i)))
@@ -149,6 +152,9 @@ CRBASE_EXPORT bool IsKeyboardPresentOnSlate(std::string* reason);
     offsetof(struct_name, member) + \
     (sizeof static_cast<struct_name*>(NULL)->member)
 
+// Returns true if the process is per monitor DPI aware.
+CRBASE_EXPORT bool IsProcessPerMonitorDpiAware();
+
 // Returns true if the current process can make USER32 or GDI32 calls such as
 // CreateWindow and CreateDC. Windows 8 and above allow the kernel component
 // of these calls to be disabled (also known as win32k lockdown) which can
@@ -163,6 +169,15 @@ CRBASE_EXPORT bool IsKeyboardPresentOnSlate(std::string* reason);
 // did not work, so adding calls to this method to guard them simply avoids
 // unnecessary method calls.
 CRBASE_EXPORT bool IsUser32AndGdi32Available();
+
+// Gets a pointer to a function within user32.dll, if available. If user32.dll
+// cannot be loaded or the function cannot be found, this function returns
+// nullptr and sets |error|. Once loaded, user32.dll is pinned, and therefore
+// the function pointer returned by this function will never change and can be
+// cached.
+CRBASE_EXPORT void* GetUser32FunctionPointer(
+    const char* function_name,
+    NativeLibraryLoadError* error = nullptr);
 
 // Returns true if the current operating system has support for SHA-256
 // certificates. As its name indicates, this function provides a best-effort

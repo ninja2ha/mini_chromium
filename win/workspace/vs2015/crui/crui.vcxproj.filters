@@ -1,46 +1,121 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="base">
+      <UniqueIdentifier>{c9337ce5-6683-41e0-8689-80ace418bbfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\win">
+      <UniqueIdentifier>{5bfc608a-2cf1-4c83-af54-96386e22a78c}</UniqueIdentifier>
+    </Filter>
     <Filter Include="gfx">
-      <UniqueIdentifier>{313b3078-c734-4d0d-9381-ba71b910a3d6}</UniqueIdentifier>
+      <UniqueIdentifier>{8d0fa207-57d8-4556-b4f0-60e233274a8b}</UniqueIdentifier>
     </Filter>
     <Filter Include="gfx\geometry">
-      <UniqueIdentifier>{735706b1-d682-4477-8839-774460645c59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="base">
-      <UniqueIdentifier>{db31e07d-0c69-4a3f-8d7b-13e5d2d0f829}</UniqueIdentifier>
+      <UniqueIdentifier>{2ba617d3-baf7-4578-9627-86ef8d17c71c}</UniqueIdentifier>
     </Filter>
     <Filter Include="gfx\win">
-      <UniqueIdentifier>{35a968b1-2733-4ace-89fa-f6ea95dbaad2}</UniqueIdentifier>
+      <UniqueIdentifier>{52ec1639-5605-4eb0-ae77-967013748e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display">
+      <UniqueIdentifier>{5f3ed3c8-aee3-4f43-90da-83d1beb686dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display\win">
+      <UniqueIdentifier>{9e2f4fa2-a604-4554-b576-ddfbc3d98905}</UniqueIdentifier>
     </Filter>
     <Filter Include="events">
-      <UniqueIdentifier>{50e3f60b-0874-4195-a539-d740be657bbc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="events\types">
-      <UniqueIdentifier>{5431df29-fd4e-4d1d-a7da-93397711cb0f}</UniqueIdentifier>
+      <UniqueIdentifier>{f91efbb7-9f78-4121-b608-f7b4d064c5ce}</UniqueIdentifier>
     </Filter>
     <Filter Include="events\keycodes">
-      <UniqueIdentifier>{2e38ad16-39f8-404b-953c-33f12140a707}</UniqueIdentifier>
+      <UniqueIdentifier>{ee038cda-018e-465e-aee4-e74e5266a3cc}</UniqueIdentifier>
     </Filter>
     <Filter Include="events\keycodes\dom">
-      <UniqueIdentifier>{9282a0b9-7bb7-44ab-a8f7-4816dde5c5c7}</UniqueIdentifier>
+      <UniqueIdentifier>{2a921a3b-a406-45cc-bdd8-c089001a5048}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\platform">
+      <UniqueIdentifier>{63439ba7-32ea-46c0-bd26-02b3174d5e70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\types">
+      <UniqueIdentifier>{6dc12c82-071d-4638-9a07-2df3eaa751ee}</UniqueIdentifier>
     </Filter>
     <Filter Include="events\win">
-      <UniqueIdentifier>{5703bab0-ebb2-4be5-8a72-e893b289678c}</UniqueIdentifier>
+      <UniqueIdentifier>{9da287a6-2892-4aed-9ce9-0985d7387f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display\types">
+      <UniqueIdentifier>{91a5a75e-8296-4269-bdc8-d8f77a3cecfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views">
+      <UniqueIdentifier>{c278c853-1fb8-48d2-aa88-f44c6903b788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\widget">
+      <UniqueIdentifier>{71290ea4-e5ad-4655-a781-fb297c43a010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\win">
+      <UniqueIdentifier>{77a66aa1-7fa4-4af2-a577-2d9956b517a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\window">
+      <UniqueIdentifier>{2ccdc58a-c2f6-4f84-8959-7352baa24378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\accelerators">
+      <UniqueIdentifier>{1383c591-b1dc-42f1-bc1f-c13c0d474b0d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_f.cc">
-      <Filter>gfx\geometry</Filter>
+    <ClCompile Include="..\..\..\src\crui\base\base_window.cc">
+      <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d.cc">
-      <Filter>gfx\geometry</Filter>
+    <ClCompile Include="..\..\..\src\crui\base\class_property.cc">
+      <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d_f.cc">
-      <Filter>gfx\geometry</Filter>
+    <ClCompile Include="..\..\..\src\crui\base\hit_test.cc">
+      <Filter>base</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc">
-      <Filter>gfx\geometry</Filter>
+    <ClCompile Include="..\..\..\src\crui\base\ui_base_types.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\view_prop.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\accessibility_misc_utils.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\foreground_helper.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\hidden_window.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\hwnd_metrics.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\hwnd_subclass.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\internal_constants.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\lock_state.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\message_box_win.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\mouse_wheel_util.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\scoped_ole_initializer.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\session_change_observer.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\shell.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\touch_input.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\window_event_target.cc">
+      <Filter>base\win</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.cc">
       <Filter>gfx\geometry</Filter>
@@ -51,13 +126,28 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\dip_util.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets_f.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix3_f.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix4_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_conversions.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_f.cc">
@@ -84,6 +174,12 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\scroll_offset.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
@@ -93,20 +189,50 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_conversions.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_conversions.cc">
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_f.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets.cc">
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\transform.cc">
       <Filter>gfx\geometry</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\dip_util.cc">
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\transform_util.cc">
       <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector4d_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc">
+      <Filter>gfx\win</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\win\window_impl.cc">
       <Filter>gfx\win</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc">
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd.cc">
       <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\screen_win.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\uwp_text_scale_factor.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\base_event_utils.cc">
+      <Filter>events</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\events\event.cc">
       <Filter>events</Filter>
@@ -138,6 +264,9 @@
     <ClCompile Include="..\..\..\src\crui\events\event_utils.cc">
       <Filter>events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\events_stub.cc">
+      <Filter>events</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\events\gesture_event_details.cc">
       <Filter>events</Filter>
     </ClCompile>
@@ -156,6 +285,15 @@
     <ClCompile Include="..\..\..\src\crui\events\scoped_target_handler.cc">
       <Filter>events</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion.cc">
+      <Filter>events\keycodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion_win.cc">
+      <Filter>events\keycodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.cc">
+      <Filter>events\keycodes</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout.cc">
       <Filter>events\keycodes\dom</Filter>
     </ClCompile>
@@ -171,17 +309,11 @@
     <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\keycode_converter.cc">
       <Filter>events\keycodes\dom</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion.cc">
-      <Filter>events\keycodes</Filter>
+    <ClCompile Include="..\..\..\src\crui\events\platform\platform_event_source.cc">
+      <Filter>events\platform</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion_win.cc">
-      <Filter>events\keycodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.cc">
-      <Filter>events\keycodes</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\events\base_event_utils.cc">
-      <Filter>events</Filter>
+    <ClCompile Include="..\..\..\src\crui\events\platform\scoped_event_dispatcher.cc">
+      <Filter>events\platform</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\events\win\events_win.cc">
       <Filter>events\win</Filter>
@@ -201,18 +333,192 @@
     <ClCompile Include="..\..\..\src\crui\events\win\system_event_state_lookup.cc">
       <Filter>events\win</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\dpi.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\screen_win_display.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\display_info.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_layout.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\scaling_util.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\screen.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\color_profile_reader.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_layout_builder.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_observer.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_change_notifier.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_delegate.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_private.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_getter.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_deletion_observer.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_focus_manager.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_win.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\hwnd_message_handler.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\fullscreen_handler.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\window\window_resize_utils.cc">
+      <Filter>views\window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_listener.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_listener_win.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_util.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\menu_label_accelerator_util.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\system_media_controls_media_keys_listener2.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\global_media_keys_listener_win.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_manager.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_history.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\pen_event_processor.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\views_delegate.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\sequential_id_generator.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_f.h">
-      <Filter>gfx\geometry</Filter>
+    <ClInclude Include="..\..\..\src\crui\base\base_window.h">
+      <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d.h">
-      <Filter>gfx\geometry</Filter>
+    <ClInclude Include="..\..\..\src\crui\base\build_platform.h">
+      <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d_f.h">
-      <Filter>gfx\geometry</Filter>
+    <ClInclude Include="..\..\..\src\crui\base\class_property.h">
+      <Filter>base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector3d_f.h">
+    <ClInclude Include="..\..\..\src\crui\base\hit_test.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\ui_base_types.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\ui_export.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\view_prop.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\accessibility_ids_win.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\accessibility_misc_utils.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\atl_module.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\foreground_helper.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\hidden_window.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\hwnd_metrics.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\hwnd_subclass.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\internal_constants.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\lock_state.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\message_box_win.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\mouse_wheel_util.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_gdi_object.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_hdc.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_ole_initializer.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_select_gdi_object.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\session_change_observer.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\shell.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\touch_input.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\window_event_target.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\angle_conversions.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.h">
@@ -221,10 +527,19 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\box_f.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\clamp_float_geometry.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\dip_util.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets_f.h">
@@ -233,7 +548,13 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix3_f.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix4_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_conversions.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_f.h">
@@ -260,44 +581,80 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\safe_integer_conversions.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\scalar.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\scroll_offset.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\sin_cos_degrees.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\size.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\base\ui_export.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\safe_integer_conversions.h">
-      <Filter>gfx\geometry</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_conversions.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_conversions.h">
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_f.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\angle_conversions.h">
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\transform.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets.h">
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\transform_util.h">
       <Filter>gfx\geometry</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\win\window_impl.h">
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector3d_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector4d_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\hwnd_util.h">
       <Filter>gfx\win</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\win\msg_util.h">
       <Filter>gfx\win</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\window_impl.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\native_widget_types.h">
       <Filter>gfx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\base\build_platform.h">
-      <Filter>base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\win\hwnd_util.h">
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd.h">
       <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\screen_win.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\uwp_text_scale_factor.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\base_event_utils.h">
+      <Filter>events</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\events\event.h">
       <Filter>events</Filter>
@@ -374,8 +731,23 @@
     <ClInclude Include="..\..\..\src\crui\events\scoped_target_handler.h">
       <Filter>events</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\types\scroll_types.h">
-      <Filter>events\types</Filter>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom_us_layout_data.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion_win.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_codes.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_codes_win.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.h">
+      <Filter>events\keycodes</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_code.h">
       <Filter>events\keycodes\dom</Filter>
@@ -401,26 +773,20 @@
     <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\keycode_converter.h">
       <Filter>events\keycodes\dom</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom_us_layout_data.h">
-      <Filter>events\keycodes</Filter>
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_dispatcher.h">
+      <Filter>events\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion.h">
-      <Filter>events\keycodes</Filter>
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_observer.h">
+      <Filter>events\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion_win.h">
-      <Filter>events\keycodes</Filter>
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_source.h">
+      <Filter>events\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_codes.h">
-      <Filter>events\keycodes</Filter>
+    <ClInclude Include="..\..\..\src\crui\events\platform\scoped_event_dispatcher.h">
+      <Filter>events\platform</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_codes_win.h">
-      <Filter>events\keycodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.h">
-      <Filter>events\keycodes</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\events\base_event_utils.h">
-      <Filter>events</Filter>
+    <ClInclude Include="..\..\..\src\crui\events\types\scroll_types.h">
+      <Filter>events\types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\events\win\events_win_utils.h">
       <Filter>events\win</Filter>
@@ -431,13 +797,125 @@
     <ClInclude Include="..\..\..\src\crui\events\win\system_event_state_lookup.h">
       <Filter>events\win</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\src\crui\events\keycodes\dom\dom_code_data.inc">
-      <Filter>events\keycodes\dom</Filter>
-    </None>
-    <None Include="..\..\..\src\crui\events\keycodes\dom\dom_key_data.inc">
-      <Filter>events\keycodes\dom</Filter>
-    </None>
+    <ClInclude Include="..\..\..\src\crui\display\win\dpi.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\types\display_constants.h">
+      <Filter>display\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\screen_win_display.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\display_info.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_layout.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\scaling_util.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\screen.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\color_profile_reader.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_layout_builder.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_observer.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_change_notifier.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_delegate.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_delegate.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_private.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_getter.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_deletion_observer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_observer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_removals_observer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_focus_manager.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_win.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler_delegate.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\fullscreen_handler.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\window\window_resize_utils.h">
+      <Filter>views\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\system_media_controls_media_keys_listener2.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\media_keys_listener.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\media_keys_util.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\menu_label_accelerator_util.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\global_media_keys_listener_win.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_manager.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_history.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\pen_event_processor.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\views_delegate.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\sequential_id_generator.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

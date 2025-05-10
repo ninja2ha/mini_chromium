@@ -7,8 +7,8 @@
 #include <vector>
 
 #include "crbase/numerics/safe_conversions.h"
-///#include "crui/display/display.h"
-///#include "crui/display/screen.h"
+#include "crui/display/display.h"
+#include "crui/display/screen.h"
 
 namespace crui {
 
@@ -77,23 +77,23 @@ void ValidateEventTimeClock(cr::TimeTicks* timestamp) {
     *timestamp = now;
 }
 
-///bool ShouldDefaultToNaturalScroll() {
-///  return GetInternalDisplayTouchSupport() ==
-///         display::Display::TouchSupport::AVAILABLE;
-///}
-///
-///display::Display::TouchSupport GetInternalDisplayTouchSupport() {
-///  display::Screen* screen = display::Screen::GetScreen();
-///  // No screen in some unit tests.
-///  if (!screen)
-///    return display::Display::TouchSupport::UNKNOWN;
-///  const std::vector<display::Display>& displays = screen->GetAllDisplays();
-///  for (auto it = displays.begin(); it != displays.end(); ++it) {
-///    if (it->IsInternal())
-///      return it->touch_support();
-///  }
-///  return display::Display::TouchSupport::UNAVAILABLE;
-///}
+bool ShouldDefaultToNaturalScroll() {
+  return GetInternalDisplayTouchSupport() ==
+         display::Display::TouchSupport::AVAILABLE;
+}
+
+display::Display::TouchSupport GetInternalDisplayTouchSupport() {
+  display::Screen* screen = display::Screen::GetScreen();
+  // No screen in some unit tests.
+  if (!screen)
+    return display::Display::TouchSupport::UNKNOWN;
+  const std::vector<display::Display>& displays = screen->GetAllDisplays();
+  for (auto it = displays.begin(); it != displays.end(); ++it) {
+    if (it->IsInternal())
+      return it->touch_support();
+  }
+  return display::Display::TouchSupport::UNAVAILABLE;
+}
 
 ///void ComputeEventLatencyOS(const PlatformEvent& native_event) {
 ///  cr::TimeTicks current_time = EventTimeForNow();

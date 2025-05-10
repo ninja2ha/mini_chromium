@@ -10,8 +10,8 @@
 #include "crui/gfx/geometry/angle_conversions.h"
 
 namespace {
-const double kEpsilon = 1.0e-6;
-}
+constexpr double kEpsilon = 1.0e-6;
+}  // namespace
 
 namespace crui {
 namespace gfx {
@@ -51,6 +51,14 @@ void Vector3dF::Scale(float x_scale, float y_scale, float z_scale) {
   z_ *= z_scale;
 }
 
+void Vector3dF::InvScale(float inv_x_scale, 
+                         float inv_y_scale, 
+                         float inv_z_scale) {
+  x_ /= inv_x_scale;
+  y_ /= inv_y_scale;
+  z_ /= inv_z_scale;
+}
+
 void Vector3dF::Cross(const Vector3dF& other) {
   double dx = x_;
   double dy = y_;
@@ -68,7 +76,7 @@ bool Vector3dF::GetNormalized(Vector3dF* out) const {
   *out = *this;
   if (length_squared < kEpsilon * kEpsilon)
     return false;
-  out->Scale(static_cast<float>(1 / sqrt(length_squared)));
+  out->InvScale(static_cast<float>(sqrt(length_squared)));
   return true;
 }
 
