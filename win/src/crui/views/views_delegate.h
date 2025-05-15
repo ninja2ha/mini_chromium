@@ -139,7 +139,7 @@ class CRUI_EXPORT ViewsDelegate {
   // Creates a default NonClientFrameView to be used for windows that don't
   // specify their own. If this function returns NULL, the
   // views::CustomFrameView type will be used.
-  ///virtual NonClientFrameView* CreateDefaultNonClientFrameView(Widget* widget);
+  virtual NonClientFrameView* CreateDefaultNonClientFrameView(Widget* widget);
 
   // AddRef/ReleaseRef are invoked while a menu is visible. They are used to
   // ensure we don't attempt to exit while a menu is showing.

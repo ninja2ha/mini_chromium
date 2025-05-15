@@ -27,7 +27,10 @@ class Rect;
 }  // namespace gfx 
 
 namespace views {
-class TooltipManager;
+
+///class TooltipManager;
+class View;
+
 namespace internal {
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -88,7 +91,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
 
   // Returns a NonClientFrameView for the widget's NonClientView, or NULL if
   // the NativeWidget wants no special NonClientFrameView.
-  ///virtual NonClientFrameView* CreateNonClientFrameView() = 0;
+  virtual NonClientFrameView* CreateNonClientFrameView() = 0;
 
   virtual bool ShouldUseNativeFrame() const = 0;
   virtual bool ShouldWindowContentsBeTransparent() const = 0;
@@ -119,7 +122,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
 
   // Notifies the NativeWidget that a view was removed from the Widget's view
   // hierarchy.
-  ///virtual void ViewRemoved(View* view) = 0;
+  virtual void ViewRemoved(View* view) = 0;
 
   // Sets/Gets a native window property on the underlying native window object.
   // Returns NULL if the property does not exist. Setting the property value to

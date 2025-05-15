@@ -222,6 +222,7 @@ class CRBASE_EXPORT TimeDelta {
   TimeDelta operator%(TimeDelta a) const {
     return TimeDelta(delta_ % a.delta_);
   }
+  TimeDelta& operator%=(TimeDelta other) { return *this = (*this % other); }
 
   // Comparison operators.
   constexpr bool operator==(TimeDelta other) const {

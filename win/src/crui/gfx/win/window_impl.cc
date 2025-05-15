@@ -131,9 +131,13 @@ ATOM ClassRegistrar::RetrieveClassAtom(const ClassInfo& class_info) {
 
   WNDCLASSEXW window_class;
   cr::win::InitializeWindowClass(
-      name.c_str(), &cr::win::WrappedWindowProc<WindowImpl::WndProc>,
-      class_info.style, 0, 0, NULL,
-      reinterpret_cast<HBRUSH>(GetStockObject(BLACK_BRUSH)), NULL,
+      name.c_str(), 
+      &cr::win::WrappedWindowProc<WindowImpl::WndProc>,
+      class_info.style, 
+      0, 
+      0, 
+      nullptr,
+      reinterpret_cast<HBRUSH>(GetStockObject(BLACK_BRUSH)), nullptr,
       class_info.icon, class_info.small_icon, &window_class);
   HMODULE instance = window_class.hInstance;
   ATOM atom = ::RegisterClassExW(&window_class);

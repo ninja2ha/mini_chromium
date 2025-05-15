@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MINI_CHROMIUM_SRC_CRBASE_COcNTAINERS_STACK_H_
+#ifndef MINI_CHROMIUM_SRC_CRBASE_CONTAINERS_STACK_H_
 #define MINI_CHROMIUM_SRC_CRBASE_CONTAINERS_STACK_H_
 
 #include <stack>

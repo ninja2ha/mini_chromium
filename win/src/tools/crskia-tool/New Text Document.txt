@@ -1,0 +1,29 @@
+#include <iostream>
+
+#include "crbase/at_exit.h"
+#include "crbase/strings/string_piece.h"
+#include "crbase/strings/string_util.h"
+#include "crbase/files/file_path.h"
+#include "crbase/files/file_util.h"
+
+namespace {
+
+int SkiaCheckPath(const cr::FilePath& skia_path) {
+  if (!cr::DirectoryExists(skia_path.Append(FILE_PATH_LITERAL("include")).Append(FILE_PATH_LITERAL(""))))
+}
+
+int SkiaFormatHeaderIncludes(const char* skia_src) {
+}
+
+}  // namesapce
+
+int main(int argc, char* argv[]) {
+  cr::AtExitManager at_exit;
+
+  std::string skia_path;
+  std::cout << "skia path:"; 
+  std::getline(std::cin, skia_path);
+
+
+  return 0;
+}

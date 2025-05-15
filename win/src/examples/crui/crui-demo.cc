@@ -49,12 +49,12 @@ SimpleUIApplication::SimpleUIApplication(const crui::views::Widget* widget)
 SimpleUIApplication::~SimpleUIApplication() {
 }
 
-bool SimpleUIApplication::CanResize() const { return false; }
-bool SimpleUIApplication::CanMaximize() const { return false; }
+bool SimpleUIApplication::CanResize() const { return true; }
+bool SimpleUIApplication::CanMaximize() const { return true; }
 bool SimpleUIApplication::CanMinimize() const { return true; }
 
 cr::string16 SimpleUIApplication::GetWindowTitle() const {
-  return cr::ASCIIToUTF16("SimpleWidget");
+  return cr::ASCIIToUTF16("curi-demo");
 }
 
 void SimpleUIApplication::WindowClosing() {
@@ -78,6 +78,7 @@ int RunSimpleWidget() {
   params.delegate = new SimpleUIApplication(widget);
   params.context = nullptr;
   params.force_software_compositing = true;
+  params.bounds = crui::gfx::Rect(800, 600);
   widget->Init(std::move(params));
   widget->Show();
 

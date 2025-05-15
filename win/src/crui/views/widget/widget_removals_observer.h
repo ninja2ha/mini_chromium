@@ -11,7 +11,7 @@ namespace crui {
 namespace views {
 
 class Widget;
-///class View;
+class View;
 
 // |WidgetRemovalsObserver| complements |WidgetObserver| with additional
 // notifications. These include events occurring during tear down like view
@@ -24,7 +24,7 @@ class CRUI_EXPORT WidgetRemovalsObserver {
   // same widget, but will be called if it's moved to a different widget.
   // Only called on the root of a view tree; it implies that all of the
   // descendants of |view| will be removed.
-  ///virtual void OnWillRemoveView(Widget* widget, View* view) {}
+  virtual void OnWillRemoveView(Widget* widget, View* view) {}
 
  protected:
   virtual ~WidgetRemovalsObserver() = default;

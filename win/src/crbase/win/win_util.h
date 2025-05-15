@@ -186,6 +186,9 @@ CRBASE_EXPORT void* GetUser32FunctionPointer(
 // run-time detection of this capability.
 CRBASE_EXPORT bool MaybeHasSHA256Support();
 
+// Returns true if current session is a remote session.
+CRBASE_EXPORT bool IsCurrentSessionRemote();
+
 }  // namespace win
 }  // namespace cr
 

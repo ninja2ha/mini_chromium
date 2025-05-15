@@ -58,7 +58,7 @@ class CRUI_EXPORT NativeWidgetWin : public internal::NativeWidgetPrivate,
 
   // Returns a NonClientFrameView for the widget's NonClientView, or NULL if
   // the NativeWidget wants no special NonClientFrameView.
-  ///virtual NonClientFrameView* CreateNonClientFrameView() override;
+  virtual NonClientFrameView* CreateNonClientFrameView() override;
 
   virtual bool ShouldUseNativeFrame() const override;
   virtual bool ShouldWindowContentsBeTransparent() const override;
@@ -89,7 +89,7 @@ class CRUI_EXPORT NativeWidgetWin : public internal::NativeWidgetPrivate,
 
   // Notifies the NativeWidget that a view was removed from the Widget's view
   // hierarchy.
-  ///virtual void ViewRemoved(View* view) override;
+  virtual void ViewRemoved(View* view) override;
 
   // Sets/Gets a native window property on the underlying native window object.
   // Returns NULL if the property does not exist. Setting the property value to

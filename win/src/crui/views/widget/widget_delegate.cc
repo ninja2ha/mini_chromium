@@ -10,10 +10,10 @@
 #include "crui/display/display.h"
 #include "crui/display/screen.h"
 ///#include "crui/gfx/image/image_skia.h"
-///#include "crui/views/view.h"
-///#include "crui/views/views_delegate.h"
+#include "crui/views/view.h"
+#include "crui/views/views_delegate.h"
 #include "crui/views/widget/widget.h"
-///#include "crui/views/window/client_view.h"
+#include "crui/views/window/client_view.h"
 
 namespace crui {
 namespace views {
@@ -45,9 +45,9 @@ bool WidgetDelegate::OnCloseRequested(Widget::ClosedReason close_reason) {
 
 void WidgetDelegate::OnPaintAsActiveChanged(bool paint_as_active) {}
 
-///View* WidgetDelegate::GetInitiallyFocusedView() {
-///  return nullptr;
-//}
+View* WidgetDelegate::GetInitiallyFocusedView() {
+  return nullptr;
+}
 
 ///BubbleDialogDelegateView* WidgetDelegate::AsBubbleDialogDelegate() {
 ///  return nullptr;
@@ -127,8 +127,8 @@ void WidgetDelegate::SaveWindowPlacement(const gfx::Rect& bounds,
                                          crui::WindowShowState show_state) {
   std::string window_name = GetWindowName();
   if (!window_name.empty()) {
-  ///  ViewsDelegate::GetInstance()->SaveWindowPlacement(GetWidget(), window_name,
-  ///                                                    bounds, show_state);
+    ViewsDelegate::GetInstance()->SaveWindowPlacement(GetWidget(), window_name,
+                                                      bounds, show_state);
   }
 }
 
@@ -151,23 +151,23 @@ bool WidgetDelegate::ShouldRestoreWindowSize() const {
   return true;
 }
 
-///View* WidgetDelegate::GetContentsView() {
-///  if (!default_contents_view_)
-///    default_contents_view_ = new View;
-///  return default_contents_view_;
-///}
-///
-///ClientView* WidgetDelegate::CreateClientView(Widget* widget) {
-///  return new ClientView(widget, GetContentsView());
-///}
-///
-///NonClientFrameView* WidgetDelegate::CreateNonClientFrameView(Widget* widget) {
-///  return nullptr;
-///}
-///
-///View* WidgetDelegate::CreateOverlayView() {
-///  return nullptr;
-///}
+View* WidgetDelegate::GetContentsView() {
+  if (!default_contents_view_)
+    default_contents_view_ = new View;
+  return default_contents_view_;
+}
+
+ClientView* WidgetDelegate::CreateClientView(Widget* widget) {
+  return new ClientView(widget, GetContentsView());
+}
+
+NonClientFrameView* WidgetDelegate::CreateNonClientFrameView(Widget* widget) {
+  return nullptr;
+}
+
+View* WidgetDelegate::CreateOverlayView() {
+  return nullptr;
+}
 
 bool WidgetDelegate::WillProcessWorkAreaChange() const {
   return false;
@@ -195,24 +195,28 @@ bool WidgetDelegate::ShouldDescendIntoChildForEventHandling(
 // WidgetDelegateView:
 
 
-///WidgetDelegateView::WidgetDelegateView() {
-///  // A WidgetDelegate should be deleted on DeleteDelegate.
-///  set_owned_by_client();
-///}
-///
-///WidgetDelegateView::~WidgetDelegateView() = default;
-///
-///void WidgetDelegateView::DeleteDelegate() {
-///  delete this;
-///}
-///
-///views::View* WidgetDelegateView::GetContentsView() {
-///  return this;
-///}
-///
-///BEGIN_METADATA(WidgetDelegateView)
-///METADATA_PARENT_CLASS(View)
-///END_METADATA()
+WidgetDelegateView::WidgetDelegateView() {
+  // A WidgetDelegate should be deleted on DeleteDelegate.
+  set_owned_by_client();
+}
+
+WidgetDelegateView::~WidgetDelegateView() = default;
+
+void WidgetDelegateView::DeleteDelegate() {
+  delete this;
+}
+
+views::View* WidgetDelegateView::GetContentsView() {
+  return this;
+}
+
+const Widget* WidgetDelegateView::GetWidgetImpl() const {
+  return View::GetWidgetImpl();
+}
+
+BEGIN_METADATA(WidgetDelegateView)
+METADATA_PARENT_CLASS(View)
+END_METADATA()
 
 }  // namespace views
 }  // namespace crui

@@ -13,7 +13,7 @@
 #include "crbase/memory/weak_ptr.h"
 #include "crbase/observer_list.h"
 #include "crbase/containers/optional.h"
-///#include "crbase/scoped_observer.h"
+#include "crbase/scoped_observer.h"
 #include "crui/base/ui_base_types.h"
 #include "crui/events/event_source.h"
 #include "crui/gfx/geometry/rect.h"
@@ -21,10 +21,10 @@
 #include "crui/gfx/native_widget_types.h"
 ///#include "ui/native_theme/native_theme.h"
 ///#include "ui/native_theme/native_theme_observer.h"
-///#include "ui/views/focus/focus_manager.h"
+#include "crui/views/focus/focus_manager.h"
 #include "crui/views/widget/native_widget_delegate.h"
-///#include "ui/views/window/client_view.h"
-///#include "ui/views/window/non_client_view.h"
+#include "crui/views/window/client_view.h"
+#include "crui/views/window/non_client_view.h"
 #include "crui/base/class_property.h"
 #include "crui/base/ui_export.h"
 
@@ -54,14 +54,14 @@ namespace views {
 class NativeWidget;
 ///class NonClientFrameView;
 ///class TooltipManager;
-///class View;
+class View;
 class WidgetDelegate;
 class WidgetObserver;
 class WidgetRemovalsObserver;
 
 namespace internal {
 class NativeWidgetPrivate;
-///class RootView;
+class RootView;
 }  // namespace internal 
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -90,8 +90,8 @@ class NativeWidgetPrivate;
 //      destructor). This is often used to place a Widget in a std::unique_ptr<>
 //      or on the stack in a test.
 class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
-                           public crui::EventSource/*,
-                           public FocusTraversable,
+                           public crui::EventSource,
+                           public FocusTraversable/*,
                            public ui::NativeThemeObserver*/ {
  public:
   using Widgets = std::set<Widget*>;
@@ -450,7 +450,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   virtual bool GetAccelerator(int cmd_id, crui::Accelerator* accelerator) const;
 
   // Forwarded from the RootView so that the widget can do any cleanup.
-  ///void ViewHierarchyChanged(const ViewHierarchyChangedDetails& details);
+  void ViewHierarchyChanged(const ViewHierarchyChangedDetails& details);
 
   // Called right before changing the widget's parent NativeView to do any
   // cleanup.
@@ -461,7 +461,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   void NotifyNativeViewHierarchyChanged();
 
   // Called immediately before removing |view| from this widget.
-  ///void NotifyWillRemoveView(View* view);
+  void NotifyWillRemoveView(View* view);
 
   // Returns the top level widget in a hierarchy (see is_top_level() for
   // the definition of top level widget.) Will return NULL if called
@@ -476,11 +476,11 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // be one contents view child of this Widget's RootView. This view is sized to
   // fit the entire size of the RootView. The RootView takes ownership of this
   // View, unless it is set as not being parent-owned.
-  ///void SetContentsView(View* view);
+  void SetContentsView(View* view);
 
   // NOTE: This may not be the same view as WidgetDelegate::GetContentsView().
   // See RootView::GetContentsView().
-  ///View* GetContentsView();
+  View* GetContentsView();
 
   // Returns the bounds of the Widget in screen coordinates.
   gfx::Rect GetWindowBoundsInScreen() const;
@@ -638,8 +638,8 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
 
   // Returns the View at the root of the View hierarchy contained by this
   // Widget.
-  ///View* GetRootView();
-  ///const View* GetRootView() const;
+  View* GetRootView();
+  const View* GetRootView() const;
 
   // A secondary widget is one that is automatically closed (via Close()) when
   // all non-secondary widgets are closed.
@@ -665,8 +665,8 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
 
   // Returns the FocusManager for this widget.
   // Note that all widgets in a widget hierarchy share the same focus manager.
-  ///FocusManager* GetFocusManager();
-  ///const FocusManager* GetFocusManager() const;
+  FocusManager* GetFocusManager();
+  const FocusManager* GetFocusManager() const;
 
   // Returns the ui::InputMethod for this widget.
   ///crui::InputMethod* GetInputMethod();
@@ -721,19 +721,19 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   void ShowEmojiPanel();
 
   // Retrieves the focus traversable for this widget.
-  ///FocusTraversable* GetFocusTraversable();
+  FocusTraversable* GetFocusTraversable();
 
   // Notifies the view hierarchy contained in this widget that theme resources
   // changed.
-  ///void ThemeChanged();
+  void ThemeChanged();
 
   // Notifies the view hierarchy contained in this widget that the device scale
   // factor changed.
   void DeviceScaleFactorChanged(float old_device_scale_factor,
                                 float new_device_scale_factor);
 
-  ///void SetFocusTraversableParent(FocusTraversable* parent);
-  ///void SetFocusTraversableParentView(View* parent_view);
+  void SetFocusTraversableParent(FocusTraversable* parent);
+  void SetFocusTraversableParentView(View* parent_view);
 
   // Clear native focus set to the Widget's NativeWidget.
   void ClearNativeFocus();
@@ -745,7 +745,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // WidgetDelegate is given the first opportunity to create one, followed by
   // the NativeWidget implementation. If both return NULL, a default one is
   // created.
-  ///virtual NonClientFrameView* CreateNonClientFrameView();
+  virtual NonClientFrameView* CreateNonClientFrameView();
 
   // Whether we should be using a native frame.
   bool ShouldUseNativeFrame() const;
@@ -761,22 +761,22 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // Tell the window that something caused the frame type to change.
   void FrameTypeChanged();
 
-  ///NonClientView* non_client_view() {
-  ///  return const_cast<NonClientView*>(
-  ///      const_cast<const Widget*>(this)->non_client_view());
-  ///}
-  ///const NonClientView* non_client_view() const {
-  ///  return non_client_view_;
-  ///}
-  ///
-  ///ClientView* client_view() {
-  ///  return const_cast<ClientView*>(
-  ///      const_cast<const Widget*>(this)->client_view());
-  ///}
-  ///const ClientView* client_view() const {
-  ///  // non_client_view_ may be NULL, especially during creation.
-  ///  return non_client_view_ ? non_client_view_->client_view() : nullptr;
-  ///}
+  NonClientView* non_client_view() {
+    return const_cast<NonClientView*>(
+        const_cast<const Widget*>(this)->non_client_view());
+  }
+  const NonClientView* non_client_view() const {
+    return non_client_view_;
+  }
+  
+  ClientView* client_view() {
+    return const_cast<ClientView*>(
+        const_cast<const Widget*>(this)->client_view());
+  }
+  const ClientView* client_view() const {
+    // non_client_view_ may be NULL, especially during creation.
+    return non_client_view_ ? non_client_view_->client_view() : nullptr;
+  }
 
   // Returns the compositor for this Widget, note that this may change during
   // the Widget's lifetime (e.g. when switching monitors on Chrome OS).
@@ -820,7 +820,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // and gesture events go to |view|. If |view| is NULL, the widget still
   // obtains event capture, but the events will go to the view they'd normally
   // go to.
-  ///void SetCapture(View* view);
+  void SetCapture(View* view);
 
   // Releases capture.
   void ReleaseCapture();
@@ -930,9 +930,9 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   crui::EventSink* GetEventSink() override;
 
   // Overridden from FocusTraversable:
-  ///FocusSearch* GetFocusSearch() override;
-  ///FocusTraversable* GetFocusTraversableParent() override;
-  ///View* GetFocusTraversableParentView() override;
+  FocusSearch* GetFocusSearch() override;
+  FocusTraversable* GetFocusTraversableParent() override;
+  View* GetFocusTraversableParentView() override;
 
   // Overridden from ui::NativeThemeObserver:
   ///void OnNativeThemeUpdated(crui::NativeTheme* observed_theme) override;
@@ -940,17 +940,17 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
  protected:
   // Call this to propagate native theme changes to the root view. Subclasses
   // may override this to customize how native theme updates are propagated.
-  ///virtual void PropagateNativeThemeChanged();
+  virtual void PropagateNativeThemeChanged();
 
   // Creates the RootView to be used within this Widget. Subclasses may override
   // to create custom RootViews that do specialized event processing.
   // TODO(beng): Investigate whether or not this is needed.
-  ///virtual internal::RootView* CreateRootView();
+  virtual internal::RootView* CreateRootView();
 
   // Provided to allow the NativeWidget implementations to destroy the RootView
   // _before_ the focus manager/tooltip manager.
   // TODO(beng): remove once we fold those objects onto this one.
-  ///void DestroyRootView();
+  void DestroyRootView();
 
   // Notification that a drag will start. Default implementation does nothing.
   virtual void OnDragWillStart();
@@ -1012,26 +1012,26 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // The root of the View hierarchy attached to this window.
   // WARNING: see warning in tooltip_manager_ for ordering dependencies with
   // this and tooltip_manager_.
-  ///std::unique_ptr<internal::RootView> root_view_;
+  std::unique_ptr<internal::RootView> root_view_;
 
   // The View that provides the non-client area of the window (title bar,
   // window controls, sizing borders etc). To use an implementation other than
   // the default, this class must be sub-classed and this value set to the
   // desired implementation before calling |InitWindow()|.
-  ///NonClientView* non_client_view_ = nullptr;
+  NonClientView* non_client_view_ = nullptr;
 
   // The focus manager keeping track of focus for this Widget and any of its
   // children.  NULL for non top-level widgets.
   // WARNING: RootView's destructor calls into the FocusManager. As such, this
   // must be destroyed AFTER root_view_. This is enforced in DestroyRootView().
-  ///std::unique_ptr<FocusManager> focus_manager_;
+  std::unique_ptr<FocusManager> focus_manager_;
 
   // A theme provider to use when no other theme provider is specified.
   ///std::unique_ptr<ui::DefaultThemeProvider> default_theme_provider_;
 
   // Valid for the lifetime of RunShellDrag(), indicates the view the drag
   // started from.
-  ///View* dragged_view_ = nullptr;
+  View* dragged_view_ = nullptr;
 
   // See class documentation for Widget above for a note about ownership.
   InitParams::Ownership ownership_ = InitParams::NATIVE_WIDGET_OWNS_WIDGET;

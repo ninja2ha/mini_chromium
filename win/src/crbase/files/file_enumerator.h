@@ -83,7 +83,7 @@ class CRBASE_EXPORT FileEnumerator {
     FILES = 1 << 0,
     DIRECTORIES = 1 << 1,
     INCLUDE_DOT_DOT = 1 << 2,
-#if defined(OS_POSIX) || defined(OS_FUCHSIA)
+#if defined(MINI_CHROMIUM_OS_POSIX)
     SHOW_SYM_LINKS = 1 << 4,
 #endif
   };

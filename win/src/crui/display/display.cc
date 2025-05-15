@@ -42,7 +42,7 @@ bool HasForceDeviceScaleFactorImpl() {
 }
 
 float GetForcedDeviceScaleFactorImpl() {
-  double scale_in_double = 1.0;
+  constexpr double scale_in_double = 1.0;
   ///if (HasForceDeviceScaleFactorImpl()) {
   ///  std::string value =
   ///      base::CommandLine::ForCurrentProcess()->GetSwitchValueASCII(

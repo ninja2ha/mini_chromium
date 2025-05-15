@@ -19,7 +19,7 @@
 // To define a new ClassProperty:
 //
 //  #include "foo/foo_export.h"
-//  #include "ui/base/class_property.h"
+//  #include "crui/base/class_property.h"
 //
 //  DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE(FOO_EXPORT, MyType)
 //  namespace foo {
@@ -237,7 +237,7 @@ void PropertyHandler::SetProperty(const ClassProperty<T*>* property,
   }
 }
 
-}  // namespace ui
+}  // namespace crui
 
 // Macros to declare the property getter/setter template functions.
 #define DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(EXPORT, T)                   \

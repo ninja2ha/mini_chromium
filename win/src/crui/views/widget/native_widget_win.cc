@@ -17,6 +17,7 @@
 #include "crui/views/widget/widget_delegate.h"
 #include "crui/views/win/hwnd_message_handler.h"
 #include "crui/views/win/fullscreen_handler.h"
+#include "crui/views/window/native_frame_view.h"
 
 namespace crui {
 namespace views {
@@ -199,6 +200,11 @@ void NativeWidgetWin::InitNativeWidget(Widget::InitParams params) {
 void NativeWidgetWin::OnWidgetInitDone() {
 }
 
+NonClientFrameView* NativeWidgetWin::CreateNonClientFrameView() {
+  return GetWidget()->ShouldUseNativeFrame() ?
+    new NativeFrameView(GetWidget()) : NULL;
+}
+
 bool NativeWidgetWin::ShouldUseNativeFrame() const {
   return true;
 }
@@ -234,6 +240,13 @@ Widget* NativeWidgetWin::GetTopLevelWidget() {
 
 void NativeWidgetWin::ReorderNativeViews() {
   
+}
+
+void NativeWidgetWin::ViewRemoved(View* view) {
+  ///if (drop_target_.get())
+  ///  drop_target_->ResetTargetViewIfEquals(view);
+  ///
+  ///ClearAccessibilityViewEvent(view);
 }
 
 void NativeWidgetWin::SetNativeWindowProperty(const char* key, void* value) {
@@ -665,8 +678,7 @@ void NativeWidgetWin::GetMinMaxSize(gfx::Size* min_size,
 }
 
 gfx::Size NativeWidgetWin::GetRootViewSize() const { 
-  ///return GetWidget()->GetRootView()->size();
-  return gfx::Size();
+  return GetWidget()->GetRootView()->size();
 }
 
 gfx::Size NativeWidgetWin::DIPToScreenSize(const gfx::Size& dip_size) const { 
@@ -709,7 +721,7 @@ bool NativeWidgetWin::HandleCommand(int command) {
 }
 
 void NativeWidgetWin::HandleAccelerator(const crui::Accelerator& accelerator) { 
-  ///GetWidget()->GetFocusManager()->ProcessAccelerator(accelerator);
+  GetWidget()->GetFocusManager()->ProcessAccelerator(accelerator);
 }
 
 void NativeWidgetWin::HandleCreate() { 
@@ -912,14 +924,6 @@ void NativeWidgetWin::HandleWindowScaleFactorChanged(
   ///      window()->GetLocalSurfaceIdAllocation());
   ///}
 }
-
-///Widget* NativeWidgetWin::GetWidget() {
-///  return native_widget_delegate_->AsWidget();
-///}
-
-///const Widget* NativeWidgetWin::GetWidget() const {
-///  return native_widget_delegate_->AsWidget();
-///}
 
 const Widget* NativeWidgetWin::GetWidgetImpl() const {
   return native_widget_delegate_->AsWidget();

@@ -11,7 +11,7 @@
 ///#include "base/macros.h"
 ///#include "ui/accessibility/ax_enums.mojom-forward.h"
 #include "crui/base/ui_base_types.h"
-///#include "crui/views/view.h"
+#include "crui/views/view.h"
 #include "crui/views/widget/widget.h"
 #include "crui/views/widget/widget_getter.h"
 
@@ -24,10 +24,10 @@ class Rect;
 
 namespace views {
 ///class BubbleDialogDelegateView;
-///class ClientView;
+class ClientView;
 ///class DialogDelegate;
-///class NonClientFrameView;
-///class View;
+class NonClientFrameView;
+class View;
 
 // Handles events on Widgets in context-specific ways.
 class CRUI_EXPORT WidgetDelegate : public virtual WidgetGetter {
@@ -68,7 +68,7 @@ class CRUI_EXPORT WidgetDelegate : public virtual WidgetGetter {
 
   // Returns the view that should have the focus when the widget is shown.  If
   // NULL no view is focused.
-  ///virtual View* GetInitiallyFocusedView();
+  virtual View* GetInitiallyFocusedView();
 
   ///virtual BubbleDialogDelegateView* AsBubbleDialogDelegate();
   ///virtual DialogDelegate* AsDialogDelegate();
@@ -156,21 +156,21 @@ class CRUI_EXPORT WidgetDelegate : public virtual WidgetGetter {
   virtual void OnWindowEndUserBoundsChange() {}
 
   // Returns the View that is contained within this Widget.
-  ///virtual View* GetContentsView();
+  virtual View* GetContentsView();
 
   // Called by the Widget to create the Client View used to host the contents
   // of the widget.
-  ///virtual ClientView* CreateClientView(Widget* widget);
+  virtual ClientView* CreateClientView(Widget* widget);
 
   // Called by the Widget to create the NonClient Frame View for this widget.
   // Return NULL to use the default one.
-  ///virtual NonClientFrameView* CreateNonClientFrameView(Widget* widget);
+  virtual NonClientFrameView* CreateNonClientFrameView(Widget* widget);
 
   // Called by the Widget to create the overlay View for this widget. Return
   // NULL for no overlay. The overlay View will fill the Widget and sit on top
   // of the ClientView and NonClientFrameView (both visually and wrt click
   // targeting).
-  ///virtual View* CreateOverlayView();
+  virtual View* CreateOverlayView();
 
   // Returns true if the window can be notified with the work area change.
   // Otherwise, the work area change for the top window will be processed by
@@ -197,7 +197,7 @@ class CRUI_EXPORT WidgetDelegate : public virtual WidgetGetter {
 
   // Populates |panes| with accessible panes in this window that can
   // be cycled through with keyboard focus.
-  ///virtual void GetAccessiblePanes(std::vector<View*>* panes) {}
+  virtual void GetAccessiblePanes(std::vector<View*>* panes) {}
 
  protected:
   virtual ~WidgetDelegate();
@@ -205,7 +205,7 @@ class CRUI_EXPORT WidgetDelegate : public virtual WidgetGetter {
  private:
   friend class Widget;
 
-  ///View* default_contents_view_ = nullptr;
+  View* default_contents_view_ = nullptr;
   bool can_activate_ = true;
 
   // Managed by Widget. Ensures |this| outlives its Widget.
@@ -215,20 +215,24 @@ class CRUI_EXPORT WidgetDelegate : public virtual WidgetGetter {
 // A WidgetDelegate implementation that is-a View. Note that WidgetDelegateView
 // is not owned by view's hierarchy and is expected to be deleted on
 // DeleteDelegate call.
-///class CRUI_EXPORT WidgetDelegateView : public WidgetDelegate, public View {
-/// public:
-///  METADATA_HEADER(WidgetDelegateView);
-///
-///  WidgetDelegateView();
-///  ~WidgetDelegateView() override;
-///
-///  // WidgetDelegate:
-///  void DeleteDelegate() override;
-///  views::View* GetContentsView() override;
-///
-/// private:
-///  DISALLOW_COPY_AND_ASSIGN(WidgetDelegateView);
-///};
+class CRUI_EXPORT WidgetDelegateView : public View, public WidgetDelegate {
+ public:
+  METADATA_HEADER(WidgetDelegateView)
+
+  WidgetDelegateView(const WidgetDelegateView&) = delete;
+  WidgetDelegateView& operator=(const WidgetDelegateView&) = delete;
+
+  WidgetDelegateView();
+  ~WidgetDelegateView() override;
+
+  // WidgetDelegate:
+  void DeleteDelegate() override;
+  views::View* GetContentsView() override;
+
+ protected:
+  // WidgetGetter implement.
+  const Widget* GetWidgetImpl() const override;
+};
 
 }  // namespace views
 }  // namespace crui

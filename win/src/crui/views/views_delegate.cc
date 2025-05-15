@@ -92,10 +92,10 @@ gfx::ImageSkia* ViewsDelegate::GetDefaultWindowIcon() const {
 }
 #endif
 
-///NonClientFrameView* ViewsDelegate::CreateDefaultNonClientFrameView(
-///    Widget* widget) {
-///  return nullptr;
-///}
+NonClientFrameView* ViewsDelegate::CreateDefaultNonClientFrameView(
+    Widget* widget) {
+  return nullptr;
+}
 
 bool ViewsDelegate::IsShuttingDown() const {
   return false;

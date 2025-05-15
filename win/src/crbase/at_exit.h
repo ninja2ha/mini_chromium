@@ -9,6 +9,7 @@
 
 #include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
+#include "crbase/containers/stack.h"
 #include "crbase/synchronization/lock.h"
 
 namespace cr {
@@ -16,7 +17,7 @@ namespace cr {
 // This class provides a facility similar to the CRT atexit(), except that
 // we control when the callbacks are executed. Under Windows for a DLL they
 // happen at a really bad time and under the loader lock. This facility is
-// mostly used by base::Singleton.
+// mostly used by cr::Singleton.
 //
 // The usage is simple. Early in the main() or WinMain() scope create an
 // AtExitManager object on the stack:
@@ -65,7 +66,7 @@ class CRBASE_EXPORT AtExitManager {
  private:
   cr::Lock lock_;
 
-  std::stack<cr::OnceClosure> stack_; // GUARDED_BY(lock_);
+  cr::stack<cr::OnceClosure> stack_; // GUARDED_BY(lock_);
 
   // Stack of managers to allow shadowing.
   AtExitManager* const next_manager_;

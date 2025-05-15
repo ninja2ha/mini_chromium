@@ -281,10 +281,10 @@ OSInfo** OSInfo::GetInstanceStorage() {
       get_product_info(version_info.dwMajorVersion, version_info.dwMinorVersion,
                        0, 0, &os_type);
 
-		return new OSInfo(version_info, GetSystemInfoStorage(), os_type);
+    return new OSInfo(version_info, GetSystemInfoStorage(), os_type);
 	}();
 
-	return &info;
+  return &info;
 }
 
 // static
