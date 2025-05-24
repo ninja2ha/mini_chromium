@@ -189,6 +189,19 @@ CRBASE_EXPORT bool MaybeHasSHA256Support();
 // Returns true if current session is a remote session.
 CRBASE_EXPORT bool IsCurrentSessionRemote();
 
+// Return true if the device is physically used as a tablet independently of
+// Windows tablet mode. It checks if the device:
+// - Is running Windows 8 or newer,
+// - Has a touch digitizer,
+// - Is not docked,
+// - Has a supported rotation sensor,
+// - Is not in laptop mode,
+// - prefers the mobile or slate power management profile (per OEM choice), and
+// - Is in slate mode.
+// This function optionally sets the |reason| parameter to determine as to why
+// or why not a device was deemed to be a tablet.
+CRBASE_EXPORT bool IsDeviceUsedAsATablet(std::string* reason);
+
 }  // namespace win
 }  // namespace cr
 

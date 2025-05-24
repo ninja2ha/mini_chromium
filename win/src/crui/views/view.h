@@ -23,19 +23,19 @@
 #include "crbase/observer_list.h"
 ///#include "crbase/i18n/rtl.h"
 ///#include "third_party/skia/include/core/SkPath.h"
-///#include "ui/accessibility/ax_enums.mojom-forward.h"
+///#include "crui/accessibility/ax_enums.mojom-forward.h"
 #include "crui/base/ui_export.h"
 #include "crui/base/accelerators/accelerator.h"
 #include "crui/base/class_property.h"
-///#include "ui/base/clipboard/clipboard_format_type.h"
-///#include "ui/base/dragdrop/drag_drop_types.h"
-///#include "ui/base/dragdrop/drop_target_event.h"
-///#include "ui/base/dragdrop/os_exchange_data.h"
+///#include "crui/base/clipboard/clipboard_format_type.h"
+#include "crui/base/dragdrop/drag_drop_types.h"
+#include "crui/base/dragdrop/drop_target_event.h"
+#include "crui/base/dragdrop/os_exchange_data.h"
 #include "crui/base/ui_base_types.h"
-///#include "ui/compositor/layer_delegate.h"
-///#include "ui/compositor/layer_observer.h"
-///#include "ui/compositor/layer_owner.h"
-///#include "ui/compositor/paint_cache.h"
+///#include "crui/compositor/layer_delegate.h"
+///#include "crui/compositor/layer_observer.h"
+///#include "crui/compositor/layer_owner.h"
+///#include "crui/compositor/paint_cache.h"
 #include "crui/events/event.h"
 #include "crui/events/event_target.h"
 #include "crui/gfx/geometry/insets.h"
@@ -52,7 +52,7 @@
 #include "crui/views/widget/widget_getter.h"
 #include "crui/base/build_platform.h"
 
-///using crui::OSExchangeData;
+using crui::OSExchangeData;
 
 namespace crui {
 
@@ -77,7 +77,7 @@ namespace views {
 ///class Background;
 ///class Border;
 ///class ContextMenuController;
-///class DragController;
+class DragController;
 class FocusManager;
 class FocusTraversable;
 class LayoutManager;
@@ -1088,7 +1088,7 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   void OnMouseEvent(crui::MouseEvent* event) override;
   void OnScrollEvent(crui::ScrollEvent* event) override;
   void OnTouchEvent(crui::TouchEvent* event) final;
-  ///void OnGestureEvent(crui::GestureEvent* event) override;
+  void OnGestureEvent(crui::GestureEvent* event) override;
 
   // Accelerators --------------------------------------------------------------
 
@@ -1223,10 +1223,10 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
 
   // Drag and drop -------------------------------------------------------------
 
-  ///DragController* drag_controller() { return drag_controller_; }
-  ///void set_drag_controller(DragController* drag_controller) {
-  ///  drag_controller_ = drag_controller;
-  ///}
+  DragController* drag_controller() { return drag_controller_; }
+  void set_drag_controller(DragController* drag_controller) {
+    drag_controller_ = drag_controller;
+  }
 
   // During a drag and drop session when the mouse moves the view under the
   // mouse is queried for the drop types it supports by way of the
@@ -1250,44 +1250,44 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // |formats| is a bitmask of the formats defined bye OSExchangeData::Format.
   // The default implementation returns false, which means the view doesn't
   // support dropping.
-  ///virtual bool GetDropFormats(int* formats,
-  ///                            std::set<crui::ClipboardFormatType>* format_types);
+  virtual bool GetDropFormats(int* formats,
+                              std::set<crui::ClipboardFormatType>* format_types);
 
   // Override and return true if the data must be available before any drop
   // methods should be invoked. The default is false.
-  ///virtual bool AreDropTypesRequired();
+  virtual bool AreDropTypesRequired();
 
   // A view that supports drag and drop must override this and return true if
   // data contains a type that may be dropped on this view.
-  ///virtual bool CanDrop(const OSExchangeData& data);
+  virtual bool CanDrop(const OSExchangeData& data);
 
   // OnDragEntered is invoked when the mouse enters this view during a drag and
   // drop session and CanDrop returns true. This is immediately
   // followed by an invocation of OnDragUpdated, and eventually one of
   // OnDragExited or OnPerformDrop.
-  ///virtual void OnDragEntered(const crui::DropTargetEvent& event);
+  virtual void OnDragEntered(const crui::DropTargetEvent& event);
 
   // Invoked during a drag and drop session while the mouse is over the view.
   // This should return a bitmask of the DragDropTypes::DragOperation supported
   // based on the location of the event. Return 0 to indicate the drop should
   // not be accepted.
-  ///virtual int OnDragUpdated(const crui::DropTargetEvent& event);
+  virtual int OnDragUpdated(const crui::DropTargetEvent& event);
 
   // Invoked during a drag and drop session when the mouse exits the views, or
   // when the drag session was canceled and the mouse was over the view.
-  ///virtual void OnDragExited();
+  virtual void OnDragExited();
 
   // Invoked during a drag and drop session when OnDragUpdated returns a valid
   // operation and the user release the mouse.
-  ///virtual int OnPerformDrop(const crui::DropTargetEvent& event);
+  virtual int OnPerformDrop(const crui::DropTargetEvent& event);
 
   // Invoked from DoDrag after the drag completes. This implementation does
   // nothing, and is intended for subclasses to do cleanup.
-  ///virtual void OnDragDone();
+  virtual void OnDragDone();
 
   // Returns true if the mouse was dragged enough to start a drag operation.
   // delta_x and y are the distance the mouse was dragged.
-  ///static bool ExceededDragThreshold(const gfx::Vector2d& delta);
+  static bool ExceededDragThreshold(const gfx::Vector2d& delta);
 
   // Accessibility -------------------------------------------------------------
 
@@ -1305,7 +1305,7 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   ///virtual bool HandleAccessibleAction(const crui::AXActionData& action_data);
 
   // Returns an instance of the native accessibility interface for this view.
-  ///virtual gfx::NativeViewAccessible GetNativeViewAccessible();
+  virtual gfx::NativeViewAccessible GetNativeViewAccessible();
 
   // Notifies assistive technology that an accessibility event has
   // occurred on this view, such as when the view is focused or when its
@@ -1490,8 +1490,8 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
 
   // Overridden from crui::LayerDelegate:
   ///void OnPaintLayer(const crui::PaintContext& context) override;
-  ///void OnDeviceScaleFactorChanged(float old_device_scale_factor,
-  ///                                float new_device_scale_factor) override;
+  void OnDeviceScaleFactorChanged(float old_device_scale_factor,
+                                  float new_device_scale_factor) /*override*/;
 
   // Finds the layer that this view paints to (it may belong to an ancestor
   // view), then reorders the immediate children of that layer to match the
@@ -1546,18 +1546,18 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // the DragController. Subclasses may wish to override rather than install
   // a DragController.
   // See DragController for a description of these methods.
-  ///virtual int GetDragOperations(const gfx::Point& press_pt);
-  ///virtual void WriteDragData(const gfx::Point& press_pt, OSExchangeData* data);
+  virtual int GetDragOperations(const gfx::Point& press_pt);
+  virtual void WriteDragData(const gfx::Point& press_pt, OSExchangeData* data);
 
   // Returns whether we're in the middle of a drag session that was initiated
   // by us.
-  ///bool InDrag() const;
+  bool InDrag() const;
 
   // Returns how much the mouse needs to move in one direction to start a
   // drag. These methods cache in a platform-appropriate way. These values are
   // used by the public static method ExceededDragThreshold().
-  ///static int GetHorizontalDragThreshold();
-  ///static int GetVerticalDragThreshold();
+  static int GetHorizontalDragThreshold();
+  static int GetVerticalDragThreshold();
 
   // Property Support ----------------------------------------------------------
 
@@ -1839,15 +1839,15 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // supported drag operations. When done, OnDragDone is invoked. |press_pt| is
   // in the view's coordinate system.
   // Returns true if a drag was started.
-  ///bool DoDrag(const crui::LocatedEvent& event,
-  ///            const gfx::Point& press_pt,
-  ///            crui::DragDropTypes::DragEventSource source);
+  bool DoDrag(const crui::LocatedEvent& event,
+              const gfx::Point& press_pt,
+              crui::DragDropTypes::DragEventSource source);
 
   // Property support ----------------------------------------------------------
 
   // Called from OnPropertyChanged with the given set of property effects. This
   // function is NOT called if effects == kPropertyEffectsNone.
-  ///void HandlePropertyChangeEffects(PropertyEffects effects);
+  void HandlePropertyChangeEffects(PropertyEffects effects);
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -2006,7 +2006,7 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
 
   // Drag and drop -------------------------------------------------------------
 
-  ///DragController* drag_controller_ = nullptr;
+  DragController* drag_controller_ = nullptr;
 
   // Input  --------------------------------------------------------------------
 

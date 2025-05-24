@@ -544,6 +544,10 @@
     <ClInclude Include="..\..\..\src\crbase\win\com\core_winrt_util.h">
       <Filter>win\com</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\scoped_hglobal.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\supports_user_data.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />
@@ -886,6 +890,7 @@
     <ClCompile Include="..\..\..\src\crbase\win\com\core_winrt_util.cc">
       <Filter>win\com</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\supports_user_data.cc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="debug">

@@ -10,6 +10,7 @@
 #include "crbase/auto_reset.h"
 #include "crbase/logging.h"
 #include "crui/base/accelerators/accelerator.h"
+#include "crui/base/i18n/rtl.h"
 ///#include "crui/base/ime/input_method.h"
 ///#include "crui/base/ime/text_input_client.h"
 #include "crui/events/event.h"
@@ -564,7 +565,7 @@ bool FocusManager::ProcessArrowKeyTraversal(const crui::KeyEvent& event) {
   }
 
   const crui::KeyboardCode reverse =
-      /*cr::i18n::IsRTL() ? crui::VKEY_RIGHT :*/ crui::VKEY_LEFT;
+      crui::i18n::IsRTL() ? crui::VKEY_RIGHT : crui::VKEY_LEFT;
   AdvanceFocus(key == reverse || key == crui::VKEY_UP);
   return true;
 }

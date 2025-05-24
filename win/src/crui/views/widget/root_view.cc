@@ -23,6 +23,7 @@
 #include "crui/views/widget/root_view_targeter.h"
 #include "crui/views/widget/widget.h"
 #include "crui/views/widget/widget_delegate.h"
+#include "crui/views/drag_controller.h"
 
 using DispatchDetails = crui::EventDispatchDetails;
 
@@ -142,35 +143,35 @@ class PostEventDispatchHandler : public crui::EventHandler {
 
  private:
   // Overridden from ui::EventHandler:
-  ///void OnGestureEvent(crui::GestureEvent* event) override {
-  ///  DCHECK_EQ(ui::EP_POSTTARGET, event->phase());
-  ///  if (event->handled())
-  ///    return;
-  ///
-  ///  View* target = static_cast<View*>(event->target());
-  ///  gfx::Point location = event->location();
-  ///  if (touch_dnd_enabled_ &&
-  ///      event->type() == ui::ET_GESTURE_LONG_PRESS &&
-  ///      (!target->drag_controller() ||
-  ///       target->drag_controller()->CanStartDragForView(
-  ///           target, location, location))) {
-  ///    if (target->DoDrag(*event, location,
-  ///        ui::DragDropTypes::DRAG_EVENT_SOURCE_TOUCH)) {
-  ///      event->StopPropagation();
-  ///      return;
-  ///    }
-  ///  }
-  ///
-  ///  if (target->context_menu_controller() &&
-  ///      (event->type() == ui::ET_GESTURE_LONG_PRESS ||
-  ///       event->type() == ui::ET_GESTURE_LONG_TAP ||
-  ///       event->type() == ui::ET_GESTURE_TWO_FINGER_TAP)) {
-  ///    gfx::Point screen_location(location);
-  ///    View::ConvertPointToScreen(target, &screen_location);
-  ///    target->ShowContextMenu(screen_location, ui::MENU_SOURCE_TOUCH);
-  ///    event->StopPropagation();
-  ///  }
-  ///}
+  void OnGestureEvent(crui::GestureEvent* event) override {
+    CR_DCHECK(crui::EP_POSTTARGET == event->phase());
+    if (event->handled())
+      return;
+  
+    View* target = static_cast<View*>(event->target());
+    gfx::Point location = event->location();
+    if (touch_dnd_enabled_ &&
+        event->type() == crui::ET_GESTURE_LONG_PRESS &&
+        (!target->drag_controller() ||
+         target->drag_controller()->CanStartDragForView(
+             target, location, location))) {
+      if (target->DoDrag(*event, location,
+          crui::DragDropTypes::DRAG_EVENT_SOURCE_TOUCH)) {
+        event->StopPropagation();
+        return;
+      }
+    }
+  
+    ///if (target->context_menu_controller() &&
+    ///    (event->type() == crui::ET_GESTURE_LONG_PRESS ||
+    ///     event->type() == crui::ET_GESTURE_LONG_TAP ||
+    ///     event->type() == crui::ET_GESTURE_TWO_FINGER_TAP)) {
+    ///  gfx::Point screen_location(location);
+    ///  View::ConvertPointToScreen(target, &screen_location);
+    ///  target->ShowContextMenu(screen_location, crui::MENU_SOURCE_TOUCH);
+    ///  event->StopPropagation();
+    ///}
+  }
 
   bool touch_dnd_enabled_;
 };

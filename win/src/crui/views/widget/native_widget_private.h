@@ -18,8 +18,8 @@
 namespace crui {
 
 ///class InputMethod;
-///class GestureRecognizer;
-///class OSExchangeData;
+class GestureRecognizer;
+class OSExchangeData;
 
 namespace gfx {
 class ImageSkia;
@@ -28,7 +28,7 @@ class Rect;
 
 namespace views {
 
-///class TooltipManager;
+class TooltipManager;
 class View;
 
 namespace internal {
@@ -132,7 +132,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
 
   // Returns the native widget's tooltip manager. Called from the View hierarchy
   // to update tooltips.
-  ///virtual TooltipManager* GetTooltipManager() const = 0;
+  virtual TooltipManager* GetTooltipManager() const = 0;
 
   // Sets or releases event capturing for this native widget.
   virtual void SetCapture() = 0;
@@ -203,11 +203,11 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
   virtual void SetOpacity(float opacity) = 0;
   virtual void SetAspectRatio(const gfx::SizeF& aspect_ratio) = 0;
   virtual void FlashFrame(bool flash) = 0;
-  ///virtual void RunShellDrag(View* view,
-  ///                          std::unique_ptr<ui::OSExchangeData> data,
-  ///                          const gfx::Point& location,
-  ///                          int operation,
-  ///                          ui::DragDropTypes::DragEventSource source) = 0;
+  virtual void RunShellDrag(View* view,
+                            std::unique_ptr<crui::OSExchangeData> data,
+                            const gfx::Point& location,
+                            int operation,
+                            crui::DragDropTypes::DragEventSource source) = 0;
   virtual void SchedulePaintInRect(const gfx::Rect& rect) = 0;
   virtual void ScheduleLayout() = 0;
   virtual void SetCursor(gfx::NativeCursor cursor) = 0;
@@ -228,7 +228,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
   virtual void SetVisibilityAnimationTransition(
       Widget::VisibilityTransition transition) = 0;
   virtual bool IsTranslucentWindowOpacitySupported() const = 0;
-  ///virtual crui::GestureRecognizer* GetGestureRecognizer() = 0;
+  virtual crui::GestureRecognizer* GetGestureRecognizer() = 0;
   virtual void OnSizeConstraintsChanged() = 0;
   // Called before and after re-parenting of this or an ancestor widget.
   virtual void OnNativeViewHierarchyWillChange() = 0;

@@ -122,7 +122,7 @@ class CRUI_EXPORT NativeWidgetDelegate {
   virtual void OnMouseEvent(crui::MouseEvent* event) = 0;
   virtual void OnMouseCaptureLost() = 0;
   virtual void OnScrollEvent(crui::ScrollEvent* event) = 0;
-  ///virtual void OnGestureEvent(crui::GestureEvent* event) = 0;
+  virtual void OnGestureEvent(crui::GestureEvent* event) = 0;
 
   // Runs the specified native command. Returns true if the command is handled.
   virtual bool ExecuteCommand(int command_id) = 0;

@@ -59,7 +59,8 @@ gfx::Point Cursor::GetHotspot() const {
   if (native_type_ == CursorType::kCustom)
     return custom_hotspot_;
 #if defined(MINI_CHROMIUM_USE_AURA)
-  return GetDefaultHotspot();
+  return gfx::Point();
+  ///*return GetDefaultHotspot();
 #else
   return gfx::Point();
 #endif

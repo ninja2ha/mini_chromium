@@ -39,7 +39,7 @@ class NativeWidget;
 class Widget;
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-class TouchSelectionMenuRunnerViews;
+///class TouchSelectionMenuRunnerViews;
 #endif
 
 namespace internal {
@@ -132,7 +132,8 @@ class CRUI_EXPORT ViewsDelegate {
   // Returns true if the window passed in is in the Windows 8 metro
   // environment.
   virtual bool IsWindowInMetro(gfx::NativeWindow window) const;
-#elif defined(MINI_CHROMIUM_OS_LINUX) && BUILDFLAG(ENABLE_DESKTOP_AURA)
+#elif defined(MINI_CHROMIUM_OS_LINUX) && \
+      defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
   virtual gfx::ImageSkia* GetDefaultWindowIcon() const;
 #endif
 
@@ -183,8 +184,8 @@ class CRUI_EXPORT ViewsDelegate {
   ViewsDelegate();
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-  void SetTouchSelectionMenuRunner(
-      std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner);
+  ///void SetTouchSelectionMenuRunner(
+  ///    std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner);
 #endif
 
  private:
@@ -192,7 +193,7 @@ class CRUI_EXPORT ViewsDelegate {
   ///    editing_controller_factory_;
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-  std::unique_ptr<TouchSelectionMenuRunnerViews> touch_selection_menu_runner_;
+  ///std::unique_ptr<TouchSelectionMenuRunnerViews> touch_selection_menu_runner_;
 #endif
 
   NativeWidgetFactory native_widget_factory_;

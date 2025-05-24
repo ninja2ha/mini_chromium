@@ -139,7 +139,7 @@ bool SearchTable(const CursorData* table,
                  float scale_factor,
                  int* resource_id,
                  gfx::Point* point) {
-  CR_DCHECK(scale_factor, 0);
+  CR_DCHECK(scale_factor != 0);
 
   ///bool resource_2x_available =
   ///    ResourceBundle::GetSharedInstance().GetMaxScaleFactor() ==

@@ -7,12 +7,12 @@
 #include <stdint.h>
 #include <tuple>
 
-///#include "crbase/i18n/rtl.h"
 #include "crbase/logging.h"
 #include "crbase/strings/strcat.h"
 #include "crbase/strings/string_util.h"
 #include "crbase/strings/utf_string_conversions.h"
 ///#include "crui/base/l10n/l10n_util.h"
+#include "crui/base/i18n/rtl.h"
 #include "crui/events/event.h"
 #include "crui/events/keycodes/keyboard_code_conversion.h"
 ///#include "crui/strings/grit/ui_strings.h"
@@ -190,11 +190,11 @@ cr::string16 Accelerator::GetShortcutText() const {
   // required.
   cr::string16 shortcut_rtl;
   bool adjust_shortcut_for_rtl = false;
-  ///if (cr::i18n::IsRTL() && shortcut.length() == 1 &&
-  ///    !cr::IsAsciiAlpha(shortcut[0]) && !cr::IsAsciiDigit(shortcut[0])) {
-  ///  adjust_shortcut_for_rtl = true;
-  ///  shortcut_rtl.assign(shortcut);
-  ///}
+  if (crui::i18n::IsRTL() && shortcut.length() == 1 &&
+      !cr::IsAsciiAlpha(shortcut[0]) && !cr::IsAsciiDigit(shortcut[0])) {
+    adjust_shortcut_for_rtl = true;
+    shortcut_rtl.assign(shortcut);
+  }
 
   shortcut = ApplyLongFormModifiers(shortcut);
 

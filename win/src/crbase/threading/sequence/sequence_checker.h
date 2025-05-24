@@ -59,7 +59,7 @@
 //   }
 
 #if CR_DCHECK_IS_ON()
-#define CR_SEQUENCE_CHECKER(name) cr::SequenceChecker name
+#define CR_SEQUENCE_CHECKER(name) cr::SequenceChecker name;
 #define CR_DCHECK_CALLED_ON_VALID_SEQUENCE(name) \
   CR_DCHECK((name).CalledOnValidSequence())
 #define CR_DETACH_FROM_SEQUENCE(name) (name).DetachFromSequence()

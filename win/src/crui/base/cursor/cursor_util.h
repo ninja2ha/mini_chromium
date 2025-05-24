@@ -18,23 +18,23 @@ namespace crui {
 // Scale and rotate the cursor's bitmap and hotpoint.
 // |bitmap_in_out| and |hotpoint_in_out| are used as
 // both input and output.
-CRUI_EXPORT void ScaleAndRotateCursorBitmapAndHotpoint(
-    float scale,
-    display::Display::Rotation rotation,
-    SkBitmap* bitmap_in_out,
-    gfx::Point* hotpoint_in_out);
-
-// Helpers for CursorLoader.
-void GetImageCursorBitmap(int resource_id,
-                          float scale,
-                          display::Display::Rotation rotation,
-                          gfx::Point* hotspot,
-                          SkBitmap* bitmap);
-void GetAnimatedCursorBitmaps(int resource_id,
-                              float scale,
-                              display::Display::Rotation rotation,
-                              gfx::Point* hotspot,
-                              std::vector<SkBitmap>* bitmaps);
+///CRUI_EXPORT void ScaleAndRotateCursorBitmapAndHotpoint(
+///    float scale,
+///    display::Display::Rotation rotation,
+///    SkBitmap* bitmap_in_out,
+///    gfx::Point* hotpoint_in_out);
+///
+///// Helpers for CursorLoader.
+///void GetImageCursorBitmap(int resource_id,
+///                          float scale,
+///                          display::Display::Rotation rotation,
+///                          gfx::Point* hotspot,
+///                          SkBitmap* bitmap);
+///void GetAnimatedCursorBitmaps(int resource_id,
+///                              float scale,
+///                              display::Display::Rotation rotation,
+///                              gfx::Point* hotspot,
+///                              std::vector<SkBitmap>* bitmaps);
 
 }  // namespace crui
 

@@ -9,6 +9,7 @@
 
 #include "crbase/strings/string16.h"
 #include "crbase/strings/string_piece.h"
+#include "crbase/files/file_path.h"
 
 #include "crurl/url_export.h"
 #include "crurl/third_party/mozilla/url_parse.h"

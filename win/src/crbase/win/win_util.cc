@@ -543,5 +543,74 @@ bool IsCurrentSessionRemote() {
   return current_session_id != glass_session_id;
 }
 
+
+// This method is used to set the right interactions media queries,
+// see https://drafts.csswg.org/mediaqueries-4/#mf-interaction. It doesn't
+// check the Windows 10 tablet mode because it doesn't reflect the actual
+// input configuration of the device and can be manually triggered by the user
+// independently from the hardware state.
+bool IsDeviceUsedAsATablet(std::string* reason) {
+  if (GetVersion() < Version::WIN8) {
+    if (reason)
+      *reason = "Tablet device detection not supported below Windows 8\n";
+    return false;
+  }
+
+  if (GetSystemMetrics(SM_MAXIMUMTOUCHES) == 0) {
+    if (reason) {
+      *reason += "Device does not support touch.\n";
+    } else {
+      return false;
+    }
+  }
+
+  // If the device is docked, the user is treating the device as a PC.
+  if (GetSystemMetrics(SM_SYSTEMDOCKED) != 0) {
+    if (reason) {
+      *reason += "SM_SYSTEMDOCKED\n";
+    } else {
+      return false;
+    }
+  }
+
+  // If the device is not supporting rotation, it's unlikely to be a tablet,
+  // a convertible or a detachable.
+  // See
+  // https://msdn.microsoft.com/en-us/library/windows/desktop/dn629263(v=vs.85).aspx
+  using GetAutoRotationStateType = decltype(GetAutoRotationState)*;
+  static const auto get_auto_rotation_state_func =
+      reinterpret_cast<GetAutoRotationStateType>(
+          GetUser32FunctionPointer("GetAutoRotationState"));
+  if (get_auto_rotation_state_func) {
+    AR_STATE rotation_state = AR_ENABLED;
+    if (get_auto_rotation_state_func(&rotation_state) &&
+        (rotation_state & (AR_NOT_SUPPORTED | AR_LAPTOP | AR_NOSENSOR)) != 0)
+      return false;
+  }
+
+  // PlatformRoleSlate was added in Windows 8+.
+  POWER_PLATFORM_ROLE role = GetPlatformRole();
+  bool is_tablet = false;
+  if (role == PlatformRoleMobile || role == PlatformRoleSlate) {
+    is_tablet = !GetSystemMetrics(SM_CONVERTIBLESLATEMODE);
+    if (!is_tablet) {
+      if (reason) {
+        *reason += "Not in slate mode.\n";
+      } else {
+        return false;
+      }
+    } else {
+      if (reason) {
+        *reason += (role == PlatformRoleMobile) ? "PlatformRoleMobile\n"
+                                                : "PlatformRoleSlate\n";
+      }
+    }
+  } else {
+    if (reason)
+      *reason += "Device role is not mobile or slate.\n";
+  }
+  return is_tablet;
+}
+
 }  // namespace win
 }  // namespace cr

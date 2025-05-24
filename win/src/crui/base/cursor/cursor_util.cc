@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/base/cursor/cursor_util.h"
+#include "crui/base/cursor/cursor_util.h"
 
-#include "base/logging.h"
-#include "ui/base/resource/resource_bundle.h"
-#include "ui/gfx/geometry/point_conversions.h"
-#include "ui/gfx/geometry/size_conversions.h"
-#include "ui/gfx/image/image_skia.h"
-#include "ui/gfx/skbitmap_operations.h"
-#include "ui/gfx/skia_util.h"
+#include "crbase/logging.h"
+///#include "ui/base/resource/resource_bundle.h"
+#include "crui/gfx/geometry/point_conversions.h"
+#include "crui/gfx/geometry/size_conversions.h"
+///#include "crui/gfx/image/image_skia.h"
+///#include "crui/gfx/skbitmap_operations.h"
+///#include "crui/gfx/skia_util.h"
 
-namespace ui {
+namespace crui {
 
 namespace {
 
@@ -151,4 +151,4 @@ void GetAnimatedCursorBitmaps(int resource_id,
   }
 }
 
-}  // namespace ui
+}  // namespace crui

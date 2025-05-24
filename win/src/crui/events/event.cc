@@ -9,8 +9,8 @@
 #include <utility>
 
 #include "crbase/memory/ptr_util.h"
-///#include "base/metrics/histogram.h"
-///#include "base/metrics/histogram_macros.h"
+///#include "crbase/metrics/histogram.h"
+///#include "crbase/metrics/histogram_macros.h"
 #include "crbase/strings/string_number_conversions.h"
 #include "crbase/strings/stringprintf.h"
 #include "crui/events/base_event_utils.h"
@@ -27,11 +27,11 @@
 #include "crui/base/build_platform.h"
 
 #if defined(MINI_CHROMIUM_USE_X11)
-#include "ui/events/devices/x11/touch_factory_x11.h"        // nogncheck
-#include "ui/events/keycodes/keyboard_code_conversion_x.h"  // nogncheck
-#include "ui/events/x/events_x_utils.h"                     // nogncheck
-#include "ui/events/x/x11_event_translation.h"
-#include "ui/gfx/x/x11.h"                                   // nogncheck
+#include "crui/events/devices/x11/touch_factory_x11.h"        // nogncheck
+#include "crui/events/keycodes/keyboard_code_conversion_x.h"  // nogncheck
+#include "crui/events/x/events_x_utils.h"                     // nogncheck
+#include "crui/events/x/x11_event_translation.h"
+#include "crui/gfx/x/x11.h"                                   // nogncheck
 #endif
 
 #if defined(MINI_CHROMIUM_OS_WIN)
@@ -178,10 +178,10 @@ std::unique_ptr<Event> Event::Clone(const Event& event) {
     return std::make_unique<TouchEvent>(static_cast<const TouchEvent&>(event));
   }
 
-  ///if (event.IsGestureEvent()) {
-  ///  return std::make_unique<GestureEvent>(
-  ///      static_cast<const GestureEvent&>(event));
- /// }
+  if (event.IsGestureEvent()) {
+    return std::make_unique<GestureEvent>(
+        static_cast<const GestureEvent&>(event));
+  }
 
   if (event.IsScrollEvent()) {
     return std::make_unique<ScrollEvent>(
@@ -214,15 +214,15 @@ const CancelModeEvent* Event::AsCancelModeEvent() const {
   return static_cast<const CancelModeEvent*>(this);
 }
 
-///GestureEvent* Event::AsGestureEvent() {
-///  CR_CHECK(IsGestureEvent());
-///  return static_cast<GestureEvent*>(this);
-///}
+GestureEvent* Event::AsGestureEvent() {
+  CR_CHECK(IsGestureEvent());
+  return static_cast<GestureEvent*>(this);
+}
 
-///const GestureEvent* Event::AsGestureEvent() const {
-///  CR_CHECK(IsGestureEvent());
-///  return static_cast<const GestureEvent*>(this);
-///}
+const GestureEvent* Event::AsGestureEvent() const {
+  CR_CHECK(IsGestureEvent());
+  return static_cast<const GestureEvent*>(this);
+}
 
 KeyEvent* Event::AsKeyEvent() {
   CR_CHECK(IsKeyEvent());
@@ -1202,29 +1202,29 @@ std::string ScrollEvent::ToString() const {
 ////////////////////////////////////////////////////////////////////////////////
 // GestureEvent
 
-///GestureEvent::GestureEvent(float x,
-///                           float y,
-///                           int flags,
-///                           base::TimeTicks time_stamp,
-///                           const GestureEventDetails& details,
-///                           uint32_t unique_touch_event_id)
-///    : LocatedEvent(details.type(),
-///                   gfx::PointF(x, y),
-///                   gfx::PointF(x, y),
-///                   time_stamp,
-///                   flags | EF_FROM_TOUCH),
-///      details_(details),
-///      unique_touch_event_id_(unique_touch_event_id) {
-///  latency()->set_source_event_type(ui::SourceEventType::TOUCH);
-///  // TODO(crbug.com/868056) Other touchpad gesture should report as TOUCHPAD.
-///  if (IsPinchEvent() &&
-///      details.device_type() == ui::GestureDeviceType::DEVICE_TOUCHPAD) {
-///    latency()->set_source_event_type(ui::SourceEventType::TOUCHPAD);
-///  }
-///}
-///
-///GestureEvent::GestureEvent(const GestureEvent& other) = default;
-///
-///GestureEvent::~GestureEvent() = default;
+GestureEvent::GestureEvent(float x,
+                           float y,
+                           int flags,
+                           cr::TimeTicks time_stamp,
+                           const GestureEventDetails& details,
+                           uint32_t unique_touch_event_id)
+    : LocatedEvent(details.type(),
+                   gfx::PointF(x, y),
+                   gfx::PointF(x, y),
+                   time_stamp,
+                   flags | EF_FROM_TOUCH),
+      details_(details),
+      unique_touch_event_id_(unique_touch_event_id) {
+  ///latency()->set_source_event_type(ui::SourceEventType::TOUCH);
+  // TODO(crbug.com/868056) Other touchpad gesture should report as TOUCHPAD.
+  ///if (IsPinchEvent() &&
+  ///    details.device_type() == crui::GestureDeviceType::DEVICE_TOUCHPAD) {
+  ///  latency()->set_source_event_type(crui::SourceEventType::TOUCHPAD);
+  ///}
+}
 
-}  // namespace ui
+GestureEvent::GestureEvent(const GestureEvent& other) = default;
+
+GestureEvent::~GestureEvent() = default;
+
+}  // namespace crui

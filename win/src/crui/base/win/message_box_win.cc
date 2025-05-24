@@ -3,8 +3,7 @@
 // found in the LICENSE file.
 
 #include "crui/base/win/message_box_win.h"
-
-///#include "crbase/i18n/rtl.h"
+#include "crui/base/i18n/rtl.h"
 
 namespace crui {
 
@@ -16,8 +15,8 @@ int MessageBox(HWND hwnd,
                const cr::string16& caption,
                UINT flags) {
   UINT actual_flags = flags;
-  ///if (cr::i18n::IsRTL())
-  ///  actual_flags |= MB_RIGHT | MB_RTLREADING;
+  if (crui::i18n::IsRTL())
+    actual_flags |= MB_RIGHT | MB_RTLREADING;
 
   cr::string16 localized_text = text;
   ///base::i18n::AdjustStringForLocaleDirection(&localized_text);

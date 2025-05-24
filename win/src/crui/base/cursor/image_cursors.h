@@ -7,22 +7,24 @@
 
 #include <memory>
 
-#include "base/macros.h"
-#include "base/memory/weak_ptr.h"
-#include "base/strings/string16.h"
-#include "ui/base/cursor/cursor.h"
-#include "ui/base/ui_base_export.h"
-#include "ui/display/display.h"
-#include "ui/gfx/native_widget_types.h"
+#include "crbase/memory/weak_ptr.h"
+#include "crbase/strings/string16.h"
+#include "crui/base/cursor/cursor.h"
+#include "crui/display/display.h"
+#include "crui/gfx/native_widget_types.h"
+#include "crui/base/ui_export.h"
 
-namespace ui {
+namespace crui {
 
 class CursorLoader;
 
 // A utility class that provides cursors for NativeCursors for which we have
 // image resources.
-class UI_BASE_EXPORT ImageCursors {
+class CRUI_EXPORT ImageCursors {
  public:
+  ImageCursors(const ImageCursors&) = delete;
+  ImageCursors& operator=(const ImageCursors&) = delete;
+
   ImageCursors();
   ~ImageCursors();
 
@@ -48,7 +50,7 @@ class UI_BASE_EXPORT ImageCursors {
   // Sets the platform cursor based on the native type of |cursor|.
   void SetPlatformCursor(gfx::NativeCursor* cursor);
 
-  base::WeakPtr<ImageCursors> GetWeakPtr();
+  cr::WeakPtr<ImageCursors> GetWeakPtr();
 
  private:
   // Reloads the all loaded cursors in the cursor loader.
@@ -56,11 +58,9 @@ class UI_BASE_EXPORT ImageCursors {
 
   std::unique_ptr<CursorLoader> cursor_loader_;
   CursorSize cursor_size_;
-  base::WeakPtrFactory<ImageCursors> weak_ptr_factory_{this};
-
-  DISALLOW_COPY_AND_ASSIGN(ImageCursors);
+  cr::WeakPtrFactory<ImageCursors> weak_ptr_factory_{this};
 };
 
-}  // namespace ui
+}  // namespace crui
 
 #endif  // UI_BASE_CURSOR_IMAGE_CURSORS_H_

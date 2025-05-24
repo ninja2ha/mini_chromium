@@ -10,9 +10,10 @@
 ///#include "crbuild/build_config.h"
 ///#include "crui/views/views_touch_selection_controller_factory.h"
 #include "crui/views/widget/native_widget_private.h"
+#include "crui/base/build_platform.h"
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-#include "crui/views/touchui/touch_selection_menu_runner_views.h"
+///#include "crui/views/touchui/touch_selection_menu_runner_views.h"
 #endif
 
 namespace crui {
@@ -33,8 +34,8 @@ ViewsDelegate::ViewsDelegate()
   ///    editing_controller_factory_.get());
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-  touch_selection_menu_runner_ =
-      std::make_unique<TouchSelectionMenuRunnerViews>();
+  ///touch_selection_menu_runner_ =
+  ///    std::make_unique<TouchSelectionMenuRunnerViews>();
 #endif
 }
 
@@ -86,7 +87,8 @@ HICON ViewsDelegate::GetSmallWindowIcon() const {
 bool ViewsDelegate::IsWindowInMetro(gfx::NativeWindow window) const {
   return false;
 }
-#elif defined(MINI_CHROMIUM_OS_LINUX) && BUILDFLAG(ENABLE_DESKTOP_AURA)
+#elif defined(MINI_CHROMIUM_OS_LINUX) && \
+      defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
 gfx::ImageSkia* ViewsDelegate::GetDefaultWindowIcon() const {
   return nullptr;
 }
@@ -135,10 +137,10 @@ int ViewsDelegate::GetAppbarAutohideEdges(HMONITOR monitor,
 #endif
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-void ViewsDelegate::SetTouchSelectionMenuRunner(
-    std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner) {
-  touch_selection_menu_runner_ = std::move(menu_runner);
-}
+///void ViewsDelegate::SetTouchSelectionMenuRunner(
+///    std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner) {
+///  touch_selection_menu_runner_ = std::move(menu_runner);
+///}
 #endif
 
 }  // namespace views

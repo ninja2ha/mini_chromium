@@ -51,14 +51,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "common", "common", "{DF653D
 		..\..\src\examples\common\thread_helper.h = ..\..\src\examples\common\thread_helper.h
 	EndProjectSection
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crui", "crui\crui.vcxproj", "{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "crui", "crui", "{ABACF4C7-9400-4C25-BF97-34B42FE6A86C}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crui-demo", "examples\crui-demo\crui-demo.vcxproj", "{BCE4A48C-5675-4DD2-947D-21E0FC6516F0}"
 	ProjectSection(ProjectDependencies) = postProject
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9} = {AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}
 		{C2FC485F-4CB5-429B-A9D8-B662E1B90251} = {C2FC485F-4CB5-429B-A9D8-B662E1B90251}
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB} = {0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tools", "tools", "{867C978D-89E7-4811-B1F1-964F72ECA4D9}"
@@ -66,6 +64,13 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crskia-tool", "tools\crskia-tool\crskia-tool.vcxproj", "{C6D49B8F-EE84-4AC3-8A5B-D71F39BEB92E}"
 	ProjectSection(ProjectDependencies) = postProject
 		{C2FC485F-4CB5-429B-A9D8-B662E1B90251} = {C2FC485F-4CB5-429B-A9D8-B662E1B90251}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "third_party", "third_party", "{D4C3C717-86A4-40B9-B772-5546A1FC8763}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crui", "crui\crui.vcxproj", "{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}"
+	ProjectSection(ProjectDependencies) = postProject
+		{A0AA91BA-80D2-4E91-AC21-50C0C59174B0} = {A0AA91BA-80D2-4E91-AC21-50C0C59174B0}
 	EndProjectSection
 EndProject
 Global
@@ -140,14 +145,6 @@ Global
 		{7F69BF2C-CC09-45E2-BD3F-7704D379DCE6}.Release|x64.Build.0 = Release|x64
 		{7F69BF2C-CC09-45E2-BD3F-7704D379DCE6}.Release|x86.ActiveCfg = Release|Win32
 		{7F69BF2C-CC09-45E2-BD3F-7704D379DCE6}.Release|x86.Build.0 = Release|Win32
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Debug|x64.ActiveCfg = Debug|x64
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Debug|x64.Build.0 = Debug|x64
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Debug|x86.ActiveCfg = Debug|Win32
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Debug|x86.Build.0 = Debug|Win32
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Release|x64.ActiveCfg = Release|x64
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Release|x64.Build.0 = Release|x64
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Release|x86.ActiveCfg = Release|Win32
-		{0A81E9D3-A2FE-4DB6-85EF-C07D483E9EAB}.Release|x86.Build.0 = Release|Win32
 		{BCE4A48C-5675-4DD2-947D-21E0FC6516F0}.Debug|x64.ActiveCfg = Debug|x64
 		{BCE4A48C-5675-4DD2-947D-21E0FC6516F0}.Debug|x64.Build.0 = Debug|x64
 		{BCE4A48C-5675-4DD2-947D-21E0FC6516F0}.Debug|x86.ActiveCfg = Debug|Win32
@@ -164,6 +161,14 @@ Global
 		{C6D49B8F-EE84-4AC3-8A5B-D71F39BEB92E}.Release|x64.Build.0 = Release|x64
 		{C6D49B8F-EE84-4AC3-8A5B-D71F39BEB92E}.Release|x86.ActiveCfg = Release|Win32
 		{C6D49B8F-EE84-4AC3-8A5B-D71F39BEB92E}.Release|x86.Build.0 = Release|Win32
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Debug|x64.ActiveCfg = Debug|x64
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Debug|x64.Build.0 = Debug|x64
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Debug|x86.ActiveCfg = Debug|Win32
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Debug|x86.Build.0 = Debug|Win32
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x64.ActiveCfg = Release|x64
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x64.Build.0 = Release|x64
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x86.ActiveCfg = Release|Win32
+		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

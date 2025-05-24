@@ -142,6 +142,7 @@
     <ClInclude Include="..\..\..\src\crbase\strings\utf_offset_string_conversions.h" />
     <ClInclude Include="..\..\..\src\crbase\strings\utf_string_conversions.h" />
     <ClInclude Include="..\..\..\src\crbase\strings\utf_string_conversion_utils.h" />
+    <ClInclude Include="..\..\..\src\crbase\supports_user_data.h" />
     <ClInclude Include="..\..\..\src\crbase\synchronization\condition_variable.h" />
     <ClInclude Include="..\..\..\src\crbase\synchronization\lock.h" />
     <ClInclude Include="..\..\..\src\crbase\synchronization\lock_impl.h" />
@@ -211,6 +212,7 @@
     <ClInclude Include="..\..\..\src\crbase\win\object_watcher.h" />
     <ClInclude Include="..\..\..\src\crbase\win\registry.h" />
     <ClInclude Include="..\..\..\src\crbase\win\scoped_handle.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\scoped_hglobal.h" />
     <ClInclude Include="..\..\..\src\crbase\win\windows_version.h" />
     <ClInclude Include="..\..\..\src\crbase\win\win_util.h" />
     <ClInclude Include="..\..\..\src\crbase\win\wrapped_window_proc.h" />
@@ -283,6 +285,7 @@
     <ClCompile Include="..\..\..\src\crbase\strings\utf_offset_string_conversions.cc" />
     <ClCompile Include="..\..\..\src\crbase\strings\utf_string_conversions.cc" />
     <ClCompile Include="..\..\..\src\crbase\strings\utf_string_conversion_utils.cc" />
+    <ClCompile Include="..\..\..\src\crbase\supports_user_data.cc" />
     <ClCompile Include="..\..\..\src\crbase\synchronization\condition_variable_win.cc" />
     <ClCompile Include="..\..\..\src\crbase\synchronization\lock_impl_win.cc" />
     <ClCompile Include="..\..\..\src\crbase\synchronization\waitable_event_win.cc" />

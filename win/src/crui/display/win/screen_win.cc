@@ -431,8 +431,8 @@ gfx::PointF ScalePointRelative(const gfx::Point& from_origin,
 
 ScreenWin::ScreenWin() : ScreenWin(true) {}
 
-ScreenWin::ScreenWin(bool initialize)/*
-    : color_profile_reader_(new ColorProfileReader(this)) */{
+ScreenWin::ScreenWin(bool initialize)
+    : color_profile_reader_(new ColorProfileReader(this)) {
   CR_DCHECK(!g_screen_win_instance);
   g_screen_win_instance = this;
   if (initialize)
@@ -660,15 +660,13 @@ void ScreenWin::SetHDREnabled(bool hdr_enabled) {
 }
 
 HWND ScreenWin::GetHWNDFromNativeView(gfx::NativeView window) const {
-  ///CR_NOTREACHED();
-  ///return nullptr;
-  return window;
+  CR_NOTREACHED();
+  return nullptr;
 }
 
 gfx::NativeWindow ScreenWin::GetNativeWindowFromHWND(HWND hwnd) const {
-  ///CR_NOTREACHED();
-  ///return nullptr;
-  return hwnd;
+  CR_NOTREACHED();
+  return nullptr;
 }
 
 void ScreenWin::OnUwpTextScaleFactorChanged() {

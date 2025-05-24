@@ -2,21 +2,21 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/base/cursor/image_cursors.h"
+#include "crui/base/cursor/image_cursors.h"
 
 #include <float.h>
 #include <stddef.h>
 
-#include "base/logging.h"
-#include "base/stl_util.h"
-#include "base/strings/string16.h"
-#include "ui/base/cursor/cursor.h"
-#include "ui/base/cursor/cursor_loader.h"
-#include "ui/base/cursor/cursors_aura.h"
-#include "ui/display/display.h"
-#include "ui/gfx/geometry/point.h"
+#include "crbase/logging.h"
+#include "crbase/helper/stl_util.h"
+#include "crbase/strings/string16.h"
+#include "crui/base/cursor/cursor.h"
+#include "crui/base/cursor/cursor_loader.h"
+#include "crui/base/cursor/cursors_aura.h"
+#include "crui/display/display.h"
+#include "crui/gfx/geometry/point.h"
 
-namespace ui {
+namespace crui {
 
 namespace {
 
@@ -72,7 +72,7 @@ void ImageCursors::Initialize() {
 
 float ImageCursors::GetScale() const {
   if (!cursor_loader_) {
-    NOTREACHED();
+    CR_NOTREACHED();
     // Returning default on release build as it's not serious enough to crash
     // even if this ever happens.
     return 1.0f;
@@ -82,7 +82,7 @@ float ImageCursors::GetScale() const {
 
 display::Display::Rotation ImageCursors::GetRotation() const {
   if (!cursor_loader_) {
-    NOTREACHED();
+    CR_NOTREACHED();
     // Returning default on release build as it's not serious enough to crash
     // even if this ever happens.
     return display::Display::ROTATE_0;
@@ -110,22 +110,22 @@ void ImageCursors::ReloadCursors() {
 
   cursor_loader_->UnloadAll();
 
-  for (size_t i = 0; i < base::size(kImageCursorIds); ++i) {
+  for (size_t i = 0; i < cr::size(kImageCursorIds); ++i) {
     int resource_id = -1;
     gfx::Point hot_point;
     bool success =
         GetCursorDataFor(cursor_size_, kImageCursorIds[i], device_scale_factor,
                          &resource_id, &hot_point);
-    DCHECK(success);
+    CR_DCHECK(success);
     cursor_loader_->LoadImageCursor(kImageCursorIds[i], resource_id, hot_point);
   }
-  for (size_t i = 0; i < base::size(kAnimatedCursorIds); ++i) {
+  for (size_t i = 0; i < cr::size(kAnimatedCursorIds); ++i) {
     int resource_id = -1;
     gfx::Point hot_point;
     bool success =
         GetAnimatedCursorDataFor(cursor_size_, kAnimatedCursorIds[i],
                                  device_scale_factor, &resource_id, &hot_point);
-    DCHECK(success);
+    CR_DCHECK(success);
     cursor_loader_->LoadAnimatedCursor(kAnimatedCursorIds[i],
                                        resource_id,
                                        hot_point,
@@ -147,8 +147,8 @@ void ImageCursors::SetPlatformCursor(gfx::NativeCursor* cursor) {
   cursor_loader_->SetPlatformCursor(cursor);
 }
 
-base::WeakPtr<ImageCursors> ImageCursors::GetWeakPtr() {
+cr::WeakPtr<ImageCursors> ImageCursors::GetWeakPtr() {
   return weak_ptr_factory_.GetWeakPtr();
 }
 
-}  // namespace ui
+}  // namespace crui

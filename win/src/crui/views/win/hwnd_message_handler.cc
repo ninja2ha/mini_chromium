@@ -18,21 +18,21 @@
 #include "crbase/location.h"
 #include "crbase/strings/string_util.h"
 #include "crbase/message_loop/message_loop.h"
-///#include "base/metrics/histogram_functions.h"
+///#include "crbase/metrics/histogram_functions.h"
 #include "crbase/threading/task/single_thread_task_runner.h"
 #include "crbase/threading/thread_task_runner_handle.h"
 #include "crbase/time/time.h"
-///#include "base/trace_event/trace_event.h"
+///#include "crbase/trace_event/trace_event.h"
 #include "crbase/win/win_util.h"
 #include "crbase/win/windows_version.h"
 ///#include "third_party/skia/include/core/SkPath.h"
 #include "crui/base/win/scoped_gdi_object.h"
-///#include "ui/accessibility/accessibility_switches.h"
-///#include "ui/accessibility/platform/ax_fragment_root_win.h"
-///#include "ui/accessibility/platform/ax_platform_node_win.h"
-///#include "ui/accessibility/platform/ax_system_caret_win.h"
-///#include "ui/base/ime/text_input_client.h"
-///#include "ui/base/ime/text_input_type.h"
+///#include "crui/accessibility/accessibility_switches.h"
+///#include "crui/accessibility/platform/ax_fragment_root_win.h"
+///#include "crui/accessibility/platform/ax_platform_node_win.h"
+///#include "crui/accessibility/platform/ax_system_caret_win.h"
+///#include "crui/base/ime/text_input_client.h"
+///#include "crui/base/ime/text_input_type.h"
 ///#include "crui/base/ui_base_features.h"
 #include "crui/base/view_prop.h"
 #include "crui/base/accelerators/accelerator.h"
@@ -42,6 +42,7 @@
 #include "crui/base/win/mouse_wheel_util.h"
 #include "crui/base/win/session_change_observer.h"
 #include "crui/base/win/shell.h"
+#include "crui/base/i18n/rtl.h"
 #include "crui/base/win/touch_input.h"
 #include "crui/display/win/dpi.h"
 #include "crui/display/win/screen_win.h"
@@ -56,8 +57,8 @@
 ///#include "crui/gfx/path_win.h"
 #include "crui/gfx/win/hwnd_util.h"
 ///#include "crui/gfx/win/rendering_window_manager.h"
-///#include "ui/latency/latency_info.h"
-///#include "ui/native_theme/native_theme_win.h"
+///#include "crui/latency/latency_info.h"
+///#include "crui/native_theme/native_theme_win.h"
 #include "crui/views/views_delegate.h"
 #include "crui/views/widget/widget_hwnd_utils.h"
 #include "crui/views/win/fullscreen_handler.h"
@@ -183,8 +184,8 @@ LRESULT CALLBACK MoveLoopMouseWatcher::KeyHook(int n_code,
 
 void ShowSystemMenuAtScreenPixelLocation(HWND window, const gfx::Point& point) {
   UINT flags = TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD;
-  ///if (cr::i18n::IsRTL())
-  ///  flags |= TPM_RIGHTALIGN;
+  if (crui::i18n::IsRTL())
+    flags |= TPM_RIGHTALIGN;
   HMENU menu = GetSystemMenu(window, FALSE);
 
   const int command =
@@ -980,14 +981,14 @@ bool HWNDMessageHandler::HasChildRenderingWindow() {
   return false;
 }
 
-///std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents>
-///HWNDMessageHandler::RegisterUnadjustedMouseEvent() {
-///  std::unique_ptr<ScopedEnableUnadjustedMouseEventsWin> scoped_enable =
-///      ScopedEnableUnadjustedMouseEventsWin::StartMonitor(this);
-///
-///  DCHECK(using_wm_input_);
-///  return scoped_enable;
-///}
+std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents>
+HWNDMessageHandler::RegisterUnadjustedMouseEvent() {
+  std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents> scoped_enable =
+      ScopedEnableUnadjustedMouseEventsWin::StartMonitor(this);
+
+  CR_DCHECK(using_wm_input_);
+  return scoped_enable;
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 // HWNDMessageHandler, gfx::WindowImpl overrides:
@@ -1166,40 +1167,43 @@ void HWNDMessageHandler::HandleParentChanged() {
 }
 
 void HWNDMessageHandler::ApplyPinchZoomScale(float scale) {
-  ///POINT cursor_pos = GetCursorPos();
-  ///ScreenToClient(hwnd(), &cursor_pos);
-  ///
-  ///ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_UPDATE);
-  ///event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
-  ///event_details.set_scale(scale);
-  ///
-  ///ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
-  ///                       base::TimeTicks::Now(), event_details);
-  ///delegate_->HandleGestureEvent(&event);
+  POINT cursor_pos = GetCursorPos();
+  ScreenToClient(hwnd(), &cursor_pos);
+  
+  crui::GestureEventDetails event_details(crui::ET_GESTURE_PINCH_UPDATE);
+  event_details.set_device_type(crui::GestureDeviceType::DEVICE_TOUCHPAD);
+  event_details.set_scale(scale);
+  
+  crui::GestureEvent event(static_cast<float>(cursor_pos.x), 
+                           static_cast<float>(cursor_pos.y), crui::EF_NONE,
+                           cr::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(&event);
 }
 
 void HWNDMessageHandler::ApplyPinchZoomBegin() {
-  ///POINT cursor_pos = GetCursorPos();
-  ///ScreenToClient(hwnd(), &cursor_pos);
-  ///
-  ///ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_BEGIN);
-  ///event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
-  ///
-  ///ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
-  ///                       base::TimeTicks::Now(), event_details);
-  ///delegate_->HandleGestureEvent(&event);
+  POINT cursor_pos = GetCursorPos();
+  ScreenToClient(hwnd(), &cursor_pos);
+  
+  crui::GestureEventDetails event_details(crui::ET_GESTURE_PINCH_BEGIN);
+  event_details.set_device_type(crui::GestureDeviceType::DEVICE_TOUCHPAD);
+  
+  crui::GestureEvent event(static_cast<float>(cursor_pos.x), 
+                           static_cast<float>(cursor_pos.y), crui::EF_NONE,
+                           cr::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(&event);
 }
 
 void HWNDMessageHandler::ApplyPinchZoomEnd() {
-  ///POINT cursor_pos = GetCursorPos();
-  ///ScreenToClient(hwnd(), &cursor_pos);
-  ///
-  ///ui::GestureEventDetails event_details(ui::ET_GESTURE_PINCH_END);
-  ///event_details.set_device_type(ui::GestureDeviceType::DEVICE_TOUCHPAD);
-  ///
-  ///ui::GestureEvent event(cursor_pos.x, cursor_pos.y, ui::EF_NONE,
-  ///                       base::TimeTicks::Now(), event_details);
-  ///delegate_->HandleGestureEvent(&event);
+  POINT cursor_pos = GetCursorPos();
+  ScreenToClient(hwnd(), &cursor_pos);
+  
+  crui::GestureEventDetails event_details(crui::ET_GESTURE_PINCH_END);
+  event_details.set_device_type(crui::GestureDeviceType::DEVICE_TOUCHPAD);
+  
+  crui::GestureEvent event(static_cast<float>(cursor_pos.x), 
+                           static_cast<float>(cursor_pos.y), crui::EF_NONE,
+                           cr::TimeTicks::Now(), event_details);
+  delegate_->HandleGestureEvent(&event);
 }
 
 void HWNDMessageHandler::ApplyPanGestureEvent(
@@ -1230,38 +1234,38 @@ void HWNDMessageHandler::ApplyPanGestureEvent(
 }
 
 void HWNDMessageHandler::ApplyPanGestureScroll(int scroll_x, int scroll_y) {
-  ///ApplyPanGestureEvent(scroll_x, scroll_y, ui::EventMomentumPhase::NONE,
-  ///                     ui::ScrollEventPhase::kUpdate);
+  ApplyPanGestureEvent(scroll_x, scroll_y, crui::EventMomentumPhase::NONE,
+                       crui::ScrollEventPhase::kUpdate);
 }
 
 void HWNDMessageHandler::ApplyPanGestureFling(int scroll_x, int scroll_y) {
-  ///ApplyPanGestureEvent(scroll_x, scroll_y,
-  ///                     ui::EventMomentumPhase::INERTIAL_UPDATE,
-  ///                     ui::ScrollEventPhase::kNone);
+  ApplyPanGestureEvent(scroll_x, scroll_y,
+                       crui::EventMomentumPhase::INERTIAL_UPDATE,
+                       crui::ScrollEventPhase::kNone);
 }
 
 void HWNDMessageHandler::ApplyPanGestureScrollBegin(int scroll_x,
                                                     int scroll_y) {
   // Phase information will be ingored in ApplyPanGestureEvent().
-  ///ApplyPanGestureEvent(scroll_x, scroll_y, ui::EventMomentumPhase::NONE,
-  ///                     ui::ScrollEventPhase::kBegan);
+  ApplyPanGestureEvent(scroll_x, scroll_y, crui::EventMomentumPhase::NONE,
+                       crui::ScrollEventPhase::kBegan);
 }
 
 void HWNDMessageHandler::ApplyPanGestureScrollEnd(bool transitioning_to_pinch) {
-  ///ApplyPanGestureEvent(0, 0,
-  ///                     transitioning_to_pinch ? ui::EventMomentumPhase::BLOCKED
-  ///                                            : ui::EventMomentumPhase::NONE,
-  ///                     ui::ScrollEventPhase::kEnd);
+  ApplyPanGestureEvent(0, 0,
+                       transitioning_to_pinch ? crui::EventMomentumPhase::BLOCKED
+                                              : crui::EventMomentumPhase::NONE,
+                       crui::ScrollEventPhase::kEnd);
 }
 
 void HWNDMessageHandler::ApplyPanGestureFlingBegin() {
-  ///ApplyPanGestureEvent(0, 0, ui::EventMomentumPhase::BEGAN,
-  ///                     ui::ScrollEventPhase::kNone);
+  ApplyPanGestureEvent(0, 0, crui::EventMomentumPhase::BEGAN,
+                       crui::ScrollEventPhase::kNone);
 }
 
 void HWNDMessageHandler::ApplyPanGestureFlingEnd() {
-  ///ApplyPanGestureEvent(0, 0, ui::EventMomentumPhase::END,
-  ///                     ui::ScrollEventPhase::kNone);
+  ApplyPanGestureEvent(0, 0, crui::EventMomentumPhase::END,
+                       crui::ScrollEventPhase::kNone);
 }
 
 ///gfx::NativeViewAccessible HWNDMessageHandler::GetChildOfAXFragmentRoot() {

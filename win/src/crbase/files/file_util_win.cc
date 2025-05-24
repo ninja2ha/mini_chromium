@@ -368,6 +368,66 @@ bool DeleteFileAndRecordMetrics(const FilePath& path, bool recursive) {
   return false;
 }
 
+bool DoCreateDirectoryAndGetError(const FilePath& full_path,
+                                  File::Error* error,
+                                  bool from_recursive) {
+  ThreadRestrictions::AssertIOAllowed();
+
+  // If the path exists, we've succeeded if it's a directory, failed otherwise.
+  const wchar_t* const full_path_str = full_path.value().c_str();
+  const DWORD fileattr = ::GetFileAttributesW(full_path_str);
+  if (fileattr != INVALID_FILE_ATTRIBUTES) {
+    if ((fileattr & FILE_ATTRIBUTE_DIRECTORY) != 0) {
+      CR_DVLOG_IF(1, !from_recursive) 
+                  << "CreateDirectory(" << full_path_str << "), "
+                  << "directory already exists.";
+      return true;
+    }
+    CR_DLOG(Warning) << "CreateDirectory(" << full_path_str << "), "
+                     << "conflicts with existing file.";
+    if (error)
+      *error = File::FILE_ERROR_NOT_A_DIRECTORY;
+    ::SetLastError(ERROR_FILE_EXISTS);
+    return false;
+  }
+
+  // Invariant:  Path does not exist as file or directory.
+
+  // Attempt to create the parent recursively.  This will immediately return
+  // true if it already exists, otherwise will create all required parent
+  // directories starting with the highest-level missing parent.
+  FilePath parent_path(full_path.DirName());
+  if (parent_path.value() == full_path.value()) {
+    if (error)
+      *error = File::FILE_ERROR_NOT_FOUND;
+    ::SetLastError(ERROR_FILE_NOT_FOUND);
+    return false;
+  }
+  if (!DoCreateDirectoryAndGetError(parent_path, error, true)) {
+    CR_DLOG(Warning) << "Failed to create one of the parent directories.";
+    CR_DCHECK(!error || *error != File::FILE_OK);
+    return false;
+  }
+
+  if (::CreateDirectoryW(full_path_str, NULL))
+    return true;
+
+  const DWORD error_code = ::GetLastError();
+  if (error_code == ERROR_ALREADY_EXISTS && DirectoryExists(full_path)) {
+    // This error code ERROR_ALREADY_EXISTS doesn't indicate whether we were
+    // racing with someone creating the same directory, or a file with the same
+    // path.  If DirectoryExists() returns true, we lost the race to create the
+    // same directory.
+    return true;
+  }
+  if (error)
+    *error = File::OSErrorToFileError(error_code);
+  ::SetLastError(error_code);
+  CR_DLOG(Warning) << "Failed to create directory " << full_path_str;
+  return false;
+}
+
+
 }  // namespace
 
 FilePath MakeAbsoluteFilePath(const FilePath& input) {
@@ -609,61 +669,10 @@ bool CreateNewTempDirectory(const FilePath::StringType& prefix,
   return CreateTemporaryDirInDir(system_temp_dir, prefix, new_temp_path);
 }
 
+
 bool CreateDirectoryAndGetError(const FilePath& full_path,
                                 File::Error* error) {
-  ThreadRestrictions::AssertIOAllowed();
-
-  // If the path exists, we've succeeded if it's a directory, failed otherwise.
-  const wchar_t* const full_path_str = full_path.value().c_str();
-  const DWORD fileattr = ::GetFileAttributesW(full_path_str);
-  if (fileattr != INVALID_FILE_ATTRIBUTES) {
-    if ((fileattr & FILE_ATTRIBUTE_DIRECTORY) != 0) {
-      CR_DVLOG(1) << "CreateDirectory(" << full_path_str << "), "
-                  << "directory already exists.";
-      return true;
-    }
-    CR_DLOG(Warning) << "CreateDirectory(" << full_path_str << "), "
-                     << "conflicts with existing file.";
-    if (error)
-      *error = File::FILE_ERROR_NOT_A_DIRECTORY;
-    ::SetLastError(ERROR_FILE_EXISTS);
-    return false;
-  }
-
-  // Invariant:  Path does not exist as file or directory.
-
-  // Attempt to create the parent recursively.  This will immediately return
-  // true if it already exists, otherwise will create all required parent
-  // directories starting with the highest-level missing parent.
-  FilePath parent_path(full_path.DirName());
-  if (parent_path.value() == full_path.value()) {
-    if (error)
-      *error = File::FILE_ERROR_NOT_FOUND;
-    ::SetLastError(ERROR_FILE_NOT_FOUND);
-    return false;
-  }
-  if (!CreateDirectoryAndGetError(parent_path, error)) {
-    CR_DLOG(Warning) << "Failed to create one of the parent directories.";
-    CR_DCHECK(!error || *error != File::FILE_OK);
-    return false;
-  }
-
-  if (::CreateDirectoryW(full_path_str, NULL))
-    return true;
-
-  const DWORD error_code = ::GetLastError();
-  if (error_code == ERROR_ALREADY_EXISTS && DirectoryExists(full_path)) {
-    // This error code ERROR_ALREADY_EXISTS doesn't indicate whether we were
-    // racing with someone creating the same directory, or a file with the same
-    // path.  If DirectoryExists() returns true, we lost the race to create the
-    // same directory.
-    return true;
-  }
-  if (error)
-    *error = File::OSErrorToFileError(error_code);
-  ::SetLastError(error_code);
-  CR_DLOG(Warning) << "Failed to create directory " << full_path_str;
-  return false;
+  return DoCreateDirectoryAndGetError(full_path, error, false);
 }
 
 bool NormalizeFilePath(const FilePath& path, FilePath* real_path) {

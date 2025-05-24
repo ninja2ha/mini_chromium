@@ -24,6 +24,7 @@ class Size;
 class Accelerator;
 ///class InputMethod;
 class KeyEvent;
+class GestureEvent;
 class MouseEvent;
 class ScrollEvent;
 class TouchEvent;
@@ -252,7 +253,7 @@ class CRUI_EXPORT HWNDMessageHandlerDelegate {
 
   // Called when a gesture event is received. Returns true if the event was
   // handled by the delegate.
-  ///virtual bool HandleGestureEvent(crui::GestureEvent* event) = 0;
+  virtual bool HandleGestureEvent(crui::GestureEvent* event) = 0;
 
   // Called when the window size is about to change.
   virtual void HandleWindowSizeChanging() = 0;

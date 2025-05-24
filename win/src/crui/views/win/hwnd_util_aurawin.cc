@@ -4,9 +4,9 @@
 
 #include "crui/views/win/hwnd_util.h"
 
-///#include "crbase/i18n/rtl.h"
-///#include "ui/aura/window.h"
-///#include "ui/aura/window_tree_host.h"
+#include "crui/base/i18n/rtl.h"
+#include "crui/aura/window.h"
+#include "crui/aura/window_tree_host.h"
 #include "crui/views/widget/widget.h"
 #include "crui/base/build_platform.h"
 
@@ -63,8 +63,8 @@ gfx::Rect GetWindowBoundsForClientBounds(View* view,
 
 void ShowSystemMenuAtScreenPixelLocation(HWND window, const gfx::Point& point) {
   UINT flags = TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON | TPM_RETURNCMD;
-  ///if (cr::i18n::IsRTL())
-  ///  flags |= TPM_RIGHTALIGN;
+  if (crui::i18n::IsRTL())
+    flags |= TPM_RIGHTALIGN;
   HMENU menu = GetSystemMenu(window, FALSE);
 
   const int command =

@@ -17,7 +17,7 @@
 #include "crbase/compiler_specific.h"
 #include "crbase/memory/lazy_instance.h"
 #include "crbase/memory/weak_ptr.h"
-///#include "base/scoped_observer.h"
+///#include "crbase/scoped_observer.h"
 #include "crbase/strings/string16.h"
 #include "crbase/win/win_util.h"
 #include "crui/base/win/scoped_gdi_object.h"
@@ -34,7 +34,7 @@
 #include "crui/gfx/win/msg_util.h"
 #include "crui/gfx/win/window_impl.h"
 #include "crui/views/win/pen_event_processor.h"
-///#include "crui/views/win/scoped_enable_unadjusted_mouse_events_win.h"
+#include "crui/views/win/scoped_enable_unadjusted_mouse_events_win.h"
 #include "crui/views/window/window_resize_utils.h"
 
 namespace crui {
@@ -189,12 +189,12 @@ class CRUI_EXPORT HWNDMessageHandler : public gfx::WindowImpl,
   }
   bool is_translucent() const { return is_translucent_; }
 
-  ///std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents>
-  ///RegisterUnadjustedMouseEvent();
-  ///void set_using_wm_input(bool using_wm_input) {
-  ///  using_wm_input_ = using_wm_input;
-  ///}
-  ///bool using_wm_input() { return using_wm_input_; }
+  std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents>
+  RegisterUnadjustedMouseEvent();
+  void set_using_wm_input(bool using_wm_input) {
+    using_wm_input_ = using_wm_input;
+  }
+  bool using_wm_input() { return using_wm_input_; }
 
  private:
   using TouchIDs = std::set<DWORD>;

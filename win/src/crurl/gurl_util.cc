@@ -9,6 +9,13 @@
 
 namespace crurl {
 
+namespace {
+// Prefix to prepend to get a file URL.
+static const cr::FilePath::CharType kFileURLPrefix[] =
+    FILE_PATH_LITERAL("file:///");
+
+}  // namesapce
+
 GURL AppendQueryParameter(const GURL& url,
                           const std::string& name,
                           const std::string& value) {

@@ -8,7 +8,7 @@
 #include <memory>
 #include <utility>
 
-///#include "base/command_line.h"
+///#include "crbase/command_line.h"
 #include "crbase/containers/adapters.h"
 ///#include "crbase/feature_list.h"
 #include "crbase/logging.h"
@@ -17,43 +17,44 @@
 #include "crbase/strings/utf_string_conversions.h"
 ///#include "crbase/trace_event/trace_event.h"
 ///#include "third_party/skia/include/core/SkRect.h"
-///#include "ui/accessibility/ax_action_data.h"
-///#include "ui/accessibility/ax_enums.mojom.h"
+///#include "crui/accessibility/ax_action_data.h"
+///#include "crui/accessibility/ax_enums.mojom.h"
+#include "crui/base/i18n/rtl.h"
 #include "crui/base/cursor/cursor.h"
-///#include "ui/base/dragdrop/drag_drop_types.h"
-///#include "ui/base/ime/input_method.h"
-///#include "ui/compositor/clip_recorder.h"
-///#include "ui/compositor/compositor.h"
-///#include "ui/compositor/layer.h"
-///#include "ui/compositor/layer_animator.h"
-///#include "ui/compositor/paint_context.h"
-///#include "ui/compositor/paint_recorder.h"
-///#include "ui/compositor/transform_recorder.h"
+#include "crui/base/dragdrop/drag_drop_types.h"
+///#include "crui/base/ime/input_method.h"
+///#include "crui/compositor/clip_recorder.h"
+///#include "crui/compositor/compositor.h"
+///#include "crui/compositor/layer.h"
+///#include "crui/compositor/layer_animator.h"
+///#include "crui/compositor/paint_context.h"
+///#include "crui/compositor/paint_recorder.h"
+///#include "crui/compositor/transform_recorder.h"
 #include "crui/display/screen.h"
 #include "crui/events/base_event_utils.h"
 #include "crui/events/event_target_iterator.h"
-///#include "ui/gfx/canvas.h"
+///#include "crui/gfx/canvas.h"
 #include "crui/gfx/geometry/angle_conversions.h"
 #include "crui/gfx/geometry/point3_f.h"
 #include "crui/gfx/geometry/point_conversions.h"
-///#include "ui/gfx/interpolated_transform.h"
-///#include "ui/gfx/scoped_canvas.h"
-///#include "ui/gfx/skia_util.h"
+///#include "crui/gfx/interpolated_transform.h"
+///#include "crui/gfx/scoped_canvas.h"
+///#include "crui/gfx/skia_util.h"
 #include "crui/gfx/geometry/transform.h"
-///#include "ui/native_theme/native_theme.h"
-///#include "ui/views/accessibility/ax_event_manager.h"
-///#include "ui/views/accessibility/view_accessibility.h"
-///#include "ui/views/background.h"
-///#include "ui/views/border.h"
-///#include "ui/views/buildflags.h"
-///#include "ui/views/context_menu_controller.h"
-///#include "ui/views/drag_controller.h"
+///#include "crui/native_theme/native_theme.h"
+///#include "crui/views/accessibility/ax_event_manager.h"
+///#include "crui/views/accessibility/view_accessibility.h"
+///#include "crui/views/background.h"
+///#include "crui/views/border.h"
+///#include "crui/views/buildflags.h"
+///#include "crui/views/context_menu_controller.h"
+#include "crui/views/drag_controller.h"
 #include "crui/views/layout/layout_manager.h"
 #include "crui/views/metadata/metadata_impl_macros.h"
 #include "crui/views/view_observer.h"
 #include "crui/views/view_tracker.h"
-///#include "ui/views/views_features.h"
-///#include "ui/views/views_switches.h"
+///#include "crui/views/views_features.h"
+///#include "crui/views/views_switches.h"
 #include "crui/views/widget/native_widget_private.h"
 #include "crui/views/widget/root_view.h"
 ///#include "crui/views/widget/tooltip_manager.h"
@@ -656,7 +657,7 @@ int View::GetMirroredX() const {
 }
 
 int View::GetMirroredXForRect(const gfx::Rect& rect) const {
-  return /*cr::i18n::IsRTL() ? (width() - rect.x() - rect.width()) : */rect.x();
+  return crui::i18n::IsRTL() ? (width() - rect.x() - rect.width()) : rect.x();
 }
 
 gfx::Rect View::GetMirroredRect(const gfx::Rect& rect) const {
@@ -666,11 +667,11 @@ gfx::Rect View::GetMirroredRect(const gfx::Rect& rect) const {
 }
 
 int View::GetMirroredXInView(int x) const {
-  return /*cr::i18n::IsRTL() ? width() - x : */x;
+  return crui::i18n::IsRTL() ? width() - x : x;
 }
 
 int View::GetMirroredXWithWidthInView(int x, int w) const {
-  return /*cr::i18n::IsRTL() ? width() - x - w : */x;
+  return crui::i18n::IsRTL() ? width() - x - w : x;
 }
 
 // Layout ----------------------------------------------------------------------
@@ -1105,11 +1106,10 @@ View* View::GetTooltipHandlerForPoint(const gfx::Point& point) {
 
 gfx::NativeCursor View::GetCursor(const crui::MouseEvent& event) {
 #if defined(MINI_CHROMIUM_OS_WIN)
-  ///static crui::Cursor arrow;
-  ///if (!arrow.platform())
-  ///  arrow.SetPlatformCursor(::LoadCursorW(nullptr, IDC_ARROW));
-  ///return arrow;
-  return ::LoadCursorW(nullptr, IDC_ARROW);
+  static crui::Cursor arrow;
+  if (!arrow.platform())
+    arrow.SetPlatformCursor(::LoadCursorW(nullptr, IDC_ARROW));
+  return arrow;
 #else
   return gfx::kNullCursor;
 #endif
@@ -1237,8 +1237,8 @@ void View::OnTouchEvent(crui::TouchEvent* event) {
   CR_NOTREACHED() << "Views should not receive touch events.";
 }
 
-///void View::OnGestureEvent(crui::GestureEvent* event) {
-///}
+void View::OnGestureEvent(crui::GestureEvent* event) {
+}
 
 ///const ui::InputMethod* View::GetInputMethod() const {
 ///  Widget* widget = const_cast<Widget*>(GetWidget());
@@ -1345,21 +1345,21 @@ bool View::CanHandleAccelerators() const {
   const Widget* widget = GetWidget();
   if (!GetEnabled() || !IsDrawn() || !widget || !widget->IsVisible())
     return false;
-///#if BUILDFLAG(ENABLE_DESKTOP_AURA)
-///  // Non-ChromeOS aura windows have an associated FocusManagerEventHandler which
-///  // adds currently focused view as an event PreTarget (see
-///  // DesktopNativeWidgetAura::InitNativeWidget). However, the focused view isn't
-///  // always the right view to handle accelerators: It should only handle them
-///  // when active. Only top level widgets can be active, so for child widgets
-///  // check if they are focused instead. ChromeOS also behaves different than
-///  // Linux when an extension popup is about to handle the accelerator.
-///  bool child = widget && widget->GetTopLevelWidget() != widget;
-///  bool focus_in_child =
-///      widget &&
-///      widget->GetRootView()->Contains(GetFocusManager()->GetFocusedView());
-///  if ((child && !focus_in_child) || (!child && !widget->IsActive()))
-///    return false;
-///#endif
+#if defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
+  // Non-ChromeOS aura windows have an associated FocusManagerEventHandler which
+  // adds currently focused view as an event PreTarget (see
+  // DesktopNativeWidgetAura::InitNativeWidget). However, the focused view isn't
+  // always the right view to handle accelerators: It should only handle them
+  // when active. Only top level widgets can be active, so for child widgets
+  // check if they are focused instead. ChromeOS also behaves different than
+  // Linux when an extension popup is about to handle the accelerator.
+  bool child = widget && widget->GetTopLevelWidget() != widget;
+  bool focus_in_child =
+      widget &&
+      widget->GetRootView()->Contains(GetFocusManager()->GetFocusedView());
+  if ((child && !focus_in_child) || (!child && !widget->IsActive()))
+    return false;
+#endif
   return true;
 }
 
@@ -1474,42 +1474,42 @@ gfx::Point View::GetKeyboardContextMenuLocation() {
 
 // Drag and drop ---------------------------------------------------------------
 
-///bool View::GetDropFormats(int* formats,
-///                          std::set<crui::ClipboardFormatType>* format_types) {
-///  return false;
-///}
-///
-///bool View::AreDropTypesRequired() {
-///  return false;
-///}
-///
-///bool View::CanDrop(const OSExchangeData& data) {
-///  // TODO(sky): when I finish up migration, this should default to true.
-///  return false;
-///}
-///
-///void View::OnDragEntered(const ui::DropTargetEvent& event) {
-///}
-///
-///int View::OnDragUpdated(const ui::DropTargetEvent& event) {
-///  return ui::DragDropTypes::DRAG_NONE;
-///}
-///
-///void View::OnDragExited() {
-///}
-///
-///int View::OnPerformDrop(const ui::DropTargetEvent& event) {
-///  return ui::DragDropTypes::DRAG_NONE;
-///}
-///
-///void View::OnDragDone() {
-///}
+bool View::GetDropFormats(int* formats,
+                          std::set<crui::ClipboardFormatType>* format_types) {
+  return false;
+}
+
+bool View::AreDropTypesRequired() {
+  return false;
+}
+
+bool View::CanDrop(const OSExchangeData& data) {
+  // TODO(sky): when I finish up migration, this should default to true.
+  return false;
+}
+
+void View::OnDragEntered(const crui::DropTargetEvent& event) {
+}
+
+int View::OnDragUpdated(const crui::DropTargetEvent& event) {
+  return crui::DragDropTypes::DRAG_NONE;
+}
+
+void View::OnDragExited() {
+}
+
+int View::OnPerformDrop(const crui::DropTargetEvent& event) {
+  return crui::DragDropTypes::DRAG_NONE;
+}
+
+void View::OnDragDone() {
+}
 
 // static
-///bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
-///  return (abs(delta.x()) > GetHorizontalDragThreshold() ||
-///          abs(delta.y()) > GetVerticalDragThreshold());
-///}
+bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
+  return (abs(delta.x()) > GetHorizontalDragThreshold() ||
+          abs(delta.y()) > GetVerticalDragThreshold());
+}
 
 // Accessibility----------------------------------------------------------------
 
@@ -1559,10 +1559,12 @@ gfx::Point View::GetKeyboardContextMenuLocation() {
 ///
 ///  return false;
 ///}
-///
-///gfx::NativeViewAccessible View::GetNativeViewAccessible() {
-///  return GetViewAccessibility().GetNativeObject();
-///}
+
+gfx::NativeViewAccessible View::GetNativeViewAccessible() {
+  ///return GetViewAccessibility().GetNativeObject();
+  return nullptr;
+}
+
 ///
 ///void View::NotifyAccessibilityEvent(ax::mojom::Event event_type,
 ///                                    bool send_native_event) {
@@ -1815,29 +1817,29 @@ void View::UpdateChildLayerBounds(const LayerOffsetData& offset_data) {
 ///void View::OnPaintLayer(const ui::PaintContext& context) {
 ///  PaintFromPaintRoot(context);
 ///}
-///
-///void View::OnDeviceScaleFactorChanged(float old_device_scale_factor,
-///                                      float new_device_scale_factor) {
-///  snap_layer_to_pixel_boundary_ =
-///      (new_device_scale_factor - std::floor(new_device_scale_factor)) != 0.0f;
-///
-///  if (!layer())
-///    return;
-///
-///  // There can be no subpixel offset if the layer has no parent.
-///  if (!parent() || !layer()->parent())
-///    return;
-///
-///  if (layer()->parent() && layer()->GetCompositor() &&
-///      layer()->GetCompositor()->is_pixel_canvas()) {
-///    LayerOffsetData offset_data(
-///        parent()->CalculateOffsetToAncestorWithLayer(nullptr));
-///    offset_data += GetMirroredPosition().OffsetFromOrigin();
-///    SnapLayerToPixelBoundary(offset_data);
-///  } else {
-///    SnapLayerToPixelBoundary(LayerOffsetData());
-///  }
-///}
+
+void View::OnDeviceScaleFactorChanged(float old_device_scale_factor,
+                                      float new_device_scale_factor) {
+  snap_layer_to_pixel_boundary_ =
+      (new_device_scale_factor - std::floor(new_device_scale_factor)) != 0.0f;
+
+  ///if (!layer())
+  ///  return;
+  ///
+  ///// There can be no subpixel offset if the layer has no parent.
+  ///if (!parent() || !layer()->parent())
+  ///  return;
+  ///
+  ///if (layer()->parent() && layer()->GetCompositor() &&
+  ///    layer()->GetCompositor()->is_pixel_canvas()) {
+  ///  LayerOffsetData offset_data(
+  ///      parent()->CalculateOffsetToAncestorWithLayer(nullptr));
+  ///  offset_data += GetMirroredPosition().OffsetFromOrigin();
+  ///  SnapLayerToPixelBoundary(offset_data);
+  ///} else {
+  ///  SnapLayerToPixelBoundary(LayerOffsetData());
+  ///}
+}
 
 void View::CreateOrDestroyLayer() {
   ///if (paint_to_layer_explicitly_set_ || paint_to_layer_for_transform_ ||
@@ -1951,47 +1953,47 @@ void View::TooltipTextChanged() {
 
 // Drag and drop ---------------------------------------------------------------
 
-///int View::GetDragOperations(const gfx::Point& press_pt) {
-///  return drag_controller_ ?
-///      drag_controller_->GetDragOperationsForView(this, press_pt) :
-///      ui::DragDropTypes::DRAG_NONE;
-///}
-///
-///void View::WriteDragData(const gfx::Point& press_pt, OSExchangeData* data) {
-///  DCHECK(drag_controller_);
-///  drag_controller_->WriteDragDataForView(this, press_pt, data);
-///}
-///
-///bool View::InDrag() const {
-///  const Widget* widget = GetWidget();
-///  return widget ? widget->dragged_view() == this : false;
-///}
-///
-///int View::GetHorizontalDragThreshold() {
-///  // TODO(jennyz): This value may need to be adjusted for different platforms
-///  // and for different display density.
-///  return kDefaultHorizontalDragThreshold;
-///}
-///
-///int View::GetVerticalDragThreshold() {
-///  // TODO(jennyz): This value may need to be adjusted for different platforms
-///  // and for different display density.
-///  return kDefaultVerticalDragThreshold;
-///}
-///
+int View::GetDragOperations(const gfx::Point& press_pt) {
+  return drag_controller_ ?
+      drag_controller_->GetDragOperationsForView(this, press_pt) :
+      crui::DragDropTypes::DRAG_NONE;
+}
+
+void View::WriteDragData(const gfx::Point& press_pt, OSExchangeData* data) {
+  CR_DCHECK(drag_controller_);
+  drag_controller_->WriteDragDataForView(this, press_pt, data);
+}
+
+bool View::InDrag() const {
+  const Widget* widget = GetWidget();
+  return widget ? widget->dragged_view() == this : false;
+}
+
+int View::GetHorizontalDragThreshold() {
+  // TODO(jennyz): This value may need to be adjusted for different platforms
+  // and for different display density.
+  return kDefaultHorizontalDragThreshold;
+}
+
+int View::GetVerticalDragThreshold() {
+  // TODO(jennyz): This value may need to be adjusted for different platforms
+  // and for different display density.
+  return kDefaultVerticalDragThreshold;
+}
+
 ///PaintInfo::ScaleType View::GetPaintScaleType() const {
 ///  return PaintInfo::ScaleType::kScaleWithEdgeSnapping;
 ///}
-///
-///void View::HandlePropertyChangeEffects(PropertyEffects effects) {
-///  if (effects & kPropertyEffectsPreferredSizeChanged)
-///    PreferredSizeChanged();
-///  if (effects & kPropertyEffectsLayout)
-///    InvalidateLayout();
-///  if (effects & kPropertyEffectsPaint)
-///    SchedulePaint();
-///  OnHandlePropertyChangeEffects(effects);
-///}
+
+void View::HandlePropertyChangeEffects(PropertyEffects effects) {
+  if (effects & kPropertyEffectsPreferredSizeChanged)
+    PreferredSizeChanged();
+  if (effects & kPropertyEffectsLayout)
+    InvalidateLayout();
+  if (effects & kPropertyEffectsPaint)
+    SchedulePaint();
+  OnHandlePropertyChangeEffects(effects);
+}
 
 PropertyChangedSubscription View::AddPropertyChangedCallback(
     PropertyKey property,
@@ -2009,8 +2011,8 @@ PropertyChangedSubscription View::AddPropertyChangedCallback(
 
 void View::OnPropertyChanged(PropertyKey property,
                              PropertyEffects property_effects) {
-  ///if (property_effects != kPropertyEffectsNone)
-  ///  HandlePropertyChangeEffects(property_effects);
+  if (property_effects != kPropertyEffectsNone)
+    HandlePropertyChangeEffects(property_effects);
 
   auto entry = property_changed_vectors_.find(property);
   if (entry == property_changed_vectors_.end())
@@ -2839,8 +2841,8 @@ void View::PropagateDeviceScaleFactorChanged(float old_device_scale_factor,
   // If the view is drawing to the layer, OnDeviceScaleFactorChanged() is called
   // through LayerDelegate callback.
   ///if (!layer())
-  ///  OnDeviceScaleFactorChanged(old_device_scale_factor,
-  ///                             new_device_scale_factor);
+    OnDeviceScaleFactorChanged(old_device_scale_factor,
+                               new_device_scale_factor);
 }
 
 // Tooltips --------------------------------------------------------------------
@@ -2856,35 +2858,35 @@ void View::UpdateTooltip() {
 
 // Drag and drop ---------------------------------------------------------------
 
-///bool View::DoDrag(const crui::LocatedEvent& event,
-///                  const gfx::Point& press_pt,
-///                  crui::DragDropTypes::DragEventSource source) {
-///  int drag_operations = GetDragOperations(press_pt);
-///  if (drag_operations == ui::DragDropTypes::DRAG_NONE)
-///    return false;
-///
-///  Widget* widget = GetWidget();
-///  // We should only start a drag from an event, implying we have a widget.
-///  DCHECK(widget);
-///
-///  // Don't attempt to start a drag while in the process of dragging. This is
-///  // especially important on X where we can get multiple mouse move events when
-///  // we start the drag.
-///  if (widget->dragged_view())
-///    return false;
-///
-///  std::unique_ptr<OSExchangeData> data(std::make_unique<OSExchangeData>());
-///  WriteDragData(press_pt, data.get());
-///
-///  // Message the RootView to do the drag and drop. That way if we're removed
-///  // the RootView can detect it and avoid calling us back.
-///  gfx::Point widget_location(event.location());
-///  ConvertPointToWidget(this, &widget_location);
-///  widget->RunShellDrag(this, std::move(data), widget_location, drag_operations,
-///                       source);
-///  // WARNING: we may have been deleted.
-///  return true;
-///}
+bool View::DoDrag(const crui::LocatedEvent& event,
+                  const gfx::Point& press_pt,
+                  crui::DragDropTypes::DragEventSource source) {
+  int drag_operations = GetDragOperations(press_pt);
+  if (drag_operations == crui::DragDropTypes::DRAG_NONE)
+    return false;
+
+  Widget* widget = GetWidget();
+  // We should only start a drag from an event, implying we have a widget.
+  CR_DCHECK(widget);
+
+  // Don't attempt to start a drag while in the process of dragging. This is
+  // especially important on X where we can get multiple mouse move events when
+  // we start the drag.
+  if (widget->dragged_view())
+    return false;
+
+  std::unique_ptr<OSExchangeData> data(std::make_unique<OSExchangeData>());
+  WriteDragData(press_pt, data.get());
+
+  // Message the RootView to do the drag and drop. That way if we're removed
+  // the RootView can detect it and avoid calling us back.
+  gfx::Point widget_location(event.location());
+  ConvertPointToWidget(this, &widget_location);
+  widget->RunShellDrag(this, std::move(data), widget_location, drag_operations,
+                       source);
+  // WARNING: we may have been deleted.
+  return true;
+}
 
 DEFINE_ENUM_CONVERTERS(View::FocusBehavior,
                        {View::FocusBehavior::ACCESSIBLE_ONLY,

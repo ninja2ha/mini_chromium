@@ -5,22 +5,22 @@
 #ifndef UI_EVENTS_EVENTS_SWITCHES_H_
 #define UI_EVENTS_EVENTS_SWITCHES_H_
 
-///#include "base/compiler_specific.h"
+///#include "crbase/compiler_specific.h"
 ///#include "build/build_config.h"
-///#include "ui/events/events_base_export.h"
+///#include "crui/events/CRUI_EXPORT.h"
 ///
 ///namespace switches {
 ///
-///EVENTS_BASE_EXPORT extern const char kCompensateForUnstablePinchZoom[];
+///CRUI_EXPORT extern const char kCompensateForUnstablePinchZoom[];
 ///
 ///#if defined(OS_LINUX)
-///EVENTS_BASE_EXPORT extern const char kTouchDevices[];
-///EVENTS_BASE_EXPORT extern const char kPenDevices[];
+///CRUI_EXPORT extern const char kTouchDevices[];
+///CRUI_EXPORT extern const char kPenDevices[];
 ///#endif
 ///
 ///#if defined(USE_X11) || defined(USE_OZONE)
-///EVENTS_BASE_EXPORT extern const char kEdgeTouchFiltering[];
-///EVENTS_BASE_EXPORT extern const char kDisableCancelAllTouches[];
+///CRUI_EXPORT extern const char kEdgeTouchFiltering[];
+///CRUI_EXPORT extern const char kDisableCancelAllTouches[];
 ///#endif
 ///
 ///}  // namespace switches

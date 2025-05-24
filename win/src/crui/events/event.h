@@ -17,8 +17,8 @@
 #include "crbase/strings/string16.h"
 #include "crbase/time/time.h"
 #include "crui/events/event_constants.h"
-///#include "crui/events/gesture_event_details.h"
-///#include "crui/events/gestures/gesture_types.h"
+#include "crui/events/gesture_event_details.h"
+#include "crui/events/gestures/gesture_types.h"
 #include "crui/events/keycodes/dom/dom_key.h"
 #include "crui/events/keycodes/keyboard_codes.h"
 #include "crui/events/platform_event.h"
@@ -246,8 +246,8 @@ class CRUI_EXPORT Event {
 
   // Convenience methods to cast |this| to a GestureEvent. IsGestureEvent()
   // must be true as a precondition to calling these methods.
-  ///GestureEvent* AsGestureEvent();
-  ///const GestureEvent* AsGestureEvent() const;
+  GestureEvent* AsGestureEvent();
+  const GestureEvent* AsGestureEvent() const;
 
   // Convenience methods to cast |this| to a KeyEvent. IsKeyEvent()
   // must be true as a precondition to calling these methods.
@@ -988,44 +988,44 @@ class CRUI_EXPORT ScrollEvent : public MouseEvent {
   ScrollEventPhase scroll_event_phase_ = ScrollEventPhase::kNone;
 };
 
-///class CRUI_EXPORT GestureEvent : public LocatedEvent {
-/// public:
-///    // The constructor takes a default unique_touch_id of zero to support many
-///    // (80+) existing tests that doesn't care about this id.
-///  GestureEvent(float x,
-///               float y,
-///               int flags,
-///               cr::TimeTicks time_stamp,
-///               const GestureEventDetails& details,
-///               uint32_t unique_touch_event_id = 0);
-///
-///  // Create a new GestureEvent which is identical to the provided model.
-///  // If source / target windows are provided, the model location will be
-///  // converted from |source| coordinate system to |target| coordinate system.
-///  template <typename T>
-///  GestureEvent(const GestureEvent& model, T* source, T* target)
-///      : LocatedEvent(model, source, target),
-///        details_(model.details_) {
-///  }
-///  GestureEvent(const GestureEvent& copy);
-///  ~GestureEvent() override;
-///
-///  const GestureEventDetails& details() const { return details_; }
-///
-///  uint32_t unique_touch_event_id() const {
-///    return unique_touch_event_id_;
-///  }
-///
-/// private:
-///  GestureEventDetails details_;
-///
-///  // The unique id of the touch event that caused the gesture event to be
-///  // dispatched. This field gets a non-zero value only for gestures that are
-///  // released through TouchDispositionGestureFilter::SendGesture. The gesture
-///  // events that aren't fired directly in response to processing a touch-event
-///  // (e.g. timer fired ones), this id is zero. See crbug.com/618738.
-///  uint32_t unique_touch_event_id_;
-///};
+class CRUI_EXPORT GestureEvent : public LocatedEvent {
+ public:
+    // The constructor takes a default unique_touch_id of zero to support many
+    // (80+) existing tests that doesn't care about this id.
+  GestureEvent(float x,
+               float y,
+               int flags,
+               cr::TimeTicks time_stamp,
+               const GestureEventDetails& details,
+               uint32_t unique_touch_event_id = 0);
+
+  // Create a new GestureEvent which is identical to the provided model.
+  // If source / target windows are provided, the model location will be
+  // converted from |source| coordinate system to |target| coordinate system.
+  template <typename T>
+  GestureEvent(const GestureEvent& model, T* source, T* target)
+      : LocatedEvent(model, source, target),
+        details_(model.details_) {
+  }
+  GestureEvent(const GestureEvent& copy);
+  ~GestureEvent() override;
+
+  const GestureEventDetails& details() const { return details_; }
+
+  uint32_t unique_touch_event_id() const {
+    return unique_touch_event_id_;
+  }
+
+ private:
+  GestureEventDetails details_;
+
+  // The unique id of the touch event that caused the gesture event to be
+  // dispatched. This field gets a non-zero value only for gestures that are
+  // released through TouchDispositionGestureFilter::SendGesture. The gesture
+  // events that aren't fired directly in response to processing a touch-event
+  // (e.g. timer fired ones), this id is zero. See crbug.com/618738.
+  uint32_t unique_touch_event_id_;
+};
 
 }  // namespace crui
 

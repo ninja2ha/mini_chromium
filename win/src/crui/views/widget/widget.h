@@ -19,8 +19,8 @@
 #include "crui/gfx/geometry/rect.h"
 #include "crui/gfx/geometry/size_f.h"
 #include "crui/gfx/native_widget_types.h"
-///#include "ui/native_theme/native_theme.h"
-///#include "ui/native_theme/native_theme_observer.h"
+///#include "crui/native_theme/native_theme.h"
+///#include "crui/native_theme/native_theme_observer.h"
 #include "crui/views/focus/focus_manager.h"
 #include "crui/views/widget/native_widget_delegate.h"
 #include "crui/views/window/client_view.h"
@@ -42,18 +42,18 @@ class Rect;
 class Accelerator;
 ///class Compositor;
 ///class DefaultThemeProvider;
-///class GestureRecognizer;
+class GestureRecognizer;
 ///class InputMethod;
 ///class Layer;
-///class OSExchangeData;
+class OSExchangeData;
 ///class ThemeProvider;
 
 namespace views {
 
-///class DesktopWindowTreeHost;
+class DesktopWindowTreeHost;
 class NativeWidget;
 ///class NonClientFrameView;
-///class TooltipManager;
+class TooltipManager;
 class View;
 class WidgetDelegate;
 class WidgetObserver;
@@ -302,7 +302,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
     // of the default one.
     // TODO(beng): Figure out if there's a better way to expose this, e.g. get
     // rid of NW subclasses and do this all via message handling.
-    ///DesktopWindowTreeHost* desktop_window_tree_host = nullptr;
+    DesktopWindowTreeHost* desktop_window_tree_host = nullptr;
 
     // Only used by NativeWidgetAura. Specifies the type of layer for the
     // aura::Window.
@@ -677,18 +677,18 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // dragged_view(). If the view has not been deleted during the drag,
   // OnDragDone() is called on it. |location| is in the widget's coordinate
   // system.
-  ///void RunShellDrag(View* view,
-  ///                  std::unique_ptr<ui::OSExchangeData> data,
-  ///                  const gfx::Point& location,
-  ///                  int operation,
-  ///                  ui::DragDropTypes::DragEventSource source);
+  void RunShellDrag(View* view,
+                    std::unique_ptr<crui::OSExchangeData> data,
+                    const gfx::Point& location,
+                    int operation,
+                    crui::DragDropTypes::DragEventSource source);
 
   // Returns the view that requested the current drag operation via
   // RunShellDrag(), or NULL if there is no such view or drag operation.
-  ///View* dragged_view() {
-  ///  return const_cast<View*>(const_cast<const Widget*>(this)->dragged_view());
-  ///}
-  ///const View* dragged_view() const { return dragged_view_; }
+  View* dragged_view() {
+    return const_cast<View*>(const_cast<const Widget*>(this)->dragged_view());
+  }
+  const View* dragged_view() const { return dragged_view_; }
 
   // Adds the specified |rect| in client area coordinates to the rectangle to be
   // redrawn.
@@ -833,8 +833,8 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   }
 
   // Returns the font used for tooltips.
-  ///TooltipManager* GetTooltipManager();
-  ///const TooltipManager* GetTooltipManager() const;
+  TooltipManager* GetTooltipManager();
+  const TooltipManager* GetTooltipManager() const;
 
   void set_focus_on_creation(bool focus_on_creation) {
     focus_on_creation_ = focus_on_creation;
@@ -862,7 +862,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
 
   // Returns the gesture recognizer which can handle touch/gesture events on
   // this.
-  ///crui::GestureRecognizer* GetGestureRecognizer();
+  crui::GestureRecognizer* GetGestureRecognizer();
 
   // Called when the delegate's CanResize or CanMaximize changes.
   void OnSizeConstraintsChanged();
@@ -912,7 +912,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   void OnMouseEvent(crui::MouseEvent* event) override;
   void OnMouseCaptureLost() override;
   void OnScrollEvent(crui::ScrollEvent* event) override;
-  ///void OnGestureEvent(crui::GestureEvent* event) override;
+  void OnGestureEvent(crui::GestureEvent* event) override;
   bool ExecuteCommand(int command_id) override;
   bool HasHitTestMask() const override;
   ///void GetHitTestMask(SkPath* mask) const override;

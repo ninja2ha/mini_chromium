@@ -11,32 +11,31 @@
 #include "crbase/containers/adapters.h"
 #include "crbase/logging.h"
 #include "crbase/strings/utf_string_conversions.h"
-///#include "base/trace_event/trace_event.h"
+///#include "crbase/trace_event/trace_event.h"
 #include "crui/base/cursor/cursor.h"
 ///#include "crui/base/default_style.h"
 ///#include "crui/base/default_theme_provider.h"
 #include "crui/base/hit_test.h"
 ///#include "crui/base/ime/input_method.h"
 ///#include "crui/base/l10n/l10n_font_util.h"
-///#include "ui/base/resource/resource_bundle.h"
-///#include "ui/compositor/compositor.h"
-///#include "ui/compositor/layer.h"
+///#include "crui/base/resource/resource_bundle.h"
+///#include "crui/compositor/compositor.h"
+///#include "crui/compositor/layer.h"
 #include "crui/display/screen.h"
 #include "crui/events/event.h"
 #include "crui/events/event_utils.h"
-///#include "ui/gfx/image/image_skia.h"
-///#include "ui/views/controls/menu/menu_controller.h"
-///#include "ui/views/event_monitor.h"
+///#include "crui/gfx/image/image_skia.h"
+///#include "crui/views/controls/menu/menu_controller.h"
+///#include "crui/views/event_monitor.h"
 #include "crui/views/focus/focus_manager.h"
 #include "crui/views/focus/focus_manager_factory.h"
 #include "crui/views/views_delegate.h"
 #include "crui/views/widget/native_widget_private.h"
 #include "crui/views/widget/widget_focus_manager.h"
 #include "crui/views/widget/root_view.h"
-///#include "crui/views/widget/tooltip_manager.h"
-#include "crui/views/widget/widget_delegate.h"
 #include "crui/views/widget/widget_deletion_observer.h"
 #include "crui/views/widget/widget_observer.h"
+#include "crui/views/widget/widget_delegate.h"
 #include "crui/views/widget/widget_removals_observer.h"
 ///#include "crui/views/window/custom_frame_view.h"
 ///#include "crui/views/window/dialog_delegate.h"
@@ -824,36 +823,36 @@ const FocusManager* Widget::GetFocusManager() const {
 ///  }
 ///}
 
-///void Widget::RunShellDrag(View* view,
-///                          std::unique_ptr<ui::OSExchangeData> data,
-///                          const gfx::Point& location,
-///                          int operation,
-///                          ui::DragDropTypes::DragEventSource source) {
-///  dragged_view_ = view;
-///  OnDragWillStart();
-///
-///  for (WidgetObserver& observer : observers_)
-///    observer.OnWidgetDragWillStart(this);
-///
-///  WidgetDeletionObserver widget_deletion_observer(this);
-///  native_widget_->RunShellDrag(view, std::move(data), location, operation,
-///                               source);
-///
-///  // The widget may be destroyed during the drag operation.
-///  if (!widget_deletion_observer.IsWidgetAlive())
-///    return;
-///
-///  // If the view is removed during the drag operation, dragged_view_ is set to
-///  // NULL.
-///  if (view && dragged_view_ == view) {
-///    dragged_view_ = nullptr;
-///    view->OnDragDone();
-///  }
-///  OnDragComplete();
-///
-///  for (WidgetObserver& observer : observers_)
-///    observer.OnWidgetDragComplete(this);
-///}
+void Widget::RunShellDrag(View* view,
+                          std::unique_ptr<crui::OSExchangeData> data,
+                          const gfx::Point& location,
+                          int operation,
+                          crui::DragDropTypes::DragEventSource source) {
+  dragged_view_ = view;
+  OnDragWillStart();
+
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetDragWillStart(this);
+
+  WidgetDeletionObserver widget_deletion_observer(this);
+  native_widget_->RunShellDrag(view, std::move(data), location, operation,
+                               source);
+
+  // The widget may be destroyed during the drag operation.
+  if (!widget_deletion_observer.IsWidgetAlive())
+    return;
+
+  // If the view is removed during the drag operation, dragged_view_ is set to
+  // NULL.
+  if (view && dragged_view_ == view) {
+    dragged_view_ = nullptr;
+    view->OnDragDone();
+  }
+  OnDragComplete();
+
+  for (WidgetObserver& observer : observers_)
+    observer.OnWidgetDragComplete(this);
+}
 
 void Widget::SchedulePaintInRect(const gfx::Rect& rect) {
   native_widget_->SchedulePaintInRect(rect);
@@ -1021,13 +1020,13 @@ bool Widget::HasCapture() {
   return native_widget_->HasCapture();
 }
 
-///TooltipManager* Widget::GetTooltipManager() {
-///  return native_widget_->GetTooltipManager();
-///}
+TooltipManager* Widget::GetTooltipManager() {
+  return native_widget_->GetTooltipManager();
+}
 
-///const TooltipManager* Widget::GetTooltipManager() const {
-///  return native_widget_->GetTooltipManager();
-///}
+const TooltipManager* Widget::GetTooltipManager() const {
+  return native_widget_->GetTooltipManager();
+}
 
 gfx::Rect Widget::GetWorkAreaBoundsInScreen() const {
   return native_widget_->GetWorkAreaBoundsInScreen();
@@ -1053,9 +1052,9 @@ bool Widget::IsTranslucentWindowOpacitySupported() const {
   return native_widget_->IsTranslucentWindowOpacitySupported();
 }
 
-///ui::GestureRecognizer* Widget::GetGestureRecognizer() {
-///  return native_widget_->GetGestureRecognizer();
-///}
+crui::GestureRecognizer* Widget::GetGestureRecognizer() {
+  return native_widget_->GetGestureRecognizer();
+}
 
 void Widget::OnSizeConstraintsChanged() {
   native_widget_->OnSizeConstraintsChanged();
@@ -1379,12 +1378,12 @@ void Widget::OnScrollEvent(crui::ScrollEvent* event) {
   }
 }
 
-///void Widget::OnGestureEvent(ui::GestureEvent* event) {
-///  // We explicitly do not capture here. Not capturing enables multiple widgets
-///  // to get tap events at the same time. Views (such as tab dragging) may
-///  // explicitly capture.
-///  SendEventToSink(event);
-///}
+void Widget::OnGestureEvent(crui::GestureEvent* event) {
+  // We explicitly do not capture here. Not capturing enables multiple widgets
+  // to get tap events at the same time. Views (such as tab dragging) may
+  // explicitly capture.
+  SendEventToSink(event);
+}
 
 bool Widget::ExecuteCommand(int command_id) {
   return widget_delegate_->ExecuteWindowsCommand(command_id);

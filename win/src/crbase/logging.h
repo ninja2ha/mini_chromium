@@ -530,7 +530,7 @@ CRBASE_EXPORT extern std::ostream* g_swallow_stream;
 
 #define CR_VLOG_IF(verboselevel, condition)                                    \
   CR_LAZY_STREAM(CR_VLOG_STREAM(verboselevel),                                 \
-                 CR_VLOG_IS_ON(verboselevel) && !(condition))
+                 CR_VLOG_IS_ON(verboselevel) && (condition))
 
 // cr dlog
 #ifdef NDEBUG
@@ -573,8 +573,14 @@ CRBASE_EXPORT extern std::ostream* g_swallow_stream;
   CR_DLOG_IF(Fatal, !(assertion))  << "Assert failed: " #assertion ". "
 
 #define CR_NOTREACHED() CR_DLOG(Warning) << "NOT REACHED. "
-#define CR_NOTIMPLEMENTED() CR_DLOG(Warning) << "NOT IMPLEMENTED. "
-
+#define CR_NOTIMPLEMENTED() CR_DLOG(Error) << "NOT IMPLEMENTED. "
+#define CR_NOTIMPLEMENTED_LOG_ONCE()                                           \
+  do {                                                                         \
+    static bool logged_once = false;                                           \
+    CR_DLOG_IF(Error, !logged_once) << "NOT IMPLEMENTED. ";                    \
+    logged_once = true;                                                        \
+  } while (0);                                                                 \
+  CR_EAT_STREAM_PARAMETERS
 //  -- cr logging: end ---------------------------------------------------------
 
 }  // namespace logging
