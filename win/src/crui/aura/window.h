@@ -29,8 +29,8 @@
 #include "crui/aura/client/window_types.h"
 #include "crui/aura/window_observer.h"
 ///#include "crui/compositor/layer_animator.h"
-///#include "crui/compositor/layer_delegate.h"
-///#include "crui/compositor/layer_owner.h"
+#include "crui/compositor/layer_delegate.h"
+#include "crui/compositor/layer_owner.h"
 #include "crui/events/event_constants.h"
 #include "crui/events/event_target.h"
 #include "crui/events/event_targeter.h"
@@ -46,7 +46,7 @@
 namespace crui {
 
 enum class DomCode;
-///class Layer;
+class Layer;
 
 ///namespace cc {
 ///class LayerTreeFrameSink;
@@ -94,8 +94,8 @@ enum class EventTargetingPolicy {
 
 // Aura window implementation. Interesting events are sent to the
 // WindowDelegate.
-class CRUI_EXPORT Window : ///public crui::LayerDelegate,
-                           ///public crui::LayerOwner,
+class CRUI_EXPORT Window : public crui::LayerDelegate,
+                           public crui::LayerOwner,
                            public crui::EventTarget,
                            public crui::GestureConsumer,
                            public crui::PropertyHandler/*,
@@ -148,7 +148,7 @@ class CRUI_EXPORT Window : ///public crui::LayerDelegate,
   ~Window() override;
 
   // Initializes the window. This creates the window's layer.
-  void Init(/*crui::LayerType layer_type*/);
+  void Init(crui::LayerType layer_type);
 
   void set_owned_by_parent(bool owned_by_parent) {
     owned_by_parent_ = owned_by_parent;
@@ -237,7 +237,7 @@ class CRUI_EXPORT Window : ///public crui::LayerDelegate,
   gfx::Rect GetBoundsInScreen() const;
 
   void SetTransform(const gfx::Transform& transform);
-  ///const gfx::Transform& transform() const { return layer()->transform(); }
+  const gfx::Transform& transform() const;
 
   // Assigns a LayoutManager to size and place child windows.
   // The Window takes ownership of the LayoutManager.
@@ -390,12 +390,12 @@ class CRUI_EXPORT Window : ///public crui::LayerDelegate,
   // typedef void (*PropertyDeallocator)(int64_t value);
 
   // Overridden from ui::LayerDelegate:
-  ///void OnDeviceScaleFactorChanged(float old_device_scale_factor,
-  ///                                float new_device_scale_factor) override;
-  ///void UpdateVisualState() override;
+  void OnDeviceScaleFactorChanged(float old_device_scale_factor,
+                                  float new_device_scale_factor) override;
+  void UpdateVisualState() override;
 
   // Overridden from ui::LayerOwner:
-  ///std::unique_ptr<crui::Layer> RecreateLayer() override;
+  std::unique_ptr<crui::Layer> RecreateLayer() override;
 
 #if !defined(NDEBUG)
   // These methods are useful when debugging.
@@ -591,13 +591,13 @@ class CRUI_EXPORT Window : ///public crui::LayerDelegate,
 
   // Overridden from ui::LayerDelegate:
   ///void OnPaintLayer(const crui::PaintContext& context) override;
-  ///void OnLayerBoundsChanged(const gfx::Rect& old_bounds,
-  ///                          crui::PropertyChangeReason reason) override;
-  ///void OnLayerTransformed(const gfx::Transform& old_transform,
-  ///                        crui::PropertyChangeReason reason) override;
-  ///void OnLayerOpacityChanged(crui::PropertyChangeReason reason) override;
-  ///void OnLayerAlphaShapeChanged() override;
-  ///void OnLayerFillsBoundsOpaquelyChanged() override;
+  void OnLayerBoundsChanged(const gfx::Rect& old_bounds,
+                            crui::PropertyChangeReason reason) override;
+  void OnLayerTransformed(const gfx::Transform& old_transform,
+                          crui::PropertyChangeReason reason) override;
+  void OnLayerOpacityChanged(crui::PropertyChangeReason reason) override;
+  void OnLayerAlphaShapeChanged() override;
+  void OnLayerFillsBoundsOpaquelyChanged() override;
 
   // Overridden from crui::EventTarget:
   bool CanAcceptEvent(const crui::Event& event) override;

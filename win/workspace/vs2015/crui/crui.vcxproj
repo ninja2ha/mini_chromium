@@ -172,6 +172,11 @@
     <ClCompile Include="..\..\..\src\crui\base\win\shell.cc" />
     <ClCompile Include="..\..\..\src\crui\base\win\touch_input.cc" />
     <ClCompile Include="..\..\..\src\crui\base\win\window_event_target.cc" />
+    <ClCompile Include="..\..\..\src\crui\compositor\layer.cc" />
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_delegate.cc" />
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_owner.cc" />
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_tree_owner.cc" />
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_type.cc" />
     <ClCompile Include="..\..\..\src\crui\display\display.cc" />
     <ClCompile Include="..\..\..\src\crui\display\display_change_notifier.cc" />
     <ClCompile Include="..\..\..\src\crui\display\display_layout.cc" />
@@ -305,6 +310,7 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector4d_f.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\sequential_id_generator.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd.cc" />
@@ -312,6 +318,8 @@
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\window_impl.cc" />
     <ClCompile Include="..\..\..\src\crui\views\animation\animation_delegate_views.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\controls\button\button.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\controls\button\button_controller.cc" />
     <ClCompile Include="..\..\..\src\crui\views\corewm\cursor_height_provider_win.cc" />
     <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_aura.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -343,6 +351,7 @@
     <ClCompile Include="..\..\..\src\crui\views\metadata\metadata_types.cc" />
     <ClCompile Include="..\..\..\src\crui\views\metadata\type_conversion.cc" />
     <ClCompile Include="..\..\..\src\crui\views\rect_based_targeting_utils.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\style\platform_style.cc" />
     <ClCompile Include="..\..\..\src\crui\views\style\typography.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -433,7 +442,6 @@
     <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_move_resize_handler.h" />
     <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_init_properties.h" />
     <ClInclude Include="..\..\..\src\crui\aura\platform_window\win\win_window.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\property_change_reason.h" />
     <ClInclude Include="..\..\..\src\crui\aura\scoped_enable_unadjusted_mouse_events.h" />
     <ClInclude Include="..\..\..\src\crui\aura\scoped_keyboard_hook.h" />
     <ClInclude Include="..\..\..\src\crui\aura\scoped_simple_keyboard_hook.h" />
@@ -570,6 +578,14 @@
     <ClInclude Include="..\..\..\src\crui\base\win\shell.h" />
     <ClInclude Include="..\..\..\src\crui\base\win\touch_input.h" />
     <ClInclude Include="..\..\..\src\crui\base\win\window_event_target.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_tree_owner.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_type.h" />
+    <ClInclude Include="..\..\..\src\crui\compositor\property_change_reason.h" />
     <ClInclude Include="..\..\..\src\crui\display\display.h" />
     <ClInclude Include="..\..\..\src\crui\display\display_change_notifier.h" />
     <ClInclude Include="..\..\..\src\crui\display\display_layout.h" />
@@ -722,6 +738,7 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector3d_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector4d_f.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\native_widget_types.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\sequential_id_generator.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\text_constants.h" />
@@ -732,6 +749,10 @@
     <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\window_impl.h" />
     <ClInclude Include="..\..\..\src\crui\views\animation\animation_delegate_views.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_observer.h" />
     <ClInclude Include="..\..\..\src\crui\views\corewm\cursor_height_provider_win.h" />
     <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip.h" />
     <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_aura.h">
@@ -769,6 +790,7 @@
     <ClInclude Include="..\..\..\src\crui\views\metadata\property_metadata.h" />
     <ClInclude Include="..\..\..\src\crui\views\metadata\type_conversion.h" />
     <ClInclude Include="..\..\..\src\crui\views\rect_based_targeting_utils.h" />
+    <ClInclude Include="..\..\..\src\crui\views\style\platform_style.h" />
     <ClInclude Include="..\..\..\src\crui\views\style\typography.h" />
     <ClInclude Include="..\..\..\src\crui\views\view.h" />
     <ClInclude Include="..\..\..\src\crui\views\views_delegate.h" />

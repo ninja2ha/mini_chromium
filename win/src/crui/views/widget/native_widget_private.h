@@ -109,7 +109,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
   ///virtual const ui::Compositor* GetCompositor() const = 0;
 
   // Returns the NativeWidget's layer, if any.
-  ///virtual const ui::Layer* GetLayer() const = 0;
+  virtual const crui::Layer* GetLayer() const = 0;
 
   // Reorders the widget's child NativeViews which are associated to the view
   // tree (eg via a NativeViewHost) to match the z-order of the views in the

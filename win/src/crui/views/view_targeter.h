@@ -10,7 +10,7 @@
 
 namespace crui {
 
-///class GestureEvent;
+class GestureEvent;
 class KeyEvent;
 class ScrollEvent;
 
@@ -50,11 +50,11 @@ class CRUI_EXPORT ViewTargeter : public crui::EventTargeter {
   View* FindTargetForKeyEvent(View* root, const crui::KeyEvent& key);
   View* FindTargetForScrollEvent(View* root, const crui::ScrollEvent& scroll);
 
-  ///virtual View* FindTargetForGestureEvent(View* root,
-  ///                                        const crui::GestureEvent& gesture);
-  ///virtual crui::EventTarget* FindNextBestTargetForGestureEvent(
-  ///    crui::EventTarget* previous_target,
-  ///    const crui::GestureEvent& gesture);
+  virtual View* FindTargetForGestureEvent(View* root,
+                                          const crui::GestureEvent& gesture);
+  virtual crui::EventTarget* FindNextBestTargetForGestureEvent(
+      crui::EventTarget* previous_target,
+      const crui::GestureEvent& gesture);
   
   // ViewTargeter does not own the |delegate_|, but |delegate_| must
   // outlive the targeter.

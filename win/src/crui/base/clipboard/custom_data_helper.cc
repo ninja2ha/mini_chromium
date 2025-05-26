@@ -116,7 +116,7 @@ void ReadCustomDataIntoMap(
 void WriteCustomDataToPickle(
     const std::unordered_map<cr::string16, cr::string16>& data,
     cr::Pickle* pickle) {
-  pickle->WriteUInt32(data.size());
+  pickle->WriteUInt32(static_cast<uint32_t>(data.size()));
   for (const auto& it : data) {
     pickle->WriteString16(it.first);
     pickle->WriteString16(it.second);
@@ -126,7 +126,7 @@ void WriteCustomDataToPickle(
 void WriteCustomDataToPickle(
     const cr::flat_map<cr::string16, cr::string16>& data,
     cr::Pickle* pickle) {
-  pickle->WriteUInt32(data.size());
+  pickle->WriteUInt32(static_cast<uint32_t>(data.size()));
   for (const auto& it : data) {
     pickle->WriteString16(it.first);
     pickle->WriteString16(it.second);

@@ -6,7 +6,7 @@
 
 #include "crui/aura/window.h"
 #include "crui/base/class_property.h"
-///#include "crui/compositor/layer.h"
+#include "crui/compositor/layer.h"
 #include "crui/aura/wm//core/window_animations.h"
 
 namespace crui {
@@ -68,8 +68,8 @@ void VisibilityController::UpdateLayerVisibility(aura::Window* window,
   // When a window is made visible, we always make its layer visible
   // immediately. When a window is hidden, the layer must be left visible and
   // only made not visible once the animation is complete.
-  ///if (!animated || visible)
-  ///  window->layer()->SetVisible(visible);
+  if (!animated || visible)
+    window->layer()->SetVisible(visible);
 }
 
 SuspendChildWindowVisibilityAnimations::SuspendChildWindowVisibilityAnimations(

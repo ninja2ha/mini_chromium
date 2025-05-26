@@ -32,9 +32,9 @@
 #include "crui/base/dragdrop/drop_target_event.h"
 #include "crui/base/dragdrop/os_exchange_data.h"
 #include "crui/base/ui_base_types.h"
-///#include "crui/compositor/layer_delegate.h"
-///#include "crui/compositor/layer_observer.h"
-///#include "crui/compositor/layer_owner.h"
+#include "crui/compositor/layer_delegate.h"
+#include "crui/compositor/layer_observer.h"
+#include "crui/compositor/layer_owner.h"
 ///#include "crui/compositor/paint_cache.h"
 #include "crui/events/event.h"
 #include "crui/events/event_target.h"
@@ -60,7 +60,7 @@ namespace crui {
 ///struct AXNodeData;
 ///class Compositor;
 ///class InputMethod;
-///class Layer;
+class Layer;
 ///class NativeTheme;
 ///class PaintContext;
 ///class ThemeProvider;
@@ -217,8 +217,8 @@ enum PropertyEffects {
 //
 //   ...
 //     frobble_changed_subscription_ = AddFrobbleChangedCallback(
-//         base::BindRepeating(&FrobbleView::OnFrobbleChanged,
-//         base::Unretained(this)));
+//         cr::BindRepeating(&FrobbleView::OnFrobbleChanged,
+//         cr::Unretained(this)));
 //
 //   Example:
 //
@@ -226,7 +226,7 @@ enum PropertyEffects {
 //     bool frobble_changed = false;
 //     PropertyChangedSubscription subscription =
 //       frobble_view_->AddFrobbleChangedCallback(
-//           base::BindRepeating([](bool* frobble_changed_ptr) {
+//           cr::BindRepeating([](bool* frobble_changed_ptr) {
 //             *frobble_changed_ptr = true;
 //           }, &frobble_changed));
 //     frobble_view_->SetFrobble(!frobble_view_->GetFrobble());
@@ -266,9 +266,9 @@ enum PropertyEffects {
 //   ADD_PROPERTY_METADATA(MyView, int, Bobble)
 //   END_METADATA()
 /////////////////////////////////////////////////////////////////////////////
-class CRUI_EXPORT View : ///public crui::LayerDelegate,
-                         ///public crui::LayerObserver,
-                         ///public crui::LayerOwner,
+class CRUI_EXPORT View : public crui::LayerDelegate,
+                         public crui::LayerObserver,
+                         public crui::LayerOwner,
                          public crui::AcceleratorTarget,
                          public crui::EventTarget,
                          public crui::EventHandler,
@@ -616,7 +616,7 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // Specifically views with layers effectively paint in a z-order that is
   // always above any sibling views that do not have layers. This happens
   // regardless of the ordering returned by GetChildrenInZOrder().
-  ///void SetPaintToLayer(crui::LayerType layer_type = crui::LAYER_TEXTURED);
+  void SetPaintToLayer(crui::LayerType layer_type = crui::LAYER_TEXTURED);
 
   // Cancels layer painting triggered by a call to |SetPaintToLayer()|. Note
   // that this will not actually destroy the layer if the view paints to a layer
@@ -634,8 +634,8 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // layers for subpixel rendering reasons. Overrides should be made
   // judiciously, and generally they should just forward the calls to a child
   // view. They must be overridden together for correctness.
-  ///virtual void AddLayerBeneathView(crui::Layer* new_layer);
-  ///virtual void RemoveLayerBeneathView(crui::Layer* old_layer);
+  virtual void AddLayerBeneathView(crui::Layer* new_layer);
+  virtual void RemoveLayerBeneathView(crui::Layer* old_layer);
 
   // This is like RemoveLayerBeneathView() but doesn't remove |old_layer| from
   // its parent. This is useful for when a layer beneth this view is owned by a
@@ -644,19 +644,19 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // and to stop observing it, but it remains in the layer tree since the
   // expectation of ui::LayerOwner::RecreateLayer() is that the old layer
   // remains under the same parent, and stacked above the newly cloned layer.
-  ///void RemoveLayerBeneathViewKeepInLayerTree(crui::Layer* old_layer);
+  void RemoveLayerBeneathViewKeepInLayerTree(crui::Layer* old_layer);
 
   // Gets the layers associated with this view that should be immediate children
   // of the parent layer. They are returned in bottom-to-top order. This
   // includes |this->layer()| and any layers added with |AddLayerBeneathView()|.
   // Returns an empty vector if this view doesn't paint to a layer.
-  ///std::vector<crui::Layer*> GetLayersInOrder();
+  std::vector<crui::Layer*> GetLayersInOrder();
 
   // ui::LayerObserver:
-  ///void LayerDestroyed(crui::Layer* layer) override;
+  void LayerDestroyed(crui::Layer* layer) override;
 
   // Overridden from ui::LayerOwner:
-  ///std::unique_ptr<crui::Layer> RecreateLayer() override;
+  std::unique_ptr<crui::Layer> RecreateLayer() override;
 
   // RTL positioning -----------------------------------------------------------
 
@@ -1468,8 +1468,8 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
 
   // Returns the offset from this view to the nearest ancestor with a layer. If
   // |layer_parent| is non-NULL it is set to the nearest ancestor with a layer.
-  ///virtual LayerOffsetData CalculateOffsetToAncestorWithLayer(
-  ///    crui::Layer** layer_parent);
+  virtual LayerOffsetData CalculateOffsetToAncestorWithLayer(
+      crui::Layer** layer_parent);
 
   // Updates the view's layer's parent. Called when a view is added to a view
   // hierarchy, responsible for parenting the view's layer to the enclosing
@@ -1481,8 +1481,8 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // recurses through all children. This is used when adding a layer to an
   // existing view to make sure all descendants that have layers are parented to
   // the right layer.
-  ///void MoveLayerToParent(crui::Layer* parent_layer,
-  ///                       const LayerOffsetData& offset_data);
+  void MoveLayerToParent(crui::Layer* parent_layer,
+                         const LayerOffsetData& offset_data);
 
   // Called to update the bounds of any child layers within this View's
   // hierarchy when something happens to the hierarchy.
@@ -1491,12 +1491,12 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // Overridden from crui::LayerDelegate:
   ///void OnPaintLayer(const crui::PaintContext& context) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
-                                  float new_device_scale_factor) /*override*/;
+                                  float new_device_scale_factor) override;
 
   // Finds the layer that this view paints to (it may belong to an ancestor
   // view), then reorders the immediate children of that layer to match the
   // order of the view tree.
-  ///void ReorderLayers();
+  void ReorderLayers();
 
   // This reorders the immediate children of |*parent_layer| to match the
   // order of the view tree. Child layers which are owned by a view are
@@ -1504,7 +1504,7 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // Widget::ReorderNativeViews() should be called to reorder any child layers
   // with an associated view. Widget::ReorderNativeViews() may reorder layers
   // below layers owned by a view.
-  ///virtual void ReorderChildLayers(crui::Layer* parent_layer);
+  virtual void ReorderChildLayers(crui::Layer* parent_layer);
 
   // Notifies parents about a layer being created or destroyed in a child. An
   // example where a subclass may override this method is when it wants to clip
@@ -1733,23 +1733,23 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // Accelerated painting ------------------------------------------------------
 
   // Creates the layer and related fields for this view.
-  ///void CreateLayer(crui::LayerType layer_type);
+  void CreateLayer(crui::LayerType layer_type);
 
   // Recursively calls UpdateParentLayers() on all descendants, stopping at any
   // Views that have layers. Calls UpdateParentLayer() for any Views that have
   // a layer with no parent. If at least one descendant had an unparented layer
   // true is returned.
-  ///bool UpdateParentLayers();
+  bool UpdateParentLayers();
 
   // Parents this view's layer to |parent_layer|, and sets its bounds and other
   // properties in accordance to the layer hierarchy.
-  ///void ReparentLayer(crui::Layer* parent_layer);
+  void ReparentLayer(crui::Layer* parent_layer);
 
   // Called to update the layer visibility. The layer will be visible if the
   // View itself, and all its parent Views are visible. This also updates
   // visibility of the child layers.
-  ///void UpdateLayerVisibility();
-  ///void UpdateChildLayerVisibility(bool visible);
+  void UpdateLayerVisibility();
+  void UpdateChildLayerVisibility(bool visible);
 
   enum class LayerChangeNotifyBehavior {
     // Notify the parent chain about the layer change.
@@ -1975,7 +1975,7 @@ class CRUI_EXPORT View : ///public crui::LayerDelegate,
   // Set of layers that should be painted beneath this View's layer. These
   // layers are maintained as siblings of this View's layer and are stacked
   // beneath.
-  ////std::vector<crui::Layer*> layers_beneath_;
+  std::vector<crui::Layer*> layers_beneath_;
 
   // Accelerators --------------------------------------------------------------
 

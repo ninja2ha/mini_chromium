@@ -120,7 +120,7 @@ class CRUI_EXPORT DesktopNativeWidgetAura
   gfx::NativeView GetNativeView() const override;
   Widget* GetTopLevelWidget() override;
   ///const ui::Compositor* GetCompositor() const override;
-  ///const ui::Layer* GetLayer() const override;
+  const crui::Layer* GetLayer() const override;
   void ReorderNativeViews() override;
   void ViewRemoved(View* view) override;
   void SetNativeWindowProperty(const char* name, void* value) override;

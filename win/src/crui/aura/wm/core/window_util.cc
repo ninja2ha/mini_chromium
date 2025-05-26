@@ -8,8 +8,8 @@
 #include "crui/aura/client/aura_constants.h"
 #include "crui/aura/window.h"
 ///#include "crui/compositor/dip_util.h"
-///#include "crui/compositor/layer.h"
-///#include "crui/compositor/layer_tree_owner.h"
+#include "crui/compositor/layer.h"
+#include "crui/compositor/layer_tree_owner.h"
 #include "crui/aura/wm/core/transient_window_manager.h"
 #include "crui/aura/wm/core/window_properties.h"
 #include "crui/aura/wm/public/activation_client.h"
@@ -21,23 +21,23 @@ namespace {
 // the layer owner, all its layer's children will not be cloned.
 //
 // WARNING: It is assumed that |parent| is ultimately owned by a LayerTreeOwner.
-///void CloneChildren(crui::Layer* to_clone,
-///                   crui::Layer* parent,
-///                   const wm::MapLayerFunc& map_func) {
-///  typedef std::vector<crui::Layer*> Layers;
-///  // Make a copy of the children since RecreateLayer() mutates it.
-///  Layers children(to_clone->children());
-///  for (Layers::const_iterator i = children.begin(); i != children.end(); ++i) {
-///    ui::LayerOwner* owner = (*i)->owner();
-///    ui::Layer* old_layer = owner ? map_func.Run(owner).release() : NULL;
-///    if (old_layer) {
-///      parent->Add(old_layer);
-///      // RecreateLayer() moves the existing children to the new layer. Create a
-///      // copy of those.
-///      CloneChildren(owner->layer(), old_layer, map_func);
-///    }
-///  }
-///}
+void CloneChildren(crui::Layer* to_clone,
+                   crui::Layer* parent,
+                   const crui::wm::MapLayerFunc& map_func) {
+  typedef std::vector<crui::Layer*> Layers;
+  // Make a copy of the children since RecreateLayer() mutates it.
+  Layers children(to_clone->children());
+  for (Layers::const_iterator i = children.begin(); i != children.end(); ++i) {
+    crui::LayerOwner* owner = (*i)->owner();
+    crui::Layer* old_layer = owner ? map_func.Run(owner).release() : NULL;
+    if (old_layer) {
+      parent->Add(old_layer);
+      // RecreateLayer() moves the existing children to the new layer. Create a
+      // copy of those.
+      CloneChildren(owner->layer(), old_layer, map_func);
+    }
+  }
+}
 
 // Invokes Mirror() on all the children of |to_mirror|, adding the newly cloned
 // children to |parent|.
@@ -47,7 +47,7 @@ namespace {
 ///                    crui::Layer* parent,
 ///                    bool sync_bounds) {
 ///  for (auto* child : to_mirror->children()) {
-///    ui::Layer* mirror = child->Mirror().release();
+///    crui::Layer* mirror = child->Mirror().release();
 ///    mirror->set_sync_bounds_with_source(sync_bounds);
 ///    parent->Add(mirror);
 ///    MirrorChildren(child, mirror, sync_bounds);
@@ -152,28 +152,29 @@ const aura::Window* GetToplevelWindow(const aura::Window* window) {
   return client ? client->GetToplevelWindow(window) : NULL;
 }
 
-///std::unique_ptr<crui::LayerTreeOwner> RecreateLayers(crui::LayerOwner* root) {
-///  CR_DCHECK(root->OwnsLayer());
-///  return RecreateLayersWithClosure(
-///      root, base::BindRepeating(
-///                [](ui::LayerOwner* owner) { return owner->RecreateLayer(); }));
-///}
+std::unique_ptr<crui::LayerTreeOwner> RecreateLayers(crui::LayerOwner* root) {
+  CR_DCHECK(root->OwnsLayer());
+  return RecreateLayersWithClosure(
+      root, 
+      cr::BindRepeating(
+          [](crui::LayerOwner* owner) { return owner->RecreateLayer(); }));
+}
 
-///std::unique_ptr<ui::LayerTreeOwner> RecreateLayersWithClosure(
-///    ui::LayerOwner* root,
-///    const MapLayerFunc& map_func) {
-///  DCHECK(root->OwnsLayer());
-///  auto layer = map_func.Run(root);
-///  if (!layer)
-///    return nullptr;
-///  auto old_layer = std::make_unique<ui::LayerTreeOwner>(std::move(layer));
-///  CloneChildren(root->layer(), old_layer->root(), map_func);
-///  return old_layer;
-///}
+std::unique_ptr<crui::LayerTreeOwner> RecreateLayersWithClosure(
+    crui::LayerOwner* root,
+    const MapLayerFunc& map_func) {
+  CR_DCHECK(root->OwnsLayer());
+  auto layer = map_func.Run(root);
+  if (!layer)
+    return nullptr;
+  auto old_layer = std::make_unique<crui::LayerTreeOwner>(std::move(layer));
+  CloneChildren(root->layer(), old_layer->root(), map_func);
+  return old_layer;
+}
 
-///std::unique_ptr<ui::LayerTreeOwner> MirrorLayers(
-///    ui::LayerOwner* root, bool sync_bounds) {
-///  auto mirror = std::make_unique<ui::LayerTreeOwner>(root->layer()->Mirror());
+///std::unique_ptr<crui::LayerTreeOwner> MirrorLayers(
+///    crui::LayerOwner* root, bool sync_bounds) {
+///  auto mirror = std::make_unique<crui::LayerTreeOwner>(root->layer()->Mirror());
 ///  MirrorChildren(root->layer(), mirror->root(), sync_bounds);
 ///  return mirror;
 ///}

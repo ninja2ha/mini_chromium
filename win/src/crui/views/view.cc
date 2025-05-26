@@ -57,7 +57,7 @@
 ///#include "crui/views/views_switches.h"
 #include "crui/views/widget/native_widget_private.h"
 #include "crui/views/widget/root_view.h"
-///#include "crui/views/widget/tooltip_manager.h"
+#include "crui/views/widget/tooltip_manager.h"
 #include "crui/views/widget/widget.h"
 #include "crui/base/ui_export.h"
 
@@ -145,8 +145,8 @@ View::~View() {
   for (ViewObserver& observer : observers_)
     observer.OnViewIsDeleting(this);
 
-  ///for (crui::Layer* layer_beneath : layers_beneath_)
-  ///  layer_beneath->RemoveObserver(this);
+  for (crui::Layer* layer_beneath : layers_beneath_)
+    layer_beneath->RemoveObserver(this);
 
   // Clearing properties explicitly here lets us guarantee that properties
   // outlive |this| (at least the View part of |this|). This is intentionally
@@ -197,7 +197,7 @@ void View::ReorderChildView(View* view, int index) {
   for (ViewObserver& observer : observers_)
     observer.OnChildViewReordered(this, view);
 
-  ///ReorderLayers();
+  ReorderLayers();
   InvalidateLayout();
 }
 
@@ -258,32 +258,32 @@ void View::SetBoundsRect(const gfx::Rect& bounds) {
   // Paint the new bounds.
   SchedulePaintBoundsChanged(is_size_changed);
 
-  ///if (layer()) {
-  ///  if (parent_) {
-  ///    LayerOffsetData offset_data(
-  ///        parent_->CalculateOffsetToAncestorWithLayer(nullptr));
-  ///    offset_data += GetMirroredPosition().OffsetFromOrigin();
-  ///    SetLayerBounds(size(), offset_data);
-  ///  } else {
-  ///    SetLayerBounds(bounds_.size(),
-  ///                   LayerOffsetData() + bounds_.OffsetFromOrigin());
-  ///  }
-  ///
-  ///  // In RTL mode, if our width has changed, our children's mirrored bounds
-  ///  // will have changed. Update the child's layer bounds, or if it is not a
-  ///  // layer, the bounds of any layers inside the child.
-  ///  ///if (cr::i18n::IsRTL() && bounds_.width() != prev.width()) {
-  ///  ///  for (View* child : children_) {
-  ///  ///    child->UpdateChildLayerBounds(
-  ///  ///        LayerOffsetData(layer()->device_scale_factor(),
-  ///  ///                        child->GetMirroredPosition().OffsetFromOrigin()));
-  ///  ///  }
-  ///  ///}
-  ///} else {
-  ///  // If our bounds have changed, then any descendant layer bounds may have
-  ///  // changed. Update them accordingly.
-  ///  UpdateChildLayerBounds(CalculateOffsetToAncestorWithLayer(nullptr));
-  ///}
+  if (layer()) {
+    if (parent_) {
+      LayerOffsetData offset_data(
+          parent_->CalculateOffsetToAncestorWithLayer(nullptr));
+      offset_data += GetMirroredPosition().OffsetFromOrigin();
+      SetLayerBounds(size(), offset_data);
+    } else {
+      SetLayerBounds(bounds_.size(),
+                     LayerOffsetData() + bounds_.OffsetFromOrigin());
+    }
+  
+    // In RTL mode, if our width has changed, our children's mirrored bounds
+    // will have changed. Update the child's layer bounds, or if it is not a
+    // layer, the bounds of any layers inside the child.
+    if (crui::i18n::IsRTL() && bounds_.width() != prev.width()) {
+      for (View* child : children_) {
+        child->UpdateChildLayerBounds(
+            LayerOffsetData(layer()->device_scale_factor(),
+                            child->GetMirroredPosition().OffsetFromOrigin()));
+      }
+    }
+  } else {
+    // If our bounds have changed, then any descendant layer bounds may have
+    // changed. Update them accordingly.
+    UpdateChildLayerBounds(CalculateOffsetToAncestorWithLayer(nullptr));
+  }
 
   OnBoundsChanged(prev);
   ///if (bounds_ != prev)
@@ -457,7 +457,7 @@ void View::SetVisible(bool visible) {
 
     // This notifies all sub-views recursively.
     PropagateVisibilityNotifications(this, visible_);
-    ///UpdateLayerVisibility();
+    UpdateLayerVisibility();
 
     // Notify all other subscriptions of the change.
     OnPropertyChanged(&visible_, kPropertyEffectsPaint);
@@ -510,135 +510,135 @@ View::Views View::GetChildrenInZOrder() {
 // Transformations -------------------------------------------------------------
 
 gfx::Transform View::GetTransform() const {
-  ///if (!layer())
-  ///  return gfx::Transform();
-  ///
-  ///gfx::Transform transform = layer()->transform();
+  if (!layer())
+    return gfx::Transform();
+  
+  gfx::Transform transform = layer()->transform();
   ///gfx::ScrollOffset scroll_offset = layer()->CurrentScrollOffset();
-  ///// Offsets for layer-based scrolling are never negative, but the horizontal
-  ///// scroll direction is reversed in RTL via canvas flipping.
+  // Offsets for layer-based scrolling are never negative, but the horizontal
+  // scroll direction is reversed in RTL via canvas flipping.
   ///transform.Translate((cr::i18n::IsRTL() ? 1 : -1) * scroll_offset.x(),
   ///                    -scroll_offset.y());
-  ///return transform;
-  return gfx::Transform();
+  return transform;
 }
 
 void View::SetTransform(const gfx::Transform& transform) {
-  ///if (transform.IsIdentity()) {
-  ///  if (layer())
-  ///    layer()->SetTransform(transform);
-  ///  paint_to_layer_for_transform_ = false;
-  ///  CreateOrDestroyLayer();
-  ///} else {
-  ///  paint_to_layer_for_transform_ = true;
-  ///  CreateOrDestroyLayer();
-  ///  CR_DCHECK(layer() != nullptr);
-  ///  layer()->SetTransform(transform);
-  ///  layer()->ScheduleDraw();
-  ///}
-  ///
-  ///for (crui::Layer* layer_beneath : layers_beneath_)
-  ///  layer_beneath->SetTransform(transform);
+  if (transform.IsIdentity()) {
+    if (layer())
+      layer()->SetTransform(transform);
+    paint_to_layer_for_transform_ = false;
+    CreateOrDestroyLayer();
+  } else {
+    paint_to_layer_for_transform_ = true;
+    CreateOrDestroyLayer();
+    CR_DCHECK(layer() != nullptr);
+    layer()->SetTransform(transform);
+    ///layer()->ScheduleDraw();
+  }
+  
+  for (crui::Layer* layer_beneath : layers_beneath_)
+    layer_beneath->SetTransform(transform);
 }
 
-///void View::SetPaintToLayer(crui::LayerType layer_type) {
-///  // Avoid re-creating the layer if unnecessary.
-///  if (paint_to_layer_explicitly_set_) {
-///    CR_DCHECK(layer() != nullptr);
-///    if (layer()->type() == layer_type)
-///      return;
-///  }
-///
-///  DestroyLayerImpl(LayerChangeNotifyBehavior::DONT_NOTIFY);
-///  paint_to_layer_explicitly_set_ = true;
-///
-///  // We directly call |CreateLayer()| here to pass |layer_type|. A call to
-///  // |CreateOrDestroyLayer()| is therefore not necessary.
-///  CreateLayer(layer_type);
-///
-///  // Notify the parent chain about the layer change.
-///  NotifyParentsOfLayerChange();
-///}
+void View::SetPaintToLayer(crui::LayerType layer_type) {
+  // Avoid re-creating the layer if unnecessary.
+  if (paint_to_layer_explicitly_set_) {
+    CR_DCHECK(layer() != nullptr);
+    if (layer()->type() == layer_type)
+      return;
+  }
+
+  DestroyLayerImpl(LayerChangeNotifyBehavior::DONT_NOTIFY);
+  paint_to_layer_explicitly_set_ = true;
+
+  // We directly call |CreateLayer()| here to pass |layer_type|. A call to
+  // |CreateOrDestroyLayer()| is therefore not necessary.
+  CreateLayer(layer_type);
+
+  // Notify the parent chain about the layer change.
+  NotifyParentsOfLayerChange();
+}
 
 void View::DestroyLayer() {
   paint_to_layer_explicitly_set_ = false;
   CreateOrDestroyLayer();
 }
 
-///void View::AddLayerBeneathView(crui::Layer* new_layer) {
-///  DCHECK(new_layer);
-///  DCHECK(!base::Contains(layers_beneath_, new_layer)) << "Layer already added.";
-///
-///  new_layer->AddObserver(this);
-///  new_layer->SetVisible(GetVisible());
-///  layers_beneath_.push_back(new_layer);
-///
-///  // If painting to a layer already, ensure |new_layer| gets added and stacked
-///  // correctly. If not, this will happen on layer creation.
-///  if (layer()) {
-///    ui::Layer* parent_layer = layer()->parent();
-///    // Note that |new_layer| may have already been added to the parent, for
-///    // example when the layer of a LayerOwner is recreated.
-///    if (parent_layer && parent_layer != new_layer->parent())
-///      parent_layer->Add(new_layer);
-///    new_layer->SetBounds(gfx::Rect(new_layer->size()) +
-///                         layer()->bounds().OffsetFromOrigin());
-///    if (parent())
-///      parent()->ReorderLayers();
-///  }
-///
-///  CreateOrDestroyLayer();
-///
-///  layer()->SetFillsBoundsOpaquely(false);
-///}
+void View::AddLayerBeneathView(crui::Layer* new_layer) {
+  CR_DCHECK(new_layer);
+  CR_DCHECK(!cr::Contains(layers_beneath_, new_layer)) 
+      << "Layer already added.";
 
-///void View::RemoveLayerBeneathView(ui::Layer* old_layer) {
-///  RemoveLayerBeneathViewKeepInLayerTree(old_layer);
-///
-///  // Note that |old_layer| may have already been removed from its parent.
-///  ui::Layer* parent_layer = layer()->parent();
-///  if (parent_layer && parent_layer == old_layer->parent())
-///    parent_layer->Remove(old_layer);
-///
-///  CreateOrDestroyLayer();
-///}
+  new_layer->AddObserver(this);
+  new_layer->SetVisible(GetVisible());
+  layers_beneath_.push_back(new_layer);
 
-///void View::RemoveLayerBeneathViewKeepInLayerTree(ui::Layer* old_layer) {
-///  auto layer_pos =
-///      std::find(layers_beneath_.begin(), layers_beneath_.end(), old_layer);
-///  DCHECK(layer_pos != layers_beneath_.end())
-///      << "Attempted to remove a layer that was never added.";
-///  layers_beneath_.erase(layer_pos);
-///  old_layer->RemoveObserver(this);
-///}
+  // If painting to a layer already, ensure |new_layer| gets added and stacked
+  // correctly. If not, this will happen on layer creation.
+  if (layer()) {
+    crui::Layer* parent_layer = layer()->parent();
+    // Note that |new_layer| may have already been added to the parent, for
+    // example when the layer of a LayerOwner is recreated.
+    if (parent_layer && parent_layer != new_layer->parent())
+      parent_layer->Add(new_layer);
+    new_layer->SetBounds(gfx::Rect(new_layer->size()) +
+                         layer()->bounds().OffsetFromOrigin());
+    if (parent())
+      parent()->ReorderLayers();
+  }
 
-///std::vector<ui::Layer*> View::GetLayersInOrder() {
-///  // If not painting to a layer, there are no layers immediately related to this
-///  // view.
-///  if (!layer())
-///    return {};
-///
-///  std::vector<ui::Layer*> result;
-///  for (ui::Layer* layer_beneath : layers_beneath_)
-///    result.push_back(layer_beneath);
-///  result.push_back(layer());
-///
-///  return result;
-///}
+  CreateOrDestroyLayer();
 
-///void View::LayerDestroyed(ui::Layer* layer) {
-///  // Only layers added with |AddLayerBeneathView()| are observed so |layer| can
-///  // safely be removed.
-///  RemoveLayerBeneathView(layer);
-///}
+  layer()->SetFillsBoundsOpaquely(false);
+}
 
-///std::unique_ptr<ui::Layer> View::RecreateLayer() {
-///  std::unique_ptr<ui::Layer> old_layer = LayerOwner::RecreateLayer();
-///  Widget* widget = GetWidget();
-///  if (widget)
-///    widget->LayerTreeChanged();
-///  return old_layer;
-///}
+void View::RemoveLayerBeneathView(crui::Layer* old_layer) {
+  RemoveLayerBeneathViewKeepInLayerTree(old_layer);
+
+  // Note that |old_layer| may have already been removed from its parent.
+  crui::Layer* parent_layer = layer()->parent();
+  if (parent_layer && parent_layer == old_layer->parent())
+    parent_layer->Remove(old_layer);
+
+  CreateOrDestroyLayer();
+}
+
+void View::RemoveLayerBeneathViewKeepInLayerTree(crui::Layer* old_layer) {
+  auto layer_pos =
+      std::find(layers_beneath_.begin(), layers_beneath_.end(), old_layer);
+  CR_DCHECK(layer_pos != layers_beneath_.end())
+      << "Attempted to remove a layer that was never added.";
+  layers_beneath_.erase(layer_pos);
+  old_layer->RemoveObserver(this);
+}
+
+std::vector<crui::Layer*> View::GetLayersInOrder() {
+  // If not painting to a layer, there are no layers immediately related to this
+  // view.
+  if (!layer())
+    return {};
+
+  std::vector<crui::Layer*> result;
+  for (crui::Layer* layer_beneath : layers_beneath_)
+    result.push_back(layer_beneath);
+  result.push_back(layer());
+
+  return result;
+}
+
+void View::LayerDestroyed(crui::Layer* layer) {
+  // Only layers added with |AddLayerBeneathView()| are observed so |layer| can
+  // safely be removed.
+  RemoveLayerBeneathView(layer);
+}
+
+std::unique_ptr<crui::Layer> View::RecreateLayer() {
+  std::unique_ptr<crui::Layer> old_layer = LayerOwner::RecreateLayer();
+  Widget* widget = GetWidget();
+  if (widget)
+    widget->LayerTreeChanged();
+  return old_layer;
+}
 
 // RTL positioning -------------------------------------------------------------
 
@@ -1686,111 +1686,111 @@ void View::OnDidSchedulePaint(const gfx::Rect& rect) {}
 
 // Accelerated Painting --------------------------------------------------------
 
-///View::LayerOffsetData View::CalculateOffsetToAncestorWithLayer(
-///    ui::Layer** layer_parent) {
-///  if (layer()) {
-///    if (layer_parent)
-///      *layer_parent = layer();
-///    return LayerOffsetData(layer()->device_scale_factor());
-///  }
-///  if (!parent_)
-///    return LayerOffsetData();
-///
-///  LayerOffsetData offset_data =
-///      parent_->CalculateOffsetToAncestorWithLayer(layer_parent);
-///
-///  return offset_data + GetMirroredPosition().OffsetFromOrigin();
-///}
+View::LayerOffsetData View::CalculateOffsetToAncestorWithLayer(
+    crui::Layer** layer_parent) {
+  if (layer()) {
+    if (layer_parent)
+      *layer_parent = layer();
+    return LayerOffsetData(layer()->device_scale_factor());
+  }
+  if (!parent_)
+    return LayerOffsetData();
+
+  LayerOffsetData offset_data =
+      parent_->CalculateOffsetToAncestorWithLayer(layer_parent);
+
+  return offset_data + GetMirroredPosition().OffsetFromOrigin();
+}
 
 void View::UpdateParentLayer() {
-  ///if (!layer())
-  ///  return;
-  ///
-  ///ui::Layer* parent_layer = nullptr;
-  ///
-  ///if (parent_)
-  ///  parent_->CalculateOffsetToAncestorWithLayer(&parent_layer);
-  ///
-  ///ReparentLayer(parent_layer);
+  if (!layer())
+    return;
+  
+  crui::Layer* parent_layer = nullptr;
+  
+  if (parent_)
+    parent_->CalculateOffsetToAncestorWithLayer(&parent_layer);
+  
+  ReparentLayer(parent_layer);
 }
-///
-///void View::MoveLayerToParent(ui::Layer* parent_layer,
-///                             const LayerOffsetData& offset_data) {
-///  LayerOffsetData local_offset_data(offset_data);
-///  if (parent_layer != layer())
-///    local_offset_data += GetMirroredPosition().OffsetFromOrigin();
-///
-///  if (layer() && parent_layer != layer()) {
-///    // Adding the main layer can trigger a call to |SnapLayerToPixelBoundary()|.
-///    // That method assumes layers beneath have already been added. Therefore
-///    // layers beneath must be added first here. See crbug.com/961212.
-///    for (ui::Layer* layer_beneath : layers_beneath_)
-///      parent_layer->Add(layer_beneath);
-///    parent_layer->Add(layer());
-///
-///    SetLayerBounds(size(), local_offset_data);
-///  } else {
-///    internal::ScopedChildrenLock lock(this);
-///    for (auto* child : GetChildrenInZOrder())
-///      child->MoveLayerToParent(parent_layer, local_offset_data);
-///  }
-///}
-///
-///void View::UpdateLayerVisibility() {
-///  bool visible = visible_;
-///  for (const View* v = parent_; visible && v && !v->layer(); v = v->parent_)
-///    visible = v->GetVisible();
-///
-///  UpdateChildLayerVisibility(visible);
-///}
-///
-///void View::UpdateChildLayerVisibility(bool ancestor_visible) {
-///  const bool layers_visible = ancestor_visible && visible_;
-///  if (layer()) {
-///    layer()->SetVisible(layers_visible);
-///    for (ui::Layer* layer_beneath : layers_beneath_)
-///      layer_beneath->SetVisible(layers_visible);
-///  } else {
-///    internal::ScopedChildrenLock lock(this);
-///    for (auto* child : children_)
-///      child->UpdateChildLayerVisibility(layers_visible);
-///  }
-///}
+
+void View::MoveLayerToParent(crui::Layer* parent_layer,
+                             const LayerOffsetData& offset_data) {
+  LayerOffsetData local_offset_data(offset_data);
+  if (parent_layer != layer())
+    local_offset_data += GetMirroredPosition().OffsetFromOrigin();
+
+  if (layer() && parent_layer != layer()) {
+    // Adding the main layer can trigger a call to |SnapLayerToPixelBoundary()|.
+    // That method assumes layers beneath have already been added. Therefore
+    // layers beneath must be added first here. See crbug.com/961212.
+    for (crui::Layer* layer_beneath : layers_beneath_)
+      parent_layer->Add(layer_beneath);
+    parent_layer->Add(layer());
+
+    SetLayerBounds(size(), local_offset_data);
+  } else {
+    internal::ScopedChildrenLock lock(this);
+    for (auto* child : GetChildrenInZOrder())
+      child->MoveLayerToParent(parent_layer, local_offset_data);
+  }
+}
+
+void View::UpdateLayerVisibility() {
+  bool visible = visible_;
+  for (const View* v = parent_; visible && v && !v->layer(); v = v->parent_)
+    visible = v->GetVisible();
+
+  UpdateChildLayerVisibility(visible);
+}
+
+void View::UpdateChildLayerVisibility(bool ancestor_visible) {
+  const bool layers_visible = ancestor_visible && visible_;
+  if (layer()) {
+    layer()->SetVisible(layers_visible);
+    for (crui::Layer* layer_beneath : layers_beneath_)
+      layer_beneath->SetVisible(layers_visible);
+  } else {
+    internal::ScopedChildrenLock lock(this);
+    for (auto* child : children_)
+      child->UpdateChildLayerVisibility(layers_visible);
+  }
+}
 
 void View::DestroyLayerImpl(LayerChangeNotifyBehavior notify_parents) {
-  ///// Normally, adding layers beneath will trigger painting to a layer. It would
-  ///// leave this view in an inconsistent state if its layer were destroyed while
-  ///// layers beneath were still present. So, assume this doesn't happen.
-  ///DCHECK(layers_beneath_.empty());
-  ///
-  ///if (!layer())
-  ///  return;
-  ///
-  ///// Copy children(), since the loop below will mutate its result.
-  ///std::vector<ui::Layer*> children = layer()->children();
-  ///ui::Layer* new_parent = layer()->parent();
-  ///for (auto* child : children) {
-  ///  layer()->Remove(child);
-  ///  if (new_parent)
-  ///    new_parent->Add(child);
-  ///}
-  ///
-  ///LayerOwner::DestroyLayer();
-  ///
-  ///if (new_parent)
-  ///  ReorderLayers();
-  ///
-  ///UpdateChildLayerBounds(CalculateOffsetToAncestorWithLayer(nullptr));
-  ///
-  ///SchedulePaint();
-  ///
-  ///// Notify the parent chain about the layer change.
-  ///if (notify_parents == LayerChangeNotifyBehavior::NOTIFY)
-  ///  NotifyParentsOfLayerChange();
-  ///
-  ///Widget* widget = GetWidget();
-  ///if (widget)
-  ///  widget->LayerTreeChanged();
+  // Normally, adding layers beneath will trigger painting to a layer. It would
+  // leave this view in an inconsistent state if its layer were destroyed while
+  // layers beneath were still present. So, assume this doesn't happen.
+  CR_DCHECK(layers_beneath_.empty());
+  
+  if (!layer())
+    return;
+  
+  // Copy children(), since the loop below will mutate its result.
+  std::vector<crui::Layer*> children = layer()->children();
+  crui::Layer* new_parent = layer()->parent();
+  for (auto* child : children) {
+    layer()->Remove(child);
+    if (new_parent)
+      new_parent->Add(child);
+  }
+  
+  LayerOwner::DestroyLayer();
+  
+  if (new_parent)
+    ReorderLayers();
+  
+  UpdateChildLayerBounds(CalculateOffsetToAncestorWithLayer(nullptr));
+  
+  SchedulePaint();
+  
+  // Notify the parent chain about the layer change.
+  if (notify_parents == LayerChangeNotifyBehavior::NOTIFY)
+    NotifyParentsOfLayerChange();
+  
+  Widget* widget = GetWidget();
+  if (widget)
+    widget->LayerTreeChanged();
 }
 
 void View::NotifyParentsOfLayerChange() {
@@ -1803,15 +1803,15 @@ void View::NotifyParentsOfLayerChange() {
 }
 
 void View::UpdateChildLayerBounds(const LayerOffsetData& offset_data) {
-  ///if (layer()) {
-  ///  SetLayerBounds(size(), offset_data);
-  ///} else {
-  ///  internal::ScopedChildrenLock lock(this);
-  ///  for (auto* child : children_) {
-  ///    child->UpdateChildLayerBounds(
-  ///        offset_data + child->GetMirroredPosition().OffsetFromOrigin());
-  ///  }
-  ///}
+  if (layer()) {
+    SetLayerBounds(size(), offset_data);
+  } else {
+    internal::ScopedChildrenLock lock(this);
+    for (auto* child : children_) {
+      child->UpdateChildLayerBounds(
+          offset_data + child->GetMirroredPosition().OffsetFromOrigin());
+    }
+  }
 }
 
 ///void View::OnPaintLayer(const ui::PaintContext& context) {
@@ -1823,13 +1823,13 @@ void View::OnDeviceScaleFactorChanged(float old_device_scale_factor,
   snap_layer_to_pixel_boundary_ =
       (new_device_scale_factor - std::floor(new_device_scale_factor)) != 0.0f;
 
-  ///if (!layer())
-  ///  return;
-  ///
-  ///// There can be no subpixel offset if the layer has no parent.
-  ///if (!parent() || !layer()->parent())
-  ///  return;
-  ///
+  if (!layer())
+    return;
+  
+  // There can be no subpixel offset if the layer has no parent.
+  if (!parent() || !layer()->parent())
+    return;
+  
   ///if (layer()->parent() && layer()->GetCompositor() &&
   ///    layer()->GetCompositor()->is_pixel_canvas()) {
   ///  LayerOffsetData offset_data(
@@ -1837,64 +1837,64 @@ void View::OnDeviceScaleFactorChanged(float old_device_scale_factor,
   ///  offset_data += GetMirroredPosition().OffsetFromOrigin();
   ///  SnapLayerToPixelBoundary(offset_data);
   ///} else {
-  ///  SnapLayerToPixelBoundary(LayerOffsetData());
+    SnapLayerToPixelBoundary(LayerOffsetData());
   ///}
 }
 
 void View::CreateOrDestroyLayer() {
-  ///if (paint_to_layer_explicitly_set_ || paint_to_layer_for_transform_ ||
-  ///    !layers_beneath_.empty()) {
-  ///  // If we need to paint to a layer, make sure we have one.
-  ///  if (!layer())
-  ///    CreateLayer(ui::LAYER_TEXTURED);
-  ///} else if (layer()) {
-  ///  // If we don't, make sure we delete our layer.
-  ///  DestroyLayerImpl(LayerChangeNotifyBehavior::NOTIFY);
-  ///}
+  if (paint_to_layer_explicitly_set_ || paint_to_layer_for_transform_ ||
+      !layers_beneath_.empty()) {
+    // If we need to paint to a layer, make sure we have one.
+    if (!layer())
+      CreateLayer(crui::LAYER_TEXTURED);
+  } else if (layer()) {
+    // If we don't, make sure we delete our layer.
+    DestroyLayerImpl(LayerChangeNotifyBehavior::NOTIFY);
+  }
 }
 
-///void View::ReorderLayers() {
-///  View* v = this;
-///  while (v && !v->layer())
-///    v = v->parent();
-///
-///  Widget* widget = GetWidget();
-///  if (!v) {
-///    if (widget) {
-///      ui::Layer* layer = widget->GetLayer();
-///      if (layer)
-///        widget->GetRootView()->ReorderChildLayers(layer);
-///    }
-///  } else {
-///    v->ReorderChildLayers(v->layer());
-///  }
-///
-///  if (widget) {
-///    // Reorder the widget's child NativeViews in case a child NativeView is
-///    // associated with a view (e.g. via a NativeViewHost). Always do the
-///    // reordering because the associated NativeView's layer (if it has one)
-///    // is parented to the widget's layer regardless of whether the host view has
-///    // an ancestor with a layer.
-///    widget->ReorderNativeViews();
-///  }
-///}
-///
-///void View::ReorderChildLayers(ui::Layer* parent_layer) {
-///  if (layer() && layer() != parent_layer) {
-///    DCHECK_EQ(parent_layer, layer()->parent());
-///    parent_layer->StackAtBottom(layer());
-///    for (ui::Layer* layer_beneath : layers_beneath_)
-///      parent_layer->StackAtBottom(layer_beneath);
-///  } else {
-///    // Iterate backwards through the children so that a child with a layer
-///    // which is further to the back is stacked above one which is further to
-///    // the front.
-///    View::Views children = GetChildrenInZOrder();
-///    DCHECK_EQ(children_.size(), children.size());
-///    for (auto* child : base::Reversed(children))
-///      child->ReorderChildLayers(parent_layer);
-///  }
-///}
+void View::ReorderLayers() {
+  View* v = this;
+  while (v && !v->layer())
+    v = v->parent();
+
+  Widget* widget = GetWidget();
+  if (!v) {
+    if (widget) {
+      crui::Layer* layer = widget->GetLayer();
+      if (layer)
+        widget->GetRootView()->ReorderChildLayers(layer);
+    }
+  } else {
+    v->ReorderChildLayers(v->layer());
+  }
+
+  if (widget) {
+    // Reorder the widget's child NativeViews in case a child NativeView is
+    // associated with a view (e.g. via a NativeViewHost). Always do the
+    // reordering because the associated NativeView's layer (if it has one)
+    // is parented to the widget's layer regardless of whether the host view has
+    // an ancestor with a layer.
+    widget->ReorderNativeViews();
+  }
+}
+
+void View::ReorderChildLayers(crui::Layer* parent_layer) {
+  if (layer() && layer() != parent_layer) {
+    CR_DCHECK(parent_layer == layer()->parent());
+    parent_layer->StackAtBottom(layer());
+    for (crui::Layer* layer_beneath : layers_beneath_)
+      parent_layer->StackAtBottom(layer_beneath);
+  } else {
+    // Iterate backwards through the children so that a child with a layer
+    // which is further to the back is stacked above one which is further to
+    // the front.
+    View::Views children = GetChildrenInZOrder();
+    CR_DCHECK(children_.size() == children.size());
+    for (auto* child : cr::Reversed(children))
+      child->ReorderChildLayers(parent_layer);
+  }
+}
 
 void View::OnChildLayerChanged(View* child) {}
 
@@ -1947,8 +1947,8 @@ void View::Blur() {
 void View::TooltipTextChanged() {
   Widget* widget = GetWidget();
   // TooltipManager may be null if there is a problem creating it.
-  ///if (widget && widget->GetTooltipManager())
-  ///  widget->GetTooltipManager()->TooltipTextChanged(this);
+  if (widget && widget->GetTooltipManager())
+    widget->GetTooltipManager()->TooltipTextChanged(this);
 }
 
 // Drag and drop ---------------------------------------------------------------
@@ -2043,13 +2043,13 @@ void View::SchedulePaintInRectImpl(const gfx::Rect& rect) {
   OnDidSchedulePaint(rect);
   if (!visible_)
     return;
-  ///if (layer()) {
-  ///  layer()->SchedulePaint(rect);
-  ///} else if (parent_) {
-  ///  // Translate the requested paint rect to the parent's coordinate system
-  ///  // then pass this notification up to the parent.
-  ///  parent_->SchedulePaintInRectImpl(ConvertRectToParent(rect));
-  ///}
+  if (layer()) {
+    ///layer()->SchedulePaint(rect);
+  } else if (parent_) {
+    // Translate the requested paint rect to the parent's coordinate system
+    // then pass this notification up to the parent.
+    parent_->SchedulePaintInRectImpl(ConvertRectToParent(rect));
+  }
 }
 
 void View::SchedulePaintBoundsChanged(bool size_changed) {
@@ -2059,17 +2059,17 @@ void View::SchedulePaintBoundsChanged(bool size_changed) {
   // If we have a layer and the View's size did not change, we do not need to
   // schedule any paints since the layer will be redrawn at its new location
   // during the next Draw() cycle in the compositor.
-  ///if (!layer() || size_changed) {
-  ///  // Otherwise, if the size changes or we don't have a layer then we need to
-  ///  // use SchedulePaint to invalidate the area occupied by the View.
-  ///  SchedulePaint();
-  ///} else {
-  ///  // The compositor doesn't Draw() until something on screen changes, so
-  ///  // if our position changes but nothing is being animated on screen, then
-  ///  // tell the compositor to redraw the scene. We know layer() exists due to
-  ///  // the above if clause.
-  ///  layer()->ScheduleDraw();
-  ///}
+  if (!layer() || size_changed) {
+    // Otherwise, if the size changes or we don't have a layer then we need to
+    // use SchedulePaint to invalidate the area occupied by the View.
+    SchedulePaint();
+  } else {
+    // The compositor doesn't Draw() until something on screen changes, so
+    // if our position changes but nothing is being animated on screen, then
+    // tell the compositor to redraw the scene. We know layer() exists due to
+    // the above if clause.
+    ///layer()->ScheduleDraw();
+  }
 }
 
 void View::SchedulePaintOnParent() {
@@ -2192,18 +2192,18 @@ void View::AddChildViewAtImpl(View* view, int index) {
   // Ensure the layer tree matches the view tree before calling to any client
   // code. This way if client code further modifies the view tree we are in a
   // sane state.
-  ///const bool did_reparent_any_layers = view->UpdateParentLayers();
+  const bool did_reparent_any_layers = view->UpdateParentLayers();
   Widget* widget = GetWidget();
-  ///if (did_reparent_any_layers && widget)
-  ///  widget->LayerTreeChanged();
+  if (did_reparent_any_layers && widget)
+    widget->LayerTreeChanged();
 
-  ///ReorderLayers();
+  ReorderLayers();
 
   // Make sure the visibility of the child layers are correct.
   // If any of the parent View is hidden, then the layers of the subtree
   // rooted at |this| should be hidden. Otherwise, all the child layers should
   // inherit the visibility of the owner View.
-  ///view->UpdateLayerVisibility();
+  view->UpdateLayerVisibility();
 
   // Need to notify the layout manager because one of the callbacks below might
   // want to know the view's new preferred size, minimum size, etc.
@@ -2468,18 +2468,18 @@ void View::SetLayoutManagerImpl(std::unique_ptr<LayoutManager> layout_manager) {
 
 void View::SetLayerBounds(const gfx::Size& size,
                           const LayerOffsetData& offset_data) {
-  ///const gfx::Rect bounds = gfx::Rect(size) + offset_data.offset();
-  ///const bool bounds_changed = (bounds != layer()->GetTargetBounds());
-  ///layer()->SetBounds(bounds);
-  ///for (crui::Layer* layer_beneath : layers_beneath_) {
-  ///  layer_beneath->SetBounds(gfx::Rect(layer_beneath->size()) +
-  ///                           bounds.OffsetFromOrigin());
-  ///}
-  ///SnapLayerToPixelBoundary(offset_data);
-  ///if (bounds_changed) {
-  ///  for (ViewObserver& observer : observers_)
-  ///    observer.OnLayerTargetBoundsChanged(this);
-  ///}
+  const gfx::Rect bounds = gfx::Rect(size) + offset_data.offset();
+  const bool bounds_changed = (bounds != layer()->GetTargetBounds());
+  layer()->SetBounds(bounds);
+  for (crui::Layer* layer_beneath : layers_beneath_) {
+    layer_beneath->SetBounds(gfx::Rect(layer_beneath->size()) +
+                             bounds.OffsetFromOrigin());
+  }
+  SnapLayerToPixelBoundary(offset_data);
+  if (bounds_changed) {
+    for (ViewObserver& observer : observers_)
+      observer.OnLayerTargetBoundsChanged(this);
+  }
 }
 
 // Transformations -------------------------------------------------------------
@@ -2542,97 +2542,97 @@ bool View::ConvertRectFromAncestor(const View* ancestor,
 
 // Accelerated painting --------------------------------------------------------
 
-///void View::CreateLayer(crui::LayerType layer_type) {
-///  // A new layer is being created for the view. So all the layers of the
-///  // sub-tree can inherit the visibility of the corresponding view.
-///  {
-///    internal::ScopedChildrenLock lock(this);
-///    for (auto* child : children_)
-///      child->UpdateChildLayerVisibility(true);
-///  }
-///
-///  SetLayer(std::make_unique<ui::Layer>(layer_type));
-///  layer()->set_delegate(this);
-///  layer()->SetName(GetClassName());
-///
-///  UpdateParentLayers();
-///  UpdateLayerVisibility();
-///
-///  // The new layer needs to be ordered in the layer tree according
-///  // to the view tree. Children of this layer were added in order
-///  // in UpdateParentLayers().
-///  if (parent())
-///    parent()->ReorderLayers();
-///
-///  Widget* widget = GetWidget();
-///  if (widget)
-///    widget->LayerTreeChanged();
-///
-///  // Before having its own Layer, this View may have painted in to a Layer owned
-///  // by an ancestor View. Scheduling a paint on the parent View will erase this
-///  // View's painting effects on the ancestor View's Layer.
-///  // (See crbug.com/551492)
-///  SchedulePaintOnParent();
-///}
+void View::CreateLayer(crui::LayerType layer_type) {
+  // A new layer is being created for the view. So all the layers of the
+  // sub-tree can inherit the visibility of the corresponding view.
+  {
+    internal::ScopedChildrenLock lock(this);
+    for (auto* child : children_)
+      child->UpdateChildLayerVisibility(true);
+  }
 
-///bool View::UpdateParentLayers() {
-///  // Attach all top-level un-parented layers.
-///  if (layer()) {
-///    if (!layer()->parent()) {
-///      UpdateParentLayer();
-///      return true;
-///    }
-///    // The layers of any child views are already in place, so we can stop
-///    // iterating here.
-///    return false;
-///  }
-///  bool result = false;
-///  internal::ScopedChildrenLock lock(this);
-///  for (auto* child : children_) {
-///    if (child->UpdateParentLayers())
-///      result = true;
-///  }
-///  return result;
-///}
+  SetLayer(std::make_unique<crui::Layer>(layer_type));
+  layer()->set_delegate(this);
+  ///layer()->SetName(GetClassName());
 
-void View::OrphanLayers() {
-///  if (layer()) {
-///    ui::Layer* parent = layer()->parent();
-///    if (parent) {
-///      parent->Remove(layer());
-///      for (ui::Layer* layer_beneath : layers_beneath_)
-///        parent->Remove(layer_beneath);
-///    }
-///
-///    // The layer belonging to this View has already been orphaned. It is not
-///    // necessary to orphan the child layers.
-///    return;
-///  }
-///  internal::ScopedChildrenLock lock(this);
-///  for (auto* child : children_)
-///    child->OrphanLayers();
+  UpdateParentLayers();
+  UpdateLayerVisibility();
+
+  // The new layer needs to be ordered in the layer tree according
+  // to the view tree. Children of this layer were added in order
+  // in UpdateParentLayers().
+  if (parent())
+    parent()->ReorderLayers();
+
+  Widget* widget = GetWidget();
+  if (widget)
+    widget->LayerTreeChanged();
+
+  // Before having its own Layer, this View may have painted in to a Layer owned
+  // by an ancestor View. Scheduling a paint on the parent View will erase this
+  // View's painting effects on the ancestor View's Layer.
+  // (See crbug.com/551492)
+  SchedulePaintOnParent();
 }
 
-///void View::ReparentLayer(ui::Layer* parent_layer) {
-///  DCHECK_NE(layer(), parent_layer);
-///  if (parent_layer) {
-///    // Adding the main layer can trigger a call to |SnapLayerToPixelBoundary()|.
-///    // That method assumes layers beneath have already been added. Therefore
-///    // layers beneath must be added first here. See crbug.com/961212.
-///    for (ui::Layer* layer_beneath : layers_beneath_)
-///      parent_layer->Add(layer_beneath);
-///    parent_layer->Add(layer());
-///  }
-///  // Update the layer bounds; this needs to be called after this layer is added
-///  // to the new parent layer since snapping to pixel boundary will be affected
-///  // by the layer hierarchy.
-///  LayerOffsetData offset =
-///      parent_ ? parent_->CalculateOffsetToAncestorWithLayer(nullptr)
-///              : LayerOffsetData(layer()->device_scale_factor());
-///  SetLayerBounds(size(), offset + GetMirroredBounds().OffsetFromOrigin());
-///  layer()->SchedulePaint(GetLocalBounds());
-///  MoveLayerToParent(layer(), LayerOffsetData(layer()->device_scale_factor()));
-///}
+bool View::UpdateParentLayers() {
+  // Attach all top-level un-parented layers.
+  if (layer()) {
+    if (!layer()->parent()) {
+      UpdateParentLayer();
+      return true;
+    }
+    // The layers of any child views are already in place, so we can stop
+    // iterating here.
+    return false;
+  }
+  bool result = false;
+  internal::ScopedChildrenLock lock(this);
+  for (auto* child : children_) {
+    if (child->UpdateParentLayers())
+      result = true;
+  }
+  return result;
+}
+
+void View::OrphanLayers() {
+  if (layer()) {
+    crui::Layer* parent = layer()->parent();
+    if (parent) {
+      parent->Remove(layer());
+      for (crui::Layer* layer_beneath : layers_beneath_)
+        parent->Remove(layer_beneath);
+    }
+
+    // The layer belonging to this View has already been orphaned. It is not
+    // necessary to orphan the child layers.
+    return;
+  }
+  internal::ScopedChildrenLock lock(this);
+  for (auto* child : children_)
+    child->OrphanLayers();
+}
+
+void View::ReparentLayer(crui::Layer* parent_layer) {
+  CR_DCHECK(layer() != parent_layer);
+  if (parent_layer) {
+    // Adding the main layer can trigger a call to |SnapLayerToPixelBoundary()|.
+    // That method assumes layers beneath have already been added. Therefore
+    // layers beneath must be added first here. See crbug.com/961212.
+    for (crui::Layer* layer_beneath : layers_beneath_)
+      parent_layer->Add(layer_beneath);
+    parent_layer->Add(layer());
+  }
+  // Update the layer bounds; this needs to be called after this layer is added
+  // to the new parent layer since snapping to pixel boundary will be affected
+  // by the layer hierarchy.
+  LayerOffsetData offset =
+      parent_ ? parent_->CalculateOffsetToAncestorWithLayer(nullptr)
+              : LayerOffsetData(layer()->device_scale_factor());
+  SetLayerBounds(size(), offset + GetMirroredBounds().OffsetFromOrigin());
+  ///layer()->SchedulePaint(GetLocalBounds());
+  MoveLayerToParent(layer(), LayerOffsetData(layer()->device_scale_factor()));
+}
 
 // Input -----------------------------------------------------------------------
 
@@ -2852,8 +2852,8 @@ void View::UpdateTooltip() {
   // TODO(beng): The TooltipManager nullptr check can be removed when we
   //             consolidate Init() methods and make views_unittests Init() all
   //             Widgets that it uses.
-  ///if (widget && widget->GetTooltipManager())
-  ///  widget->GetTooltipManager()->UpdateTooltip();
+  if (widget && widget->GetTooltipManager())
+    widget->GetTooltipManager()->UpdateTooltip();
 }
 
 // Drag and drop ---------------------------------------------------------------

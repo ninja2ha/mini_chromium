@@ -468,7 +468,7 @@ bool DesktopWindowTreeHostWin::IsFullscreen() const {
 }
 
 void DesktopWindowTreeHostWin::SetOpacity(float opacity) {
-  ///content_window()->layer()->SetOpacity(opacity);
+  content_window()->layer()->SetOpacity(opacity);
 }
 
 void DesktopWindowTreeHostWin::SetAspectRatio(const gfx::SizeF& aspect_ratio) {

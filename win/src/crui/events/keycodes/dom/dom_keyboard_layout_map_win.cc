@@ -55,7 +55,8 @@ uint32_t DomKeyboardLayoutMapWin::GetKeyboardLayoutCount() {
 
   keyboard_layout_handles_.resize(keyboard_layout_count);
   const size_t copy_count = ::GetKeyboardLayoutList(
-      keyboard_layout_handles_.size(), keyboard_layout_handles_.data());
+      static_cast<int>(keyboard_layout_handles_.size()), 
+      keyboard_layout_handles_.data());
   if (!copy_count) {
     CR_DPLOG(Error) << "GetKeyboardLayoutList failed: ";
     return false;
@@ -72,7 +73,7 @@ uint32_t DomKeyboardLayoutMapWin::GetKeyboardLayoutCount() {
       iter != keyboard_layout_handles_.end())
     std::iter_swap(keyboard_layout_handles_.begin(), iter);
 
-  return keyboard_layout_handles_.size();
+  return static_cast<uint32_t>(keyboard_layout_handles_.size());
 }
 
 crui::DomKey DomKeyboardLayoutMapWin::GetDomKeyFromDomCodeForLayout(
@@ -100,10 +101,13 @@ crui::DomKey DomKeyboardLayoutMapWin::GetDomKeyFromDomCodeForLayout(
   wchar_t char_buffer[1] = {0};
   int key_type =
       ::ToUnicodeEx(virtual_key_code, scan_code, keyboard_state, char_buffer,
-                    cr::size(char_buffer), /*wFlags=*/0, keyboard_layout);
+                    static_cast<int>(cr::size(char_buffer)), /*wFlags=*/0, 
+                    keyboard_layout);
+
+  ULONG_PTR u_keyboard_layout = reinterpret_cast<ULONG_PTR>(keyboard_layout);
 
   // Handle special cases for Japanese keyboard layout.
-  if (0x04110411 == reinterpret_cast<unsigned int>(keyboard_layout)) {
+  if (0x04110411 == static_cast<unsigned int>(u_keyboard_layout)) {
     // Fix value for Japanese yen currency symbol.
     // Windows returns '\' for both IntlRo and IntlYen, even though IntlYen
     // should be the yen symbol.
@@ -121,7 +125,7 @@ crui::DomKey DomKeyboardLayoutMapWin::GetDomKeyFromDomCodeForLayout(
   }
 
   // Handle special cases for Korean keyboard layout.
-  if (0x04120412 == reinterpret_cast<unsigned int>(keyboard_layout)) {
+  if (0x04120412 == static_cast<unsigned int>(u_keyboard_layout)) {
     // Fix value for Korean won currency symbol.
     // Windows returns '\' for both Backslash and IntlBackslash, even though
     // IntlBackslash should be the won symbol.
@@ -142,7 +146,8 @@ crui::DomKey DomKeyboardLayoutMapWin::GetDomKeyFromDomCodeForLayout(
     // the dead key state. See crbug/977609 for details on how this problem
     // exhibits itself to users.
     ::ToUnicodeEx(0x0020, 0x0039, keyboard_state, char_buffer,
-                  cr::size(char_buffer), /*wFlags=*/0, keyboard_layout);
+                  static_cast<int>(cr::size(char_buffer)), /*wFlags=*/0, 
+                  keyboard_layout);
   }
   return key;
 }

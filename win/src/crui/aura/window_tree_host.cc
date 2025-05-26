@@ -149,7 +149,7 @@ cr::WeakPtr<WindowTreeHost> WindowTreeHost::GetWeakPtr() {
 gfx::Transform WindowTreeHost::GetRootTransform() const {
   gfx::Transform transform;
   transform.Scale(device_scale_factor_, device_scale_factor_);
-  ///transform *= window()->layer()->transform();
+  transform *= window()->layer()->transform();
   return transform;
 }
 
@@ -229,21 +229,11 @@ void WindowTreeHost::ConvertScreenInPixelsToDIP(gfx::Point* point) const {
 }
 
 void WindowTreeHost::ConvertDIPToPixels(gfx::Point* point) const {
-  ///auto point_3f = gfx::Point3F(gfx::PointF(*point));
-  ///GetRootTransform().TransformPoint(&point_3f);
-  ///*point = gfx::ToFlooredPoint(point_3f.AsPointF());
-  gfx::PointF point_f{ *point };
-  point_f = GetRootTransform().MapPoint(point_f);
-  *point = gfx::ToFlooredPoint(point_f);
+  *point = GetRootTransform().MapPoint(*point);
 }
 
 void WindowTreeHost::ConvertPixelsToDIP(gfx::Point* point) const {
-  ///auto point_3f = gfx::Point3F(gfx::PointF(*point));
-  ///GetInverseRootTransform().TransformPoint(&point_3f);
-  ///*point = gfx::ToFlooredPoint(point_3f.AsPointF());
-  gfx::PointF point_f{ *point };
-  point_f = GetInverseRootTransform().MapPoint(point_f);
-  *point = gfx::ToFlooredPoint(point_f);
+  *point = GetInverseRootTransform().MapPoint(*point);
 }
 
 void WindowTreeHost::SetCursor(gfx::NativeCursor cursor) {
@@ -449,7 +439,7 @@ void WindowTreeHost::CreateCompositor(///const viz::FrameSinkId& frame_sink_id,
   ///    use_external_begin_frame_control, force_software_compositor,
    ///   trace_environment_name);
   if (!dispatcher()) {
-    window()->Init(/*crui::LAYER_NOT_DRAWN*/);
+    window()->Init(crui::LAYER_NOT_DRAWN);
     window()->set_host(this);
     window()->SetName("RootWindow");
     dispatcher_ = std::make_unique<WindowEventDispatcher>(this);
@@ -489,20 +479,20 @@ void WindowTreeHost::OnHostResizedInPixels(
   // these two.
   ///if (!compositor_)
   ///  return;
-  ///
-  ///display::Display display =
-  ///    display::Screen::GetScreen()->GetDisplayNearestWindow(window());
-  ///device_scale_factor_ = display.device_scale_factor();
-  ///UpdateRootWindowSizeInPixels();
-  ///
-  ///// Passing |new_size_in_pixels| to set compositor size. It could be different
-  ///// from GetBoundsInPixels() on Windows to contain extra space for window
-  ///// transition animations and should be used to set compositor size instead of
-  ///// GetBoundsInPixels() in such case.
-  ///UpdateCompositorScaleAndSize(new_size_in_pixels);
-  ///
-  ///for (WindowTreeHostObserver& observer : observers_)
-  ///  observer.OnHostResized(this);
+  
+  display::Display display =
+      display::Screen::GetScreen()->GetDisplayNearestWindow(window());
+  device_scale_factor_ = display.device_scale_factor();
+  UpdateRootWindowSizeInPixels();
+  
+  // Passing |new_size_in_pixels| to set compositor size. It could be different
+  // from GetBoundsInPixels() on Windows to contain extra space for window
+  // transition animations and should be used to set compositor size instead of
+  // GetBoundsInPixels() in such case.
+  UpdateCompositorScaleAndSize(new_size_in_pixels);
+  
+  for (WindowTreeHostObserver& observer : observers_)
+    observer.OnHostResized(this);
 }
 
 void WindowTreeHost::OnHostWorkspaceChanged() {
@@ -548,10 +538,7 @@ void WindowTreeHost::OnDisplayMetricsChanged(const display::Display& display,
 
 gfx::Rect WindowTreeHost::GetTransformedRootWindowBoundsInPixels(
     const gfx::Size& size_in_pixels) const {
-  gfx::RectF new_bounds = gfx::RectF(gfx::Rect(size_in_pixels));
-  ///GetInverseRootTransform().TransformRect(&new_bounds);
-  new_bounds = GetInverseRootTransform().MapRect(new_bounds);
-  return gfx::ToEnclosingRect(new_bounds);
+  return GetInverseRootTransform().MapRect(gfx::Rect(size_in_pixels));
 }
 
 ////////////////////////////////////////////////////////////////////////////////

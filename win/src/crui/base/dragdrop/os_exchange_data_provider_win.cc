@@ -404,7 +404,7 @@ void OSExchangeDataProviderWin::SetVirtualFileContentsForTesting(
   cr::win::ScopedHGlobal<FILEGROUPDESCRIPTORW*> locked_mem(hdata);
 
   FILEGROUPDESCRIPTORW* descriptor = locked_mem.get();
-  descriptor->cItems = num_files;
+  descriptor->cItems = static_cast<UINT>(num_files);
 
   STGMEDIUM* storage = new STGMEDIUM;
   storage->tymed = TYMED_HGLOBAL;
@@ -460,7 +460,8 @@ void OSExchangeDataProviderWin::SetVirtualFileContentAtIndexForTesting(
     Microsoft::WRL::ComPtr<IStream> source_stream;
     if (SUCCEEDED(hr)) {
       source_stream =
-          ::SHCreateMemStream(data_buffer.data(), data_buffer.size());
+          ::SHCreateMemStream(data_buffer.data(), 
+                              static_cast<int>(data_buffer.size()));
     }
 
     if (source_stream) {
@@ -479,7 +480,8 @@ void OSExchangeDataProviderWin::SetVirtualFileContentAtIndexForTesting(
     storage_for_contents = std::make_unique<STGMEDIUM>();
     storage_for_contents->pUnkForRelease = nullptr;
     storage_for_contents->pstm =
-        ::SHCreateMemStream(data_buffer.data(), data_buffer.size());
+        ::SHCreateMemStream(data_buffer.data(), 
+                            static_cast<UINT>(data_buffer.size()));
     if (storage_for_contents->pstm) {
       // A properly implemented IDataObject::GetData moves the stream pointer
       // to end.
@@ -494,7 +496,7 @@ void OSExchangeDataProviderWin::SetVirtualFileContentAtIndexForTesting(
         GetStorageForBytes(data_buffer.data(), data_buffer.size()));
   }
   ClipboardFormatType type =
-      ClipboardFormatType::GetFileContentAtIndexType(index);
+      ClipboardFormatType::GetFileContentAtIndexType(static_cast<LONG>(index));
   // Pass ownership of |storage_for_contents| here.
   data_->contents_.push_back(std::make_unique<DataObjectImpl::StoredDataInfo>(
       type.ToFormatEtc(), storage_for_contents.release()));

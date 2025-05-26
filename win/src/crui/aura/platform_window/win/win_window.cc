@@ -260,7 +260,7 @@ LRESULT WinWindow::OnKeyEvent(UINT message, WPARAM w_param, LPARAM l_param) {
 
 LRESULT WinWindow::OnNCActivate(UINT message, WPARAM w_param, LPARAM l_param) {
   delegate_->OnActivationChanged(!!w_param);
-  return DefWindowProc(hwnd(), message, w_param, l_param);
+  return ::DefWindowProcW(hwnd(), message, w_param, l_param);
 }
 
 void WinWindow::OnClose() {

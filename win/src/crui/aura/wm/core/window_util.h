@@ -16,9 +16,9 @@
 
 namespace crui {
 
-///class Layer;
-///class LayerOwner;
-//class LayerTreeOwner;
+class Layer;
+class LayerOwner;
+class LayerTreeOwner;
 
 namespace aura {
 class Window;
@@ -62,19 +62,19 @@ CRUI_EXPORT const aura::Window* GetToplevelWindow(
 //
 // As a result of this |root| has freshly created layers, meaning the layers
 // have not yet been painted to.
-///CRUI_EXPORT std::unique_ptr<crui::LayerTreeOwner> RecreateLayers(
-///    crui::LayerOwner* root);
+CRUI_EXPORT std::unique_ptr<crui::LayerTreeOwner> RecreateLayers(
+    crui::LayerOwner* root);
 
-///using MapLayerFunc =
-///    cr::RepeatingCallback<std::unique_ptr<crui::Layer>(crui::LayerOwner*)>;
+using MapLayerFunc =
+    cr::RepeatingCallback<std::unique_ptr<crui::Layer>(crui::LayerOwner*)>;
 
 // Maps |map_func| over each layer of the layer tree and returns a copy of the
 // layer tree. The recursion stops at the level when |map_func| returns nullptr
 // on the owner's layer. MapLayers might return nullptr when |map_func| returns
 // nullptr on the root layer's owner.
-///CRUI_EXPORT std::unique_ptr<crui::LayerTreeOwner> RecreateLayersWithClosure(
-///    crui::LayerOwner* root,
-///    const MapLayerFunc& map_func);
+CRUI_EXPORT std::unique_ptr<crui::LayerTreeOwner> RecreateLayersWithClosure(
+    crui::LayerOwner* root,
+    const MapLayerFunc& map_func);
 
 // Returns a layer tree that mirrors |root|. Used for live window previews. If
 // |sync_bounds| is true, the bounds of all mirror layers except the root are

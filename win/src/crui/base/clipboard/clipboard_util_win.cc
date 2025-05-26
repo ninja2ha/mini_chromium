@@ -64,11 +64,13 @@ bool GetUrlFromHDrop(IDataObject* data_object,
       return false;
 
     wchar_t filename[MAX_PATH];
-    if (DragQueryFileW(hdrop.get(), 0, filename, cr::size(filename))) {
+    if (DragQueryFileW(hdrop.get(), 0, filename, 
+                       static_cast<UINT>(cr::size(filename)))) {
       wchar_t url_buffer[INTERNET_MAX_URL_LENGTH];
       if (0 == _wcsicmp(PathFindExtensionW(filename), L".url") &&
           GetPrivateProfileStringW(L"InternetShortcut", L"url", 0, url_buffer,
-                                   cr::size(url_buffer), filename)) {
+                                   static_cast<DWORD>(cr::size(url_buffer)), 
+                                   filename)) {
         *url = crurl::GURL(url_buffer);
         ::PathRemoveExtensionW(filename);
         title->assign(::PathFindFileNameW(filename));
@@ -215,7 +217,8 @@ cr::FilePath WriteFileContentsToTempFile(const cr::FilePath& suggested_name,
     cr::win::ScopedHGlobal<char*> data(hdata);
     // Don't write to the temp file for empty content--leave it at 0-bytes.
     if (!(data.Size() == 1 && data.get()[0] == '\0')) {
-      if (cr::WriteFile(temp_path, data.get(), data.Size()) < 0) {
+      if (cr::WriteFile(temp_path, data.get(), 
+                        static_cast<int>(data.Size())) < 0) {
         cr::DeleteFile(temp_path, false);
         return cr::FilePath();
       }
@@ -627,7 +630,8 @@ bool ClipboardUtil::GetVirtualFilesAsTempFiles(
   // Write the file contents to global memory.
   std::vector<HGLOBAL> memory_backed_contents;
   for (size_t i = 0; i < display_names.size(); i++) {
-    HGLOBAL hdata = CopyFileContentsToHGlobal(data_object, i);
+    HGLOBAL hdata = CopyFileContentsToHGlobal(data_object, 
+                                              static_cast<LONG>(i));
     memory_backed_contents.push_back(hdata);
   }
 

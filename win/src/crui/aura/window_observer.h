@@ -8,7 +8,7 @@
 ///#include "base/observer_list_types.h"
 #include "crbase/strings/string16.h"
 #include "crui/base/ui_export.h"
-#include "crui/aura/property_change_reason.h"
+#include "crui/compositor/property_change_reason.h"
 
 namespace crui {
 

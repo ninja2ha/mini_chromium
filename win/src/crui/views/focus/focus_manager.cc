@@ -178,7 +178,7 @@ bool FocusManager::RotatePaneFocus(Direction direction,
                                   return pane && pane->Contains(focused_view);
                                 });
     if (i != panes.cend())
-      index = i - panes.cbegin();
+      index = static_cast<int>(i - panes.cbegin());
   }
 
   // Rotate focus.

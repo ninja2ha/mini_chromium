@@ -139,6 +139,15 @@
     <Filter Include="base\cursor">
       <UniqueIdentifier>{7244edda-e5ba-42ec-a037-74f9d92f3c48}</UniqueIdentifier>
     </Filter>
+    <Filter Include="views\controls">
+      <UniqueIdentifier>{4ecc9068-602a-40c2-8942-900a0fc5adc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\controls\button">
+      <UniqueIdentifier>{7b2151d4-3bd8-47ff-a3b6-832b2efd7a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="compositor">
+      <UniqueIdentifier>{478b6c1e-f691-483a-8fb7-dc1e8fa5736e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crui\base\base_window.cc">
@@ -1107,6 +1116,33 @@
     <ClCompile Include="..\..\..\src\crui\events\platform\platform_event_source_stub.cc">
       <Filter>events\platform</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\controls\button\button.cc">
+      <Filter>views\controls\button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\controls\button\button_controller.cc">
+      <Filter>views\controls\button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\style\platform_style.cc">
+      <Filter>views\style</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_tree_owner.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_delegate.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_owner.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_type.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\crui\base\base_window.h">
@@ -1907,9 +1943,6 @@
     <ClInclude Include="..\..\..\src\crui\aura\null_window_targeter.h">
       <Filter>aura</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\aura\property_change_reason.h">
-      <Filter>aura</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\aura\scoped_enable_unadjusted_mouse_events.h">
       <Filter>aura</Filter>
     </ClInclude>
@@ -2278,6 +2311,48 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\base\cursor\image_cursors.h">
       <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller_delegate.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_observer.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\style\platform_style.h">
+      <Filter>views\style</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\property_change_reason.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_tree_owner.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_type.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_delegate.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner_delegate.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_observer.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h">
+      <Filter>gfx</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

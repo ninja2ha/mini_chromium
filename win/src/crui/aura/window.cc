@@ -44,10 +44,10 @@
 #include "crui/aura/window_targeter.h"
 #include "crui/aura/window_tracker.h"
 #include "crui/aura/window_tree_host.h"
-///#include "crui/base/layout.h"
+#include "crui/base/layout.h"
 ///#include "crui/base/ui_base_features.h"
 ///#include "crui/compositor/compositor.h"
-///#include "crui/compositor/layer.h"
+#include "crui/compositor/layer.h"
 ///#include "crui/compositor/layer_animator.h"
 #include "crui/display/display.h"
 #include "crui/display/screen.h"
@@ -176,8 +176,8 @@ Window::~Window() {
 
   // The layer will either be destroyed by |layer_owner_|'s dtor, or by whoever
   // acquired it.
-  ///layer()->set_delegate(NULL);
-  ///DestroyLayer();
+  layer()->set_delegate(NULL);
+  DestroyLayer();
 
   // If SetEmbedFrameSinkId() was called by client code, then we assume client
   // code is taking care of invalidating.
@@ -190,20 +190,20 @@ Window::~Window() {
   ///}
 }
 
-void Window::Init(/*ui::LayerType layer_type*/) {
+void Window::Init(crui::LayerType layer_type) {
   ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
 
-  ///SetLayer(std::make_unique<ui::Layer>(layer_type));
-  ///layer()->SetVisible(false);
+  SetLayer(std::make_unique<crui::Layer>(/*layer_type*/));
+  layer()->SetVisible(false);
   ///layer()->set_delegate(this);
   ///UpdateLayerName();
-  ///layer()->SetFillsBoundsOpaquely(!transparent_);
+  layer()->SetFillsBoundsOpaquely(!transparent_);
   Env::GetInstance()->NotifyWindowInitialized(this);
 }
 
 void Window::SetType(client::WindowType type) {
   // Cannot change type after the window is initialized.
-  ///CR_DCHECK(!layer());
+  CR_DCHECK(!layer());
   type_ = type;
 }
 
@@ -237,12 +237,12 @@ void Window::SetTransparent(bool transparent) {
   if (transparent == transparent_)
     return;
   transparent_ = transparent;
-  ///if (layer())
-  ///  layer()->SetFillsBoundsOpaquely(!transparent_);
+  if (layer())
+    layer()->SetFillsBoundsOpaquely(!transparent_);
 }
 
 void Window::SetFillsBoundsCompletely(bool fills_bounds) {
-  ///layer()->SetFillsBoundsCompletely(fills_bounds);
+  layer()->SetFillsBoundsCompletely(fills_bounds);
 }
 
 Window* Window::GetRootWindow() {
@@ -265,11 +265,11 @@ const WindowTreeHost* Window::GetHost() const {
 }
 
 void Window::Show() {
-  ///CR_DCHECK(visible_ == layer()->GetTargetVisibility());
+  CR_DCHECK(visible_ == layer()->GetTargetVisibility());
   // It is not allowed that a window is visible but the layers alpha is fully
   // transparent since the window would still be considered to be active but
   // could not be seen.
-  ///CR_DCHECK(!visible_ || layer()->GetTargetOpacity() > 0.0f);
+  CR_DCHECK(!visible_ || layer()->GetTargetOpacity() > 0.0f);
   SetVisible(true);
 }
 
@@ -283,8 +283,7 @@ bool Window::IsVisible() const {
   // when a Window is hidden, we want this function to return false immediately
   // after, even though the client may decide to animate the hide effect (and
   // so the layer will be visible for some time after Hide() is called).
-  ///return visible_ ? layer()->IsDrawn() : false;
-  return visible_;
+  return visible_ ? layer()->IsDrawn() : false;
 }
 
 gfx::Rect Window::GetBoundsInRootWindow() const {
@@ -317,7 +316,11 @@ void Window::SetTransform(const gfx::Transform& transform) {
   ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
   for (WindowObserver& observer : observers_)
     observer.OnWindowTargetTransformChanging(this, transform);
-  ///layer()->SetTransform(transform);
+  layer()->SetTransform(transform);
+}
+
+const gfx::Transform& Window::transform() const {
+  return layer()->transform();
 }
 
 void Window::SetLayoutManager(WindowLayoutManager* layout_manager) {
@@ -374,8 +377,7 @@ void Window::SetBoundsInScreen(const gfx::Rect& new_bounds_in_screen,
 }
 
 gfx::Rect Window::GetTargetBounds() const {
-  ///return layer() ? layer()->GetTargetBounds() : bounds();
-  return bounds();
+  return layer() ? layer()->GetTargetBounds() : bounds();
 }
 
 void Window::ScheduleDraw() {
@@ -409,8 +411,8 @@ void Window::StackChildBelow(Window* child, Window* target) {
 void Window::AddChild(Window* child) {
   ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
 
-  ///CR_DCHECK(layer()) << "Parent has not been Init()ed yet.";
-  ///CR_DCHECK(child->layer()) << "Child has not been Init()ed yt.";
+  CR_DCHECK(layer()) << "Parent has not been Init()ed yet.";
+  CR_DCHECK(child->layer()) << "Child has not been Init()ed yt.";
   WindowObserver::HierarchyChangeParams params;
   params.target = child;
   params.new_parent = this;
@@ -425,7 +427,7 @@ void Window::AddChild(Window* child) {
     child->parent()->RemoveChildImpl(child, this);
 
   child->parent_ = this;
-  ///layer()->Add(child->layer());
+  layer()->Add(child->layer());
 
   children_.push_back(child);
   if (layout_manager_)
@@ -503,7 +505,7 @@ void Window::ConvertPointToTarget(const Window* source,
     if (target_client)
       target_client->ConvertPointFromScreen(target, point);
   } else {
-    ///ui::Layer::ConvertPointToLayer(source->layer(), target->layer(), point);
+    crui::Layer::ConvertPointToLayer(source->layer(), target->layer(), point);
   }
 }
 
@@ -759,29 +761,29 @@ void* Window::GetNativeWindowProperty(const char* key) const {
   return reinterpret_cast<void*>(GetPropertyInternal(key, 0));
 }
 
-///void Window::OnDeviceScaleFactorChanged(float old_device_scale_factor,
-///                                        float new_device_scale_factor) {
-///  if (!IsRootWindow() && last_device_scale_factor_ != new_device_scale_factor &&
-///      IsEmbeddingExternalContent()) {
-///    last_device_scale_factor_ = new_device_scale_factor;
-///    parent_local_surface_id_allocator_->GenerateId();
-///    if (frame_sink_) {
-///      frame_sink_->SetLocalSurfaceId(
-///          GetCurrentLocalSurfaceIdAllocation().local_surface_id());
-///    }
-///  }
-///
-///  ScopedCursorHider hider(this);
-///  if (delegate_) {
-///    delegate_->OnDeviceScaleFactorChanged(old_device_scale_factor,
-///                                          new_device_scale_factor);
-///  }
-///}
+void Window::OnDeviceScaleFactorChanged(float old_device_scale_factor,
+                                        float new_device_scale_factor) {
+  ///if (!IsRootWindow() && last_device_scale_factor_ != new_device_scale_factor &&
+  ///    IsEmbeddingExternalContent()) {
+  ///  last_device_scale_factor_ = new_device_scale_factor;
+  ///  parent_local_surface_id_allocator_->GenerateId();
+  ///  if (frame_sink_) {
+  ///    frame_sink_->SetLocalSurfaceId(
+  ///        GetCurrentLocalSurfaceIdAllocation().local_surface_id());
+  ///  }
+  ///}
 
-///void Window::UpdateVisualState() {
-///  if (delegate_)
-///    delegate_->UpdateVisualState();
-///}
+  ScopedCursorHider hider(this);
+  if (delegate_) {
+    delegate_->OnDeviceScaleFactorChanged(old_device_scale_factor,
+                                          new_device_scale_factor);
+  }
+}
+
+void Window::UpdateVisualState() {
+  if (delegate_)
+    delegate_->UpdateVisualState();
+}
 
 #if !defined(NDEBUG)
 std::string Window::GetDebugInfo() const {
@@ -791,11 +793,10 @@ std::string Window::GetDebugInfo() const {
       GetName().empty() ? "Unknown" : GetName().c_str(), id(), bounds().x(),
       bounds().y(), bounds().width(), bounds().height(),
       visible_ ? "WindowVisible" : "WindowHidden",
-      ///layer()
-      ///    ? (layer()->GetTargetVisibility() ? "LayerVisible" : "LayerHidden")
-      ///    : "NoLayer",
-      ///layer() ? layer()->opacity() : 1.0f,
-      "LayerHidden", 1.0f,
+      layer()
+          ? (layer()->GetTargetVisibility() ? "LayerVisible" : "LayerHidden")
+          : "NoLayer",
+      layer() ? layer()->opacity() : 1.0f,
       OcclusionStateToString(occlusion_state_));
 }
 
@@ -865,20 +866,20 @@ void Window::SetBoundsInternal(const gfx::Rect& new_bounds) {
 
   // Always need to set the layer's bounds -- even if it is to the same thing.
   // This may cause important side effects such as stopping animation.
-  ///layer()->SetBounds(new_bounds);
+  layer()->SetBounds(new_bounds);
 
   // If we are currently not the layer's delegate, we will not get bounds
   // changed notification from the layer (this typically happens after animating
   // hidden). We must notify ourselves.
-  ///if (layer()->delegate() != this) {
-  ///  OnLayerBoundsChanged(old_bounds,
-  ///                       ui::PropertyChangeReason::NOT_FROM_ANIMATION);
-  ///}
+  if (layer()->delegate() != this) {
+    OnLayerBoundsChanged(old_bounds,
+                         crui::PropertyChangeReason::NOT_FROM_ANIMATION);
+  }
 }
 
 void Window::SetVisible(bool visible) {
-  ///if (visible == layer()->GetTargetVisibility())
-  //  return;  // No change.
+  if (visible == layer()->GetTargetVisibility())
+    return;  // No change.
 
   ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
 
@@ -890,7 +891,7 @@ void Window::SetVisible(bool visible) {
   if (visibility_client)
     visibility_client->UpdateLayerVisibility(this, visible);
   else
- ///   layer()->SetVisible(visible);
+    layer()->SetVisible(visible);
   visible_ = visible;
   SchedulePaint();
   if (parent_ && parent_->layout_manager_)
@@ -935,8 +936,8 @@ void Window::RemoveChildImpl(Window* child, Window* new_parent) {
   if (root_window && root_window != new_root_window)
     child->NotifyRemovingFromRootWindow(new_root_window);
 
-  ///if (child->OwnsLayer())
-  ///  layer()->Remove(child->layer());
+  if (child->OwnsLayer())
+    layer()->Remove(child->layer());
   child->parent_ = NULL;
   auto i = std::find(children_.begin(), children_.end(), child);
   CR_DCHECK(i != children_.end());
@@ -999,11 +1000,11 @@ void Window::StackChildRelativeTo(Window* child,
 void Window::StackChildLayerRelativeTo(Window* child,
                                        Window* target,
                                        StackDirection direction) {
-  ///CR_DCHECK(layer() && child->layer() && target->layer());
-  ///if (direction == STACK_ABOVE)
-  ///  layer()->StackAbove(child->layer(), target->layer());
-  ///else
-  ///  layer()->StackBelow(child->layer(), target->layer());
+  CR_DCHECK(layer() && child->layer() && target->layer());
+  if (direction == STACK_ABOVE)
+    layer()->StackAbove(child->layer(), target->layer());
+  else
+    layer()->StackBelow(child->layer(), target->layer());
 }
 
 void Window::OnStackingChanged() {
@@ -1306,60 +1307,60 @@ void Window::NotifyResizeLoopEnded() {
 ///  Paint(context);
 ///}
 
-///void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds,
-///                                  crui::PropertyChangeReason reason) {
-///  WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
-///
-///  bounds_ = layer()->bounds();
-///
-///  if (!IsRootWindow() && old_bounds.size() != bounds_.size() &&
-///      IsEmbeddingExternalContent()) {
-///    parent_local_surface_id_allocator_->GenerateId();
-///    if (frame_sink_) {
-///      frame_sink_->SetLocalSurfaceId(
-///          GetCurrentLocalSurfaceIdAllocation().local_surface_id());
-///    }
-///  }
-///
-///  if (layout_manager_)
-///    layout_manager_->OnWindowResized();
-///  if (delegate_)
-///    delegate_->OnBoundsChanged(old_bounds, bounds_);
-///  for (auto& observer : observers_)
-///    observer.OnWindowBoundsChanged(this, old_bounds, bounds_, reason);
-///}
+void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds,
+                                  crui::PropertyChangeReason reason) {
+  ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
 
-///void Window::OnLayerOpacityChanged(crui::PropertyChangeReason reason) {
-///  WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
-///  for (WindowObserver& observer : observers_)
-///    observer.OnWindowOpacitySet(this, reason);
-///}
+  bounds_ = layer()->bounds();
 
-///void Window::OnLayerAlphaShapeChanged() {
-///  WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
-///  for (WindowObserver& observer : observers_)
-///    observer.OnWindowAlphaShapeSet(this);
-///}
+  ///if (!IsRootWindow() && old_bounds.size() != bounds_.size() &&
+  ///    IsEmbeddingExternalContent()) {
+  ///  parent_local_surface_id_allocator_->GenerateId();
+  ///  if (frame_sink_) {
+  ///    frame_sink_->SetLocalSurfaceId(
+  ///        GetCurrentLocalSurfaceIdAllocation().local_surface_id());
+  ///  }
+  ///}
 
-///void Window::OnLayerFillsBoundsOpaquelyChanged() {
-///  // Let observers know that this window's transparent status has changed.
-///  // Transparent status can affect the occlusion computed for windows.
-///  WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
-///
-///  // Non-transparent windows should not have opaque regions for occlusion set.
-///  if (!transparent())
-///    CR_DCHECK(opaque_regions_for_occlusion_.empty());
-///
-///  for (WindowObserver& observer : observers_)
-///    observer.OnWindowTransparentChanged(this);
-///}
+  if (layout_manager_)
+    layout_manager_->OnWindowResized();
+  if (delegate_)
+    delegate_->OnBoundsChanged(old_bounds, bounds_);
+  for (auto& observer : observers_)
+    observer.OnWindowBoundsChanged(this, old_bounds, bounds_, reason);
+}
 
-///void Window::OnLayerTransformed(const gfx::Transform& old_transform,
-///                                crui::PropertyChangeReason reason) {
-///  WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
-///  for (WindowObserver& observer : observers_)
-///    observer.OnWindowTransformed(this, reason);
-///}
+void Window::OnLayerOpacityChanged(crui::PropertyChangeReason reason) {
+  ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowOpacitySet(this, reason);
+}
+
+void Window::OnLayerAlphaShapeChanged() {
+  ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowAlphaShapeSet(this);
+}
+
+void Window::OnLayerFillsBoundsOpaquelyChanged() {
+  // Let observers know that this window's transparent status has changed.
+  // Transparent status can affect the occlusion computed for windows.
+  ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
+
+  // Non-transparent windows should not have opaque regions for occlusion set.
+  if (!transparent())
+    CR_DCHECK(opaque_regions_for_occlusion_.empty());
+
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowTransparentChanged(this);
+}
+
+void Window::OnLayerTransformed(const gfx::Transform& old_transform,
+                                crui::PropertyChangeReason reason) {
+  ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowTransformed(this, reason);
+}
 
 bool Window::CanAcceptEvent(const crui::Event& event) {
   // The client may forbid certain windows from receiving events at a given
@@ -1420,43 +1421,43 @@ gfx::PointF Window::GetScreenLocationF(const crui::LocatedEvent& event) const {
   return screen_location;
 }
 
-///std::unique_ptr<crui::Layer> Window::RecreateLayer() {
-///  WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
-///
-///  ui::LayerAnimator* const animator = layer()->GetAnimator();
-///  const bool was_animating_opacity =
-///      animator->IsAnimatingProperty(ui::LayerAnimationElement::OPACITY);
-///  const bool was_animating_transform =
-///      animator->IsAnimatingProperty(ui::LayerAnimationElement::TRANSFORM);
-///
-///  std::unique_ptr<ui::Layer> old_layer = LayerOwner::RecreateLayer();
-///
-///  // If a frame sink is attached to the window, then allocate a new surface
-///  // id when layers are recreated, so the old layer contents are not affected
-///  // by a frame sent to the frame sink.
-///  if (GetFrameSinkId().is_valid() && old_layer)
-///    AllocateLocalSurfaceId();
-///
-///  // Observers are guaranteed to be notified when an opacity or transform
-///  // animation ends.
-///  if (was_animating_opacity) {
-///    for (WindowObserver& observer : observers_) {
-///      observer.OnWindowOpacitySet(this,
-///                                  ui::PropertyChangeReason::FROM_ANIMATION);
-///    }
-///  }
-///  if (was_animating_transform) {
-///    for (WindowObserver& observer : observers_) {
-///      observer.OnWindowTransformed(this,
-///                                   ui::PropertyChangeReason::FROM_ANIMATION);
-///    }
-///  }
-///
-///  for (WindowObserver& observer : observers_)
-///    observer.OnWindowLayerRecreated(this);
-///
-///  return old_layer;
-///}
+std::unique_ptr<crui::Layer> Window::RecreateLayer() {
+  ///WindowOcclusionTracker::ScopedPause pause_occlusion_tracking;
+  ///
+  ///ui::LayerAnimator* const animator = layer()->GetAnimator();
+  ///const bool was_animating_opacity =
+  ///    animator->IsAnimatingProperty(ui::LayerAnimationElement::OPACITY);
+  ///const bool was_animating_transform =
+  ///    animator->IsAnimatingProperty(ui::LayerAnimationElement::TRANSFORM);
+  
+  std::unique_ptr<crui::Layer> old_layer = LayerOwner::RecreateLayer();
+
+  // If a frame sink is attached to the window, then allocate a new surface
+  // id when layers are recreated, so the old layer contents are not affected
+  // by a frame sent to the frame sink.
+  ///if (GetFrameSinkId().is_valid() && old_layer)
+  ///  AllocateLocalSurfaceId();
+
+  // Observers are guaranteed to be notified when an opacity or transform
+  // animation ends.
+  ///if (was_animating_opacity) {
+  ///  for (WindowObserver& observer : observers_) {
+  ///    observer.OnWindowOpacitySet(this,
+  ///                                ui::PropertyChangeReason::FROM_ANIMATION);
+  ///  }
+  ///}
+  ///if (was_animating_transform) {
+  ///  for (WindowObserver& observer : observers_) {
+  ///    observer.OnWindowTransformed(this,
+  ///                                 ui::PropertyChangeReason::FROM_ANIMATION);
+  ///  }
+  ///}
+
+  for (WindowObserver& observer : observers_)
+    observer.OnWindowLayerRecreated(this);
+
+  return old_layer;
+}
 
 ///void Window::OnFirstSurfaceActivation(const viz::SurfaceInfo& surface_info) {
 ///  DCHECK_EQ(surface_info.id().frame_sink_id(), GetFrameSinkId());

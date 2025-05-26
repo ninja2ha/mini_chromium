@@ -179,7 +179,7 @@ void NativeWidgetAura::InitNativeWidget(Widget::InitParams params) {
   // do not add useless shadow layers by deriving one from the window type.
   SetShadowElevationFromInitParams(window_, params);
 
-  window_->Init(/*params.layer_type*/);
+  window_->Init(params.layer_type);
   // Set name after layer init so it propagates to layer.
   window_->SetName(params.name.empty() ? "NativeWidgetAura" : params.name);
   if (params.type == Widget::InitParams::TYPE_CONTROL)
@@ -306,9 +306,9 @@ Widget* NativeWidgetAura::GetTopLevelWidget() {
 ///  return window_ ? window_->layer()->GetCompositor() : nullptr;
 ///}
 
-///const ui::Layer* NativeWidgetAura::GetLayer() const {
-///  return window_ ? window_->layer() : nullptr;
-///}
+const crui::Layer* NativeWidgetAura::GetLayer() const {
+  return window_ ? window_->layer() : nullptr;
+}
 
 void NativeWidgetAura::ReorderNativeViews() {
   window_reorderer_->ReorderChildWindows();
@@ -671,8 +671,8 @@ void NativeWidgetAura::SetCanAppearInExistingFullscreenSpaces(
     bool can_appear_in_existing_fullscreen_spaces) {}
 
 void NativeWidgetAura::SetOpacity(float opacity) {
-  ///if (window_)
-  ///  window_->layer()->SetOpacity(opacity);
+  if (window_)
+    window_->layer()->SetOpacity(opacity);
 }
 
 void NativeWidgetAura::SetAspectRatio(const gfx::SizeF& aspect_ratio) {
@@ -864,9 +864,8 @@ int NativeWidgetAura::GetNonClientComponent(const gfx::Point& point) const {
 bool NativeWidgetAura::ShouldDescendIntoChildForEventHandling(
       aura::Window* child,
       const gfx::Point& location) {
-  ///return delegate_->ShouldDescendIntoChildForEventHandling(
-  ///    window_->layer(), child, child->layer(), location);
-  return false;
+  return delegate_->ShouldDescendIntoChildForEventHandling(
+      window_->layer(), child, child->layer(), location);
 }
 
 bool NativeWidgetAura::CanFocus() {

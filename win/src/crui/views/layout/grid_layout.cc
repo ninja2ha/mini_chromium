@@ -1121,9 +1121,9 @@ void GridLayout::DistributeRemainingHeight(ViewState* view_state) const {
   // Determine the number of resizable rows the view touches.
   int start_row = view_state->start_row;
   int max_row = view_state->start_row + view_state->row_span;
-  const int resizable_rows =
+  const int resizable_rows = static_cast<int>(
       std::count_if(rows_.cbegin() + start_row, rows_.cbegin() + max_row,
-                    [](const auto& row) { return row->IsResizable(); });
+                    [](const auto& row) { return row->IsResizable(); }));
 
   if (resizable_rows > 0) {
     // There are resizable rows, give the remaining height to them.

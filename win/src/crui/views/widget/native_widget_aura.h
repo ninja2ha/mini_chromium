@@ -56,9 +56,9 @@ class CRUI_EXPORT NativeWidgetAura : public internal::NativeWidgetPrivate,
       aura::Window* window);
 
   // Assign an icon to aura window.
-  static void AssignIconToAuraWindow(aura::Window* window,
-                                     const gfx::ImageSkia& window_icon,
-                                     const gfx::ImageSkia& app_icon);
+  ///static void AssignIconToAuraWindow(aura::Window* window,
+  ///                                   const gfx::ImageSkia& window_icon,
+  ///                                   const gfx::ImageSkia& app_icon);
 
   // If necessary, sets the ShadowElevation of |window| from |params|.
   static void SetShadowElevationFromInitParams(
@@ -81,7 +81,7 @@ class CRUI_EXPORT NativeWidgetAura : public internal::NativeWidgetPrivate,
   gfx::NativeWindow GetNativeWindow() const override;
   Widget* GetTopLevelWidget() override;
   ///const ui::Compositor* GetCompositor() const override;
-  ///const ui::Layer* GetLayer() const override;
+  const crui::Layer* GetLayer() const override;
   void ReorderNativeViews() override;
   void ViewRemoved(View* view) override;
   void SetNativeWindowProperty(const char* name, void* value) override;

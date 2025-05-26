@@ -479,7 +479,7 @@ void DesktopNativeWidgetAura::InitNativeWidget(Widget::InitParams params) {
 
   NativeWidgetAura::RegisterNativeWidgetForWindow(this, content_window_);
   content_window_->SetType(GetAuraWindowTypeForWidgetType(params.type));
-  content_window_->Init(/*params.layer_type*/);
+  content_window_->Init(params.layer_type);
   ///wm::SetShadowElevation(content_window_, wm::kShadowElevationNone);
 
   if (!desktop_window_tree_host_) {
@@ -635,9 +635,9 @@ Widget* DesktopNativeWidgetAura::GetTopLevelWidget() {
 ///  return content_window_ ? content_window_->layer()->GetCompositor() : nullptr;
 ///}
 
-///const ui::Layer* DesktopNativeWidgetAura::GetLayer() const {
-///  return content_window_ ? content_window_->layer() : nullptr;
-///}
+const crui::Layer* DesktopNativeWidgetAura::GetLayer() const {
+  return content_window_ ? content_window_->layer() : nullptr;
+}
 
 void DesktopNativeWidgetAura::ReorderNativeViews() {
   if (!content_window_)
@@ -1066,9 +1066,8 @@ int DesktopNativeWidgetAura::GetNonClientComponent(
 bool DesktopNativeWidgetAura::ShouldDescendIntoChildForEventHandling(
       aura::Window* child,
       const gfx::Point& location) {
-  ///return native_widget_delegate_->ShouldDescendIntoChildForEventHandling(
-  ///    content_window_->layer(), child, child->layer(), location);
-  return false;
+  return native_widget_delegate_->ShouldDescendIntoChildForEventHandling(
+      content_window_->layer(), child, child->layer(), location);
 }
 
 bool DesktopNativeWidgetAura::CanFocus() {

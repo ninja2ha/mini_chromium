@@ -871,7 +871,7 @@ bool HWNDMessageHandler::SetTitle(const cr::string16& title) {
   if (len_with_null - 1 == title.length() &&
       ::GetWindowTextW(hwnd(),
                        cr::WriteInto(&current_title, len_with_null),
-                       len_with_null) &&
+                       static_cast<int>(len_with_null)) &&
       current_title == title)
     return false;
   ::SetWindowTextW(hwnd(), title.c_str());
@@ -2635,8 +2635,8 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
   size_t num_points = LOWORD(w_param);
   std::unique_ptr<TOUCHINPUT[]> input(new TOUCHINPUT[num_points]);
   if (crui::GetTouchInputInfoWrapper(reinterpret_cast<HTOUCHINPUT>(l_param),
-                                      num_points, input.get(),
-                                      sizeof(TOUCHINPUT))) {
+                                     static_cast<UINT>(num_points), input.get(),
+                                     static_cast<int>(sizeof(TOUCHINPUT)))) {
     // input[i].dwTime doesn't necessarily relate to the system time at all,
     // so use base::TimeTicks::Now().
     const cr::TimeTicks event_time = cr::TimeTicks::Now();
@@ -3136,7 +3136,8 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypeTouch(UINT message,
   crui::TouchEvent event(
       event_type, touch_point, event_time,
       crui::PointerDetails(crui::EventPointerType::POINTER_TYPE_TOUCH,
-                           mapped_pointer_id, radius_x, radius_y, pressure,
+                           static_cast<crui::PointerId>(mapped_pointer_id), 
+                           radius_x, radius_y, pressure,
                            static_cast<float>(rotation_angle)),
       crui::GetModifiersFromKeyState());
 
@@ -3293,7 +3294,8 @@ void HWNDMessageHandler::GenerateTouchEvent(crui::EventType event_type,
                                             TouchEvents* touch_events) {
   crui::TouchEvent event(
       event_type, point, time_stamp,
-      crui::PointerDetails(crui::EventPointerType::POINTER_TYPE_TOUCH, id));
+      crui::PointerDetails(crui::EventPointerType::POINTER_TYPE_TOUCH, 
+                           static_cast<crui::PointerId>(id)));
 
   event.set_flags(crui::GetModifiersFromKeyState());
 

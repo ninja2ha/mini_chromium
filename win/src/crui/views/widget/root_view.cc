@@ -309,49 +309,49 @@ crui::EventTargeter* RootView::GetDefaultEventTargeter() {
 }
 
 void RootView::OnEventProcessingStarted(crui::Event* event) {
-  ///if (!event->IsGestureEvent())
-  ///  return;
-  ///
-  ///crui::GestureEvent* gesture_event = event->AsGestureEvent();
-  ///
-  ///// Do not process ui::ET_GESTURE_BEGIN events.
-  ///if (gesture_event->type() == ui::ET_GESTURE_BEGIN) {
-  ///  event->SetHandled();
-  ///  return;
-  ///}
-  ///
-  ///// Do not process ui::ET_GESTURE_END events if they do not correspond to the
-  ///// removal of the final touch point or if no gesture handler has already
-  ///// been set.
-  ///if (gesture_event->type() == ui::ET_GESTURE_END &&
-  ///    (gesture_event->details().touch_points() > 1 ||
-  ///     !gesture_handler_)) {
-  ///  event->SetHandled();
-  ///  return;
-  ///}
-  ///
-  ///// Do not process subsequent gesture scroll events if no handler was set for
-  ///// a ui::ET_GESTURE_SCROLL_BEGIN event.
-  ///if (!gesture_handler_ &&
-  ///    (gesture_event->type() == ui::ET_GESTURE_SCROLL_UPDATE ||
-  ///     gesture_event->type() == ui::ET_GESTURE_SCROLL_END ||
-  ///     gesture_event->type() == ui::ET_SCROLL_FLING_START)) {
-  ///  event->SetHandled();
-  ///  return;
-  ///}
-  ///
-  ///gesture_handler_set_before_processing_ = !!gesture_handler_;
+  if (!event->IsGestureEvent())
+    return;
+  
+  crui::GestureEvent* gesture_event = event->AsGestureEvent();
+  
+  // Do not process ui::ET_GESTURE_BEGIN events.
+  if (gesture_event->type() == crui::ET_GESTURE_BEGIN) {
+    event->SetHandled();
+    return;
+  }
+  
+  // Do not process ui::ET_GESTURE_END events if they do not correspond to the
+  // removal of the final touch point or if no gesture handler has already
+  // been set.
+  if (gesture_event->type() == crui::ET_GESTURE_END &&
+      (gesture_event->details().touch_points() > 1 ||
+       !gesture_handler_)) {
+    event->SetHandled();
+    return;
+  }
+  
+  // Do not process subsequent gesture scroll events if no handler was set for
+  // a ui::ET_GESTURE_SCROLL_BEGIN event.
+  if (!gesture_handler_ &&
+      (gesture_event->type() == crui::ET_GESTURE_SCROLL_UPDATE ||
+       gesture_event->type() == crui::ET_GESTURE_SCROLL_END ||
+       gesture_event->type() == crui::ET_SCROLL_FLING_START)) {
+    event->SetHandled();
+    return;
+  }
+  
+  gesture_handler_set_before_processing_ = !!gesture_handler_;
 }
 
 void RootView::OnEventProcessingFinished(crui::Event* event) {
   // If |event| was not handled and |gesture_handler_| was not set by the
   // dispatch of a previous gesture event, then no default gesture handler
   // should be set prior to the next gesture event being received.
-  ///if (event->IsGestureEvent() &&
-  ///    !event->handled() &&
-  ///    !gesture_handler_set_before_processing_) {
-  ///  gesture_handler_ = nullptr;
-  ///}
+  if (event->IsGestureEvent() &&
+      !event->handled() &&
+      !gesture_handler_set_before_processing_) {
+    gesture_handler_ = nullptr;
+  }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -386,7 +386,9 @@ bool RootView::OnMousePressed(const crui::MouseEvent& event) {
        mouse_pressed_handler_ && (mouse_pressed_handler_ != this);
        mouse_pressed_handler_ = mouse_pressed_handler_->parent()) {
     CR_DVLOG(1) << "OnMousePressed testing "
-        << mouse_pressed_handler_->GetClassName();
+        << mouse_pressed_handler_->GetClassName()
+        << ", pos:" << event.location().ToString()
+        << ", id:" << mouse_pressed_handler_->GetID();
     if (!mouse_pressed_handler_->GetEnabled()) {
       // Disabled views should eat events instead of propagating them upwards.
       hit_disabled_view = true;
@@ -646,8 +648,8 @@ void RootView::SetMouseHandler(View* new_mh) {
 ///}
 
 void RootView::UpdateParentLayer() {
-  ///if (layer())
-  ///  ReparentLayer(widget_->GetLayer());
+  if (layer())
+    ReparentLayer(widget_->GetLayer());
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -681,12 +683,12 @@ void RootView::VisibilityChanged(View* /*starting_from*/, bool is_visible) {
 }
 
 void RootView::OnDidSchedulePaint(const gfx::Rect& rect) {
-  ///if (!layer()) {
+  if (!layer()) {
     gfx::Rect xrect = ConvertRectToParent(rect);
     gfx::Rect invalid_rect = gfx::IntersectRects(GetLocalBounds(), xrect);
     if (!invalid_rect.IsEmpty())
       widget_->SchedulePaintInRect(invalid_rect);
-  ///}
+  }
 }
 
 ///void RootView::OnPaint(gfx::Canvas* canvas) {
@@ -696,14 +698,14 @@ void RootView::OnDidSchedulePaint(const gfx::Rect& rect) {
 ///  View::OnPaint(canvas);
 ///}
 
-///View::LayerOffsetData RootView::CalculateOffsetToAncestorWithLayer(
-///    ui::Layer** layer_parent) {
-///  if (layer() || !widget_->GetLayer())
-///    return View::CalculateOffsetToAncestorWithLayer(layer_parent);
-///  if (layer_parent)
-///    *layer_parent = widget_->GetLayer();
-///  return LayerOffsetData(widget_->GetLayer()->device_scale_factor());
-///}
+View::LayerOffsetData RootView::CalculateOffsetToAncestorWithLayer(
+    crui::Layer** layer_parent) {
+  if (layer() || !widget_->GetLayer())
+    return View::CalculateOffsetToAncestorWithLayer(layer_parent);
+  if (layer_parent)
+    *layer_parent = widget_->GetLayer();
+  return LayerOffsetData(widget_->GetLayer()->device_scale_factor());
+}
 
 View::DragInfo* RootView::GetDragInfo() {
   return &drag_info_;

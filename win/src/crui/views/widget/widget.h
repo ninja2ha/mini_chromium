@@ -44,7 +44,7 @@ class Accelerator;
 ///class DefaultThemeProvider;
 class GestureRecognizer;
 ///class InputMethod;
-///class Layer;
+class Layer;
 class OSExchangeData;
 ///class ThemeProvider;
 
@@ -306,7 +306,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
 
     // Only used by NativeWidgetAura. Specifies the type of layer for the
     // aura::Window.
-    ///crui::LayerType layer_type = ui::LAYER_TEXTURED;
+    crui::LayerType layer_type = crui::LAYER_TEXTURED;
 
     // Only used by Aura. Provides a context window whose RootWindow is
     // consulted during widget creation to determine where in the Window
@@ -787,11 +787,11 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   ///const ui::Compositor* GetCompositor() const;
 
   // Returns the widget's layer, if any.
-  ///ui::Layer* GetLayer() {
-  ///  return const_cast<ui::Layer*>(
-  ///      const_cast<const Widget*>(this)->GetLayer());
-  ///}
-  ///const ui::Layer* GetLayer() const;
+  crui::Layer* GetLayer() {
+    return const_cast<crui::Layer*>(
+        const_cast<const Widget*>(this)->GetLayer());
+  }
+  const crui::Layer* GetLayer() const;
 
   // Reorders the widget's child NativeViews which are associated to the view
   // tree (eg via a NativeViewHost) to match the z-order of the views in the
@@ -919,11 +919,11 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   Widget* AsWidget() override;
   const Widget* AsWidget() const override;
   bool SetInitialFocus(crui::WindowShowState show_state) override;
-  ///bool ShouldDescendIntoChildForEventHandling(
-  ///    ui::Layer* root_layer,
-  ///    gfx::NativeView child,
-  ///    ui::Layer* child_layer,
-  ///    const gfx::Point& location) override;
+  bool ShouldDescendIntoChildForEventHandling(
+      crui::Layer* root_layer,
+      gfx::NativeView child,
+      crui::Layer* child_layer,
+      const gfx::Point& location) override;
   void LayoutRootViewIfNecessary() override;
 
   // Overridden from crui::EventSource:
@@ -985,7 +985,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
 
   // Returns the Views whose layers are parented directly to the Widget's
   // layer.
-  ///const View::Views& GetViewsWithLayers();
+  const View::Views& GetViewsWithLayers();
 
   // Undoes LockPaintAsActive(). Called by PaintAsActiveLock destructor.
   void UnlockPaintAsActive();
@@ -1098,7 +1098,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   bool auto_release_capture_ = true;
 
   // See description in GetViewsWithLayers().
-  ///View::Views views_with_layers_;
+  View::Views views_with_layers_;
 
   // Does |views_with_layers_| need updating?
   bool views_with_layers_dirty_ = false;
