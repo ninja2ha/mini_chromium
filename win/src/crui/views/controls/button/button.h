@@ -187,7 +187,7 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
   void OnDragDone() override;
   // Instead of overriding this, subclasses that want custom painting should use
   // PaintButtonContents.
-  ///void OnPaint(gfx::Canvas* canvas) final;
+  void OnPaint(gfx::Canvas* canvas) final;
   ///void GetAccessibleNodeData(ui::AXNodeData* node_data) override;
   void VisibilityChanged(View* starting_from, bool is_visible) override;
   void ViewHierarchyChanged(
@@ -261,7 +261,7 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
   // Override to paint custom button contents. Any background or border set on
   // the view will be painted before this is called and |focus_painter_| will be
   // painted afterwards.
-  ///virtual void PaintButtonContents(gfx::Canvas* canvas);
+  virtual void PaintButtonContents(gfx::Canvas* canvas);
 
   // Returns true if the button should enter hovered state; that is, if the
   // mouse is over the button, and no other window has capture (which would

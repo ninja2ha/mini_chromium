@@ -53,6 +53,8 @@
 #include "crui/events/win/system_event_state_lookup.h"
 ///#include "crui/gfx/canvas.h"
 #include "crui/gfx/geometry/insets.h"
+#include "crui/gfx/canvas.h"
+#include "crui/gfx/canvas_paint_win.h"
 ///#include "crui/gfx/icon_util.h"
 ///#include "crui/gfx/path_win.h"
 #include "crui/gfx/win/hwnd_util.h"
@@ -238,7 +240,35 @@ void EnableMenuItemByCommand(HMENU menu, UINT command, bool enabled) {
 // Callback used to notify child windows that the top level window received a
 // DWMCompositionChanged message.
 BOOL CALLBACK SendDwmCompositionChanged(HWND window, LPARAM param) {
-  SendMessage(window, WM_DWMCOMPOSITIONCHANGED, 0, 0);
+  ::SendMessageW(window, WM_DWMCOMPOSITIONCHANGED, 0, 0);
+  return TRUE;
+}
+
+// See comments in OnNCPaint() for details of this struct.
+struct ClipState {
+  // The window being painted.
+  HWND parent;
+
+  // DC painting to.
+  HDC dc;
+
+  // Origin of the window in terms of the screen.
+  int x;
+  int y;
+};
+
+// See comments in OnNCPaint() for details of this function.
+static BOOL CALLBACK ClipDCToChild(HWND window, LPARAM param) {
+  ClipState* clip_state = reinterpret_cast<ClipState*>(param);
+  if (GetParent(window) == clip_state->parent && IsWindowVisible(window)) {
+    RECT bounds;
+    GetWindowRect(window, &bounds);
+    ::ExcludeClipRect(clip_state->dc,
+                      bounds.left - clip_state->x,
+                      bounds.top - clip_state->y,
+                      bounds.right - clip_state->x,
+                      bounds.bottom - clip_state->y);
+  }
   return TRUE;
 }
 
@@ -429,6 +459,9 @@ HWNDMessageHandler::HWNDMessageHandler(HWNDMessageHandlerDelegate* delegate,
       lock_updates_count_(0),
       ignore_window_pos_changes_(false),
       last_monitor_(nullptr),
+      use_layered_buffer_(false),
+      layered_alpha_(255),
+      waiting_for_redraw_layered_window_contents_(false),
       is_first_nccalc_(true),
       menu_depth_(0),
       id_generator_(0),
@@ -894,6 +927,31 @@ void HWNDMessageHandler::FrameTypeChanged() {
     dwm_transition_desired_ = true;
   if (!dwm_transition_desired_ || !IsFullscreen())
     PerformDwmTransition();
+}
+
+void HWNDMessageHandler::SchedulePaintInRect(const gfx::Rect& rect) {
+  if (use_layered_buffer_) {
+    // We must update the back-buffer immediately, since Windows' handling of
+    // invalid rects is somewhat mysterious.
+    invalid_rect_.Union(rect);
+
+    // In some situations, such as drag and drop, when Windows itself runs a
+    // nested message loop our message loop appears to be starved and we don't
+    // receive calls to DidProcessMessage(). This only seems to affect layered
+    // windows, so we schedule a redraw manually using a task, since those never
+    // seem to be starved. Also, wtf.
+    if (!waiting_for_redraw_layered_window_contents_) {
+      waiting_for_redraw_layered_window_contents_ = true;
+      cr::MessageLoop::current()->task_runner()->PostTask(
+          CR_FROM_HERE,
+          cr::BindOnce(&HWNDMessageHandler::RedrawLayeredWindowContents,
+              msg_handler_weak_factory_.GetWeakPtr()));
+    }
+  } else {
+    // InvalidateRect() expects client coordinates.
+    RECT r = rect.ToRECT();
+    InvalidateRect(hwnd(), &r, FALSE);
+  }
 }
 
 ///void HWNDMessageHandler::SetWindowIcons(const gfx::ImageSkia& window_icon,
@@ -1538,6 +1596,35 @@ void HWNDMessageHandler::UnlockUpdates() {
   }
 }
 
+void HWNDMessageHandler::RedrawLayeredWindowContents() {
+  waiting_for_redraw_layered_window_contents_ = false;
+  if (invalid_rect_.IsEmpty())
+    return;
+
+  // We need to clip to the dirty rect ourselves.
+  layered_window_contents_->sk_canvas()->save();
+  double scale = display::win::GetDPIScale();
+  layered_window_contents_->sk_canvas()->scale(
+      SkScalar(scale),SkScalar(scale));
+  layered_window_contents_->ClipRect(invalid_rect_);
+  delegate_->PaintLayeredWindow(layered_window_contents_.get());
+  layered_window_contents_->sk_canvas()->scale(
+      SkScalar(1.0/scale),SkScalar(1.0/scale));
+  layered_window_contents_->sk_canvas()->restore();
+
+  RECT wr;
+  GetWindowRect(hwnd(), &wr);
+  SIZE size = {wr.right - wr.left, wr.bottom - wr.top};
+  POINT position = {wr.left, wr.top};
+  HDC dib_dc = skia::BeginPlatformPaint(layered_window_contents_->sk_canvas());
+  POINT zero = {0, 0};
+  BLENDFUNCTION blend = {AC_SRC_OVER, 0, layered_alpha_, AC_SRC_ALPHA};
+  UpdateLayeredWindow(hwnd(), NULL, &position, &size, dib_dc, &zero,
+                      RGB(0xFF, 0xFF, 0xFF), &blend, ULW_ALPHA);
+  invalid_rect_.SetRect(0, 0, 0, 0);
+  skia::EndPlatformPaint(layered_window_contents_->sk_canvas());
+}
+
 void HWNDMessageHandler::ForceRedrawWindow(int attempts) {
   if (crui::IsWorkstationLocked()) {
     // Presents will continue to fail as long as the input desktop is
@@ -1611,6 +1698,8 @@ void HWNDMessageHandler::OnCommand(UINT notification_code,
 }
 
 LRESULT HWNDMessageHandler::OnCreate(CREATESTRUCT* create_struct) {
+  use_layered_buffer_ = !!(window_ex_style() & WS_EX_LAYERED);
+
   if (is_translucent_) {
     // This is part of the magic to emulate layered windows with Aura
     // see the explanation elsewere when we set is_translucent_.
@@ -2350,7 +2439,46 @@ void HWNDMessageHandler::OnNCPaint(HRGN rgn) {
     // all is well.
     return;
   }
-  delegate_->HandlePaintAccelerated(gfx::Rect(dirty_region));
+
+  // In theory GetDCEx should do what we want, but I couldn't get it to work.
+  // In particular the docs mentiond DCX_CLIPCHILDREN, but as far as I can tell
+  // it doesn't work at all. So, instead we get the DC for the window then
+  // manually clip out the children.
+  HDC dc = GetWindowDC(hwnd());
+  ClipState clip_state;
+  clip_state.x = window_rect.left;
+  clip_state.y = window_rect.top;
+  clip_state.parent = hwnd();
+  clip_state.dc = dc;
+  EnumChildWindows(hwnd(), &ClipDCToChild,
+                   reinterpret_cast<LPARAM>(&clip_state));
+
+  gfx::Rect old_paint_region = invalid_rect_;
+  if (!old_paint_region.IsEmpty()) {
+    // The root view has a region that needs to be painted. Include it in the
+    // region we're going to paint.
+
+    RECT old_paint_region_crect = old_paint_region.ToRECT();
+    RECT tmp = dirty_region;
+    UnionRect(&dirty_region, &tmp, &old_paint_region_crect);
+  }
+
+  SchedulePaintInRect(gfx::Rect(dirty_region));
+
+  // gfx::CanvasSkiaPaint's destructor does the actual painting. As such, wrap
+  // the following in a block to force paint to occur so that we can release
+  // the dc.
+  if (!delegate_->HandlePaintAccelerated(gfx::Rect(dirty_region))) {
+    gfx::CanvasSkiaPaint canvas(dc,
+                                true,
+                                dirty_region.left,
+                                dirty_region.top,
+                                dirty_region.right - dirty_region.left,
+                                dirty_region.bottom - dirty_region.top);
+    delegate_->HandlePaint(&canvas);
+  }
+
+  ReleaseDC(hwnd(), dc);
 
   // When using a custom frame, we want to avoid calling DefWindowProc() since
   // that may render artifacts.
@@ -2418,7 +2546,11 @@ void HWNDMessageHandler::OnPaint(HDC dc) {
       FillRect(ps.hdc, &ps.rcPaint,
                reinterpret_cast<HBRUSH>(GetStockObject(BLACK_BRUSH)));
     }
-    delegate_->HandlePaintAccelerated(gfx::Rect(ps.rcPaint));
+    if (!delegate_->HandlePaintAccelerated(gfx::Rect(ps.rcPaint))) {
+      std::unique_ptr<gfx::Canvas> canvas(
+          new gfx::CanvasSkiaPaint(hwnd(), display_dc, ps));
+      delegate_->HandlePaint(canvas.get());
+    }
   }
 
   EndPaint(hwnd(), &ps);

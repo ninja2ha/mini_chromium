@@ -9,4 +9,5 @@
 #pragma comment(lib, "userenv.lib")
 #pragma comment(lib, "winmm.lib")
 #pragma comment(lib, "ws2_32.lib")
+#pragma comment(lib, "usp10.lib")  // SkFontHost_win.cpp need it.
 #endif

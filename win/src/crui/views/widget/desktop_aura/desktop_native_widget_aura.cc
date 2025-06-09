@@ -1078,9 +1078,9 @@ void DesktopNativeWidgetAura::OnCaptureLost() {
   native_widget_delegate_->OnMouseCaptureLost();
 }
 
-///void DesktopNativeWidgetAura::OnPaint(const crui::PaintContext& context) {
-///  native_widget_delegate_->OnNativeWidgetPaint(context);
-///}
+void DesktopNativeWidgetAura::OnPaint(gfx::Canvas* canvas) {
+  native_widget_delegate_->OnNativeWidgetPaint(canvas);
+}
 
 void DesktopNativeWidgetAura::OnDeviceScaleFactorChanged(
     float old_device_scale_factor,

@@ -61,7 +61,7 @@ class CRUI_EXPORT WindowDelegate : public crui::EventHandler {
   virtual void OnCaptureLost() = 0;
 
   // Asks the delegate to paint window contents into the supplied context.
-  ///virtual void OnPaint(const crui::PaintContext& context) = 0;
+  virtual void OnPaint(gfx::Canvas* canvas) = 0;
 
   // Called when the window's device scale factor has changed.
   virtual void OnDeviceScaleFactorChanged(float old_device_scale_factor,

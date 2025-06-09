@@ -876,9 +876,9 @@ void NativeWidgetAura::OnCaptureLost() {
   delegate_->OnMouseCaptureLost();
 }
 
-///void NativeWidgetAura::OnPaint(const ui::PaintContext& context) {
-///  delegate_->OnNativeWidgetPaint(context);
-///}
+void NativeWidgetAura::OnPaint(gfx::Canvas* canvas) {
+  delegate_->OnNativeWidgetPaint(canvas);
+}
 
 void NativeWidgetAura::OnDeviceScaleFactorChanged(
     float old_device_scale_factor,

@@ -747,7 +747,7 @@ void FlexLayout::AllocateFlexSpace(
     std::vector<size_t> view_indices(flex_elem.second);
     if (flex_allocation_order() == FlexAllocationOrder::kReverse)
       std::reverse(view_indices.begin(), view_indices.end());
-    for (int view_index : view_indices) {
+    for (size_t view_index : view_indices) {
       ChildLayout& child_layout = data->layout.child_layouts[view_index];
       FlexChildData& flex_child = data->child_data[view_index];
 

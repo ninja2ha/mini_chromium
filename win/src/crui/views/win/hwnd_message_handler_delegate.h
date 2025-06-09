@@ -19,6 +19,7 @@ class Insets;
 class Point;
 class Rect;
 class Size;
+class Canvas;
 }
 
 class Accelerator;
@@ -106,6 +107,8 @@ class CRUI_EXPORT HWNDMessageHandlerDelegate {
   // user.
   virtual void GetMinMaxSize(gfx::Size* min_size,
                              gfx::Size* max_size) const = 0;
+
+  virtual void PaintLayeredWindow(gfx::Canvas* canvas) = 0;
 
   // Returns the current size of the RootView.
   virtual gfx::Size GetRootViewSize() const = 0;
@@ -220,7 +223,10 @@ class CRUI_EXPORT HWNDMessageHandlerDelegate {
                                          HKL input_language_id) = 0;
 
   // Called to compel the delegate to paint |invalid_rect| accelerated.
-  virtual void HandlePaintAccelerated(const gfx::Rect& invalid_rect) = 0;
+  virtual bool HandlePaintAccelerated(const gfx::Rect& invalid_rect) = 0;
+
+  // Called to compel the delegate to paint using the software path.
+  virtual void HandlePaint(gfx::Canvas* canvas) = 0;
 
   // Called to forward a WM_NOTIFY message to the tooltip manager.
   virtual bool HandleTooltipNotify(int w_param,

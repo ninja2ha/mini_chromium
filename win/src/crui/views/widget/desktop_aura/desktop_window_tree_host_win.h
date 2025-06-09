@@ -177,6 +177,7 @@ class CRUI_EXPORT DesktopWindowTreeHostWin
   gfx::Size GetRootViewSize() const override;
   gfx::Size DIPToScreenSize(const gfx::Size& dip_size) const override;
   void ResetWindowControls() override;
+  void PaintLayeredWindow(gfx::Canvas* canvas) override;
   gfx::NativeViewAccessible GetNativeViewAccessible() override;
   void HandleActivationChanged(bool active) override;
   bool HandleAppCommand(short command) override;
@@ -210,7 +211,8 @@ class CRUI_EXPORT DesktopWindowTreeHostWin
                         LRESULT* result) override;
   void HandleInputLanguageChange(DWORD character_set,
                                  HKL input_language_id) override;
-  void HandlePaintAccelerated(const gfx::Rect& invalid_rect) override;
+  bool HandlePaintAccelerated(const gfx::Rect& invalid_rect) override;
+  void HandlePaint(gfx::Canvas* canvas) override;
   bool HandleTooltipNotify(int w_param,
                            NMHDR* l_param,
                            LRESULT* l_result) override;

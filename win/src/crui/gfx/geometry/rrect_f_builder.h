@@ -5,8 +5,9 @@
 #ifndef UI_GFX_RRECT_F_BUILDER_H_
 #define UI_GFX_RRECT_F_BUILDER_H_
 
-#include "crui/gfx/rrect_f.h"
+#include "crui/gfx/geometry/rrect_f.h"
 
+namespace crui {
 namespace gfx {
 
 // RRectFBuilder is implemented to make the parameter setting easier for RRectF.
@@ -22,7 +23,7 @@ namespace gfx {
 //                  .set_lower_right(5, 6)
 //                  .set_lower_left(7, 8)
 //                  .Build();
-class GEOMETRY_SKIA_EXPORT RRectFBuilder {
+class CRUI_EXPORT RRectFBuilder {
  public:
   RRectFBuilder();
   RRectFBuilder(RRectFBuilder&& other);
@@ -126,5 +127,6 @@ class GEOMETRY_SKIA_EXPORT RRectFBuilder {
 };
 
 }  // namespace gfx
+}  // namespace crui
 
 #endif  // UI_GFX_RRECT_F_BUILDER_H_

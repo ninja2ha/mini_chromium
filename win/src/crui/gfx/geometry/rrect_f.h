@@ -8,10 +8,10 @@
 #include <memory>
 #include <string>
 
-///#include "third_party/skia/include/core/SkRRect.h"
+#include "third_party/skia/include/core/SkRRect.h"
 #include "crui/gfx/geometry/rect_f.h"
 #include "crui/gfx/geometry/rounded_corners_f.h"
-///#include "crui/gfx/skia_util.h"
+#include "crui/gfx/skia_util.h"
 
 namespace crui {
 namespace gfx {
@@ -82,7 +82,7 @@ class CRUI_EXPORT RRectF {
                corners.lower_left()) {}
 
   // The rectangular portion of the RRectF, without the corner radii.
-  ///gfx::RectF rect() const { return gfx::SkRectToRectF(skrrect_.rect()); }
+  gfx::RectF rect() const { return gfx::SkRectToRectF(skrrect_.rect()); }
 
   // Returns the radii of the all corners. DCHECKs that all corners
   // have the same radii (the type is <= kOval).
@@ -198,5 +198,6 @@ inline RRectF operator-(const RRectF& a, const Vector2dF& b) {
 }
 
 }  // namespace gfx
+}  // namespace crui
 
 #endif  // UI_GFX_RRECT_F_H_

@@ -430,11 +430,12 @@ void Button::OnDragDone() {
   ///AnimateInkDrop(InkDropState::HIDDEN, nullptr /* event */);
 }
 
-///void Button::OnPaint(gfx::Canvas* canvas) {
-///  InkDropHostView::OnPaint(canvas);
-///  PaintButtonContents(canvas);
-///  Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
-///}
+void Button::OnPaint(gfx::Canvas* canvas) {
+  ///InkDropHostView::OnPaint(canvas);
+  View::OnPaint(canvas);
+  PaintButtonContents(canvas);
+  ///Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
+}
 
 ///void Button::GetAccessibleNodeData(crui::AXNodeData* node_data) {
 ///  node_data->role = ax::mojom::Role::kButton;
@@ -578,7 +579,7 @@ bool Button::ShouldEnterPushedState(const crui::Event& event) {
   return IsTriggerableEvent(event);
 }
 
-///void Button::PaintButtonContents(gfx::Canvas* canvas) {}
+void Button::PaintButtonContents(gfx::Canvas* canvas) {}
 
 bool Button::ShouldEnterHoveredState() {
   if (!GetVisible())

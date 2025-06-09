@@ -400,7 +400,7 @@ void Window::StackChildAbove(Window* child, Window* target) {
 
 void Window::StackChildAtBottom(Window* child) {
   if (children_.size() <= 1 || child == children_.front())
-    return;  // At the bottom already.
+    return;  // At the bottom already
   StackChildBelow(child, children_.front());
 }
 
@@ -921,10 +921,10 @@ void Window::SchedulePaint() {
   SchedulePaintInRect(gfx::Rect(0, 0, bounds().width(), bounds().height()));
 }
 
-///void Window::Paint(const crui::PaintContext& context) {
-///  if (delegate_)
-///    delegate_->OnPaint(context);
-///}
+void Window::Paint(gfx::Canvas* canvas) {
+  if (delegate_)
+    delegate_->OnPaint(canvas);
+}
 
 void Window::RemoveChildImpl(Window* child, Window* new_parent) {
   if (layout_manager_)
@@ -1303,9 +1303,9 @@ void Window::NotifyResizeLoopEnded() {
     observer.OnResizeLoopEnded(this);
 }
 
-///void Window::OnPaintLayer(const crui::PaintContext& context) {
-///  Paint(context);
-///}
+void Window::OnPaintLayer(gfx::Canvas* canvas) {
+  Paint(canvas);
+}
 
 void Window::OnLayerBoundsChanged(const gfx::Rect& old_bounds,
                                   crui::PropertyChangeReason reason) {

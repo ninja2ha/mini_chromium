@@ -906,7 +906,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   void OnNativeWidgetBeginUserBoundsChange() override;
   void OnNativeWidgetEndUserBoundsChange() override;
   bool HasFocusManager() const override;
-  ///void OnNativeWidgetPaint(const crui::PaintContext& context) override;
+  void OnNativeWidgetPaint(gfx::Canvas* canvas) override;
   int GetNonClientComponent(const gfx::Point& point) override;
   void OnKeyEvent(crui::KeyEvent* event) override;
   void OnMouseEvent(crui::MouseEvent* event) override;

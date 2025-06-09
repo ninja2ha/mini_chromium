@@ -777,6 +777,10 @@ void DesktopWindowTreeHostWin::ResetWindowControls() {
     GetWidget()->non_client_view()->ResetWindowControls();
 }
 
+void DesktopWindowTreeHostWin::PaintLayeredWindow(gfx::Canvas* canvas) {
+  GetWidget()->GetRootView()->Paint(canvas, CullSet());
+}
+
 gfx::NativeViewAccessible DesktopWindowTreeHostWin::GetNativeViewAccessible() {
   // This function may be called during shutdown when the |RootView| is nullptr.
   return GetWidget()->GetRootView()
@@ -999,10 +1003,15 @@ void DesktopWindowTreeHostWin::HandleInputLanguageChange(
   ///GetInputMethod()->OnInputLocaleChanged();
 }
 
-void DesktopWindowTreeHostWin::HandlePaintAccelerated(
+bool DesktopWindowTreeHostWin::HandlePaintAccelerated(
     const gfx::Rect& invalid_rect) {
   ///if (compositor())
   ///  compositor()->ScheduleRedrawRect(invalid_rect);
+  return false;
+}
+
+void DesktopWindowTreeHostWin::HandlePaint(gfx::Canvas* canvas) {
+  native_widget_delegate_->OnNativeWidgetPaint(canvas);
 }
 
 bool DesktopWindowTreeHostWin::HandleTooltipNotify(int w_param,

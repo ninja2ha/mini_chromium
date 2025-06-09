@@ -76,7 +76,8 @@ std::string SkiaClacPathIncludeFile(const cr::FilePath& root,
 // #include "foo5.h" // xx    => StringPiece(10, 6) foo5.h
 // #include "foo6.h" /* xx */ => StringPiece(10, 6) foo6.h
 // // #include "foo7.h"       => StringPiece(0, 0)
-// #include <foo1.h>          => StringPiece(10, 6) foo1.h
+// #i nclude "foo8.h"         => StringPiece(0, 0)
+// #include <foo9.h>          => StringPiece(10, 6) foo9.h
 //
 cr::StringPiece SkiaCppGetIncludeFile(cr::StringPiece code_line) {
   auto getStartPos = [](cr::StringPiece& code, cr::StringPiece pattern) 
@@ -134,27 +135,32 @@ cr::StringPiece SkiaCppGetIncludeFile(cr::StringPiece code_line) {
   return cr::StringPiece(begin, p);
 }
 
-bool SkiaIsCppFile(const cr::FilePath& file) {
-  static const cr::FilePath::CharType* ext[] = { 
-      FILE_PATH_LITERAL(".s"),
-      FILE_PATH_LITERAL(".inc"),
-      FILE_PATH_LITERAL(".include"),
-      FILE_PATH_LITERAL(".fp"),
-      FILE_PATH_LITERAL(".h"),
-      FILE_PATH_LITERAL(".hpp"),
-      FILE_PATH_LITERAL(".c"),
-      FILE_PATH_LITERAL(".cc"),
-      FILE_PATH_LITERAL(".cpp") };
+bool SkiaIsCppFile(const cr::FilePath& file, bool just_header) {
+  struct SourceFileInfo {
+    const cr::FilePath::CharType* ext;
+    bool is_header;
+  };
+  static SourceFileInfo iterms[] = {
+      {FILE_PATH_LITERAL(".inc"), true},
+      {FILE_PATH_LITERAL(".include"), true},
+      {FILE_PATH_LITERAL(".fp"), false},
+      {FILE_PATH_LITERAL(".h"), true},
+      {FILE_PATH_LITERAL(".hpp"), true},
+      {FILE_PATH_LITERAL(".s"), false},
+      {FILE_PATH_LITERAL(".c"), false},
+      {FILE_PATH_LITERAL(".cc"), false},
+      {FILE_PATH_LITERAL(".cpp"), false} };
   const auto& file_value = file.value();
-  for (const auto i : ext)
-    if (cr::EndsWith(file_value, i, cr::CompareCase::INSENSITIVE_ASCII)) 
-      return true;
+  for (const auto i : iterms)
+    if (cr::EndsWith(file_value, i.ext, cr::CompareCase::INSENSITIVE_ASCII)) 
+      return just_header ? i.is_header : true;
   return false;
 }
 
 void SkiaEnumerateDirectory(
     const cr::FilePath& root,
     const cr::FilePath& dir,
+    bool just_header_file,
     cr::RepeatingCallback<
         bool(const cr::FilePath&, const cr::FilePath&, void* ud)> cb,
     void* ud) {
@@ -165,7 +171,7 @@ void SkiaEnumerateDirectory(
     if (file.empty())
       break;
 
-    if (!SkiaIsCppFile(file))
+    if (!SkiaIsCppFile(file, just_header_file))
       continue;
 
     if (!cb.Run(root, file, ud))
@@ -176,7 +182,7 @@ void SkiaEnumerateDirectory(
 int SkiaAddSourceTree(const cr::FilePath& root,
                       const cr::FilePath& include_path,
                       FileNameToIncludePath& include_map) {
-  SkiaEnumerateDirectory(root, include_path, cr::BindRepeating([](
+  SkiaEnumerateDirectory(root, include_path, true, cr::BindRepeating([](
       const cr::FilePath& root, const cr::FilePath& file, void* ud) -> bool {
     FileNameToIncludePath& include_map = *(FileNameToIncludePath*)ud;
     std::string include_file = SkiaClacPathIncludeFile(root, file, true);
@@ -187,10 +193,15 @@ int SkiaAddSourceTree(const cr::FilePath& root,
     }
 
     auto it = include_map.find(file_name);
-    if (it == include_map.end())
+    if (it == include_map.end()) {
       include_map[file_name] = include_file;
-    else
+    }
+    else {
       CR_LOG(Warning) << "Found a same name file. skiped..";
+      CR_LOG(Info) << "cur_file:" << file;
+      CR_LOG(Info) << "including:" << include_file;
+      CR_LOG(Info) << "first include:" << it->second;
+    }
     return true;
   }), &include_map);
   return 0;
@@ -202,7 +213,7 @@ int SkiaFormatIncludes(const cr::FilePath& root,
                        const cr::FilePath& out_root) {
   static cr::FilePath g_out_root;
   g_out_root = out_root;
-  SkiaEnumerateDirectory(root, src_path, cr::BindRepeating([](
+  SkiaEnumerateDirectory(root, src_path, false, cr::BindRepeating([](
       const cr::FilePath& root, const cr::FilePath& file, void* ud) -> bool {
     const FileNameToIncludePath& include_map = 
         *(const FileNameToIncludePath*)ud;
@@ -271,56 +282,64 @@ int SkiaFormatIncludes(const cr::FilePath& root,
 
 }  // namesapce
 
-int main3(int argc, char* argv[]) {
-  example::InitLogging();
-  cr::AtExitManager at_exit;
-
-  std::cout << "This tool is used to format include file in skia source."
-            << std::endl
-            << "e.g: format the code from #include \"SkTypes.h\" to "
-                                         "#include \"include/core/SkTypes.h\""
-            << std::endl;
-  std::string skia_path;
-  std::cout << "now, typing skia path(e.g. E:\\skia-chrome-m61):";
-  std::getline(std::cin, skia_path);
-
-  cr::FilePath root;
-  root = root.FromUTF16Unsafe(cr::SysNativeMBToWide(skia_path));
-
-  cr::FilePath include_path, src_path;
-  if (!SkiaCheckPath(root, include_path, src_path))
-    return -1;
-
-  cr::FilePath out_root;
-  cr::PathService::Get(cr::DIR_EXE, &out_root);
-  out_root = out_root.Append(FILE_PATH_LITERAL("skia"));
-  if (cr::PathExists(out_root))
-    cr::DeleteFile(out_root, true);
-
-  FileNameToIncludePath include_map;
-  SkiaAddSourceTree(root, include_path, include_map);
-  SkiaFormatIncludes(root, include_path, include_map, out_root);
-
-  SkiaAddSourceTree(root, src_path, include_map);
-  SkiaFormatIncludes(root, src_path, include_map, out_root);
-  return 0;
-}
+///int main(int argc, char* argv[]) {
+///  example::InitLogging();
+///  cr::AtExitManager at_exit;
+///
+///  std::cout << "This tool is used to format '#include' code from "
+///            << "earlier versions of skia."
+///            << std::endl
+///            << "i.e: formating the codeline from #include \"SkTypes.h\" to "
+///               "#include \"include/core/SkTypes.h\""
+///            << std::endl;
+///  std::string skia_path;
+///  std::cout << "typing skia path now(i.e. E:\\skia-chrome-m61):";
+///  std::getline(std::cin, skia_path);
+///
+///  cr::FilePath root;
+///  root = root.FromUTF16Unsafe(cr::SysNativeMBToWide(skia_path));
+///
+///  cr::FilePath include_path, src_path;
+///  if (!SkiaCheckPath(root, include_path, src_path))
+///    return -1;
+///
+///  cr::FilePath out_root;
+///  cr::PathService::Get(cr::DIR_EXE, &out_root);
+///  out_root = out_root.Append(FILE_PATH_LITERAL("skia"));
+///  if (cr::PathExists(out_root))
+///    cr::DeleteFile(out_root, true);
+///
+///  FileNameToIncludePath include_map;
+///  SkiaAddSourceTree(root, include_path, include_map);
+///  SkiaFormatIncludes(root, include_path, include_map, out_root);
+///
+///  SkiaAddSourceTree(root, src_path, include_map);
+///  SkiaFormatIncludes(root, src_path, include_map, out_root);
+///  return 0;
+///}
 
 ////////////////////////////////////////////////////////////////////////////////
 
 static const char* skia_src[] = {
-  "$_src/sksl/SkSLCFGGenerator.cpp",
-  "$_src/sksl/SkSLCompiler.cpp",
-  "$_src/sksl/SkSLIRGenerator.cpp",
-  "$_src/sksl/SkSLParser.cpp",
-  "$_src/sksl/SkSLCPPCodeGenerator.cpp",
-  "$_src/sksl/SkSLHCodeGenerator.cpp",
-  "$_src/sksl/SkSLGLSLCodeGenerator.cpp",
-  "$_src/sksl/SkSLSPIRVCodeGenerator.cpp",
-  "$_src/sksl/SkSLString.cpp",
-  "$_src/sksl/SkSLUtil.cpp",
-  "$_src/sksl/lex.layout.cpp",
-
+  "<(skia_src_path)/ports/SkFontHost_mac.cpp",
+  "<(skia_src_path)/ports/SkFontHost_win.cpp",
+  "<(skia_src_path)/ports/SkFontMgr_android.cpp",
+  "<(skia_src_path)/ports/SkFontMgr_android_factory.cpp",
+  "<(skia_src_path)/ports/SkFontMgr_android_parser.cpp",
+  "<(skia_src_path)/ports/SkFontMgr_win_dw.cpp",
+  "<(skia_src_path)/ports/SkGlobalInitialization_default.cpp",
+  "<(skia_src_path)/ports/SkImageDecoder_empty.cpp",
+  "<(skia_src_path)/ports/SkOSFile_posix.cpp",
+  "<(skia_src_path)/ports/SkRemotableFontMgr_win_dw.cpp",
+  "<(skia_src_path)/ports/SkOSFile_stdio.cpp",
+  "<(skia_src_path)/ports/SkOSFile_win.cpp",
+  "<(skia_src_path)/ports/SkScalerContext_win_dw.cpp",
+  "<(skia_src_path)/ports/SkTime_Unix.cpp",
+  "<(skia_src_path)/ports/SkTLS_pthread.cpp",
+  "<(skia_src_path)/ports/SkTLS_win.cpp",
+  "<(skia_src_path)/ports/SkTypeface_win_dw.cpp",
+  "<(skia_src_path)/sfnt/SkOTTable_name.cpp",
+  "<(skia_src_path)/sfnt/SkOTUtils.cpp",
 };
 
 int main(int argc, char* argv) {
@@ -345,6 +364,6 @@ int main(int argc, char* argv) {
   out_file = out_file.AppendASCII("out.txt");
 
   cr::File file(out_file, cr::File::FLAG_CREATE_ALWAYS | cr::File::FLAG_WRITE);
-  file.Write(0, out.data(), out.length());
+  file.Write(0, out.data(), static_cast<int>(out.length()));
   return 0;
 }

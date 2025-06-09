@@ -66,12 +66,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crskia-tool", "tools\crskia
 		{C2FC485F-4CB5-429B-A9D8-B662E1B90251} = {C2FC485F-4CB5-429B-A9D8-B662E1B90251}
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "third_party", "third_party", "{D4C3C717-86A4-40B9-B772-5546A1FC8763}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crui", "crui\crui.vcxproj", "{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{A0AA91BA-80D2-4E91-AC21-50C0C59174B0} = {A0AA91BA-80D2-4E91-AC21-50C0C59174B0}
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB} = {68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}
 	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crui_skia", "crui_skia\crui_skia.vcxproj", "{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -169,6 +170,14 @@ Global
 		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x64.Build.0 = Release|x64
 		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x86.ActiveCfg = Release|Win32
 		{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}.Release|x86.Build.0 = Release|Win32
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Debug|x64.ActiveCfg = Debug|x64
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Debug|x64.Build.0 = Debug|x64
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Debug|x86.ActiveCfg = Debug|Win32
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Debug|x86.Build.0 = Debug|Win32
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Release|x64.ActiveCfg = Release|x64
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Release|x64.Build.0 = Release|x64
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Release|x86.ActiveCfg = Release|Win32
+		{68A0B9E5-6D0E-4818-82A8-A98E902EE2BB}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

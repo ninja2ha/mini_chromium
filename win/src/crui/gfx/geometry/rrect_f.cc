@@ -27,7 +27,7 @@ RRectF::RRectF(float x,
   if (IsEmpty()) {
     // Make sure that empty rects are created fully empty, not with some
     // non-zero dimensions.
-    skrrect_ = SkRRect::MakeEmpty();
+    skrrect_.setEmpty();/// = SkRRect::MakeEmpty();
   }
 }
 
@@ -54,18 +54,18 @@ RRectF::RRectF(float x,
   if (IsEmpty()) {
     // Make sure that empty rects are created fully empty, not with some
     // non-zero dimensions.
-    skrrect_ = SkRRect::MakeEmpty();
+    skrrect_.setEmpty();/// = SkRRect::MakeEmpty();
   }
 }
 
 gfx::Vector2dF RRectF::GetSimpleRadii() const {
-  DCHECK(GetType() <= Type::kOval);
+  CR_DCHECK(GetType() <= Type::kOval);
   SkPoint result = skrrect_.getSimpleRadii();
   return gfx::Vector2dF(result.x(), result.y());
 }
 
 float RRectF::GetSimpleRadius() const {
-  DCHECK(GetType() <= Type::kSingle);
+  CR_DCHECK(GetType() <= Type::kSingle);
   SkPoint result = skrrect_.getSimpleRadii();
   return result.x();
 }
@@ -124,13 +124,13 @@ void RRectF::Scale(float x_scale, float y_scale) {
   }
   if (!x_scale || !y_scale) {
     // SkRRect doesn't support scaling TO an empty rect.
-    skrrect_ = SkRRect::MakeEmpty();
+    skrrect_.setEmpty();/// = SkRRect::MakeEmpty();
     return;
   }
   SkMatrix scale = SkMatrix::MakeScale(x_scale, y_scale);
   SkRRect result;
   bool success = skrrect_.transform(scale, &result);
-  DCHECK(success);
+  CR_DCHECK(success);
   skrrect_ = result;
 }
 
@@ -197,3 +197,4 @@ bool RRectF::ApproximatelyEqual(const RRectF& rect, float tolerance) const {
 }
 
 }  // namespace gfx
+}  // namespace crui

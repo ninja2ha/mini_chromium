@@ -8,6 +8,9 @@
 #include "crui/views/widget/widget.h"
 #include "crui/views/widget/widget_delegate.h"
 #include "crui/views/views_delegate.h"
+#include "crui/views/controls/button/button.h"
+#include "crui/views/view_border.h"
+#include "crui/views/view_background.h"
 #include "crui/base/build_platform.h"
 
 #if defined(MINI_CHROMIUM_USE_AURA)
@@ -33,13 +36,14 @@
 
 namespace example {
 
-class SimpleUIApplication : public crui::views::WidgetDelegate,
-                            public crui::views::ViewsDelegate {
+class SimpleUIApplication : public crui::views::WidgetDelegateView,
+                            public crui::views::ViewsDelegate,
+                            public crui::views::ButtonListener {
  public:
   SimpleUIApplication(const SimpleUIApplication&) = delete;
   SimpleUIApplication& operator=(const SimpleUIApplication&) = delete;
 
-  SimpleUIApplication(const crui::views::Widget* widget);
+  SimpleUIApplication();
   virtual ~SimpleUIApplication();
  
  protected:
@@ -49,17 +53,18 @@ class SimpleUIApplication : public crui::views::WidgetDelegate,
   bool CanMinimize() const override;
   cr::string16 GetWindowTitle() const override;
   void WindowClosing() override;
-  void DeleteDelegate() override;
 
-  // WidgetGetter implements
-  const crui::views::Widget* GetWidgetImpl() const override;
+  void ButtonPressed(crui::views::Button* sender, 
+                     const crui::Event& event) override;
 
- private:
-  const crui::views::Widget* const widget_ = nullptr;
 };
 
-SimpleUIApplication::SimpleUIApplication(const crui::views::Widget* widget)
-    : widget_(widget) {
+SimpleUIApplication::SimpleUIApplication() {
+  crui::views::Button* button = new crui::views::Button(this);
+  button->SetBackground(crui::views::CreateSolidBackground(SK_ColorBLUE));
+  button->SetID(111);
+  button->SetBounds(0, 0, 100, 100);
+  this->AddChildView(button);
 }
 
 SimpleUIApplication::~SimpleUIApplication() {
@@ -77,12 +82,9 @@ void SimpleUIApplication::WindowClosing() {
   MainThreadHelper::Get()->AsyncQuit();
 }
 
-void SimpleUIApplication::DeleteDelegate() {
-  delete this;
-}
-
-const crui::views::Widget* SimpleUIApplication::GetWidgetImpl() const {
-  return widget_;
+void SimpleUIApplication::ButtonPressed(crui::views::Button* sender, 
+                                        const crui::Event& event) {
+  MessageBox(NULL, 0, 0, MB_OK);
 }
 
 int RunSimpleWidget() {
@@ -108,7 +110,7 @@ int RunSimpleWidget() {
 
   views::Widget* widget = new views::Widget;
   views::Widget::InitParams params;
-  params.delegate = new SimpleUIApplication(widget);
+  params.delegate = new SimpleUIApplication();
 #if defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
   params.native_widget = new crui::views::DesktopNativeWidgetAura(widget);
 #endif

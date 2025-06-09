@@ -42,6 +42,7 @@
 #include "crui/gfx/geometry/point.h"
 #include "crui/gfx/geometry/rect.h"
 #include "crui/gfx/geometry/rect_f.h"
+#include "crui/gfx/geometry/r_tree.h"
 #include "crui/gfx/geometry/vector2d.h"
 #include "crui/gfx/native_widget_types.h"
 #include "crui/views/layout/layout_types.h"
@@ -49,6 +50,7 @@
 #include "crui/views/metadata/metadata_impl_macros.h"
 ///#include "crui/views/paint_info.h"
 #include "crui/views/view_targeter.h"
+#include "crui/views/cull_set.h"
 #include "crui/views/widget/widget_getter.h"
 #include "crui/base/build_platform.h"
 
@@ -74,8 +76,8 @@ class Transform;
 
 namespace views {
 
-///class Background;
-///class Border;
+class Background;
+class Border;
 ///class ContextMenuController;
 class DragController;
 class FocusManager;
@@ -851,17 +853,18 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // for View coordinates and language direction as required, allows the View
   // to paint itself via the various OnPaint*() event handlers and then paints
   // the hierarchy beneath it.
-  ///void Paint(const PaintInfo& parent_paint_info);
+  void Paint(gfx::Canvas* canvas, const CullSet& cull_set);
+  void PaintCommon(gfx::Canvas* canvas, const CullSet& cull_set);
 
   // The background object may be null.
-  ///void SetBackground(std::unique_ptr<Background> b);
-  ///const Background* background() const { return background_.get(); }
-  ///Background* background() { return background_.get(); }
+  void SetBackground(std::unique_ptr<Background> b);
+  const Background* background() const { return background_.get(); }
+  Background* background() { return background_.get(); }
 
   // The border object may be null.
-  ///virtual void SetBorder(std::unique_ptr<Border> b);
-  ///const Border* border() const { return border_.get(); }
-  ///Border* border() { return border_.get(); }
+  virtual void SetBorder(std::unique_ptr<Border> b);
+  const Border* border() const { return border_.get(); }
+  Border* border() { return border_.get(); }
 
   // Get the theme provider from the parent widget.
   ///const crui::ThemeProvider* GetThemeProvider() const;
@@ -1442,20 +1445,25 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Responsible for calling Paint() on child Views. Override to control the
   // order child Views are painted.
-  ///virtual void PaintChildren(const PaintInfo& info);
+  virtual void PaintChildren(gfx::Canvas* canvas, const CullSet& cull_set);
 
   // Override to provide rendering in any part of the View's bounds. Typically
   // this is the "contents" of the view. If you override this method you will
   // have to call the subsequent OnPaint*() methods manually.
-  ///virtual void OnPaint(gfx::Canvas* canvas);
+  virtual void OnPaint(gfx::Canvas* canvas);
 
   // Override to paint a background before any content is drawn. Typically this
   // is done if you are satisfied with a default OnPaint handler but wish to
   // supply a different background.
-  ///virtual void OnPaintBackground(gfx::Canvas* canvas);
+  virtual void OnPaintBackground(gfx::Canvas* canvas);
 
   // Override to paint a border not specified by SetBorder().
-  ///virtual void OnPaintBorder(gfx::Canvas* canvas);
+  virtual void OnPaintBorder(gfx::Canvas* canvas);
+
+  // Returns true if this View is the root for paint events, and should
+  // therefore maintain a |bounds_tree_| member and use it for paint damage rect
+  // calculations.
+  virtual bool IsPaintRoot();
 
   // Returns the type of scaling to be done for this View. Override this to
   // change the default scaling type from |kScaleToFit|. You would want to
@@ -1489,7 +1497,7 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   void UpdateChildLayerBounds(const LayerOffsetData& offset_data);
 
   // Overridden from crui::LayerDelegate:
-  ///void OnPaintLayer(const crui::PaintContext& context) override;
+  void OnPaintLayer(gfx::Canvas* canvas) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override;
 
@@ -1580,6 +1588,8 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   friend class FocusManager;
   friend class Widget;
 
+  typedef gfx::RTree<intptr_t> BoundsTree;
+
   using PropertyChangedVectors =
       std::map<PropertyKey, std::unique_ptr<PropertyChangedCallbacks>>;
 
@@ -1615,14 +1625,15 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Recursively calls the painting method |func| on all non-layered children,
   // in Z order.
-  ///void RecursivePaintHelper(void (View::*func)(const PaintInfo&),
-  ///                          const PaintInfo& info);
+  void RecursivePaintHelper(void (View::*func)(gfx::Canvas*, const CullSet&),
+                            gfx::Canvas* canvas,
+                            const CullSet& cull_set);
 
   // Invokes Paint() and, if necessary, PaintDebugRects().  Should be called
   // only on the root of a widget/layer.  PaintDebugRects() is invoked as a
   // separate pass, instead of being rolled into Paint(), so that siblings will
   // not obscure debug rects.
-  ///void PaintFromPaintRoot(const crui::PaintContext& parent_context);
+  void PaintFromPaintRoot(gfx::Canvas* canvas);
 
   // Draws a semitransparent rect to indicate the bounds of this view.
   // Recursively does the same for all children.  Invoked only with
@@ -1785,6 +1796,25 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   void SetLayerBounds(const gfx::Size& size_in_dip,
                       const LayerOffsetData& layer_offset_data);
 
+  // Sets the bit indicating that the cached bounds for this object within the
+  // root view bounds tree are no longer valid. If |origin_changed| is true sets
+  // the same bit for all of our children as well.
+  void SetRootBoundsDirty(bool origin_changed);
+
+  // If needed, updates the bounds rectangle in paint root coordinate space
+  // in the supplied RTree. Recurses to children for recomputation as well.
+  void UpdateRootBounds(BoundsTree* bounds_tree, const gfx::Vector2d& offset);
+
+  // Remove self and all children from the supplied bounds tree. This is used,
+  // for example, when a view gets a layer and therefore becomes paint root. It
+  // needs to remove all references to itself and its children from any previous
+  // paint root that may have been tracking it.
+  void RemoveRootBounds(BoundsTree* bounds_tree);
+
+  // Traverse up the View hierarchy to the first ancestor that is a paint root
+  // and return a pointer to its |bounds_tree_| or NULL if no tree is found.
+  BoundsTree* GetBoundsTreeFromPaintRoot();
+
   // Input ---------------------------------------------------------------------
 
   bool ProcessMousePressed(const crui::MouseEvent& event);
@@ -1918,6 +1948,15 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // List of descendants wanting notification when their visible bounds change.
   std::unique_ptr<Views> descendants_to_notify_;
 
+  // True if the bounds on this object have changed since the last time the
+  // paint root view constructed the spatial database.
+  bool root_bounds_dirty_;
+
+  // If this View IsPaintRoot() then this will be a pointer to a spatial data
+  // structure where we will keep the bounding boxes of all our children, for
+  // efficient paint damage rectangle intersection.
+  std::unique_ptr<BoundsTree> bounds_tree_;
+
   // Transformations -----------------------------------------------------------
 
   // Painting will be clipped to this path. TODO(estade): this doesn't work for
@@ -1939,10 +1978,10 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // Painting ------------------------------------------------------------------
 
   // Background
-  ///std::unique_ptr<Background> background_;
+  std::unique_ptr<Background> background_;
 
   // Border.
-  ///std::unique_ptr<Border> border_;
+  std::unique_ptr<Border> border_;
 
   // Cached output of painting to be reused in future frames until invalidated.
   ///crui::PaintCache paint_cache_;

@@ -2,8 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "crui/gfx/rrect_f_builder.h"
+#include "crui/gfx/geometry/rrect_f_builder.h"
 
+namespace crui {
 namespace gfx {
 
 RRectFBuilder::RRectFBuilder() = default;
@@ -16,3 +17,4 @@ RRectF RRectFBuilder::Build() {
 }
 
 }  // namespace gfx
+}  // namespace crui

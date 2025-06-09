@@ -128,7 +128,7 @@ class CRUI_EXPORT RootView : public View,
       const ViewHierarchyChangedDetails& details) override;
   void VisibilityChanged(View* starting_from, bool is_visible) override;
   void OnDidSchedulePaint(const gfx::Rect& rect) override;
-  ///void OnPaint(gfx::Canvas* canvas) override;
+  void OnPaint(gfx::Canvas* canvas) override;
   View::LayerOffsetData CalculateOffsetToAncestorWithLayer(
       crui::Layer** layer_parent) override;
   View::DragInfo* GetDragInfo() override;

@@ -1230,13 +1230,13 @@ bool Widget::HasFocusManager() const {
   return !!focus_manager_.get();
 }
 
-///void Widget::OnNativeWidgetPaint(const ui::PaintContext& context) {
-///  // On Linux Aura, we can get here during Init() because of the
-///  // SetInitialBounds call.
-///  if (!native_widget_initialized_)
-///    return;
-///  GetRootView()->PaintFromPaintRoot(context);
-///}
+void Widget::OnNativeWidgetPaint(gfx::Canvas* canvas) {
+  // On Linux Aura, we can get here during Init() because of the
+  // SetInitialBounds call.
+  if (!native_widget_initialized_)
+    return;
+  GetRootView()->PaintFromPaintRoot(canvas);
+}
 
 int Widget::GetNonClientComponent(const gfx::Point& point) {
   int component = non_client_view_ ?

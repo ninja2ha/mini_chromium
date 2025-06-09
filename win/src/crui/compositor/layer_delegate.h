@@ -13,15 +13,14 @@ namespace crui {
 namespace gfx {
 class Rect;
 class Transform;
+class Canvas;
 }  // namespace gfx
-
-///class PaintContext;
 
 // A delegate interface implemented by an object that renders to a Layer.
 class CRUI_EXPORT LayerDelegate {
  public:
   // Paint content for the layer to the specified context.
-  ///virtual void OnPaintLayer(const PaintContext& context) = 0;
+  virtual void OnPaintLayer(gfx::Canvas* canvas) = 0;
 
   // Called when the layer's device scale factor has changed.
   virtual void OnDeviceScaleFactorChanged(float old_device_scale_factor,
@@ -56,6 +55,6 @@ class CRUI_EXPORT LayerDelegate {
   virtual ~LayerDelegate() {}
 };
 
-}  // namespace ui
+}  // namespace crui
 
 #endif  // UI_COMPOSITOR_LAYER_DELEGATE_H_

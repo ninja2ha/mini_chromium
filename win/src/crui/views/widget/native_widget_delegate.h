@@ -17,6 +17,7 @@ namespace crui {
 namespace gfx {
 class Point;
 class Size;
+class Canvas;
 }  // namespace gfx
 
 class GestureEvent;
@@ -111,7 +112,7 @@ class CRUI_EXPORT NativeWidgetDelegate {
 
   // Paints the rootview in the context. This will also refresh the compositor
   // tree if necessary.
-  ///virtual void OnNativeWidgetPaint(const crui::PaintContext& context) = 0;
+  virtual void OnNativeWidgetPaint(gfx::Canvas* canvas) = 0;
 
   // Returns the non-client component (see ui/base/hit_test.h) containing
   // |point|, in client coordinates.

@@ -212,7 +212,7 @@ class CRUI_EXPORT DesktopNativeWidgetAura
       const gfx::Point& location) override;
   bool CanFocus() override;
   void OnCaptureLost() override;
-  ///void OnPaint(const crui::PaintContext& context) override;
+  void OnPaint(gfx::Canvas* canvas) override;
   void OnDeviceScaleFactorChanged(float old_device_scale_factor,
                                   float new_device_scale_factor) override;
   void OnWindowDestroying(aura::Window* window) override;

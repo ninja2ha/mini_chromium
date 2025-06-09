@@ -264,6 +264,9 @@
     <ClCompile Include="..\..\..\src\crui\gfx\animation\slide_animation.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\animation\throb_animation.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\animation\tween.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas_paint_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas_skia.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\font\font.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\font\font_render_params.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\font\system_fonts_win.cc" />
@@ -289,17 +292,26 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rect_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\r_tree_base.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\scroll_offset.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_conversions.cc" />
@@ -311,7 +323,10 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector4d_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\path.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\path_win.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\sequential_id_generator.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\skia_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.cc" />
@@ -329,6 +344,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_controller.cc" />
     <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_win.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\cull_set.cc" />
     <ClCompile Include="..\..\..\src\crui\views\drag_utils.cc" />
     <ClCompile Include="..\..\..\src\crui\views\drag_utils_aura.cc" />
     <ClCompile Include="..\..\..\src\crui\views\focus\external_focus_tracker.cc" />
@@ -360,6 +376,8 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\views\view.cc" />
     <ClCompile Include="..\..\..\src\crui\views\views_delegate.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\view_background.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\view_border.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_class_properties.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_constants.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_constants_aura.cc" />
@@ -686,6 +704,8 @@
     <ClInclude Include="..\..\..\src\crui\gfx\animation\slide_animation.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\animation\throb_animation.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\animation\tween.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas_paint_win.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\font\font.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\font\font_render_params.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\font\platform_font.h" />
@@ -714,17 +734,27 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rect_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      </ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree_base.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\safe_integer_conversions.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\scalar.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\scroll_offset.h" />
@@ -740,7 +770,11 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector4d_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\native_widget_types.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\path.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\path_win.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\scoped_canvas.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\sequential_id_generator.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\skia_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\text_constants.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\hwnd_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\msg_util.h" />
@@ -763,6 +797,7 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_controller.h" />
     <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_win.h" />
+    <ClInclude Include="..\..\..\src\crui\views\cull_set.h" />
     <ClInclude Include="..\..\..\src\crui\views\drag_controller.h" />
     <ClInclude Include="..\..\..\src\crui\views\drag_utils.h" />
     <ClInclude Include="..\..\..\src\crui\views\focus\external_focus_tracker.h" />
@@ -794,6 +829,8 @@
     <ClInclude Include="..\..\..\src\crui\views\style\typography.h" />
     <ClInclude Include="..\..\..\src\crui\views\view.h" />
     <ClInclude Include="..\..\..\src\crui\views\views_delegate.h" />
+    <ClInclude Include="..\..\..\src\crui\views\view_background.h" />
+    <ClInclude Include="..\..\..\src\crui\views\view_border.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_class_properties.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_constants.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_constants_aura.h" />
@@ -922,7 +959,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NOMINMAX;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;$(ProjectDir)..\..\..\src\third_party\skia\</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
@@ -940,7 +977,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NOMINMAX;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;$(ProjectDir)..\..\..\src\third_party\skia\</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)</ObjectFileName>
     </ClCompile>
     <Link>
@@ -960,8 +997,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NOMINMAX;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;$(ProjectDir)..\..\..\src\third_party\skia\</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -982,8 +1020,9 @@
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NOMINMAX;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\;$(ProjectDir)..\..\..\src\third_party\skia\</AdditionalIncludeDirectories>
       <ObjectFileName>$(IntDir)</ObjectFileName>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>

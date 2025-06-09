@@ -16,7 +16,7 @@
 #include "crui/events/event.h"
 #include "crui/events/event_utils.h"
 #include "crui/events/keycodes/keyboard_codes.h"
-///#include "crui/gfx/canvas.h"
+#include "crui/gfx/canvas.h"
 ///#include "crui/views/drag_controller.h"
 #include "crui/views/layout/fill_layout.h"
 #include "crui/views/view_targeter.h"
@@ -691,12 +691,12 @@ void RootView::OnDidSchedulePaint(const gfx::Rect& rect) {
   }
 }
 
-///void RootView::OnPaint(gfx::Canvas* canvas) {
-///  if (!layer() || !layer()->fills_bounds_opaquely())
-///    canvas->DrawColor(SK_ColorBLACK, SkBlendMode::kClear);
-///
-///  View::OnPaint(canvas);
-///}
+void RootView::OnPaint(gfx::Canvas* canvas) {
+  ///if (!layer() || !layer()->fills_bounds_opaquely())
+  ///  canvas->DrawColor(SK_ColorBLACK, SkBlendMode::kClear);
+
+  View::OnPaint(canvas);
+}
 
 View::LayerOffsetData RootView::CalculateOffsetToAncestorWithLayer(
     crui::Layer** layer_parent) {

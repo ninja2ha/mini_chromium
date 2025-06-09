@@ -146,7 +146,7 @@
       <UniqueIdentifier>{7b2151d4-3bd8-47ff-a3b6-832b2efd7a46}</UniqueIdentifier>
     </Filter>
     <Filter Include="compositor">
-      <UniqueIdentifier>{478b6c1e-f691-483a-8fb7-dc1e8fa5736e}</UniqueIdentifier>
+      <UniqueIdentifier>{b7623f57-6393-43d1-9af0-716ae24ab554}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -1125,10 +1125,31 @@
     <ClCompile Include="..\..\..\src\crui\views\style\platform_style.cc">
       <Filter>views\style</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\compositor\layer.cc">
-      <Filter>compositor</Filter>
+    <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc">
+      <Filter>gfx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\compositor\layer_tree_owner.cc">
+    <ClCompile Include="..\..\..\src\crui\gfx\path.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\path_win.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas_skia.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\skia_util.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_background.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_border.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer.cc">
       <Filter>compositor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\compositor\layer_delegate.cc">
@@ -1137,11 +1158,20 @@
     <ClCompile Include="..\..\..\src\crui\compositor\layer_owner.cc">
       <Filter>compositor</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_tree_owner.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\compositor\layer_type.cc">
       <Filter>compositor</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc">
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas_paint_win.cc">
       <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\cull_set.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\r_tree_base.cc">
+      <Filter>gfx\geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2327,19 +2357,37 @@
     <ClInclude Include="..\..\..\src\crui\views\style\platform_style.h">
       <Filter>views\style</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\path.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\path_win.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\scoped_canvas.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\skia_util.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_background.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_border.h">
+      <Filter>views</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\compositor\layer.h">
       <Filter>compositor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\compositor\property_change_reason.h">
-      <Filter>compositor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_tree_owner.h">
-      <Filter>compositor</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_type.h">
-      <Filter>compositor</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\crui\compositor\layer_delegate.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_observer.h">
       <Filter>compositor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crui\compositor\layer_owner.h">
@@ -2348,11 +2396,26 @@
     <ClInclude Include="..\..\..\src\crui\compositor\layer_owner_delegate.h">
       <Filter>compositor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_observer.h">
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_tree_owner.h">
       <Filter>compositor</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h">
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_type.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\property_change_reason.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas_paint_win.h">
       <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\cull_set.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree_base.h">
+      <Filter>gfx\geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

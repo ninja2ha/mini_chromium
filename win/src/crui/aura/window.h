@@ -532,7 +532,7 @@ class CRUI_EXPORT Window : public crui::LayerDelegate,
   void SchedulePaint();
 
   // Asks the delegate to paint the window.
-  ///void Paint(const crui::PaintContext& context);
+  void Paint(gfx::Canvas* canvas);
 
   // Implementation of RemoveChild(). If |child| is being removed as the result
   // of an add, |new_parent| is the new parent |child| is going to be parented
@@ -589,8 +589,8 @@ class CRUI_EXPORT Window : public crui::LayerDelegate,
   // Notifies this window and its parent hierarchy.
   void NotifyWindowVisibilityChangedUp(aura::Window* target, bool visible);
 
-  // Overridden from ui::LayerDelegate:
-  ///void OnPaintLayer(const crui::PaintContext& context) override;
+  // Overridden from crui::LayerDelegate:
+  void OnPaintLayer(gfx::Canvas* canvas) override;
   void OnLayerBoundsChanged(const gfx::Rect& old_bounds,
                             crui::PropertyChangeReason reason) override;
   void OnLayerTransformed(const gfx::Transform& old_transform,
