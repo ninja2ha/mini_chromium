@@ -74,7 +74,7 @@ void NativeFrameView::SizeConstraintsChanged() {
 
 gfx::Size NativeFrameView::CalculatePreferredSize() const {
   gfx::Size client_preferred_size = frame_->client_view()->GetPreferredSize();
-#if defined(OS_WIN)
+#if defined(MINI_CHROMIUM_OS_WIN)
   // Returns the client size. On Windows, this is the expected behavior for
   // native frames (see |NativeWidgetWin::WidgetSizeIsClientSize()|), while
   // other platforms currently always return client bounds from

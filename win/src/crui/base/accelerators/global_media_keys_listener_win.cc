@@ -6,7 +6,7 @@
 
 #include "crbase/helper/stl_util.h"
 #include "crbase/functional/bind.h"
-///#include "crbase/metrics/histogram_macros.h"
+///#include "base/metrics/histogram_macros.h"
 #include "crui/base/accelerators/accelerator.h"
 #include "crui/events/keycodes/keyboard_code_conversion_win.h"
 #include "crui/gfx/win/singleton_hwnd_hot_key_observer.h"

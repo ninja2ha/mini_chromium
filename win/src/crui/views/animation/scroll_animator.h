@@ -7,17 +7,18 @@
 
 #include <memory>
 
-#include "base/macros.h"
-#include "ui/gfx/animation/animation_delegate.h"
-#include "ui/views/views_export.h"
+#include "crui/gfx/animation/animation_delegate.h"
+#include "crui/base/ui_export.h"
+
+namespace crui {
 
 namespace gfx {
 class SlideAnimation;
-}
+}  // namespace gfx
 
 namespace views {
 
-class VIEWS_EXPORT ScrollDelegate {
+class CRUI_EXPORT ScrollDelegate {
  public:
   // Returns true if the content was actually scrolled, false otherwise.
   virtual bool OnScroll(float dx, float dy) = 0;
@@ -26,8 +27,11 @@ class VIEWS_EXPORT ScrollDelegate {
   ~ScrollDelegate() = default;
 };
 
-class VIEWS_EXPORT ScrollAnimator : public gfx::AnimationDelegate {
+class CRUI_EXPORT ScrollAnimator : public gfx::AnimationDelegate {
  public:
+  ScrollAnimator(const ScrollAnimator&) = delete;
+  ScrollAnimator& operator=(const ScrollAnimator&) = delete;
+
   // The ScrollAnimator does not own the delegate. Uses default acceleration.
   explicit ScrollAnimator(ScrollDelegate* delegate);
   ~ScrollAnimator() override;
@@ -55,10 +59,9 @@ class VIEWS_EXPORT ScrollAnimator : public gfx::AnimationDelegate {
   float acceleration_;
 
   std::unique_ptr<gfx::SlideAnimation> animation_;
-
-  DISALLOW_COPY_AND_ASSIGN(ScrollAnimator);
 };
 
 }  // namespace views
+}  // namespace crui
 
 #endif  // UI_VIEWS_ANIMATION_SCROLL_ANIMATOR_H_

@@ -6,14 +6,15 @@
 
 #include <utility>
 
+#include "crbase/memory/ptr_util.h"
 //#include "crbase/command_line.h"
 ///#include "crbuild/build_config.h"
 ///#include "crui/views/views_touch_selection_controller_factory.h"
 #include "crui/views/widget/native_widget_private.h"
-#include "crui/base/build_platform.h"
+#include "crui/events/gestures/gesture_recognizer_impl.h"
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-///#include "crui/views/touchui/touch_selection_menu_runner_views.h"
+#include "crui/views/touchui/touch_selection_menu_runner_views.h"
 #endif
 
 namespace crui {
@@ -26,16 +27,16 @@ ViewsDelegate* views_delegate = nullptr;
 }  // namespace
 
 ViewsDelegate::ViewsDelegate()
+    : gesture_recognizer_(cr::WrapUnique(new GestureRecognizerImpl))
     /*: editing_controller_factory_(new ViewsTouchEditingControllerFactory) */{
   CR_DCHECK(!views_delegate);
   views_delegate = this;
-
   ///crui::TouchEditingControllerFactory::SetInstance(
   ///    editing_controller_factory_.get());
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-  ///touch_selection_menu_runner_ =
-  ///    std::make_unique<TouchSelectionMenuRunnerViews>();
+  touch_selection_menu_runner_ =
+      std::make_unique<TouchSelectionMenuRunnerViews>();
 #endif
 }
 
@@ -48,6 +49,11 @@ ViewsDelegate::~ViewsDelegate() {
 
 ViewsDelegate* ViewsDelegate::GetInstance() {
   return views_delegate;
+}
+
+void ViewsDelegate::set_gesture_recognizer(
+    std::unique_ptr<GestureRecognizer> gesture_recognizer) {
+  gesture_recognizer_ = std::move(gesture_recognizer);
 }
 
 void ViewsDelegate::SaveWindowPlacement(const Widget* widget,
@@ -87,8 +93,7 @@ HICON ViewsDelegate::GetSmallWindowIcon() const {
 bool ViewsDelegate::IsWindowInMetro(gfx::NativeWindow window) const {
   return false;
 }
-#elif defined(MINI_CHROMIUM_OS_LINUX) && \
-      defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
+#elif defined(MINI_CHROMIUM_OS_LINUX) && BUILDFLAG(ENABLE_DESKTOP_AURA)
 gfx::ImageSkia* ViewsDelegate::GetDefaultWindowIcon() const {
   return nullptr;
 }
@@ -137,10 +142,10 @@ int ViewsDelegate::GetAppbarAutohideEdges(HMONITOR monitor,
 #endif
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-///void ViewsDelegate::SetTouchSelectionMenuRunner(
-///    std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner) {
-///  touch_selection_menu_runner_ = std::move(menu_runner);
-///}
+void ViewsDelegate::SetTouchSelectionMenuRunner(
+    std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner) {
+  touch_selection_menu_runner_ = std::move(menu_runner);
+}
 #endif
 
 }  // namespace views

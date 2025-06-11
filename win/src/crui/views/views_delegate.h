@@ -26,6 +26,7 @@ namespace crui {
 
 ///class ContextFactory;
 ///class TouchEditingControllerFactory;
+class GestureRecognizer;
 
 namespace gfx {
 ///class ImageSkia;
@@ -39,7 +40,7 @@ class NativeWidget;
 class Widget;
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-///class TouchSelectionMenuRunnerViews;
+class TouchSelectionMenuRunnerViews;
 #endif
 
 namespace internal {
@@ -95,6 +96,11 @@ class CRUI_EXPORT ViewsDelegate {
     return native_widget_factory_;
   }
 
+  void set_gesture_recognizer(std::unique_ptr<GestureRecognizer> gr);
+  GestureRecognizer* gesture_recognizer() {
+    return gesture_recognizer_.get();
+  }
+
   // Saves the position, size and "show" state for the window with the
   // specified name.
   virtual void SaveWindowPlacement(const Widget* widget,
@@ -132,8 +138,7 @@ class CRUI_EXPORT ViewsDelegate {
   // Returns true if the window passed in is in the Windows 8 metro
   // environment.
   virtual bool IsWindowInMetro(gfx::NativeWindow window) const;
-#elif defined(MINI_CHROMIUM_OS_LINUX) && \
-      defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
+#elif defined(MINI_CHROMIUM_OS_LINUX) && BUILDFLAG(ENABLE_DESKTOP_AURA)
   virtual gfx::ImageSkia* GetDefaultWindowIcon() const;
 #endif
 
@@ -184,8 +189,8 @@ class CRUI_EXPORT ViewsDelegate {
   ViewsDelegate();
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-  ///void SetTouchSelectionMenuRunner(
-  ///    std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner);
+  void SetTouchSelectionMenuRunner(
+      std::unique_ptr<TouchSelectionMenuRunnerViews> menu_runner);
 #endif
 
  private:
@@ -193,9 +198,10 @@ class CRUI_EXPORT ViewsDelegate {
   ///    editing_controller_factory_;
 
 #if defined(MINI_CHROMIUM_USE_AURA)
-  ///std::unique_ptr<TouchSelectionMenuRunnerViews> touch_selection_menu_runner_;
+  std::unique_ptr<TouchSelectionMenuRunnerViews> touch_selection_menu_runner_;
 #endif
 
+  std::unique_ptr<GestureRecognizer> gesture_recognizer_; // from aura/env.h
   NativeWidgetFactory native_widget_factory_;
 };
 

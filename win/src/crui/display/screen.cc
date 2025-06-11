@@ -4,17 +4,21 @@
 
 #include "crui/display/screen.h"
 
+#include "crbase/build_platform.h"
 #include "crui/display/display.h"
 #include "crui/display/types/display_constants.h"
 #include "crui/gfx/geometry/rect.h"
-#include "crui/base/build_platform.h"
+
+#if defined(MINI_CHROMIUM_OS_WIN)
+#include "crui/display/win/screen_win.h"
+#endif
 
 namespace crui {
 namespace display {
 
 namespace {
 
-Screen* g_screen;
+Screen* g_screen = nullptr;
 
 }  // namespace
 
@@ -29,6 +33,12 @@ Screen* Screen::GetScreen() {
   if (!g_screen)
     g_screen = CreateNativeScreen();
 #endif
+
+#if defined(MINI_CHROMIUM_OS_WIN)
+  if (!g_screen)
+    return win::ScreenWin::GetInstance();
+#endif
+
   return g_screen;
 }
 

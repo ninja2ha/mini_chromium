@@ -8,12 +8,12 @@
 #include "crbase/build_platform.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN) 
-#define MINI_CHROMIUM_USE_AURA
-#define MINI_CHROMIUM_ENABLE_DESKTOP_AURA
+///#define MINI_CHROMIUM_USE_AURA 1
 #elif defined(MINI_CHROMIUM_OS_LINUX)
-#define MINI_CHROMIUM_USE_AURA
-#define MINI_CHROMIUM_USE_X11
+#define MINI_CHROMIUM_USE_AURA 1
+#define MINI_CHROMIUM_USER_X11 1
 #elif defined(MINI_CHROMIUM_OS_MACOSX)
+///#define MINI_CHROMIUM_USER_X11 1
 #else
 #error unknown platform
 #endif

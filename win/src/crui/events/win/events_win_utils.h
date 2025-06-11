@@ -7,6 +7,7 @@
 
 #include <stdint.h>
 
+#include <windows.h>
 #include <memory>
 
 #include "crbase/strings/string16.h"
@@ -17,9 +18,7 @@
 #include "crui/events/keycodes/keyboard_codes.h"
 #include "crui/events/platform_event.h"
 #include "crui/gfx/native_widget_types.h"
-#include "crui/base/build_platform.h"
 
-#include <windows.h>
 
 namespace cr {
 class TimeTicks;

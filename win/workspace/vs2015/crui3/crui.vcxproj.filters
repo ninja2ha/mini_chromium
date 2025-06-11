@@ -1,0 +1,2426 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="base">
+      <UniqueIdentifier>{c9337ce5-6683-41e0-8689-80ace418bbfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\win">
+      <UniqueIdentifier>{5bfc608a-2cf1-4c83-af54-96386e22a78c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx">
+      <UniqueIdentifier>{8d0fa207-57d8-4556-b4f0-60e233274a8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\geometry">
+      <UniqueIdentifier>{2ba617d3-baf7-4578-9627-86ef8d17c71c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\win">
+      <UniqueIdentifier>{52ec1639-5605-4eb0-ae77-967013748e12}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display">
+      <UniqueIdentifier>{5f3ed3c8-aee3-4f43-90da-83d1beb686dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display\win">
+      <UniqueIdentifier>{9e2f4fa2-a604-4554-b576-ddfbc3d98905}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events">
+      <UniqueIdentifier>{f91efbb7-9f78-4121-b608-f7b4d064c5ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\keycodes">
+      <UniqueIdentifier>{ee038cda-018e-465e-aee4-e74e5266a3cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\keycodes\dom">
+      <UniqueIdentifier>{2a921a3b-a406-45cc-bdd8-c089001a5048}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\platform">
+      <UniqueIdentifier>{63439ba7-32ea-46c0-bd26-02b3174d5e70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\types">
+      <UniqueIdentifier>{6dc12c82-071d-4638-9a07-2df3eaa751ee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\win">
+      <UniqueIdentifier>{9da287a6-2892-4aed-9ce9-0985d7387f3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display\types">
+      <UniqueIdentifier>{91a5a75e-8296-4269-bdc8-d8f77a3cecfa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views">
+      <UniqueIdentifier>{c278c853-1fb8-48d2-aa88-f44c6903b788}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\widget">
+      <UniqueIdentifier>{71290ea4-e5ad-4655-a781-fb297c43a010}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\win">
+      <UniqueIdentifier>{77a66aa1-7fa4-4af2-a577-2d9956b517a5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\window">
+      <UniqueIdentifier>{2ccdc58a-c2f6-4f84-8959-7352baa24378}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\accelerators">
+      <UniqueIdentifier>{1383c591-b1dc-42f1-bc1f-c13c0d474b0d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\layout">
+      <UniqueIdentifier>{d14b8867-53c5-4b14-aa03-7e2cd227261d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\metadata">
+      <UniqueIdentifier>{bc93f64c-dc6b-46db-ba95-9d842bee8fa3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\animation">
+      <UniqueIdentifier>{a648a7e9-7e82-453e-86ad-a15f4b92af7e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\animation">
+      <UniqueIdentifier>{4051997c-23aa-45fd-8465-88228576a081}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\style">
+      <UniqueIdentifier>{32dfb121-507e-4b94-a076-5b31bbd9722b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\focus">
+      <UniqueIdentifier>{b28dd803-604a-4b3e-866e-f24f463fa476}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\gesture">
+      <UniqueIdentifier>{5de58c05-ea4a-4356-a449-7d7651f85c38}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="events\gesture_detection">
+      <UniqueIdentifier>{caa1a48f-7276-4bda-9f4a-a746f60ac321}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\dragdrop">
+      <UniqueIdentifier>{5fea0fc8-74cf-4f72-8ef8-57a6168eacdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\dragdrop\file_info">
+      <UniqueIdentifier>{0d0e6a33-8bc8-4b58-81ec-510c82e02c10}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\clipboard">
+      <UniqueIdentifier>{ff45072c-9db5-4d15-a40c-9bf315a4fdbd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura">
+      <UniqueIdentifier>{633be1c7-40ab-4a25-87bf-74a13509ebf2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\i18n">
+      <UniqueIdentifier>{32304241-a74c-4992-8ab8-5731416032a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\wm">
+      <UniqueIdentifier>{5b84b321-724f-4325-9248-610daf682a2d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\wm\core">
+      <UniqueIdentifier>{bfe2b53d-25cd-4e44-b855-f56073ab7432}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\wm\public">
+      <UniqueIdentifier>{5abed057-72e7-475f-bba7-1d754a9ea7a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\client">
+      <UniqueIdentifier>{dbb803a7-caed-4145-801f-520899deb6bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\platform_window">
+      <UniqueIdentifier>{372328df-e2b8-48c5-b444-856f5c3080a6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\platform_window\win">
+      <UniqueIdentifier>{ec41d2c1-7baa-483e-b558-4922863805ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\platform_window\platform_window_handler">
+      <UniqueIdentifier>{abb10b19-187a-425d-9926-7c99aa62c906}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="aura\platform_window\extensions">
+      <UniqueIdentifier>{1e777c77-3537-4fda-a377-3af69c19ca05}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\corewm">
+      <UniqueIdentifier>{fe9264cd-a6c4-4d76-ac84-29a6d34ccce4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\pointer">
+      <UniqueIdentifier>{fd2d022d-9306-4f42-8c9e-44ef3c516966}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\resource">
+      <UniqueIdentifier>{8cb7eb6a-1723-40eb-b451-d144e67b3121}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\widget\desktop_aura">
+      <UniqueIdentifier>{53a28153-fb8d-4462-8efd-879b0304a970}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="gfx\font">
+      <UniqueIdentifier>{bf2afacd-7ee1-4565-b0ac-cc488883c938}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\cursor">
+      <UniqueIdentifier>{7244edda-e5ba-42ec-a037-74f9d92f3c48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\controls">
+      <UniqueIdentifier>{4ecc9068-602a-40c2-8942-900a0fc5adc6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="views\controls\button">
+      <UniqueIdentifier>{7b2151d4-3bd8-47ff-a3b6-832b2efd7a46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="compositor">
+      <UniqueIdentifier>{b7623f57-6393-43d1-9af0-716ae24ab554}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\crui\base\base_window.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\class_property.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\hit_test.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\ui_base_types.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\view_prop.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\accessibility_misc_utils.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\foreground_helper.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\hidden_window.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\hwnd_metrics.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\hwnd_subclass.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\internal_constants.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\lock_state.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\message_box_win.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\mouse_wheel_util.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\scoped_ole_initializer.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\session_change_observer.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\shell.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\touch_input.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\win\window_event_target.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\box_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\dip_util.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix3_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix4_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\point.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_conversions.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\point3_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\quad_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\quaternion.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rect.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rect_conversions.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rect_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\scroll_offset.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\size.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_conversions.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\transform.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\transform_util.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector4d_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\window_impl.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.cc">
+      <Filter>gfx\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\screen_win.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\uwp_text_scale_factor.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\base_event_utils.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_dispatcher.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_handler.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_modifiers.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_processor.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_rewriter.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_source.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_switches.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_target.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\event_utils.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keyboard_hook_base.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\mobile_scroller.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\null_event_targeter.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\pointer_details.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\scoped_target_handler.cc">
+      <Filter>events</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion.cc">
+      <Filter>events\keycodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion_win.cc">
+      <Filter>events\keycodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.cc">
+      <Filter>events\keycodes</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout.cc">
+      <Filter>events\keycodes\dom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout_manager.cc">
+      <Filter>events\keycodes\dom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout_map_base.cc">
+      <Filter>events\keycodes\dom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout_map_win.cc">
+      <Filter>events\keycodes\dom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\keycodes\dom\keycode_converter.cc">
+      <Filter>events\keycodes\dom</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\platform\platform_event_source.cc">
+      <Filter>events\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\platform\scoped_event_dispatcher.cc">
+      <Filter>events\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\win\events_win.cc">
+      <Filter>events\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\win\events_win_utils.cc">
+      <Filter>events\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\win\keyboard_hook_win_base.cc">
+      <Filter>events\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\win\media_keyboard_hook_win.cc">
+      <Filter>events\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\win\modifier_keyboard_hook_win.cc">
+      <Filter>events\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\win\system_event_state_lookup.cc">
+      <Filter>events\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\dpi.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\screen_win_display.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\display_info.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_layout.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\scaling_util.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\screen.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\win\color_profile_reader.cc">
+      <Filter>display\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_layout_builder.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_observer.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\display\display_change_notifier.cc">
+      <Filter>display</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_delegate.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_private.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_getter.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_deletion_observer.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_focus_manager.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\hwnd_message_handler.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\fullscreen_handler.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\window\window_resize_utils.cc">
+      <Filter>views\window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_listener.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_listener_win.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\media_keys_util.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\menu_label_accelerator_util.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\system_media_controls_media_keys_listener2.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\global_media_keys_listener_win.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_manager.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_history.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator.cc">
+      <Filter>base\accelerators</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\pen_event_processor.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\views_delegate.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\sequential_id_generator.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_class_properties.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_constants.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\animating_layout_manager.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\box_layout.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\fill_layout.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\flex_layout.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\flex_layout_types.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\grid_layout.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\layout_manager.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\layout_manager_base.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\layout_provider.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\layout_types.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\normalized_geometry.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\layout\proposed_layout.cc">
+      <Filter>views\layout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_targeter.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_targeter_delegate.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\rect_based_targeting_utils.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\metadata\metadata_cache.cc">
+      <Filter>views\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\metadata\metadata_types.cc">
+      <Filter>views\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\metadata\type_conversion.cc">
+      <Filter>views\metadata</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\range.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\range_f.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\tween.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\animation_runner.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\animation_container.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\linear_animation.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\slide_animation.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\animation.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\animation\animation_delegate_views.cc">
+      <Filter>views\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\style\typography.cc">
+      <Filter>views\style</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\focus\external_focus_tracker.cc">
+      <Filter>views\focus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\focus\focus_manager.cc">
+      <Filter>views\focus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\focus\focus_manager_factory.cc">
+      <Filter>views\focus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\focus\focus_search.cc">
+      <Filter>views\focus</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_tracker.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\root_view.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\root_view_targeter.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\window\non_client_view.cc">
+      <Filter>views\window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\window\client_view.cc">
+      <Filter>views\window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\window\native_frame_view.cc">
+      <Filter>views\window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\hwnd_util_aurawin.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\multi_animation.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\throb_animation.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\animation\animation_win.cc">
+      <Filter>gfx\animation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_event_details.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\gesture_provider_aura.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\gesture_recognizer.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\gesture_recognizer_impl.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\gesture_types.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\fixed_velocity_curve.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\fling_curve.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\physics_based_fling_curve.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gestures\motion_event_aura.cc">
+      <Filter>events\gesture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\filtered_gesture_provider.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_configuration.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_configuration_aura.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_detector.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_event_data.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_event_data_packet.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_listeners.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_provider.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\gesture_provider_config_helper.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\motion_event.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\motion_event_buffer.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\motion_event_generic.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\scale_gesture_detector.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\scale_gesture_listeners.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\snap_scroll_controller.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\touch_disposition_gesture_filter.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\velocity_tracker.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\gesture_detection\velocity_tracker_state.cc">
+      <Filter>events\gesture_detection</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drag_drop_types_win.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drag_source_win.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drop_target_event.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drop_target_win.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\os_exchange_data.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_factory.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_win.cc">
+      <Filter>base\dragdrop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\dragdrop\file_info\file_info.cc">
+      <Filter>base\dragdrop\file_info</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_constants.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_format_type_win.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_monitor.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_util_win.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_win.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\custom_data_helper.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\clipboard\scoped_clipboard_writer.cc">
+      <Filter>base\clipboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\env.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\env_input_state_controller.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\event_injector.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\input_state_lookup_win.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\null_window_targeter.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\scoped_keyboard_hook.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\scoped_simple_keyboard_hook.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\scoped_window_event_targeting_blocker.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\scoped_window_targeter.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_delegate.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_event_dispatcher.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_layout_manager.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_observer.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_targeter.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_tracker.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_tree_host.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\window_tree_host_platform.cc">
+      <Filter>aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\accelerator_filter.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\base_focus_rules.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\capture_controller.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\compound_event_filter.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\coordinate_conversion.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\cursor_manager.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\default_activation_client.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\default_screen_position_client.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\easy_resize_window_targeter.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\focus_controller.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\shadow_controller.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\shadow_types.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\transient_window_controller.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\transient_window_manager.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\transient_window_stacking_client.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\visibility_controller.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_animations.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_modality_controller.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_properties.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_util.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\core\wm_state.cc">
+      <Filter>aura\wm\core</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\activation_change_observer.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\activation_client.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\activation_delegate.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\animation_host.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\scoped_tooltip_disabler.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\tooltip_client.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\wm\public\window_move_client.cc">
+      <Filter>aura\wm\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\aura_constants.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\capture_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\cursor_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\cursor_client_observer.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\default_capture_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\drag_drop_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\drag_drop_delegate.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\event_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\focus_change_observer.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\focus_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\screen_position_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\transient_window_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\visibility_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\window_parenting_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\client\window_stacking_client.cc">
+      <Filter>aura\client</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window.cc">
+      <Filter>aura\platform_window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_delegate.cc">
+      <Filter>aura\platform_window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_init_properties.cc">
+      <Filter>aura\platform_window</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\win\win_window.cc">
+      <Filter>aura\platform_window\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drag_handler.cc">
+      <Filter>aura\platform_window\platform_window_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drop_handler.cc">
+      <Filter>aura\platform_window\platform_window_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_move_resize_handler.cc">
+      <Filter>aura\platform_window\platform_window_handler</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\aura\platform_window\extensions\workspace_extension.cc">
+      <Filter>aura\platform_window\extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\corewm\cursor_height_provider_win.cc">
+      <Filter>views\corewm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_aura.cc">
+      <Filter>views\corewm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_controller.cc">
+      <Filter>views\corewm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_win.cc">
+      <Filter>views\corewm</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\tooltip_manager.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\tooltip_manager_aura.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_aura.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\drag_utils.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\drag_utils_aura.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\layout.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\pointer\pointer_device_util.cc">
+      <Filter>base\pointer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\pointer\pointer_device_win.cc">
+      <Filter>base\pointer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\pointer\touch_editing_controller.cc">
+      <Filter>base\pointer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\resource\scale_factor.cc">
+      <Filter>base\resource</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\drop_helper.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\focus_manager_event_handler.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\widget_aura_utils.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\window_reorderer.cc">
+      <Filter>views\widget</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_constants_aura.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_capture_client.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drag_drop_client_win.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drop_target_win.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_event_client.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_focus_rules.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_cursor_manager.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_widget_aura.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_position_client.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_win.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host_win.cc">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\win\scoped_enable_unadjusted_mouse_events_win.cc">
+      <Filter>views\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\font\font.cc">
+      <Filter>gfx\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\font\font_render_params.cc">
+      <Filter>gfx\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\font\system_fonts_win.cc">
+      <Filter>gfx\font</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor.cc">
+      <Filter>base\cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor_loader_win.cc">
+      <Filter>base\cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor_util.cc">
+      <Filter>base\cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor_win.cc">
+      <Filter>base\cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\cursor\cursors_aura.cc">
+      <Filter>base\cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\base\cursor\image_cursors.cc">
+      <Filter>base\cursor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\events\platform\platform_event_source_stub.cc">
+      <Filter>events\platform</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\controls\button\button.cc">
+      <Filter>views\controls\button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\controls\button\button_controller.cc">
+      <Filter>views\controls\button</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\style\platform_style.cc">
+      <Filter>views\style</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\path.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\path_win.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas_skia.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\skia_util.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_background.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\view_border.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_delegate.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_owner.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_tree_owner.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\compositor\layer_type.cc">
+      <Filter>compositor</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\canvas_paint_win.cc">
+      <Filter>gfx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\views\cull_set.cc">
+      <Filter>views</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crui\gfx\geometry\r_tree_base.cc">
+      <Filter>gfx\geometry</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\crui\base\base_window.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\build_platform.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\class_property.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\hit_test.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\ui_base_types.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\ui_export.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\view_prop.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\accessibility_ids_win.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\accessibility_misc_utils.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\atl_module.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\foreground_helper.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\hidden_window.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\hwnd_metrics.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\hwnd_subclass.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\internal_constants.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\lock_state.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\message_box_win.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\mouse_wheel_util.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_gdi_object.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_hdc.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_ole_initializer.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\scoped_select_gdi_object.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\session_change_observer.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\shell.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\touch_input.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\win\window_event_target.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\angle_conversions.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\box_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\clamp_float_geometry.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\dip_util.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix3_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix4_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\point.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_conversions.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\point3_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\quad_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\quaternion.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rect.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rect_conversions.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rect_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rounded_corners_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\rrect_f_builder.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\safe_integer_conversions.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\scalar.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\scroll_offset.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\sin_cos_degrees.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\size.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_conversions.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\size_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\transform.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\transform_util.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector3d_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector4d_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\hwnd_util.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\msg_util.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\window_impl.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\native_widget_types.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.h">
+      <Filter>gfx\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\screen_win.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\uwp_text_scale_factor.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\base_event_utils.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_constants.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_dispatcher.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_handler.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_modifiers.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_observer.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_processor.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_rewriter.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_rewriter_continuation.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_sink.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_source.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_switches.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_target.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_target_iterator.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_targeter.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\event_utils.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keyboard_hook.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keyboard_hook_base.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\mobile_scroller.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\null_event_targeter.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\platform_event.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\pointer_details.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\scoped_target_handler.h">
+      <Filter>events</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom_us_layout_data.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_code_conversion_win.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_codes.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\keyboard_codes_win.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\platform_key_map_win.h">
+      <Filter>events\keycodes</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_code.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_codes.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_key.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout_manager.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout_map.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\dom_keyboard_layout_map_base.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\keycodes\dom\keycode_converter.h">
+      <Filter>events\keycodes\dom</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_dispatcher.h">
+      <Filter>events\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_observer.h">
+      <Filter>events\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\platform\platform_event_source.h">
+      <Filter>events\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\platform\scoped_event_dispatcher.h">
+      <Filter>events\platform</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\types\scroll_types.h">
+      <Filter>events\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\win\events_win_utils.h">
+      <Filter>events\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\win\keyboard_hook_win_base.h">
+      <Filter>events\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\win\system_event_state_lookup.h">
+      <Filter>events\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\dpi.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\types\display_constants.h">
+      <Filter>display\types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\screen_win_display.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\display_info.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_layout.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\scaling_util.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\screen.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\win\color_profile_reader.h">
+      <Filter>display\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_layout_builder.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_observer.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\display\display_change_notifier.h">
+      <Filter>display</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_delegate.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_delegate.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_private.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_getter.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_deletion_observer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_observer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_removals_observer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_focus_manager.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler_delegate.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\fullscreen_handler.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\window\window_resize_utils.h">
+      <Filter>views\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\system_media_controls_media_keys_listener2.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\media_keys_listener.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\media_keys_util.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\menu_label_accelerator_util.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\global_media_keys_listener_win.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_manager.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_history.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator.h">
+      <Filter>base\accelerators</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\pen_event_processor.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\views_delegate.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\sequential_id_generator.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_class_properties.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_constants.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\animating_layout_manager.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\box_layout.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\fill_layout.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\flex_layout.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\flex_layout_types.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\grid_layout.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\layout_manager.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\layout_manager_base.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\layout_provider.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\layout_types.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\normalized_geometry.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\layout\proposed_layout.h">
+      <Filter>views\layout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_targeter.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_targeter_delegate.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\rect_based_targeting_utils.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\metadata_cache.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\metadata_header_macros.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\metadata_impl_macros.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\metadata_macros_internal.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\metadata_types.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\property_metadata.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\metadata\type_conversion.h">
+      <Filter>views\metadata</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\range.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\range_f.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\text_constants.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\tween.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation_runner.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation_container.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation_container_element.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation_container_observer.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation_delegate.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation_delegate_notifier.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\linear_animation.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\slide_animation.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\animation.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_observer.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\animation\animation_delegate_views.h">
+      <Filter>views\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\style\typography.h">
+      <Filter>views\style</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\focus\external_focus_tracker.h">
+      <Filter>views\focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\focus\focus_manager.h">
+      <Filter>views\focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\focus\focus_manager_delegate.h">
+      <Filter>views\focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\focus\focus_manager_factory.h">
+      <Filter>views\focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\focus\focus_search.h">
+      <Filter>views\focus</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_tracker.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\root_view.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\root_view_targeter.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\window\non_client_view.h">
+      <Filter>views\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\window\client_view.h">
+      <Filter>views\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\window\native_frame_view.h">
+      <Filter>views\window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\hwnd_util.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\multi_animation.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\animation\throb_animation.h">
+      <Filter>gfx\animation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_curve.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_event_details.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\gesture_provider_aura.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\gesture_recognizer.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\gesture_recognizer_impl.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\gesture_types.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\fixed_velocity_curve.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\fling_curve.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\physics_based_fling_curve.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gestures\motion_event_aura.h">
+      <Filter>events\gesture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\bitset_32.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\filtered_gesture_provider.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_configuration.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_detector.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_event_data.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_event_data_packet.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_listeners.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_provider.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\gesture_provider_config_helper.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\motion_event.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\motion_event_buffer.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\motion_event_generic.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\scale_gesture_detector.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\scale_gesture_listeners.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\snap_scroll_controller.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\touch_disposition_gesture_filter.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\velocity_tracker.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\events\gesture_detection\velocity_tracker_state.h">
+      <Filter>events\gesture_detection</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\download_file_interface.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drag_drop_types.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drag_source_win.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drop_target_event.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drop_target_win.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\os_exchange_data.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_factory.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_win.h">
+      <Filter>base\dragdrop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\dragdrop\file_info\file_info.h">
+      <Filter>base\dragdrop\file_info</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\drag_controller.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_buffer.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_constants.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_format_type.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_monitor.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_observer.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_util_win.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_win.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\custom_data_helper.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\clipboard\scoped_clipboard_writer.h">
+      <Filter>base\clipboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\env.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\env_input_state_controller.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\env_observer.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\event_injector.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\input_state_lookup.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\input_state_lookup_win.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\null_window_targeter.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\scoped_enable_unadjusted_mouse_events.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\scoped_keyboard_hook.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\scoped_simple_keyboard_hook.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\scoped_window_event_targeting_blocker.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\scoped_window_targeter.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_delegate.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_event_dispatcher.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_event_dispatcher_observer.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_layout_manager.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_observer.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_targeter.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_tracker.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_tree_host.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_tree_host_observer.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\window_tree_host_platform.h">
+      <Filter>aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\i18n\rtl.h">
+      <Filter>base\i18n</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\accelerator_delegate.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\accelerator_filter.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\base_focus_rules.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\capture_controller.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\compound_event_filter.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\coordinate_conversion.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\cursor_manager.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\default_activation_client.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\default_screen_position_client.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\easy_resize_window_targeter.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\focus_controller.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\focus_rules.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\native_cursor_manager.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\native_cursor_manager_delegate.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\shadow_controller.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\shadow_controller_delegate.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\shadow_types.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_controller.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_manager.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_observer.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_stacking_client.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\visibility_controller.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_animations.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_modality_controller.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_properties.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_util.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\core\wm_state.h">
+      <Filter>aura\wm\core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\activation_change_observer.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\activation_client.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\activation_delegate.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\animation_host.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\scoped_tooltip_disabler.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\tooltip_client.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\wm\public\window_move_client.h">
+      <Filter>aura\wm\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\aura_constants.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\capture_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\capture_client_observer.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\capture_delegate.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\cursor_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\cursor_client_observer.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\default_capture_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\drag_drop_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\drag_drop_client_observer.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\drag_drop_delegate.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\event_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\focus_change_observer.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\focus_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\screen_position_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\transient_window_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\transient_window_client_observer.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\visibility_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\window_parenting_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\window_stacking_client.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\client\window_types.h">
+      <Filter>aura\client</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window.h">
+      <Filter>aura\platform_window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_delegate.h">
+      <Filter>aura\platform_window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_init_properties.h">
+      <Filter>aura\platform_window</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\win\win_window.h">
+      <Filter>aura\platform_window\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drag_handler.h">
+      <Filter>aura\platform_window\platform_window_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drop_handler.h">
+      <Filter>aura\platform_window\platform_window_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_move_resize_handler.h">
+      <Filter>aura\platform_window\platform_window_handler</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\extensions\workspace_extension.h">
+      <Filter>aura\platform_window\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\aura\platform_window\extensions\workspace_extension_delegate.h">
+      <Filter>aura\platform_window\extensions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\corewm\cursor_height_provider_win.h">
+      <Filter>views\corewm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip.h">
+      <Filter>views\corewm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_aura.h">
+      <Filter>views\corewm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_controller.h">
+      <Filter>views\corewm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_win.h">
+      <Filter>views\corewm</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\tooltip_manager.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\tooltip_manager_aura.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_aura.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\drag_utils.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\layout.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\pointer\pointer_device.h">
+      <Filter>base\pointer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\pointer\touch_editing_controller.h">
+      <Filter>base\pointer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\resource\scale_factor.h">
+      <Filter>base\resource</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\drop_helper.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\focus_manager_event_handler.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\widget_aura_utils.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\window_reorderer.h">
+      <Filter>views\widget</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_constants_aura.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_capture_client.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drag_drop_client_win.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drop_target_win.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_event_client.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_focus_rules.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_cursor_manager.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_widget_aura.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_position_client.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_win.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host_win.h">
+      <Filter>views\widget\desktop_aura</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\win\scoped_enable_unadjusted_mouse_events_win.h">
+      <Filter>views\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\font\font.h">
+      <Filter>gfx\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\font\font_render_params.h">
+      <Filter>gfx\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\font\platform_font.h">
+      <Filter>gfx\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\font\system_fonts_win.h">
+      <Filter>gfx\font</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_loader.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_loader_win.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_size.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_types.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_util.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\cursors_aura.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\base\cursor\image_cursors.h">
+      <Filter>base\cursor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller_delegate.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\controls\button\button_observer.h">
+      <Filter>views\controls\button</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\style\platform_style.h">
+      <Filter>views\style</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\path.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\path_win.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\scoped_canvas.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\skia_util.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_background.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\view_border.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_delegate.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_observer.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner_delegate.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_tree_owner.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\layer_type.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\compositor\property_change_reason.h">
+      <Filter>compositor</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas_paint_win.h">
+      <Filter>gfx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\views\cull_set.h">
+      <Filter>views</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree_base.h">
+      <Filter>gfx\geometry</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\crui\aura\wm\core\OWNERS">
+      <Filter>aura\wm\core</Filter>
+    </None>
+  </ItemGroup>
+</Project>

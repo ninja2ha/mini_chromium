@@ -7,11 +7,11 @@
 #include <cmath>
 #include <limits>
 
-///#include "base/i18n/rtl.h"
 #include "crbase/logging.h"
 #include "third_party/skia/include/core/SkBitmap.h"
 #include "third_party/skia/include/effects/SkGradientShader.h"
 ///#include "ui/gfx/font_list.h"
+#include "crui/base/i18n/rtl.h"
 #include "crui/gfx/geometry/rect.h"
 #include "crui/gfx/geometry/rect_conversions.h"
 #include "crui/gfx/geometry/rect_f.h"
@@ -19,7 +19,7 @@
 #include "crui/gfx/geometry/size_conversions.h"
 #include "crui/gfx/geometry/transform.h"
 #include "crui/gfx/scoped_canvas.h"
-#include "crui/gfx/skia_util.h"
+#include "crui/gfx/skia/skia_util.h"
 
 namespace crui {
 namespace gfx {
@@ -513,9 +513,7 @@ void Canvas::DrawSolidFocusRect(const Rect& rect, SkColor color) {
 ///}
 
 void Canvas::Transform(const gfx::Transform& transform) {
-  SkMatrix matrix;
-  gfx::TransformToFlattenedSkMatrix(transform, &matrix);
-  canvas_->concat(matrix);
+  canvas_->concat(transform.matrix());
 }
 
 bool Canvas::IntersectsClipRectInt(int x, int y, int w, int h) {

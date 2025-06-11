@@ -3,31 +3,19 @@
 #include "crbase/strings/string_piece.h"
 #include "crbase/strings/utf_string_conversions.h"
 #include "crbase/message_loop/message_loop.h"
+#include "crbase/memory/ptr_util.h"
 #include "crbase/win/msvc_import_libs.h"
 
+#include "crui/display/screen.h"
+#include "crui/display/win/screen_win.h"
 #include "crui/views/widget/widget.h"
 #include "crui/views/widget/widget_delegate.h"
 #include "crui/views/views_delegate.h"
-#include "crui/views/controls/button/button.h"
-#include "crui/views/view_border.h"
 #include "crui/views/view_background.h"
+#include "crui/views/layout/box_layout.h"
+#include "crui/views/layout/grid_layout.h"
+#include "crui/views/controls/button/button.h"
 #include "crui/base/build_platform.h"
-
-#if defined(MINI_CHROMIUM_USE_AURA)
-#include "crui/aura/env.h"
-#include "crui/aura/wm/core/wm_state.h"
-#endif
-
-#if defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
-#include "crui/display/screen.h"
-#include "crui/display/display.h"
-#include "crui/views/widget/desktop_aura/desktop_native_widget_aura.h"
-#include "crui/views/widget/desktop_aura/desktop_screen.h"
-#endif
-
-#if defined(MINI_CHROMIUM_OS_WIN)
-#include "crui/base/win/scoped_ole_initializer.h"
-#endif
 
 #include "examples/common/logging_initializtion.h"
 #include "examples/common/thread_helper.h"
@@ -37,8 +25,8 @@
 namespace example {
 
 class SimpleUIApplication : public crui::views::WidgetDelegateView,
-                            public crui::views::ViewsDelegate,
-                            public crui::views::ButtonListener {
+                            public crui::views::ButtonListener,
+                            public crui::views::ViewsDelegate {
  public:
   SimpleUIApplication(const SimpleUIApplication&) = delete;
   SimpleUIApplication& operator=(const SimpleUIApplication&) = delete;
@@ -54,16 +42,22 @@ class SimpleUIApplication : public crui::views::WidgetDelegateView,
   cr::string16 GetWindowTitle() const override;
   void WindowClosing() override;
 
-  void ButtonPressed(crui::views::Button* sender, 
-                     const crui::Event& event) override;
+  //
+  void ButtonPressed(crui::views::Button* sender, const crui::Event& event);
 
 };
 
 SimpleUIApplication::SimpleUIApplication() {
-  crui::views::Button* button = new crui::views::Button(this);
-  button->SetBackground(crui::views::CreateSolidBackground(SK_ColorBLUE));
-  button->SetID(111);
-  button->SetBounds(0, 0, 100, 100);
+  using namespace crui::views;
+  this->SetBackground(CreateSolidBackground(SK_ColorWHITE));
+
+  Button* button = new Button(this);
+  button->SetSize(crui::gfx::Size(120, 30));
+  button->SetPosition(crui::gfx::Point(300, 400));
+  button->SetFocusPainter(
+      Painter::CreateSolidFocusPainter(
+          SK_ColorBLUE, crui::gfx::Insets(1)));
+  button->SetBackground(CreateRoundedRectBackground(SK_ColorCYAN, 5));
   this->AddChildView(button);
 }
 
@@ -84,46 +78,26 @@ void SimpleUIApplication::WindowClosing() {
 
 void SimpleUIApplication::ButtonPressed(crui::views::Button* sender, 
                                         const crui::Event& event) {
-  MessageBox(NULL, 0, 0, MB_OK);
+  CR_LOG(Info) << "button(" << sender->GetID() << ") pressed";
 }
 
 int RunSimpleWidget() {
-#if defined(MINI_CHROMIUM_OS_WIN)
-  crui::ScopedOleInitializer ole_initializer;
-#endif
-
   using namespace crui;
   MainThreadHelper main_thread(cr::MessageLoop::TYPE_UI, true);
-
-#if defined(MINI_CHROMIUM_USE_AURA)
-  std::unique_ptr<aura::Env> env = aura::Env::CreateInstance();
-  ///aura::Env::GetInstance()->set_context_factory(context_factory.get());
-  ///aura::Env::GetInstance()->set_context_factory_private(context_factory.get());
-  crui::wm::WMState wm_state;
-#endif
-
-#if defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
-  std::unique_ptr<crui::display::Screen> desktop_screen(
-      crui::views::CreateDesktopScreen());
-  crui::display::Screen::SetScreenInstance(desktop_screen.get());
-#endif
 
   views::Widget* widget = new views::Widget;
   views::Widget::InitParams params;
   params.delegate = new SimpleUIApplication();
-#if defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
-  params.native_widget = new crui::views::DesktopNativeWidgetAura(widget);
-#endif
+  params.context = nullptr;
   params.force_software_compositing = true;
   params.bounds = crui::gfx::Rect(800, 600);
+  ///params.mirror_origin_in_rtl = true;
+  params.opacity = crui::views::Widget::InitParams::WindowOpacity::kTranslucent;
   widget->Init(std::move(params));
+  widget->CenterWindow(params.bounds.size());
   widget->Show();
 
   main_thread.Run();
-
-#if defined(MINI_CHROMIUM_USE_AURA)
-  env.reset();
-#endif
   return 0;
 }
 

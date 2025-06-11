@@ -23,38 +23,37 @@
 #include "crbase/observer_list.h"
 ///#include "crbase/i18n/rtl.h"
 ///#include "third_party/skia/include/core/SkPath.h"
-///#include "crui/accessibility/ax_enums.mojom-forward.h"
+///#include "ui/accessibility/ax_enums.mojom-forward.h"
 #include "crui/base/ui_export.h"
 #include "crui/base/accelerators/accelerator.h"
 #include "crui/base/class_property.h"
-///#include "crui/base/clipboard/clipboard_format_type.h"
-#include "crui/base/dragdrop/drag_drop_types.h"
-#include "crui/base/dragdrop/drop_target_event.h"
-#include "crui/base/dragdrop/os_exchange_data.h"
+///#include "ui/base/clipboard/clipboard_format_type.h"
+///#include "ui/base/dragdrop/drag_drop_types.h"
+///#include "ui/base/dragdrop/drop_target_event.h"
+///#include "ui/base/dragdrop/os_exchange_data.h"
 #include "crui/base/ui_base_types.h"
-#include "crui/compositor/layer_delegate.h"
-#include "crui/compositor/layer_observer.h"
-#include "crui/compositor/layer_owner.h"
-///#include "crui/compositor/paint_cache.h"
+///#include "ui/compositor/layer_delegate.h"
+///#include "ui/compositor/layer_observer.h"
+///#include "ui/compositor/layer_owner.h"
+///#include "ui/compositor/paint_cache.h"
 #include "crui/events/event.h"
 #include "crui/events/event_target.h"
 #include "crui/gfx/geometry/insets.h"
 #include "crui/gfx/geometry/point.h"
 #include "crui/gfx/geometry/rect.h"
 #include "crui/gfx/geometry/rect_f.h"
-#include "crui/gfx/geometry/r_tree.h"
 #include "crui/gfx/geometry/vector2d.h"
+#include "crui/gfx/path.h"
 #include "crui/gfx/native_widget_types.h"
 #include "crui/views/layout/layout_types.h"
 #include "crui/views/metadata/metadata_header_macros.h"
 #include "crui/views/metadata/metadata_impl_macros.h"
 ///#include "crui/views/paint_info.h"
 #include "crui/views/view_targeter.h"
-#include "crui/views/cull_set.h"
 #include "crui/views/widget/widget_getter.h"
 #include "crui/base/build_platform.h"
 
-using crui::OSExchangeData;
+///using crui::OSExchangeData;
 
 namespace crui {
 
@@ -62,14 +61,14 @@ namespace crui {
 ///struct AXNodeData;
 ///class Compositor;
 ///class InputMethod;
-class Layer;
+///class Layer;
 ///class NativeTheme;
 ///class PaintContext;
 ///class ThemeProvider;
 class TransformRecorder;
 
 namespace gfx {
-///class Canvas;
+class Canvas;
 class Insets;
 class Transform;
 }  // namespace gfx
@@ -79,7 +78,7 @@ namespace views {
 class Background;
 class Border;
 ///class ContextMenuController;
-class DragController;
+///class DragController;
 class FocusManager;
 class FocusTraversable;
 class LayoutManager;
@@ -219,8 +218,8 @@ enum PropertyEffects {
 //
 //   ...
 //     frobble_changed_subscription_ = AddFrobbleChangedCallback(
-//         cr::BindRepeating(&FrobbleView::OnFrobbleChanged,
-//         cr::Unretained(this)));
+//         base::BindRepeating(&FrobbleView::OnFrobbleChanged,
+//         base::Unretained(this)));
 //
 //   Example:
 //
@@ -228,7 +227,7 @@ enum PropertyEffects {
 //     bool frobble_changed = false;
 //     PropertyChangedSubscription subscription =
 //       frobble_view_->AddFrobbleChangedCallback(
-//           cr::BindRepeating([](bool* frobble_changed_ptr) {
+//           base::BindRepeating([](bool* frobble_changed_ptr) {
 //             *frobble_changed_ptr = true;
 //           }, &frobble_changed));
 //     frobble_view_->SetFrobble(!frobble_view_->GetFrobble());
@@ -268,9 +267,9 @@ enum PropertyEffects {
 //   ADD_PROPERTY_METADATA(MyView, int, Bobble)
 //   END_METADATA()
 /////////////////////////////////////////////////////////////////////////////
-class CRUI_EXPORT View : public crui::LayerDelegate,
-                         public crui::LayerObserver,
-                         public crui::LayerOwner,
+class CRUI_EXPORT View : ///public crui::LayerDelegate,
+                         ///public crui::LayerObserver,
+                         ///public crui::LayerOwner,
                          public crui::AcceleratorTarget,
                          public crui::EventTarget,
                          public crui::EventHandler,
@@ -601,64 +600,12 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   gfx::Transform GetTransform() const;
 
   // Clipping is done relative to the view's local bounds.
-  ///void set_clip_path(const SkPath& path) { clip_path_ = path; }
+  void set_clip_path(const SkPath& path) { clip_path_ = path; }
 
   // Sets the transform to the supplied transform.
   void SetTransform(const gfx::Transform& transform);
 
   // Accelerated painting ------------------------------------------------------
-
-  // Sets whether this view paints to a layer. A view paints to a layer if
-  // either of the following are true:
-  // . the view has a non-identity transform.
-  // . SetPaintToLayer(ui::LayerType) has been invoked.
-  // View creates the Layer only when it exists in a Widget with a non-NULL
-  // Compositor.
-  // Enabling a view to have a layer impacts painting of sibling views.
-  // Specifically views with layers effectively paint in a z-order that is
-  // always above any sibling views that do not have layers. This happens
-  // regardless of the ordering returned by GetChildrenInZOrder().
-  void SetPaintToLayer(crui::LayerType layer_type = crui::LAYER_TEXTURED);
-
-  // Cancels layer painting triggered by a call to |SetPaintToLayer()|. Note
-  // that this will not actually destroy the layer if the view paints to a layer
-  // for another reason.
-  void DestroyLayer();
-
-  // Add or remove layers below this view. This view does not take ownership of
-  // the layers. It is the caller's responsibility to keep track of this View's
-  // size and update their layer accordingly.
-  //
-  // In very rare cases, it may be necessary to override these. If any of this
-  // view's contents must be painted to the same layer as its parent, or can't
-  // handle being painted with transparency, overriding might be appropriate.
-  // One example is LabelButton, where the label must paint below any added
-  // layers for subpixel rendering reasons. Overrides should be made
-  // judiciously, and generally they should just forward the calls to a child
-  // view. They must be overridden together for correctness.
-  virtual void AddLayerBeneathView(crui::Layer* new_layer);
-  virtual void RemoveLayerBeneathView(crui::Layer* old_layer);
-
-  // This is like RemoveLayerBeneathView() but doesn't remove |old_layer| from
-  // its parent. This is useful for when a layer beneth this view is owned by a
-  // ui::LayerOwner which just recreated it (by calling RecreateLayer()). In
-  // this case, this function can be called to remove it from |layers_beneath_|,
-  // and to stop observing it, but it remains in the layer tree since the
-  // expectation of ui::LayerOwner::RecreateLayer() is that the old layer
-  // remains under the same parent, and stacked above the newly cloned layer.
-  void RemoveLayerBeneathViewKeepInLayerTree(crui::Layer* old_layer);
-
-  // Gets the layers associated with this view that should be immediate children
-  // of the parent layer. They are returned in bottom-to-top order. This
-  // includes |this->layer()| and any layers added with |AddLayerBeneathView()|.
-  // Returns an empty vector if this view doesn't paint to a layer.
-  std::vector<crui::Layer*> GetLayersInOrder();
-
-  // ui::LayerObserver:
-  void LayerDestroyed(crui::Layer* layer) override;
-
-  // Overridden from ui::LayerOwner:
-  std::unique_ptr<crui::Layer> RecreateLayer() override;
 
   // RTL positioning -----------------------------------------------------------
 
@@ -846,15 +793,14 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // Mark all or part of the View's bounds as dirty (needing repaint).
   // |r| is in the View's coordinates.
   // TODO(beng): Make protected.
-  void SchedulePaint();
-  void SchedulePaintInRect(const gfx::Rect& r);
+  virtual void SchedulePaint();
+  virtual void SchedulePaintInRect(const gfx::Rect& r);
 
   // Called by the framework to paint a View. Performs translation and clipping
   // for View coordinates and language direction as required, allows the View
   // to paint itself via the various OnPaint*() event handlers and then paints
   // the hierarchy beneath it.
-  void Paint(gfx::Canvas* canvas, const CullSet& cull_set);
-  void PaintCommon(gfx::Canvas* canvas, const CullSet& cull_set);
+  virtual void Paint(gfx::Canvas* canvas);
 
   // The background object may be null.
   void SetBackground(std::unique_ptr<Background> b);
@@ -1226,10 +1172,10 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Drag and drop -------------------------------------------------------------
 
-  DragController* drag_controller() { return drag_controller_; }
-  void set_drag_controller(DragController* drag_controller) {
-    drag_controller_ = drag_controller;
-  }
+  ///DragController* drag_controller() { return drag_controller_; }
+  ///void set_drag_controller(DragController* drag_controller) {
+  ///  drag_controller_ = drag_controller;
+  ///}
 
   // During a drag and drop session when the mouse moves the view under the
   // mouse is queried for the drop types it supports by way of the
@@ -1253,44 +1199,44 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // |formats| is a bitmask of the formats defined bye OSExchangeData::Format.
   // The default implementation returns false, which means the view doesn't
   // support dropping.
-  virtual bool GetDropFormats(int* formats,
-                              std::set<crui::ClipboardFormatType>* format_types);
+  ///virtual bool GetDropFormats(int* formats,
+  ///                            std::set<crui::ClipboardFormatType>* format_types);
 
   // Override and return true if the data must be available before any drop
   // methods should be invoked. The default is false.
-  virtual bool AreDropTypesRequired();
+  ///virtual bool AreDropTypesRequired();
 
   // A view that supports drag and drop must override this and return true if
   // data contains a type that may be dropped on this view.
-  virtual bool CanDrop(const OSExchangeData& data);
+  ///virtual bool CanDrop(const OSExchangeData& data);
 
   // OnDragEntered is invoked when the mouse enters this view during a drag and
   // drop session and CanDrop returns true. This is immediately
   // followed by an invocation of OnDragUpdated, and eventually one of
   // OnDragExited or OnPerformDrop.
-  virtual void OnDragEntered(const crui::DropTargetEvent& event);
+  ///virtual void OnDragEntered(const crui::DropTargetEvent& event);
 
   // Invoked during a drag and drop session while the mouse is over the view.
   // This should return a bitmask of the DragDropTypes::DragOperation supported
   // based on the location of the event. Return 0 to indicate the drop should
   // not be accepted.
-  virtual int OnDragUpdated(const crui::DropTargetEvent& event);
+  ///virtual int OnDragUpdated(const crui::DropTargetEvent& event);
 
   // Invoked during a drag and drop session when the mouse exits the views, or
   // when the drag session was canceled and the mouse was over the view.
-  virtual void OnDragExited();
+  ///virtual void OnDragExited();
 
   // Invoked during a drag and drop session when OnDragUpdated returns a valid
   // operation and the user release the mouse.
-  virtual int OnPerformDrop(const crui::DropTargetEvent& event);
+  ///virtual int OnPerformDrop(const crui::DropTargetEvent& event);
 
   // Invoked from DoDrag after the drag completes. This implementation does
   // nothing, and is intended for subclasses to do cleanup.
-  virtual void OnDragDone();
+  ///virtual void OnDragDone();
 
   // Returns true if the mouse was dragged enough to start a drag operation.
   // delta_x and y are the distance the mouse was dragged.
-  static bool ExceededDragThreshold(const gfx::Vector2d& delta);
+  ///static bool ExceededDragThreshold(const gfx::Vector2d& delta);
 
   // Accessibility -------------------------------------------------------------
 
@@ -1308,7 +1254,7 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   ///virtual bool HandleAccessibleAction(const crui::AXActionData& action_data);
 
   // Returns an instance of the native accessibility interface for this view.
-  virtual gfx::NativeViewAccessible GetNativeViewAccessible();
+  ///virtual gfx::NativeViewAccessible GetNativeViewAccessible();
 
   // Notifies assistive technology that an accessibility event has
   // occurred on this view, such as when the view is focused or when its
@@ -1445,7 +1391,7 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Responsible for calling Paint() on child Views. Override to control the
   // order child Views are painted.
-  virtual void PaintChildren(gfx::Canvas* canvas, const CullSet& cull_set);
+  virtual void PaintChildren(gfx::Canvas* canvas);
 
   // Override to provide rendering in any part of the View's bounds. Typically
   // this is the "contents" of the view. If you override this method you will
@@ -1460,64 +1406,7 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // Override to paint a border not specified by SetBorder().
   virtual void OnPaintBorder(gfx::Canvas* canvas);
 
-  // Returns true if this View is the root for paint events, and should
-  // therefore maintain a |bounds_tree_| member and use it for paint damage rect
-  // calculations.
-  virtual bool IsPaintRoot();
-
-  // Returns the type of scaling to be done for this View. Override this to
-  // change the default scaling type from |kScaleToFit|. You would want to
-  // override this for a view and return |kScaleToScaleFactor| in cases where
-  // scaling should cause no distortion. Such as in the case of an image or
-  // an icon.
-  ///virtual PaintInfo::ScaleType GetPaintScaleType() const;
-
   // Accelerated painting ------------------------------------------------------
-
-  // Returns the offset from this view to the nearest ancestor with a layer. If
-  // |layer_parent| is non-NULL it is set to the nearest ancestor with a layer.
-  virtual LayerOffsetData CalculateOffsetToAncestorWithLayer(
-      crui::Layer** layer_parent);
-
-  // Updates the view's layer's parent. Called when a view is added to a view
-  // hierarchy, responsible for parenting the view's layer to the enclosing
-  // layer in the hierarchy.
-  virtual void UpdateParentLayer();
-
-  // If this view has a layer, the layer is reparented to |parent_layer| and its
-  // bounds is set based on |point|. If this view does not have a layer, then
-  // recurses through all children. This is used when adding a layer to an
-  // existing view to make sure all descendants that have layers are parented to
-  // the right layer.
-  void MoveLayerToParent(crui::Layer* parent_layer,
-                         const LayerOffsetData& offset_data);
-
-  // Called to update the bounds of any child layers within this View's
-  // hierarchy when something happens to the hierarchy.
-  void UpdateChildLayerBounds(const LayerOffsetData& offset_data);
-
-  // Overridden from crui::LayerDelegate:
-  void OnPaintLayer(gfx::Canvas* canvas) override;
-  void OnDeviceScaleFactorChanged(float old_device_scale_factor,
-                                  float new_device_scale_factor) override;
-
-  // Finds the layer that this view paints to (it may belong to an ancestor
-  // view), then reorders the immediate children of that layer to match the
-  // order of the view tree.
-  void ReorderLayers();
-
-  // This reorders the immediate children of |*parent_layer| to match the
-  // order of the view tree. Child layers which are owned by a view are
-  // reordered so that they are below any child layers not owned by a view.
-  // Widget::ReorderNativeViews() should be called to reorder any child layers
-  // with an associated view. Widget::ReorderNativeViews() may reorder layers
-  // below layers owned by a view.
-  virtual void ReorderChildLayers(crui::Layer* parent_layer);
-
-  // Notifies parents about a layer being created or destroyed in a child. An
-  // example where a subclass may override this method is when it wants to clip
-  // the child by adding its own layer.
-  virtual void OnChildLayerChanged(View* child);
 
   // Input ---------------------------------------------------------------------
 
@@ -1554,18 +1443,18 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // the DragController. Subclasses may wish to override rather than install
   // a DragController.
   // See DragController for a description of these methods.
-  virtual int GetDragOperations(const gfx::Point& press_pt);
-  virtual void WriteDragData(const gfx::Point& press_pt, OSExchangeData* data);
+  ///virtual int GetDragOperations(const gfx::Point& press_pt);
+  ///virtual void WriteDragData(const gfx::Point& press_pt, OSExchangeData* data);
 
   // Returns whether we're in the middle of a drag session that was initiated
   // by us.
-  bool InDrag() const;
+  ///bool InDrag() const;
 
   // Returns how much the mouse needs to move in one direction to start a
   // drag. These methods cache in a platform-appropriate way. These values are
   // used by the public static method ExceededDragThreshold().
-  static int GetHorizontalDragThreshold();
-  static int GetVerticalDragThreshold();
+  ///static int GetHorizontalDragThreshold();
+  ///static int GetVerticalDragThreshold();
 
   // Property Support ----------------------------------------------------------
 
@@ -1587,8 +1476,6 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   friend class internal::ScopedChildrenLock;
   friend class FocusManager;
   friend class Widget;
-
-  typedef gfx::RTree<intptr_t> BoundsTree;
 
   using PropertyChangedVectors =
       std::map<PropertyKey, std::unique_ptr<PropertyChangedCallbacks>>;
@@ -1625,20 +1512,23 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Recursively calls the painting method |func| on all non-layered children,
   // in Z order.
-  void RecursivePaintHelper(void (View::*func)(gfx::Canvas*, const CullSet&),
-                            gfx::Canvas* canvas,
-                            const CullSet& cull_set);
+  void RecursivePaintHelper(void (View::*func)(gfx::Canvas* canvas),
+                            gfx::Canvas* canvas);
 
   // Invokes Paint() and, if necessary, PaintDebugRects().  Should be called
   // only on the root of a widget/layer.  PaintDebugRects() is invoked as a
   // separate pass, instead of being rolled into Paint(), so that siblings will
   // not obscure debug rects.
-  void PaintFromPaintRoot(gfx::Canvas* canvas);
+  ///void PaintFromPaintRoot(gfx::Canvas* canvas);
 
   // Draws a semitransparent rect to indicate the bounds of this view.
   // Recursively does the same for all children.  Invoked only with
   // --draw-view-bounds-rects.
   ///void PaintDebugRects(const PaintInfo& paint_info);
+
+  // Common Paint() code shared by accelerated and non-accelerated code paths to
+  // invoke OnPaint() on the View.
+  void PaintCommon(gfx::Canvas* canvas);
 
   // Tree operations -----------------------------------------------------------
 
@@ -1743,78 +1633,6 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Accelerated painting ------------------------------------------------------
 
-  // Creates the layer and related fields for this view.
-  void CreateLayer(crui::LayerType layer_type);
-
-  // Recursively calls UpdateParentLayers() on all descendants, stopping at any
-  // Views that have layers. Calls UpdateParentLayer() for any Views that have
-  // a layer with no parent. If at least one descendant had an unparented layer
-  // true is returned.
-  bool UpdateParentLayers();
-
-  // Parents this view's layer to |parent_layer|, and sets its bounds and other
-  // properties in accordance to the layer hierarchy.
-  void ReparentLayer(crui::Layer* parent_layer);
-
-  // Called to update the layer visibility. The layer will be visible if the
-  // View itself, and all its parent Views are visible. This also updates
-  // visibility of the child layers.
-  void UpdateLayerVisibility();
-  void UpdateChildLayerVisibility(bool visible);
-
-  enum class LayerChangeNotifyBehavior {
-    // Notify the parent chain about the layer change.
-    NOTIFY,
-    // Don't notify the parent chain about the layer change.
-    DONT_NOTIFY
-  };
-
-  // Destroys the layer associated with this view, and reparents any descendants
-  // to the destroyed layer's parent. If the view does not currently have a
-  // layer, this has no effect.
-  // The |notify_parents| enum controls whether a notification about the layer
-  // change is sent to the parents.
-  void DestroyLayerImpl(LayerChangeNotifyBehavior notify_parents);
-
-  // Determines whether we need to be painting to a layer, checks whether we
-  // currently have a layer, and creates or destroys the layer if necessary.
-  void CreateOrDestroyLayer();
-
-  // Notifies parents about layering changes in the view. This includes layer
-  // creation and destruction.
-  void NotifyParentsOfLayerChange();
-
-  // Orphans the layers in this subtree that are parented to layers outside of
-  // this subtree.
-  void OrphanLayers();
-
-  // Adjust the layer's offset so that it snaps to the physical pixel boundary.
-  // This has no effect if the view does not have an associated layer.
-  void SnapLayerToPixelBoundary(const LayerOffsetData& offset_data);
-
-  // Sets the layer's bounds given in DIP coordinates.
-  void SetLayerBounds(const gfx::Size& size_in_dip,
-                      const LayerOffsetData& layer_offset_data);
-
-  // Sets the bit indicating that the cached bounds for this object within the
-  // root view bounds tree are no longer valid. If |origin_changed| is true sets
-  // the same bit for all of our children as well.
-  void SetRootBoundsDirty(bool origin_changed);
-
-  // If needed, updates the bounds rectangle in paint root coordinate space
-  // in the supplied RTree. Recurses to children for recomputation as well.
-  void UpdateRootBounds(BoundsTree* bounds_tree, const gfx::Vector2d& offset);
-
-  // Remove self and all children from the supplied bounds tree. This is used,
-  // for example, when a view gets a layer and therefore becomes paint root. It
-  // needs to remove all references to itself and its children from any previous
-  // paint root that may have been tracking it.
-  void RemoveRootBounds(BoundsTree* bounds_tree);
-
-  // Traverse up the View hierarchy to the first ancestor that is a paint root
-  // and return a pointer to its |bounds_tree_| or NULL if no tree is found.
-  BoundsTree* GetBoundsTreeFromPaintRoot();
-
   // Input ---------------------------------------------------------------------
 
   bool ProcessMousePressed(const crui::MouseEvent& event);
@@ -1869,15 +1687,15 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // supported drag operations. When done, OnDragDone is invoked. |press_pt| is
   // in the view's coordinate system.
   // Returns true if a drag was started.
-  bool DoDrag(const crui::LocatedEvent& event,
-              const gfx::Point& press_pt,
-              crui::DragDropTypes::DragEventSource source);
+  ///bool DoDrag(const crui::LocatedEvent& event,
+  ///            const gfx::Point& press_pt,
+  ///            crui::DragDropTypes::DragEventSource source);
 
   // Property support ----------------------------------------------------------
 
   // Called from OnPropertyChanged with the given set of property effects. This
   // function is NOT called if effects == kPropertyEffectsNone.
-  void HandlePropertyChangeEffects(PropertyEffects effects);
+  ///void HandlePropertyChangeEffects(PropertyEffects effects);
 
   //////////////////////////////////////////////////////////////////////////////
 
@@ -1948,20 +1766,11 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
   // List of descendants wanting notification when their visible bounds change.
   std::unique_ptr<Views> descendants_to_notify_;
 
-  // True if the bounds on this object have changed since the last time the
-  // paint root view constructed the spatial database.
-  bool root_bounds_dirty_;
-
-  // If this View IsPaintRoot() then this will be a pointer to a spatial data
-  // structure where we will keep the bounding boxes of all our children, for
-  // efficient paint damage rectangle intersection.
-  std::unique_ptr<BoundsTree> bounds_tree_;
-
   // Transformations -----------------------------------------------------------
 
   // Painting will be clipped to this path. TODO(estade): this doesn't work for
   // layers.
-  ///SkPath clip_path_;
+  SkPath clip_path_;
 
   // Layout --------------------------------------------------------------------
 
@@ -2005,17 +1814,6 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Accelerated painting ------------------------------------------------------
 
-  // Whether layer painting was explicitly set by a call to |SetPaintToLayer()|.
-  bool paint_to_layer_explicitly_set_ = false;
-
-  // Whether we are painting to a layer because of a non-identity transform.
-  bool paint_to_layer_for_transform_ = false;
-
-  // Set of layers that should be painted beneath this View's layer. These
-  // layers are maintained as siblings of this View's layer and are stacked
-  // beneath.
-  std::vector<crui::Layer*> layers_beneath_;
-
   // Accelerators --------------------------------------------------------------
 
   // Focus manager accelerators registered on.
@@ -2045,7 +1843,7 @@ class CRUI_EXPORT View : public crui::LayerDelegate,
 
   // Drag and drop -------------------------------------------------------------
 
-  DragController* drag_controller_ = nullptr;
+  ///DragController* drag_controller_ = nullptr;
 
   // Input  --------------------------------------------------------------------
 

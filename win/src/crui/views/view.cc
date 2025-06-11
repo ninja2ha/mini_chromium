@@ -8,7 +8,7 @@
 #include <memory>
 #include <utility>
 
-///#include "crbase/command_line.h"
+///#include "base/command_line.h"
 #include "crbase/containers/adapters.h"
 ///#include "crbase/feature_list.h"
 #include "crbase/logging.h"
@@ -17,19 +17,19 @@
 #include "crbase/strings/utf_string_conversions.h"
 ///#include "crbase/trace_event/trace_event.h"
 ///#include "third_party/skia/include/core/SkRect.h"
-///#include "crui/accessibility/ax_action_data.h"
-///#include "crui/accessibility/ax_enums.mojom.h"
+///#include "ui/accessibility/ax_action_data.h"
+///#include "ui/accessibility/ax_enums.mojom.h"
+///#include "crui/base/cursor/cursor.h"
+///#include "ui/base/dragdrop/drag_drop_types.h"
+///#include "ui/base/ime/input_method.h"
+///#include "ui/compositor/clip_recorder.h"
+///#include "ui/compositor/compositor.h"
+///#include "ui/compositor/layer.h"
+///#include "ui/compositor/layer_animator.h"
+///#include "ui/compositor/paint_context.h"
+///#include "ui/compositor/paint_recorder.h"
+///#include "ui/compositor/transform_recorder.h"
 #include "crui/base/i18n/rtl.h"
-#include "crui/base/cursor/cursor.h"
-#include "crui/base/dragdrop/drag_drop_types.h"
-///#include "crui/base/ime/input_method.h"
-///#include "crui/compositor/clip_recorder.h"
-///#include "crui/compositor/compositor.h"
-///#include "crui/compositor/layer.h"
-///#include "crui/compositor/layer_animator.h"
-///#include "crui/compositor/paint_context.h"
-///#include "crui/compositor/paint_recorder.h"
-///#include "crui/compositor/transform_recorder.h"
 #include "crui/display/screen.h"
 #include "crui/events/base_event_utils.h"
 #include "crui/events/event_target_iterator.h"
@@ -38,27 +38,28 @@
 #include "crui/gfx/geometry/angle_conversions.h"
 #include "crui/gfx/geometry/point3_f.h"
 #include "crui/gfx/geometry/point_conversions.h"
-///#include "crui/gfx/interpolated_transform.h"
-///#include "crui/gfx/scoped_canvas.h"
-///#include "crui/gfx/skia_util.h"
+#include "crui/gfx/geometry/rect_conversions.h"
+///#include "ui/gfx/interpolated_transform.h"
+///#include "ui/gfx/scoped_canvas.h"
+///#include "ui/gfx/skia_util.h"
 #include "crui/gfx/geometry/transform.h"
-///#include "crui/native_theme/native_theme.h"
-///#include "crui/views/accessibility/ax_event_manager.h"
-///#include "crui/views/accessibility/view_accessibility.h"
+///#include "ui/native_theme/native_theme.h"
+///#include "ui/views/accessibility/ax_event_manager.h"
+///#include "ui/views/accessibility/view_accessibility.h"
 #include "crui/views/view_background.h"
 #include "crui/views/view_border.h"
-///#include "crui/views/buildflags.h"
-///#include "crui/views/context_menu_controller.h"
-#include "crui/views/drag_controller.h"
+///#include "ui/views/buildflags.h"
+///#include "ui/views/context_menu_controller.h"
+///#include "ui/views/drag_controller.h"
 #include "crui/views/layout/layout_manager.h"
 #include "crui/views/metadata/metadata_impl_macros.h"
 #include "crui/views/view_observer.h"
 #include "crui/views/view_tracker.h"
-///#include "crui/views/views_features.h"
-///#include "crui/views/views_switches.h"
+///#include "ui/views/views_features.h"
+///#include "ui/views/views_switches.h"
 #include "crui/views/widget/native_widget_private.h"
 #include "crui/views/widget/root_view.h"
-#include "crui/views/widget/tooltip_manager.h"
+///#include "crui/views/widget/tooltip_manager.h"
 #include "crui/views/widget/widget.h"
 #include "crui/base/ui_export.h"
 
@@ -146,8 +147,8 @@ View::~View() {
   for (ViewObserver& observer : observers_)
     observer.OnViewIsDeleting(this);
 
-  for (crui::Layer* layer_beneath : layers_beneath_)
-    layer_beneath->RemoveObserver(this);
+  ///for (crui::Layer* layer_beneath : layers_beneath_)
+  ///  layer_beneath->RemoveObserver(this);
 
   // Clearing properties explicitly here lets us guarantee that properties
   // outlive |this| (at least the View part of |this|). This is intentionally
@@ -198,7 +199,7 @@ void View::ReorderChildView(View* view, int index) {
   for (ViewObserver& observer : observers_)
     observer.OnChildViewReordered(this, view);
 
-  ReorderLayers();
+  ///ReorderLayers();
   InvalidateLayout();
 }
 
@@ -241,9 +242,8 @@ void View::SetBounds(int x, int y, int width, int height) {
 void View::SetBoundsRect(const gfx::Rect& bounds) {
   if (bounds == bounds_) {
     if (needs_layout_) {
+      CR_DVLOG(99) << "View::Layout(set_bounds), class:" << GetClassName();
       needs_layout_ = false;
-      ///TRACE_EVENT1("views", "View::Layout(set_bounds)", "class",
-      ///             GetClassName());
       Layout();
     }
     return;
@@ -258,33 +258,6 @@ void View::SetBoundsRect(const gfx::Rect& bounds) {
 
   // Paint the new bounds.
   SchedulePaintBoundsChanged(is_size_changed);
-
-  if (layer()) {
-    if (parent_) {
-      LayerOffsetData offset_data(
-          parent_->CalculateOffsetToAncestorWithLayer(nullptr));
-      offset_data += GetMirroredPosition().OffsetFromOrigin();
-      SetLayerBounds(size(), offset_data);
-    } else {
-      SetLayerBounds(bounds_.size(),
-                     LayerOffsetData() + bounds_.OffsetFromOrigin());
-    }
-  
-    // In RTL mode, if our width has changed, our children's mirrored bounds
-    // will have changed. Update the child's layer bounds, or if it is not a
-    // layer, the bounds of any layers inside the child.
-    if (crui::i18n::IsRTL() && bounds_.width() != prev.width()) {
-      for (View* child : children_) {
-        child->UpdateChildLayerBounds(
-            LayerOffsetData(layer()->device_scale_factor(),
-                            child->GetMirroredPosition().OffsetFromOrigin()));
-      }
-    }
-  } else {
-    // If our bounds have changed, then any descendant layer bounds may have
-    // changed. Update them accordingly.
-    UpdateChildLayerBounds(CalculateOffsetToAncestorWithLayer(nullptr));
-  }
 
   OnBoundsChanged(prev);
   ///if (bounds_ != prev)
@@ -339,8 +312,7 @@ gfx::Rect View::GetLocalBounds() const {
 }
 
 gfx::Insets View::GetInsets() const {
-  ///return border_ ? border_->GetInsets() : gfx::Insets();
-  return gfx::Insets();
+  return border_ ? border_->GetInsets() : gfx::Insets();
 }
 
 gfx::Rect View::GetVisibleBounds() const {
@@ -351,13 +323,13 @@ gfx::Rect View::GetVisibleBounds() const {
   gfx::Rect ancestor_bounds;
   const View* view = this;
   gfx::Transform transform;
-
+  
   while (view != nullptr && !vis_bounds.IsEmpty()) {
-    transform.PostConcat(view->GetTransform());
+    transform.ConcatTransform(view->GetTransform());
     gfx::Transform translation;
     translation.Translate(static_cast<float>(view->GetMirroredX()),
                           static_cast<float>(view->y()));
-    transform.PostConcat(translation);
+    transform.ConcatTransform(translation);
 
     vis_bounds = view->ConvertRectToParent(vis_bounds);
     const View* ancestor = view->parent_;
@@ -372,11 +344,11 @@ gfx::Rect View::GetVisibleBounds() const {
   }
   if (vis_bounds.IsEmpty())
     return vis_bounds;
-
-  // Convert back to this views coordinate system. This mapping returns the
-  // enclosing rect, which is good because partially visible pixels should
-  // be considered visible.
-  return transform.InverseMapRect(vis_bounds).value_or(vis_bounds);
+  // Convert back to this views coordinate system.
+  gfx::RectF views_vis_bounds(vis_bounds);
+  transform.TransformRectReverse(&views_vis_bounds);
+  // Partially visible pixels should be considered visible.
+  return gfx::ToEnclosingRect(views_vis_bounds);
 }
 
 gfx::Rect View::GetBoundsInScreen() const {
@@ -458,7 +430,6 @@ void View::SetVisible(bool visible) {
 
     // This notifies all sub-views recursively.
     PropagateVisibilityNotifications(this, visible_);
-    UpdateLayerVisibility();
 
     // Notify all other subscriptions of the change.
     OnPropertyChanged(&visible_, kPropertyEffectsPaint);
@@ -511,154 +482,11 @@ View::Views View::GetChildrenInZOrder() {
 // Transformations -------------------------------------------------------------
 
 gfx::Transform View::GetTransform() const {
-  if (!layer())
-    return gfx::Transform();
-  
-  gfx::Transform transform = layer()->transform();
-  ///gfx::ScrollOffset scroll_offset = layer()->CurrentScrollOffset();
-  // Offsets for layer-based scrolling are never negative, but the horizontal
-  // scroll direction is reversed in RTL via canvas flipping.
-  ///transform.Translate((cr::i18n::IsRTL() ? 1 : -1) * scroll_offset.x(),
-  ///                    -scroll_offset.y());
-  return transform;
+  return gfx::Transform();
 }
 
 void View::SetTransform(const gfx::Transform& transform) {
-  if (transform.IsIdentity()) {
-    if (layer())
-      layer()->SetTransform(transform);
-    paint_to_layer_for_transform_ = false;
-    CreateOrDestroyLayer();
-  } else {
-    paint_to_layer_for_transform_ = true;
-    CreateOrDestroyLayer();
-    CR_DCHECK(layer() != nullptr);
-    layer()->SetTransform(transform);
-    ///layer()->ScheduleDraw();
-  }
-  
-  for (crui::Layer* layer_beneath : layers_beneath_)
-    layer_beneath->SetTransform(transform);
-}
-
-void View::SetPaintToLayer(crui::LayerType layer_type) {
-  // Avoid re-creating the layer if unnecessary.
-  if (paint_to_layer_explicitly_set_) {
-    CR_DCHECK(layer() != nullptr);
-    if (layer()->type() == layer_type)
-      return;
-  }
-
-  DestroyLayerImpl(LayerChangeNotifyBehavior::DONT_NOTIFY);
-  paint_to_layer_explicitly_set_ = true;
-
-  if (layer_type != LAYER_NOT_DRAWN) {
-    // Gaining a layer means becoming a paint root. We must remove ourselves
-    // from our old paint root, if we had one. Traverse up view tree to find old
-    // paint root.
-    View* old_paint_root = parent_;
-    while (old_paint_root && !old_paint_root->IsPaintRoot())
-      old_paint_root = old_paint_root->parent_;
-
-    // Remove our and our children's bounds from the old tree. This will also
-    // mark all of our bounds as dirty.
-    if (old_paint_root && old_paint_root->bounds_tree_)
-      RemoveRootBounds(old_paint_root->bounds_tree_.get());
-  } else {
-    // Losing a layer means we are no longer a paint root, so delete our
-    // bounds tree and mark ourselves as dirty for future insertion into our
-    // new paint root's bounds tree.
-    bounds_tree_.reset();
-    SetRootBoundsDirty(true);
-  }
-
-  // We directly call |CreateLayer()| here to pass |layer_type|. A call to
-  // |CreateOrDestroyLayer()| is therefore not necessary.
-  CreateLayer(layer_type);
-
-  // Notify the parent chain about the layer change.
-  NotifyParentsOfLayerChange();
-}
-
-void View::DestroyLayer() {
-  paint_to_layer_explicitly_set_ = false;
-  CreateOrDestroyLayer();
-}
-
-void View::AddLayerBeneathView(crui::Layer* new_layer) {
-  CR_DCHECK(new_layer);
-  CR_DCHECK(!cr::Contains(layers_beneath_, new_layer)) 
-      << "Layer already added.";
-
-  new_layer->AddObserver(this);
-  new_layer->SetVisible(GetVisible());
-  layers_beneath_.push_back(new_layer);
-
-  // If painting to a layer already, ensure |new_layer| gets added and stacked
-  // correctly. If not, this will happen on layer creation.
-  if (layer()) {
-    crui::Layer* parent_layer = layer()->parent();
-    // Note that |new_layer| may have already been added to the parent, for
-    // example when the layer of a LayerOwner is recreated.
-    if (parent_layer && parent_layer != new_layer->parent())
-      parent_layer->Add(new_layer);
-    new_layer->SetBounds(gfx::Rect(new_layer->size()) +
-                         layer()->bounds().OffsetFromOrigin());
-    if (parent())
-      parent()->ReorderLayers();
-  }
-
-  CreateOrDestroyLayer();
-
-  layer()->SetFillsBoundsOpaquely(false);
-}
-
-void View::RemoveLayerBeneathView(crui::Layer* old_layer) {
-  RemoveLayerBeneathViewKeepInLayerTree(old_layer);
-
-  // Note that |old_layer| may have already been removed from its parent.
-  crui::Layer* parent_layer = layer()->parent();
-  if (parent_layer && parent_layer == old_layer->parent())
-    parent_layer->Remove(old_layer);
-
-  CreateOrDestroyLayer();
-}
-
-void View::RemoveLayerBeneathViewKeepInLayerTree(crui::Layer* old_layer) {
-  auto layer_pos =
-      std::find(layers_beneath_.begin(), layers_beneath_.end(), old_layer);
-  CR_DCHECK(layer_pos != layers_beneath_.end())
-      << "Attempted to remove a layer that was never added.";
-  layers_beneath_.erase(layer_pos);
-  old_layer->RemoveObserver(this);
-}
-
-std::vector<crui::Layer*> View::GetLayersInOrder() {
-  // If not painting to a layer, there are no layers immediately related to this
-  // view.
-  if (!layer())
-    return {};
-
-  std::vector<crui::Layer*> result;
-  for (crui::Layer* layer_beneath : layers_beneath_)
-    result.push_back(layer_beneath);
-  result.push_back(layer());
-
-  return result;
-}
-
-void View::LayerDestroyed(crui::Layer* layer) {
-  // Only layers added with |AddLayerBeneathView()| are observed so |layer| can
-  // safely be removed.
-  RemoveLayerBeneathView(layer);
-}
-
-std::unique_ptr<crui::Layer> View::RecreateLayer() {
-  std::unique_ptr<crui::Layer> old_layer = LayerOwner::RecreateLayer();
-  Widget* widget = GetWidget();
-  if (widget)
-    widget->LayerTreeChanged();
-  return old_layer;
+  CR_NOTIMPLEMENTED();
 }
 
 // RTL positioning -------------------------------------------------------------
@@ -713,7 +541,8 @@ void View::Layout() {
   internal::ScopedChildrenLock lock(this);
   for (auto* child : children_) {
     if (child->needs_layout_ || !layout_manager_) {
-      ///TRACE_EVENT1("views", "View::Layout", "class", child->GetClassName());
+      CR_DVLOG(1) << "View::Layout(class:" << child->GetClassName()
+                  << ", id:" << child->GetID();
       child->needs_layout_ = false;
       child->Layout();
     }
@@ -906,11 +735,11 @@ void View::ConvertRectToScreen(const View* src, gfx::Rect* rect) {
 }
 
 gfx::Rect View::ConvertRectToParent(const gfx::Rect& rect) const {
-  // This mapping returns the enclosing rect, which is good because pixels that
-  // partially occupy in the parent should be included.
-  gfx::Rect x_rect = GetTransform().MapRect(rect);
+  gfx::RectF x_rect = gfx::RectF(rect);
+  GetTransform().TransformRect(&x_rect);
   x_rect.Offset(GetMirroredPosition().OffsetFromOrigin());
-  return x_rect;
+  // Pixels we partially occupy in the parent should be included.
+  return gfx::ToEnclosingRect(x_rect);
 }
 
 gfx::Rect View::ConvertRectToWidget(const gfx::Rect& rect) const {
@@ -931,113 +760,9 @@ void View::SchedulePaintInRect(const gfx::Rect& rect) {
   SchedulePaintInRectImpl(rect);
 }
 
-void View::Paint(gfx::Canvas* canvas, const CullSet& cull_set) {
-//  if (!ShouldPaint())
-//    return;
-//
-//  const gfx::Rect& parent_bounds =
-//      !parent() ? GetMirroredBounds() : parent()->GetMirroredBounds();
-//
-//  PaintInfo paint_info = PaintInfo::CreateChildPaintInfo(
-//      parent_paint_info, GetMirroredBounds(), parent_bounds.size(),
-//      GetPaintScaleType(), !!layer(), needs_paint_);
-//
-//  needs_paint_ = false;
-//
-//  const ui::PaintContext& context = paint_info.context();
-//  bool is_invalidated = true;
-//  if (paint_info.context().CanCheckInvalid() ||
-//      base::FeatureList::IsEnabled(features::kEnableViewPaintOptimization)) {
-//    // For View paint optimization, do not default to repainting every View in
-//    // the View hierarchy if the invalidation rect is empty. Repainting does not
-//    // depend on the invalidation rect for View paint optimization.
-//#if DCHECK_IS_ON()
-//    if (!context.is_pixel_canvas()) {
-//      gfx::Vector2d offset;
-//      context.Visited(this);
-//      View* view = this;
-//      while (view->parent() && !view->layer()) {
-//        DCHECK(view->GetTransform().IsIdentity());
-//        offset += view->GetMirroredPosition().OffsetFromOrigin();
-//        view = view->parent();
-//      }
-//      // The offset in the PaintContext should be the offset up to the paint
-//      // root, which we compute and verify here.
-//      DCHECK_EQ(context.PaintOffset().x(), offset.x());
-//      DCHECK_EQ(context.PaintOffset().y(), offset.y());
-//      // The above loop will stop when |view| is the paint root, which should be
-//      // the root of the current paint walk, as verified by storing the root in
-//      // the PaintContext.
-//      DCHECK_EQ(context.RootVisited(), view);
-//    }
-//#endif
-//
-//    // If the View wasn't invalidated, don't waste time painting it, the output
-//    // would be culled.
-//    is_invalidated = paint_info.ShouldPaint();
-//  }
-//
-//  TRACE_EVENT1("views", "View::Paint", "class", GetClassName());
-//
-//  // If the view is backed by a layer, it should paint with itself as the origin
-//  // rather than relative to its parent.
-//  // TODO(danakj): Rework clip and transform recorder usage here to use
-//  // std::optional once we can do so.
-//  ui::ClipRecorder clip_recorder(parent_paint_info.context());
-//  if (!layer()) {
-//    // Set the clip rect to the bounds of this View, or |clip_path_| if it's
-//    // been set. Note that the X (or left) position we pass to ClipRect takes
-//    // into consideration whether or not the View uses a right-to-left layout so
-//    // that we paint the View in its mirrored position if need be.
-//    if (clip_path_.isEmpty()) {
-//      clip_recorder.ClipRect(gfx::Rect(paint_info.paint_recording_size()) +
-//                             paint_info.offset_from_parent());
-//    } else {
-//      SkPath clip_path_in_parent = clip_path_;
-//
-//      // Transform |clip_path_| from local space to parent recording space.
-//      gfx::Transform to_parent_recording_space;
-//
-//      to_parent_recording_space.Translate(paint_info.offset_from_parent());
-//      to_parent_recording_space.Scale(
-//          SkFloatToScalar(paint_info.paint_recording_scale_x()),
-//          SkFloatToScalar(paint_info.paint_recording_scale_y()));
-//
-//      clip_path_in_parent.transform(
-//          SkMatrix(to_parent_recording_space.matrix()));
-//      clip_recorder.ClipPathWithAntiAliasing(clip_path_in_parent);
-//    }
-//  }
-//
-//  ui::TransformRecorder transform_recorder(context);
-//  SetUpTransformRecorderForPainting(paint_info.offset_from_parent(),
-//                                    &transform_recorder);
-//
-//  // Note that the cache is not aware of the offset of the view
-//  // relative to the parent since painting is always done relative to
-//  // the top left of the individual view.
-//  if (is_invalidated ||
-//      !paint_cache_.UseCache(context, paint_info.paint_recording_size())) {
-//    ui::PaintRecorder recorder(context, paint_info.paint_recording_size(),
-//                               paint_info.paint_recording_scale_x(),
-//                               paint_info.paint_recording_scale_y(),
-//                               &paint_cache_);
-//    gfx::Canvas* canvas = recorder.canvas();
-//    gfx::ScopedCanvas scoped_canvas(canvas);
-//    if (flip_canvas_on_paint_for_rtl_ui_)
-//      scoped_canvas.FlipIfRTL(width());
-//
-//    // Delegate painting the contents of the View to the virtual OnPaint method.
-//    OnPaint(canvas);
-//  }
-//
-//  // View::Paint() recursion over the subtree.
-//  PaintChildren(paint_info);
-  CR_DCHECK(canvas);
-  if (!cull_set.ShouldPaint(this))
-    return;
-
+void View::Paint(gfx::Canvas* canvas) {
   gfx::ScopedCanvas scoped_canvas(canvas);
+
   // Paint this View and its children, setting the clip rect to the bounds
   // of this View and translating the origin to the local bounds' top left
   // point.
@@ -1050,67 +775,13 @@ void View::Paint(gfx::Canvas* canvas, const CullSet& cull_set) {
   if (parent_)
     clip_rect.set_x(parent_->GetMirroredXForRect(clip_rect));
   canvas->ClipRect(clip_rect);
-  if (canvas->IsClipEmpty())
-    return;
 
-  // Non-empty clip, translate the graphics such that 0,0 corresponds to where
-  // this view is located (related to its parent).
+  // Non-empty clip, translate the graphics such that 0,0 corresponds to
+  // where this view is located (related to its parent).
   canvas->Translate(GetMirroredPosition().OffsetFromOrigin());
   canvas->Transform(GetTransform());
-  
-  // If we are a paint root, we need to construct our own CullSet object for
-  // propagation to our children.
-  if (IsPaintRoot()) {
-    if (!bounds_tree_)
-      bounds_tree_.reset(new BoundsTree(2, 5));
 
-    // Recompute our bounds tree as needed.
-    UpdateRootBounds(bounds_tree_.get(), gfx::Vector2d());
-
-    // Grab the clip rect from the supplied canvas to use as the query rect.
-    gfx::Rect canvas_bounds;
-    if (!canvas->GetClipBounds(&canvas_bounds)) {
-      CR_NOTREACHED() << "Failed to get clip bounds from the canvas!";
-      return;
-    }
-
-    // Now query our bounds_tree_ for a set of damaged views that intersect
-    // our canvas bounds.
-    std::unique_ptr<std::unordered_set<intptr_t> > damaged_views(
-        new std::unordered_set<intptr_t>());
-    bounds_tree_->AppendIntersectingRecords(
-        canvas_bounds, damaged_views.get());
-    // Construct a CullSet to wrap the damaged views set, it will delete it
-    // for us on scope exit.
-    CullSet paint_root_cull_set(std::move(damaged_views));
-    // Paint all descendents using our new cull set.
-    PaintCommon(canvas, paint_root_cull_set);
-  } else {
-    // Not a paint root, so we can proceed as normal.
-    PaintCommon(canvas, cull_set);
-  }
-}
-
-void View::PaintCommon(gfx::Canvas* canvas, const CullSet& cull_set)  {
-  if (!ShouldPaint())
-    return;
-
-  {
-    // If the View we are about to paint requested the canvas to be flipped, we
-    // should change the transform appropriately.
-    // The canvas mirroring is undone once the View is done painting so that we
-    // don't pass the canvas with the mirrored transform to Views that didn't
-    // request the canvas to be flipped.
-    gfx::ScopedCanvas scoped_canvas(canvas);
-    if (flip_canvas_on_paint_for_rtl_ui_) {
-      canvas->Translate(gfx::Vector2d(width(), 0));
-      canvas->Scale(-1, 1);
-    }
-
-    OnPaint(canvas);
-  }
-
-  PaintChildren(canvas, cull_set);
+  PaintCommon(canvas);
 }
 
 void View::SetBackground(std::unique_ptr<Background> b) {
@@ -1152,13 +823,6 @@ void View::SetBorder(std::unique_ptr<Border> b) {
 ///    return widget->GetNativeTheme();
 ///
 ///  return ui::NativeTheme::GetInstanceForNativeUi();
-///}
-
-///void View::SetNativeThemeForTesting(ui::NativeTheme* theme) {
-///  ui::NativeTheme* original_native_theme = GetNativeTheme();
-///  native_theme_ = theme;
-///  if (native_theme_ != original_native_theme)
-///    PropagateThemeChanged();
 ///}
 
 // RTL painting ----------------------------------------------------------------
@@ -1205,10 +869,7 @@ View* View::GetTooltipHandlerForPoint(const gfx::Point& point) {
 
 gfx::NativeCursor View::GetCursor(const crui::MouseEvent& event) {
 #if defined(MINI_CHROMIUM_OS_WIN)
-  static crui::Cursor arrow;
-  if (!arrow.platform())
-    arrow.SetPlatformCursor(::LoadCursorW(nullptr, IDC_ARROW));
-  return arrow;
+  return ::LoadCursorW(nullptr, IDC_ARROW);
 #else
   return gfx::kNullCursor;
 #endif
@@ -1444,21 +1105,6 @@ bool View::CanHandleAccelerators() const {
   const Widget* widget = GetWidget();
   if (!GetEnabled() || !IsDrawn() || !widget || !widget->IsVisible())
     return false;
-#if defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA)
-  // Non-ChromeOS aura windows have an associated FocusManagerEventHandler which
-  // adds currently focused view as an event PreTarget (see
-  // DesktopNativeWidgetAura::InitNativeWidget). However, the focused view isn't
-  // always the right view to handle accelerators: It should only handle them
-  // when active. Only top level widgets can be active, so for child widgets
-  // check if they are focused instead. ChromeOS also behaves different than
-  // Linux when an extension popup is about to handle the accelerator.
-  bool child = widget && widget->GetTopLevelWidget() != widget;
-  bool focus_in_child =
-      widget &&
-      widget->GetRootView()->Contains(GetFocusManager()->GetFocusedView());
-  if ((child && !focus_in_child) || (!child && !widget->IsActive()))
-    return false;
-#endif
   return true;
 }
 
@@ -1573,42 +1219,42 @@ gfx::Point View::GetKeyboardContextMenuLocation() {
 
 // Drag and drop ---------------------------------------------------------------
 
-bool View::GetDropFormats(int* formats,
-                          std::set<crui::ClipboardFormatType>* format_types) {
-  return false;
-}
-
-bool View::AreDropTypesRequired() {
-  return false;
-}
-
-bool View::CanDrop(const OSExchangeData& data) {
-  // TODO(sky): when I finish up migration, this should default to true.
-  return false;
-}
-
-void View::OnDragEntered(const crui::DropTargetEvent& event) {
-}
-
-int View::OnDragUpdated(const crui::DropTargetEvent& event) {
-  return crui::DragDropTypes::DRAG_NONE;
-}
-
-void View::OnDragExited() {
-}
-
-int View::OnPerformDrop(const crui::DropTargetEvent& event) {
-  return crui::DragDropTypes::DRAG_NONE;
-}
-
-void View::OnDragDone() {
-}
+///bool View::GetDropFormats(int* formats,
+///                          std::set<crui::ClipboardFormatType>* format_types) {
+///  return false;
+///}
+///
+///bool View::AreDropTypesRequired() {
+///  return false;
+///}
+///
+///bool View::CanDrop(const OSExchangeData& data) {
+///  // TODO(sky): when I finish up migration, this should default to true.
+///  return false;
+///}
+///
+///void View::OnDragEntered(const ui::DropTargetEvent& event) {
+///}
+///
+///int View::OnDragUpdated(const ui::DropTargetEvent& event) {
+///  return ui::DragDropTypes::DRAG_NONE;
+///}
+///
+///void View::OnDragExited() {
+///}
+///
+///int View::OnPerformDrop(const ui::DropTargetEvent& event) {
+///  return ui::DragDropTypes::DRAG_NONE;
+///}
+///
+///void View::OnDragDone() {
+///}
 
 // static
-bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
-  return (abs(delta.x()) > GetHorizontalDragThreshold() ||
-          abs(delta.y()) > GetVerticalDragThreshold());
-}
+///bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
+///  return (abs(delta.x()) > GetHorizontalDragThreshold() ||
+///          abs(delta.y()) > GetVerticalDragThreshold());
+///}
 
 // Accessibility----------------------------------------------------------------
 
@@ -1658,12 +1304,10 @@ bool View::ExceededDragThreshold(const gfx::Vector2d& delta) {
 ///
 ///  return false;
 ///}
-
-gfx::NativeViewAccessible View::GetNativeViewAccessible() {
-  ///return GetViewAccessibility().GetNativeObject();
-  return nullptr;
-}
-
+///
+///gfx::NativeViewAccessible View::GetNativeViewAccessible() {
+///  return GetViewAccessibility().GetNativeObject();
+///}
 ///
 ///void View::NotifyAccessibilityEvent(ax::mojom::Event event_type,
 ///                                    bool send_native_event) {
@@ -1758,251 +1402,28 @@ void View::RemovedFromWidget() {}
 
 void View::OnDidSchedulePaint(const gfx::Rect& rect) {}
 
-void View::PaintChildren(gfx::Canvas* canvas, const CullSet& cull_set) {
-  ///TRACE_EVENT1("views", "View::PaintChildren", "class", GetClassName());
-  RecursivePaintHelper(&View::Paint, canvas, cull_set);
+void View::PaintChildren(gfx::Canvas* canvas) {
+  RecursivePaintHelper(&View::Paint, canvas);
 }
 
 void View::OnPaint(gfx::Canvas* canvas) {
-  ///TRACE_EVENT1("views", "View::OnPaint", "class", GetClassName());
   OnPaintBackground(canvas);
   OnPaintBorder(canvas);
 }
 
 void View::OnPaintBackground(gfx::Canvas* canvas) {
   if (background_) {
-    ///TRACE_EVENT0("views", "View::OnPaintBackground");
     background_->Paint(canvas, this);
   }
 }
 
 void View::OnPaintBorder(gfx::Canvas* canvas) {
   if (border_) {
-    ///TRACE_EVENT0("views", "View::OnPaintBorder");
     border_->Paint(*this, canvas);
   }
 }
 
-bool View::IsPaintRoot() {
-  return paint_to_layer_explicitly_set_ || !parent_;
-}
-
 // Accelerated Painting --------------------------------------------------------
-
-View::LayerOffsetData View::CalculateOffsetToAncestorWithLayer(
-    crui::Layer** layer_parent) {
-  if (layer()) {
-    if (layer_parent)
-      *layer_parent = layer();
-    return LayerOffsetData(layer()->device_scale_factor());
-  }
-  if (!parent_)
-    return LayerOffsetData();
-
-  LayerOffsetData offset_data =
-      parent_->CalculateOffsetToAncestorWithLayer(layer_parent);
-
-  return offset_data + GetMirroredPosition().OffsetFromOrigin();
-}
-
-void View::UpdateParentLayer() {
-  if (!layer())
-    return;
-  
-  crui::Layer* parent_layer = nullptr;
-  
-  if (parent_)
-    parent_->CalculateOffsetToAncestorWithLayer(&parent_layer);
-  
-  ReparentLayer(parent_layer);
-}
-
-void View::MoveLayerToParent(crui::Layer* parent_layer,
-                             const LayerOffsetData& offset_data) {
-  LayerOffsetData local_offset_data(offset_data);
-  if (parent_layer != layer())
-    local_offset_data += GetMirroredPosition().OffsetFromOrigin();
-
-  if (layer() && parent_layer != layer()) {
-    // Adding the main layer can trigger a call to |SnapLayerToPixelBoundary()|.
-    // That method assumes layers beneath have already been added. Therefore
-    // layers beneath must be added first here. See crbug.com/961212.
-    for (crui::Layer* layer_beneath : layers_beneath_)
-      parent_layer->Add(layer_beneath);
-    parent_layer->Add(layer());
-
-    SetLayerBounds(size(), local_offset_data);
-  } else {
-    internal::ScopedChildrenLock lock(this);
-    for (auto* child : GetChildrenInZOrder())
-      child->MoveLayerToParent(parent_layer, local_offset_data);
-  }
-}
-
-void View::UpdateLayerVisibility() {
-  bool visible = visible_;
-  for (const View* v = parent_; visible && v && !v->layer(); v = v->parent_)
-    visible = v->GetVisible();
-
-  UpdateChildLayerVisibility(visible);
-}
-
-void View::UpdateChildLayerVisibility(bool ancestor_visible) {
-  const bool layers_visible = ancestor_visible && visible_;
-  if (layer()) {
-    layer()->SetVisible(layers_visible);
-    for (crui::Layer* layer_beneath : layers_beneath_)
-      layer_beneath->SetVisible(layers_visible);
-  } else {
-    internal::ScopedChildrenLock lock(this);
-    for (auto* child : children_)
-      child->UpdateChildLayerVisibility(layers_visible);
-  }
-}
-
-void View::DestroyLayerImpl(LayerChangeNotifyBehavior notify_parents) {
-  // Normally, adding layers beneath will trigger painting to a layer. It would
-  // leave this view in an inconsistent state if its layer were destroyed while
-  // layers beneath were still present. So, assume this doesn't happen.
-  CR_DCHECK(layers_beneath_.empty());
-  
-  if (!layer())
-    return;
-  
-  // Copy children(), since the loop below will mutate its result.
-  std::vector<crui::Layer*> children = layer()->children();
-  crui::Layer* new_parent = layer()->parent();
-  for (auto* child : children) {
-    layer()->Remove(child);
-    if (new_parent)
-      new_parent->Add(child);
-  }
-  
-  LayerOwner::DestroyLayer();
-  
-  if (new_parent)
-    ReorderLayers();
-  
-  UpdateChildLayerBounds(CalculateOffsetToAncestorWithLayer(nullptr));
-  
-  SchedulePaint();
-  
-  // Notify the parent chain about the layer change.
-  if (notify_parents == LayerChangeNotifyBehavior::NOTIFY)
-    NotifyParentsOfLayerChange();
-  
-  Widget* widget = GetWidget();
-  if (widget)
-    widget->LayerTreeChanged();
-}
-
-void View::NotifyParentsOfLayerChange() {
-  // Notify the parent chain about the layer change.
-  View* view_parent = parent();
-  while (view_parent) {
-    view_parent->OnChildLayerChanged(this);
-    view_parent = view_parent->parent();
-  }
-}
-
-void View::UpdateChildLayerBounds(const LayerOffsetData& offset_data) {
-  if (layer()) {
-    SetLayerBounds(size(), offset_data);
-  } else {
-    internal::ScopedChildrenLock lock(this);
-    for (auto* child : children_) {
-      child->UpdateChildLayerBounds(
-          offset_data + child->GetMirroredPosition().OffsetFromOrigin());
-    }
-  }
-}
-
-void View::OnPaintLayer(gfx::Canvas* canvas) {
-  ///PaintFromPaintRoot(canvas);
-  if (!layer() || !layer()->fills_bounds_opaquely())
-    canvas->DrawColor(SK_ColorBLACK, SkXfermode::kClear_Mode);
-  PaintCommon(canvas, CullSet());
-}
-
-void View::OnDeviceScaleFactorChanged(float old_device_scale_factor,
-                                      float new_device_scale_factor) {
-  snap_layer_to_pixel_boundary_ =
-      (new_device_scale_factor - std::floor(new_device_scale_factor)) != 0.0f;
-
-  if (!layer())
-    return;
-  
-  // There can be no subpixel offset if the layer has no parent.
-  if (!parent() || !layer()->parent())
-    return;
-  
-  ///if (layer()->parent() && layer()->GetCompositor() &&
-  ///    layer()->GetCompositor()->is_pixel_canvas()) {
-  ///  LayerOffsetData offset_data(
-  ///      parent()->CalculateOffsetToAncestorWithLayer(nullptr));
-  ///  offset_data += GetMirroredPosition().OffsetFromOrigin();
-  ///  SnapLayerToPixelBoundary(offset_data);
-  ///} else {
-    SnapLayerToPixelBoundary(LayerOffsetData());
-  ///}
-}
-
-void View::CreateOrDestroyLayer() {
-  if (paint_to_layer_explicitly_set_ || paint_to_layer_for_transform_ ||
-      !layers_beneath_.empty()) {
-    // If we need to paint to a layer, make sure we have one.
-    if (!layer())
-      CreateLayer(crui::LAYER_TEXTURED);
-  } else if (layer()) {
-    // If we don't, make sure we delete our layer.
-    DestroyLayerImpl(LayerChangeNotifyBehavior::NOTIFY);
-  }
-}
-
-void View::ReorderLayers() {
-  View* v = this;
-  while (v && !v->layer())
-    v = v->parent();
-
-  Widget* widget = GetWidget();
-  if (!v) {
-    if (widget) {
-      crui::Layer* layer = widget->GetLayer();
-      if (layer)
-        widget->GetRootView()->ReorderChildLayers(layer);
-    }
-  } else {
-    v->ReorderChildLayers(v->layer());
-  }
-
-  if (widget) {
-    // Reorder the widget's child NativeViews in case a child NativeView is
-    // associated with a view (e.g. via a NativeViewHost). Always do the
-    // reordering because the associated NativeView's layer (if it has one)
-    // is parented to the widget's layer regardless of whether the host view has
-    // an ancestor with a layer.
-    widget->ReorderNativeViews();
-  }
-}
-
-void View::ReorderChildLayers(crui::Layer* parent_layer) {
-  if (layer() && layer() != parent_layer) {
-    CR_DCHECK(parent_layer == layer()->parent());
-    parent_layer->StackAtBottom(layer());
-    for (crui::Layer* layer_beneath : layers_beneath_)
-      parent_layer->StackAtBottom(layer_beneath);
-  } else {
-    // Iterate backwards through the children so that a child with a layer
-    // which is further to the back is stacked above one which is further to
-    // the front.
-    View::Views children = GetChildrenInZOrder();
-    CR_DCHECK(children_.size() == children.size());
-    for (auto* child : cr::Reversed(children))
-      child->ReorderChildLayers(parent_layer);
-  }
-}
-
-void View::OnChildLayerChanged(View* child) {}
 
 // Input -----------------------------------------------------------------------
 
@@ -2053,53 +1474,53 @@ void View::Blur() {
 void View::TooltipTextChanged() {
   Widget* widget = GetWidget();
   // TooltipManager may be null if there is a problem creating it.
-  if (widget && widget->GetTooltipManager())
-    widget->GetTooltipManager()->TooltipTextChanged(this);
+  ///if (widget && widget->GetTooltipManager())
+  ///  widget->GetTooltipManager()->TooltipTextChanged(this);
 }
 
 // Drag and drop ---------------------------------------------------------------
 
-int View::GetDragOperations(const gfx::Point& press_pt) {
-  return drag_controller_ ?
-      drag_controller_->GetDragOperationsForView(this, press_pt) :
-      crui::DragDropTypes::DRAG_NONE;
-}
-
-void View::WriteDragData(const gfx::Point& press_pt, OSExchangeData* data) {
-  CR_DCHECK(drag_controller_);
-  drag_controller_->WriteDragDataForView(this, press_pt, data);
-}
-
-bool View::InDrag() const {
-  const Widget* widget = GetWidget();
-  return widget ? widget->dragged_view() == this : false;
-}
-
-int View::GetHorizontalDragThreshold() {
-  // TODO(jennyz): This value may need to be adjusted for different platforms
-  // and for different display density.
-  return kDefaultHorizontalDragThreshold;
-}
-
-int View::GetVerticalDragThreshold() {
-  // TODO(jennyz): This value may need to be adjusted for different platforms
-  // and for different display density.
-  return kDefaultVerticalDragThreshold;
-}
-
+///int View::GetDragOperations(const gfx::Point& press_pt) {
+///  return drag_controller_ ?
+///      drag_controller_->GetDragOperationsForView(this, press_pt) :
+///      ui::DragDropTypes::DRAG_NONE;
+///}
+///
+///void View::WriteDragData(const gfx::Point& press_pt, OSExchangeData* data) {
+///  DCHECK(drag_controller_);
+///  drag_controller_->WriteDragDataForView(this, press_pt, data);
+///}
+///
+///bool View::InDrag() const {
+///  const Widget* widget = GetWidget();
+///  return widget ? widget->dragged_view() == this : false;
+///}
+///
+///int View::GetHorizontalDragThreshold() {
+///  // TODO(jennyz): This value may need to be adjusted for different platforms
+///  // and for different display density.
+///  return kDefaultHorizontalDragThreshold;
+///}
+///
+///int View::GetVerticalDragThreshold() {
+///  // TODO(jennyz): This value may need to be adjusted for different platforms
+///  // and for different display density.
+///  return kDefaultVerticalDragThreshold;
+///}
+///
 ///PaintInfo::ScaleType View::GetPaintScaleType() const {
 ///  return PaintInfo::ScaleType::kScaleWithEdgeSnapping;
 ///}
-
-void View::HandlePropertyChangeEffects(PropertyEffects effects) {
-  if (effects & kPropertyEffectsPreferredSizeChanged)
-    PreferredSizeChanged();
-  if (effects & kPropertyEffectsLayout)
-    InvalidateLayout();
-  if (effects & kPropertyEffectsPaint)
-    SchedulePaint();
-  OnHandlePropertyChangeEffects(effects);
-}
+///
+///void View::HandlePropertyChangeEffects(PropertyEffects effects) {
+///  if (effects & kPropertyEffectsPreferredSizeChanged)
+///    PreferredSizeChanged();
+///  if (effects & kPropertyEffectsLayout)
+///    InvalidateLayout();
+///  if (effects & kPropertyEffectsPaint)
+///    SchedulePaint();
+///  OnHandlePropertyChangeEffects(effects);
+///}
 
 PropertyChangedSubscription View::AddPropertyChangedCallback(
     PropertyKey property,
@@ -2117,8 +1538,8 @@ PropertyChangedSubscription View::AddPropertyChangedCallback(
 
 void View::OnPropertyChanged(PropertyKey property,
                              PropertyEffects property_effects) {
-  if (property_effects != kPropertyEffectsNone)
-    HandlePropertyChangeEffects(property_effects);
+  ///if (property_effects != kPropertyEffectsNone)
+  ///  HandlePropertyChangeEffects(property_effects);
 
   auto entry = property_changed_vectors_.find(property);
   if (entry == property_changed_vectors_.end())
@@ -2149,9 +1570,9 @@ void View::SchedulePaintInRectImpl(const gfx::Rect& rect) {
   OnDidSchedulePaint(rect);
   if (!visible_)
     return;
-  if (layer()) {
-    ///layer()->SchedulePaint(rect);
-  } else if (parent_) {
+  ///if (layer()) {
+  ///  layer()->SchedulePaint(rect);
+  /*} else */if (parent_) {
     // Translate the requested paint rect to the parent's coordinate system
     // then pass this notification up to the parent.
     parent_->SchedulePaintInRectImpl(ConvertRectToParent(rect));
@@ -2165,17 +1586,17 @@ void View::SchedulePaintBoundsChanged(bool size_changed) {
   // If we have a layer and the View's size did not change, we do not need to
   // schedule any paints since the layer will be redrawn at its new location
   // during the next Draw() cycle in the compositor.
-  if (!layer() || size_changed) {
-    // Otherwise, if the size changes or we don't have a layer then we need to
-    // use SchedulePaint to invalidate the area occupied by the View.
-    SchedulePaint();
-  } else {
-    // The compositor doesn't Draw() until something on screen changes, so
-    // if our position changes but nothing is being animated on screen, then
-    // tell the compositor to redraw the scene. We know layer() exists due to
-    // the above if clause.
-    ///layer()->ScheduleDraw();
-  }
+  ///if (!layer() || size_changed) {
+  ///  // Otherwise, if the size changes or we don't have a layer then we need to
+  ///  // use SchedulePaint to invalidate the area occupied by the View.
+  if (size_changed) SchedulePaint();
+  ///} else {
+  ///  // The compositor doesn't Draw() until something on screen changes, so
+  ///  // if our position changes but nothing is being animated on screen, then
+  ///  // tell the compositor to redraw the scene. We know layer() exists due to
+  ///  // the above if clause.
+  ///  layer()->ScheduleDraw();
+  ///}
 }
 
 void View::SchedulePaintOnParent() {
@@ -2206,24 +1627,45 @@ bool View::ShouldPaint() const {
 ///  recorder->Transform(transform_from_parent);
 ///}
 
-void View::RecursivePaintHelper(void (View::*func)(gfx::Canvas*, const CullSet&),
-                                gfx::Canvas* canvas,
-                                const CullSet& cull_set) {
+void View::RecursivePaintHelper(void (View::*func)(gfx::Canvas* canvas),
+                                gfx::Canvas* canvas) {
   View::Views children = GetChildrenInZOrder();
   CR_DCHECK(children_.size() == children.size());
   for (auto* child : children) {
-    if (!child->layer())
-      (child->*func)(canvas, cull_set);
+    ///if (!child->layer())
+      (child->*func)(canvas);
   }
 }
 
-void View::PaintFromPaintRoot(gfx::Canvas* canvas) {
-  ///PaintInfo paint_info = PaintInfo::CreateRootPaintInfo(
-  ///    parent_context, layer() ? layer()->size() : size());
-  Paint(canvas, CullSet());
-  ///if (base::CommandLine::ForCurrentProcess()->HasSwitch(
-  ///        switches::kDrawViewBoundsRects))
-  ///  PaintDebugRects(paint_info);
+///void View::PaintFromPaintRoot(const ui::PaintContext& parent_context) {
+///  PaintInfo paint_info = PaintInfo::CreateRootPaintInfo(
+///      parent_context, layer() ? layer()->size() : size());
+///  Paint(paint_info);
+///  if (base::CommandLine::ForCurrentProcess()->HasSwitch(
+///          switches::kDrawViewBoundsRects))
+///    PaintDebugRects(paint_info);
+///}
+
+void View::PaintCommon(gfx::Canvas* canvas) {
+  if (!ShouldPaint())
+    return;
+
+  {
+    // If the View we are about to paint requested the canvas to be flipped, we
+    // should change the transform appropriately.
+    // The canvas mirroring is undone once the View is done painting so that we
+    // don't pass the canvas with the mirrored transform to Views that didn't
+    // request the canvas to be flipped.
+    gfx::ScopedCanvas scoped(canvas);
+    if (flip_canvas_on_paint_for_rtl_ui()) {
+      canvas->Translate(gfx::Vector2d(width(), 0));
+      canvas->Scale(-1, 1);
+    }
+
+    OnPaint(canvas);
+  }
+
+  PaintChildren(canvas);
 }
 
 ///void View::PaintDebugRects(const PaintInfo& parent_paint_info) {
@@ -2296,21 +1738,6 @@ void View::AddChildViewAtImpl(View* view, int index) {
 
   SetFocusSiblings(view, pos);
 
-  // Ensure the layer tree matches the view tree before calling to any client
-  // code. This way if client code further modifies the view tree we are in a
-  // sane state.
-  const bool did_reparent_any_layers = view->UpdateParentLayers();
-  Widget* widget = GetWidget();
-  if (did_reparent_any_layers && widget)
-    widget->LayerTreeChanged();
-
-  ReorderLayers();
-
-  // Make sure the visibility of the child layers are correct.
-  // If any of the parent View is hidden, then the layers of the subtree
-  // rooted at |this| should be hidden. Otherwise, all the child layers should
-  // inherit the visibility of the owner View.
-  view->UpdateLayerVisibility();
 
   // Need to notify the layout manager because one of the callbacks below might
   // want to know the view's new preferred size, minimum size, etc.
@@ -2318,17 +1745,16 @@ void View::AddChildViewAtImpl(View* view, int index) {
     layout_manager_->ViewAdded(this, view);
 
   ViewHierarchyChangedDetails details(true, this, view, parent);
-
   for (View* v = this; v; v = v->parent_)
     v->ViewHierarchyChangedImpl(false, details);
 
+  Widget* widget = GetWidget();
   view->PropagateAddNotifications(details, widget && widget != old_widget);
-
-  if (widget) {
-    ///const crui::NativeTheme* new_theme = view->GetNativeTheme();
-    ///if (new_theme != old_theme)
-    ///  view->PropagateThemeChanged();
-  }
+  ///if (widget) {
+  ///  const crui::NativeTheme* new_theme = view->GetNativeTheme();
+  ///  if (new_theme != old_theme)
+  ///    view->PropagateThemeChanged();
+  ///}
 
   UpdateTooltip();
 
@@ -2375,12 +1801,6 @@ void View::DoRemoveChildView(View* view,
     if (is_removed_from_widget)
       widget->NotifyWillRemoveView(view);
   }
-
-  // Make sure the layers belonging to the subtree rooted at |view| get
-  // removed.
-  view->OrphanLayers();
-  if (widget)
-    widget->LayerTreeChanged();
 
   // Need to notify the layout manager because one of the callbacks below might
   // want to know the view's new preferred size, minimum size, etc.
@@ -2490,26 +1910,6 @@ void View::VisibilityChangedImpl(View* starting_from, bool is_visible) {
     observer.OnViewVisibilityChanged(this, starting_from);
 }
 
-void View::SnapLayerToPixelBoundary(const LayerOffsetData& offset_data) {
-///  if (!layer())
-///    return;
-///
-///#if CR_DCHECK_IS_ON()
-///  // We rely on our layers beneath being parented correctly at this point.
-///  for (crui::Layer* layer_beneath : layers_beneath_)
-///    CR_DCHECK(layer()->parent() == layer_beneath->parent());
-///#endif  // DCHECK_IS_ON()
-///
-///  if (layer()->GetCompositor() && layer()->GetCompositor()->is_pixel_canvas()) {
-///    gfx::Vector2dF offset = snap_layer_to_pixel_boundary_ && layer()->parent()
-///                                ? offset_data.GetSubpixelOffset()
-///                                : gfx::Vector2dF();
-///    layer()->SetSubpixelPositionOffset(offset);
-///    for (crui::Layer* layer_beneath : layers_beneath_)
-///      layer_beneath->SetSubpixelPositionOffset(offset);
-///  }
-}
-
 // static
 void View::RegisterChildrenForVisibleBoundsNotification(View* view) {
   if (view->GetNeedsNotificationWhenVisibleBoundsChange())
@@ -2573,94 +1973,6 @@ void View::SetLayoutManagerImpl(std::unique_ptr<LayoutManager> layout_manager) {
     layout_manager_->Installed(this);
 }
 
-void View::SetLayerBounds(const gfx::Size& size,
-                          const LayerOffsetData& offset_data) {
-  const gfx::Rect bounds = gfx::Rect(size) + offset_data.offset();
-  const bool bounds_changed = (bounds != layer()->GetTargetBounds());
-  layer()->SetBounds(bounds);
-  for (crui::Layer* layer_beneath : layers_beneath_) {
-    layer_beneath->SetBounds(gfx::Rect(layer_beneath->size()) +
-                             bounds.OffsetFromOrigin());
-  }
-  SnapLayerToPixelBoundary(offset_data);
-  if (bounds_changed) {
-    for (ViewObserver& observer : observers_)
-      observer.OnLayerTargetBoundsChanged(this);
-  }
-}
-
-
-void View::SetRootBoundsDirty(bool origin_changed) {
-  root_bounds_dirty_ = true;
-
-  if (origin_changed) {
-    // Inform our children that their root bounds are dirty, as their relative
-    // coordinates in paint root space have changed since ours have changed.
-    for (Views::const_iterator i(children_.begin()); i != children_.end();
-         ++i) {
-      if (!(*i)->IsPaintRoot())
-        (*i)->SetRootBoundsDirty(origin_changed);
-    }
-  }
-}
-
-void View::UpdateRootBounds(BoundsTree* tree, const gfx::Vector2d& offset) {
-  // If we're not visible no need to update BoundsTree. When we are made visible
-  // the BoundsTree will be updated appropriately.
-  if (!visible_)
-    return;
-
-  if (!root_bounds_dirty_ && children_.empty())
-    return;
-
-  // No need to recompute bounds if we haven't flagged ours as dirty.
-  ///TRACE_EVENT1("views", "View::UpdateRootBounds", "class", GetClassName());
-
-  // Add our own offset to the provided offset, for our own bounds update and
-  // for propagation to our children if needed.
-  gfx::Vector2d view_offset = offset + GetMirroredBounds().OffsetFromOrigin();
-
-  // If our bounds have changed we must re-insert our new bounds to the tree.
-  if (root_bounds_dirty_) {
-    root_bounds_dirty_ = false;
-    gfx::Rect bounds(
-        view_offset.x(), view_offset.y(), bounds_.width(), bounds_.height());
-    tree->Insert(bounds, reinterpret_cast<intptr_t>(this));
-  }
-
-  // Update our children's bounds if needed.
-  for (Views::const_iterator i(children_.begin()); i != children_.end(); ++i) {
-    // We don't descend in to layer views for bounds recomputation, as they
-    // manage their own RTree as paint roots.
-    if (!(*i)->IsPaintRoot())
-      (*i)->UpdateRootBounds(tree, view_offset);
-  }
-}
-
-void View::RemoveRootBounds(BoundsTree* tree) {
-  tree->Remove(reinterpret_cast<intptr_t>(this));
-
-  root_bounds_dirty_ = true;
-
-  for (Views::const_iterator i(children_.begin()); i != children_.end(); ++i) {
-    if (!(*i)->IsPaintRoot())
-      (*i)->RemoveRootBounds(tree);
-  }
-}
-
-View::BoundsTree* View::GetBoundsTreeFromPaintRoot() {
-  BoundsTree* bounds_tree = bounds_tree_.get();
-  View* paint_root = this;
-  while (!bounds_tree && !paint_root->IsPaintRoot()) {
-    // Assumption is that if IsPaintRoot() is false then parent_ is valid.
-    CR_DCHECK(paint_root);
-    paint_root = paint_root->parent_;
-    bounds_tree = paint_root->bounds_tree_.get();
-  }
-
-  return bounds_tree;
-}
-
 // Transformations -------------------------------------------------------------
 
 bool View::GetTransformRelativeTo(const View* ancestor,
@@ -2668,11 +1980,11 @@ bool View::GetTransformRelativeTo(const View* ancestor,
   const View* p = this;
 
   while (p && p != ancestor) {
-    transform->PostConcat(p->GetTransform());
+    transform->ConcatTransform(p->GetTransform());
     gfx::Transform translation;
     translation.Translate(static_cast<float>(p->GetMirroredX()),
-                          static_cast<float>(p->y()));
-    transform->PostConcat(translation);
+      static_cast<float>(p->y()));
+    transform->ConcatTransform(translation);
 
     p = p->parent_;
   }
@@ -2687,7 +1999,9 @@ bool View::ConvertPointForAncestor(const View* ancestor,
   gfx::Transform trans;
   // TODO(sad): Have some way of caching the transformation results.
   bool result = GetTransformRelativeTo(ancestor, &trans);
-  *point = gfx::ToFlooredPoint(trans.MapPoint(gfx::PointF(*point)));
+  auto p = gfx::Point3F(gfx::PointF(*point));
+  trans.TransformPoint(&p);
+  *point = gfx::ToFlooredPoint(p.AsPointF());
   return result;
 }
 
@@ -2695,10 +2009,9 @@ bool View::ConvertPointFromAncestor(const View* ancestor,
                                     gfx::Point* point) const {
   gfx::Transform trans;
   bool result = GetTransformRelativeTo(ancestor, &trans);
-  if (const cr::Optional<gfx::PointF> transformed_point =
-    trans.InverseMapPoint(gfx::PointF(*point))) {
-    *point = gfx::ToFlooredPoint(transformed_point.value());
-  }
+  auto p = gfx::Point3F(gfx::PointF(*point));
+  trans.TransformPointReverse(&p);
+  *point = gfx::ToFlooredPoint(p.AsPointF());
   return result;
 }
 
@@ -2707,7 +2020,7 @@ bool View::ConvertRectForAncestor(const View* ancestor,
   gfx::Transform trans;
   // TODO(sad): Have some way of caching the transformation results.
   bool result = GetTransformRelativeTo(ancestor, &trans);
-  *rect = trans.MapRect(*rect);
+  trans.TransformRect(rect);
   return result;
 }
 
@@ -2715,103 +2028,11 @@ bool View::ConvertRectFromAncestor(const View* ancestor,
                                    gfx::RectF* rect) const {
   gfx::Transform trans;
   bool result = GetTransformRelativeTo(ancestor, &trans);
-  *rect = trans.InverseMapRect(*rect).value_or(*rect);
+  trans.TransformRectReverse(rect);
   return result;
 }
 
 // Accelerated painting --------------------------------------------------------
-
-void View::CreateLayer(crui::LayerType layer_type) {
-  // A new layer is being created for the view. So all the layers of the
-  // sub-tree can inherit the visibility of the corresponding view.
-  {
-    internal::ScopedChildrenLock lock(this);
-    for (auto* child : children_)
-      child->UpdateChildLayerVisibility(true);
-  }
-
-  SetLayer(std::make_unique<crui::Layer>(layer_type));
-  layer()->set_delegate(this);
-  ///layer()->SetName(GetClassName());
-
-  UpdateParentLayers();
-  UpdateLayerVisibility();
-
-  // The new layer needs to be ordered in the layer tree according
-  // to the view tree. Children of this layer were added in order
-  // in UpdateParentLayers().
-  if (parent())
-    parent()->ReorderLayers();
-
-  Widget* widget = GetWidget();
-  if (widget)
-    widget->LayerTreeChanged();
-
-  // Before having its own Layer, this View may have painted in to a Layer owned
-  // by an ancestor View. Scheduling a paint on the parent View will erase this
-  // View's painting effects on the ancestor View's Layer.
-  // (See crbug.com/551492)
-  SchedulePaintOnParent();
-}
-
-bool View::UpdateParentLayers() {
-  // Attach all top-level un-parented layers.
-  if (layer()) {
-    if (!layer()->parent()) {
-      UpdateParentLayer();
-      return true;
-    }
-    // The layers of any child views are already in place, so we can stop
-    // iterating here.
-    return false;
-  }
-  bool result = false;
-  internal::ScopedChildrenLock lock(this);
-  for (auto* child : children_) {
-    if (child->UpdateParentLayers())
-      result = true;
-  }
-  return result;
-}
-
-void View::OrphanLayers() {
-  if (layer()) {
-    crui::Layer* parent = layer()->parent();
-    if (parent) {
-      parent->Remove(layer());
-      for (crui::Layer* layer_beneath : layers_beneath_)
-        parent->Remove(layer_beneath);
-    }
-
-    // The layer belonging to this View has already been orphaned. It is not
-    // necessary to orphan the child layers.
-    return;
-  }
-  internal::ScopedChildrenLock lock(this);
-  for (auto* child : children_)
-    child->OrphanLayers();
-}
-
-void View::ReparentLayer(crui::Layer* parent_layer) {
-  CR_DCHECK(layer() != parent_layer);
-  if (parent_layer) {
-    // Adding the main layer can trigger a call to |SnapLayerToPixelBoundary()|.
-    // That method assumes layers beneath have already been added. Therefore
-    // layers beneath must be added first here. See crbug.com/961212.
-    for (crui::Layer* layer_beneath : layers_beneath_)
-      parent_layer->Add(layer_beneath);
-    parent_layer->Add(layer());
-  }
-  // Update the layer bounds; this needs to be called after this layer is added
-  // to the new parent layer since snapping to pixel boundary will be affected
-  // by the layer hierarchy.
-  LayerOffsetData offset =
-      parent_ ? parent_->CalculateOffsetToAncestorWithLayer(nullptr)
-              : LayerOffsetData(layer()->device_scale_factor());
-  SetLayerBounds(size(), offset + GetMirroredBounds().OffsetFromOrigin());
-  ///layer()->SchedulePaint(GetLocalBounds());
-  MoveLayerToParent(layer(), LayerOffsetData(layer()->device_scale_factor()));
-}
 
 // Input -----------------------------------------------------------------------
 
@@ -3020,8 +2241,8 @@ void View::PropagateDeviceScaleFactorChanged(float old_device_scale_factor,
   // If the view is drawing to the layer, OnDeviceScaleFactorChanged() is called
   // through LayerDelegate callback.
   ///if (!layer())
-    OnDeviceScaleFactorChanged(old_device_scale_factor,
-                               new_device_scale_factor);
+  ///  OnDeviceScaleFactorChanged(old_device_scale_factor,
+  ///                             new_device_scale_factor);
 }
 
 // Tooltips --------------------------------------------------------------------
@@ -3031,41 +2252,41 @@ void View::UpdateTooltip() {
   // TODO(beng): The TooltipManager nullptr check can be removed when we
   //             consolidate Init() methods and make views_unittests Init() all
   //             Widgets that it uses.
-  if (widget && widget->GetTooltipManager())
-    widget->GetTooltipManager()->UpdateTooltip();
+  ///if (widget && widget->GetTooltipManager())
+  ///  widget->GetTooltipManager()->UpdateTooltip();
 }
 
 // Drag and drop ---------------------------------------------------------------
 
-bool View::DoDrag(const crui::LocatedEvent& event,
-                  const gfx::Point& press_pt,
-                  crui::DragDropTypes::DragEventSource source) {
-  int drag_operations = GetDragOperations(press_pt);
-  if (drag_operations == crui::DragDropTypes::DRAG_NONE)
-    return false;
-
-  Widget* widget = GetWidget();
-  // We should only start a drag from an event, implying we have a widget.
-  CR_DCHECK(widget);
-
-  // Don't attempt to start a drag while in the process of dragging. This is
-  // especially important on X where we can get multiple mouse move events when
-  // we start the drag.
-  if (widget->dragged_view())
-    return false;
-
-  std::unique_ptr<OSExchangeData> data(std::make_unique<OSExchangeData>());
-  WriteDragData(press_pt, data.get());
-
-  // Message the RootView to do the drag and drop. That way if we're removed
-  // the RootView can detect it and avoid calling us back.
-  gfx::Point widget_location(event.location());
-  ConvertPointToWidget(this, &widget_location);
-  widget->RunShellDrag(this, std::move(data), widget_location, drag_operations,
-                       source);
-  // WARNING: we may have been deleted.
-  return true;
-}
+///bool View::DoDrag(const crui::LocatedEvent& event,
+///                  const gfx::Point& press_pt,
+///                  crui::DragDropTypes::DragEventSource source) {
+///  int drag_operations = GetDragOperations(press_pt);
+///  if (drag_operations == ui::DragDropTypes::DRAG_NONE)
+///    return false;
+///
+///  Widget* widget = GetWidget();
+///  // We should only start a drag from an event, implying we have a widget.
+///  DCHECK(widget);
+///
+///  // Don't attempt to start a drag while in the process of dragging. This is
+///  // especially important on X where we can get multiple mouse move events when
+///  // we start the drag.
+///  if (widget->dragged_view())
+///    return false;
+///
+///  std::unique_ptr<OSExchangeData> data(std::make_unique<OSExchangeData>());
+///  WriteDragData(press_pt, data.get());
+///
+///  // Message the RootView to do the drag and drop. That way if we're removed
+///  // the RootView can detect it and avoid calling us back.
+///  gfx::Point widget_location(event.location());
+///  ConvertPointToWidget(this, &widget_location);
+///  widget->RunShellDrag(this, std::move(data), widget_location, drag_operations,
+///                       source);
+///  // WARNING: we may have been deleted.
+///  return true;
+///}
 
 DEFINE_ENUM_CONVERTERS(View::FocusBehavior,
                        {View::FocusBehavior::ACCESSIBLE_ONLY,

@@ -18,23 +18,24 @@
 #include "crbase/location.h"
 #include "crbase/strings/string_util.h"
 #include "crbase/message_loop/message_loop.h"
-///#include "crbase/metrics/histogram_functions.h"
+///#include "base/metrics/histogram_functions.h"
 #include "crbase/threading/task/single_thread_task_runner.h"
 #include "crbase/threading/thread_task_runner_handle.h"
 #include "crbase/time/time.h"
-///#include "crbase/trace_event/trace_event.h"
+///#include "base/trace_event/trace_event.h"
 #include "crbase/win/win_util.h"
 #include "crbase/win/windows_version.h"
 ///#include "third_party/skia/include/core/SkPath.h"
 #include "crui/base/win/scoped_gdi_object.h"
-///#include "crui/accessibility/accessibility_switches.h"
-///#include "crui/accessibility/platform/ax_fragment_root_win.h"
-///#include "crui/accessibility/platform/ax_platform_node_win.h"
-///#include "crui/accessibility/platform/ax_system_caret_win.h"
-///#include "crui/base/ime/text_input_client.h"
-///#include "crui/base/ime/text_input_type.h"
+///#include "ui/accessibility/accessibility_switches.h"
+///#include "ui/accessibility/platform/ax_fragment_root_win.h"
+///#include "ui/accessibility/platform/ax_platform_node_win.h"
+///#include "ui/accessibility/platform/ax_system_caret_win.h"
+///#include "ui/base/ime/text_input_client.h"
+///#include "ui/base/ime/text_input_type.h"
 ///#include "crui/base/ui_base_features.h"
 #include "crui/base/view_prop.h"
+#include "crui/base/i18n/rtl.h"
 #include "crui/base/accelerators/accelerator.h"
 #include "crui/base/win/hwnd_metrics.h"
 #include "crui/base/win/internal_constants.h"
@@ -42,7 +43,6 @@
 #include "crui/base/win/mouse_wheel_util.h"
 #include "crui/base/win/session_change_observer.h"
 #include "crui/base/win/shell.h"
-#include "crui/base/i18n/rtl.h"
 #include "crui/base/win/touch_input.h"
 #include "crui/display/win/dpi.h"
 #include "crui/display/win/screen_win.h"
@@ -51,21 +51,19 @@
 #include "crui/events/event_utils.h"
 #include "crui/events/keycodes/keyboard_code_conversion_win.h"
 #include "crui/events/win/system_event_state_lookup.h"
-///#include "crui/gfx/canvas.h"
-#include "crui/gfx/geometry/insets.h"
 #include "crui/gfx/canvas.h"
 #include "crui/gfx/canvas_paint_win.h"
+#include "crui/gfx/geometry/insets.h"
 ///#include "crui/gfx/icon_util.h"
 ///#include "crui/gfx/path_win.h"
-#include "crui/gfx/win/hwnd_util.h"
 ///#include "crui/gfx/win/rendering_window_manager.h"
-///#include "crui/latency/latency_info.h"
-///#include "crui/native_theme/native_theme_win.h"
+///#include "ui/latency/latency_info.h"
+///#include "ui/native_theme/native_theme_win.h"
 #include "crui/views/views_delegate.h"
 #include "crui/views/widget/widget_hwnd_utils.h"
 #include "crui/views/win/fullscreen_handler.h"
 #include "crui/views/win/hwnd_message_handler_delegate.h"
-///#include "crui/views/win/hwnd_util.h"
+#include "crui/gfx/win/hwnd_util.h"
 #include "crui/views/win/scoped_fullscreen_visibility.h"
 
 namespace crui {
@@ -954,6 +952,10 @@ void HWNDMessageHandler::SchedulePaintInRect(const gfx::Rect& rect) {
   }
 }
 
+void HWNDMessageHandler::SetOpacity(BYTE opcity) {
+  layered_alpha_ = opcity;
+}
+
 ///void HWNDMessageHandler::SetWindowIcons(const gfx::ImageSkia& window_icon,
 ///                                        const gfx::ImageSkia& app_icon) {
 ///  if (!window_icon.isNull()) {
@@ -1009,7 +1011,7 @@ void HWNDMessageHandler::SetAspectRatio(float aspect_ratio) {
 }
 
 void HWNDMessageHandler::SizeConstraintsChanged() {
-  LONG style = GetWindowLong(hwnd(), GWL_STYLE);
+  LONG style = ::GetWindowLongW(hwnd(), GWL_STYLE);
   // Ignore if this is not a standard window.
   if (style & (WS_POPUP | WS_CHILD))
     return;
@@ -1028,7 +1030,7 @@ void HWNDMessageHandler::SizeConstraintsChanged() {
   } else {
     style &= ~WS_MINIMIZEBOX;
   }
-  SetWindowLong(hwnd(), GWL_STYLE, style);
+  ::SetWindowLongW(hwnd(), GWL_STYLE, style);
 }
 
 bool HWNDMessageHandler::HasChildRenderingWindow() {
@@ -1039,14 +1041,14 @@ bool HWNDMessageHandler::HasChildRenderingWindow() {
   return false;
 }
 
-std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents>
-HWNDMessageHandler::RegisterUnadjustedMouseEvent() {
-  std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents> scoped_enable =
-      ScopedEnableUnadjustedMouseEventsWin::StartMonitor(this);
-
-  CR_DCHECK(using_wm_input_);
-  return scoped_enable;
-}
+///std::unique_ptr<aura::ScopedEnableUnadjustedMouseEvents>
+///HWNDMessageHandler::RegisterUnadjustedMouseEvent() {
+///  std::unique_ptr<ScopedEnableUnadjustedMouseEventsWin> scoped_enable =
+///      ScopedEnableUnadjustedMouseEventsWin::StartMonitor(this);
+///
+///  DCHECK(using_wm_input_);
+///  return scoped_enable;
+///}
 
 ////////////////////////////////////////////////////////////////////////////////
 // HWNDMessageHandler, gfx::WindowImpl overrides:
@@ -1233,7 +1235,8 @@ void HWNDMessageHandler::ApplyPinchZoomScale(float scale) {
   event_details.set_scale(scale);
   
   crui::GestureEvent event(static_cast<float>(cursor_pos.x), 
-                           static_cast<float>(cursor_pos.y), crui::EF_NONE,
+                           static_cast<float>(cursor_pos.y), 
+                           crui::EF_NONE,
                            cr::TimeTicks::Now(), event_details);
   delegate_->HandleGestureEvent(&event);
 }
@@ -1358,8 +1361,8 @@ void HWNDMessageHandler::OnAppbarAutohideEdgesChanged() {
 }
 
 void HWNDMessageHandler::SetInitialFocus() {
-  if (!(GetWindowLong(hwnd(), GWL_EXSTYLE) & WS_EX_TRANSPARENT) &&
-      !(GetWindowLong(hwnd(), GWL_EXSTYLE) & WS_EX_NOACTIVATE)) {
+  if (!(::GetWindowLongW(hwnd(), GWL_EXSTYLE) & WS_EX_TRANSPARENT) &&
+      !(::GetWindowLongW(hwnd(), GWL_EXSTYLE) & WS_EX_NOACTIVATE)) {
     // The window does not get keyboard messages unless we focus it.
     SetFocus(hwnd());
   }
@@ -1471,6 +1474,10 @@ void HWNDMessageHandler::ClientAreaSizeChanged() {
     return;
   gfx::Size s = GetClientAreaBounds().size();
   delegate_->HandleClientSizeChanged(s);
+  
+  if (use_layered_buffer_)
+    layered_window_contents_.reset(
+        new gfx::Canvas(s, 1.0f, false));
 
   current_window_size_message_++;
   sent_window_size_changing_ = false;
@@ -1575,7 +1582,7 @@ LRESULT HWNDMessageHandler::DefWindowProcWithRedrawLock(UINT message,
   // The Widget and HWND can be destroyed in the call to DefWindowProc, so use
   // the WeakPtrFactory to avoid unlocking (and crashing) after destruction.
   cr::WeakPtr<HWNDMessageHandler> ref(msg_handler_weak_factory_.GetWeakPtr());
-  LRESULT result = DefWindowProc(hwnd(), message, w_param, l_param);
+  LRESULT result = ::DefWindowProcW(hwnd(), message, w_param, l_param);
   if (!ref)
     lock.CancelUnlockOperation();
   return result;
@@ -1595,6 +1602,7 @@ void HWNDMessageHandler::UnlockUpdates() {
     lock_updates_count_ = 0;
   }
 }
+
 
 void HWNDMessageHandler::RedrawLayeredWindowContents() {
   waiting_for_redraw_layered_window_contents_ = false;
@@ -1727,7 +1735,8 @@ LRESULT HWNDMessageHandler::OnCreate(CREATESTRUCT* create_struct) {
   // Get access to a modifiable copy of the system menu.
   GetSystemMenu(hwnd(), false);
 
-  if (!pointer_events_for_touch_)
+  if (!pointer_events_for_touch_ && 
+      cr::win::GetVersion() >= cr::win::Version::WIN7)
     RegisterTouchWindow(hwnd(), TWF_WANTPALM);
 
   // We need to allow the delegate to size its contents since the window may not
@@ -2210,8 +2219,10 @@ LRESULT HWNDMessageHandler::OnNCActivate(UINT message,
   // corruption.
   if (!delegate_->HasFrame() ||
       delegate_->GetFrameMode() == FrameMode::CUSTOM_DRAWN) {
-    SetMsgHandled(TRUE);
-    return TRUE;
+    if (cr::win::GetVersion() > cr::win::Version::VISTA) {
+      SetMsgHandled(TRUE);
+      return TRUE;
+    }
   }
 
   return DefWindowProcWithRedrawLock(WM_NCACTIVATE, paint_as_active || active,
@@ -2230,7 +2241,7 @@ LRESULT HWNDMessageHandler::OnNCCalcSize(BOOL mode, LPARAM l_param) {
   // See http://code.google.com/p/chromium/issues/detail?id=900
   if (is_first_nccalc_) {
     is_first_nccalc_ = false;
-    if (GetWindowLong(hwnd(), GWL_STYLE) & WS_CAPTION) {
+    if (::GetWindowLongW(hwnd(), GWL_STYLE) & WS_CAPTION) {
       SetMsgHandled(FALSE);
       return 0;
     }
@@ -2440,6 +2451,7 @@ void HWNDMessageHandler::OnNCPaint(HRGN rgn) {
     return;
   }
 
+
   // In theory GetDCEx should do what we want, but I couldn't get it to work.
   // In particular the docs mentiond DCX_CLIPCHILDREN, but as far as I can tell
   // it doesn't work at all. So, instead we get the DC for the window then
@@ -2465,9 +2477,6 @@ void HWNDMessageHandler::OnNCPaint(HRGN rgn) {
 
   SchedulePaintInRect(gfx::Rect(dirty_region));
 
-  // gfx::CanvasSkiaPaint's destructor does the actual painting. As such, wrap
-  // the following in a block to force paint to occur so that we can release
-  // the dc.
   if (!delegate_->HandlePaintAccelerated(gfx::Rect(dirty_region))) {
     gfx::CanvasSkiaPaint canvas(dc,
                                 true,
@@ -2710,8 +2719,8 @@ void HWNDMessageHandler::OnSysCommand(UINT notification_code,
     if (window_bounds_change && !IsVisible()) {
       // Circumvent ScopedRedrawLocks and force visibility before entering a
       // resize or move modal loop to get continuous sizing/moving feedback.
-      SetWindowLong(hwnd(), GWL_STYLE,
-                    GetWindowLong(hwnd(), GWL_STYLE) | WS_VISIBLE);
+      ::SetWindowLongW(hwnd(), GWL_STYLE,
+                       ::GetWindowLongW(hwnd(), GWL_STYLE) | WS_VISIBLE);
     }
   }
 
@@ -2767,7 +2776,8 @@ LRESULT HWNDMessageHandler::OnTouchEvent(UINT message,
   size_t num_points = LOWORD(w_param);
   std::unique_ptr<TOUCHINPUT[]> input(new TOUCHINPUT[num_points]);
   if (crui::GetTouchInputInfoWrapper(reinterpret_cast<HTOUCHINPUT>(l_param),
-                                     static_cast<UINT>(num_points), input.get(),
+                                     static_cast<UINT>(num_points), 
+                                     input.get(),
                                      static_cast<int>(sizeof(TOUCHINPUT)))) {
     // input[i].dwTime doesn't necessarily relate to the system time at all,
     // so use base::TimeTicks::Now().
@@ -3268,13 +3278,10 @@ LRESULT HWNDMessageHandler::HandlePointerEventTypeTouch(UINT message,
   crui::TouchEvent event(
       event_type, touch_point, event_time,
       crui::PointerDetails(crui::EventPointerType::POINTER_TYPE_TOUCH,
-                           static_cast<crui::PointerId>(mapped_pointer_id), 
+                           static_cast<PointerId>(mapped_pointer_id), 
                            radius_x, radius_y, pressure,
                            static_cast<float>(rotation_angle)),
       crui::GetModifiersFromKeyState());
-
-  ///event.latency()->AddLatencyNumberWithTimestamp(
-  ///    ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, event_time);
 
   // Release the pointer id for touch release events.
   if (event_type == crui::ET_TOUCH_RELEASED)
@@ -3427,13 +3434,9 @@ void HWNDMessageHandler::GenerateTouchEvent(crui::EventType event_type,
   crui::TouchEvent event(
       event_type, point, time_stamp,
       crui::PointerDetails(crui::EventPointerType::POINTER_TYPE_TOUCH, 
-                           static_cast<crui::PointerId>(id)));
+                           static_cast<PointerId>(id)));
 
   event.set_flags(crui::GetModifiersFromKeyState());
-
-  ///event.latency()->AddLatencyNumberWithTimestamp(
-  ///    ui::INPUT_EVENT_LATENCY_ORIGINAL_COMPONENT, time_stamp);
-
   touch_events->push_back(event);
 }
 

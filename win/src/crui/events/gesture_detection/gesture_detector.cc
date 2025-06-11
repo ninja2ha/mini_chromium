@@ -13,7 +13,6 @@
 #include "crui/events/gesture_detection/gesture_listeners.h"
 #include "crui/events/gesture_detection/motion_event.h"
 #include "crui/gfx/geometry/angle_conversions.h"
-#include "crui/base/build_platform.h"
 
 namespace crui {
 namespace {

@@ -7,7 +7,7 @@
 #include "crbase/logging.h"
 #include "crbase/helper/stl_util.h"
 #include "crbase/strings/utf_string_conversion_utils.h"
-#include "crui/base/build_platform.h"
+#include "crbase/build_platform.h"
 #include "crui/events/keycodes/dom/dom_code.h"
 #include "crui/events/keycodes/dom/dom_key.h"
 
@@ -20,7 +20,7 @@ namespace {
 #if defined(MINI_CHROMIUM_OS_WIN)
 #define DOM_CODE(usb, evdev, xkb, win, mac, code, id) \
   { usb, win, code }
-#elif defined(MINI_CHROMIUM_OS_LINUX)
+#elif defined(MINI_CHROMIUM_USE_X11)
 #define DOM_CODE(usb, evdev, xkb, win, mac, code, id) \
   { usb, xkb, code }
 #elif defined(MINI_CHROMIUM_OS_MACOSX)

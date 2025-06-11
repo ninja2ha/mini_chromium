@@ -5,7 +5,7 @@
 #ifndef UI_EVENTS_KEYCODES_DOM_US_LAYOUT_DATA_H_
 #define UI_EVENTS_KEYCODES_DOM_US_LAYOUT_DATA_H_
 
-#include "crui/base/build_platform.h"
+#include "crbase/build_platform.h"
 
 namespace crui {
 
@@ -416,7 +416,7 @@ const struct DomCodeToKeyboardCodeEntry {
     // DomCode::SUSPEND                            0x000014 Suspend
     // DomCode::RESUME                             0x000015 Resume
     // DomCode::TURBO                              0x000016 Turbo
-#if defined(OS_POSIX)
+#if defined(MINI_CHROMIUM_OS_POSIX)
     {DomCode::PRIVACY_SCREEN_TOGGLE,
      VKEY_PRIVACY_SCREEN_TOGGLE},  // 0x000017 PrivacyScreenToggle
 #endif
@@ -596,7 +596,7 @@ const struct DomCodeToKeyboardCodeEntry {
     {DomCode::LAUNCH_MAIL, VKEY_MEDIA_LAUNCH_MAIL},  // 0x0C018A LaunchMail
     {DomCode::LAUNCH_APP2, VKEY_MEDIA_LAUNCH_APP2},  // 0x0C0192 LaunchApp2
     {DomCode::LAUNCH_APP1, VKEY_MEDIA_LAUNCH_APP1},  // 0x0C0194 LaunchApp1
-#if defined(OS_POSIX)
+#if defined(MINI_CHROMIUM_OS_POSIX)
     {DomCode::LAUNCH_CONTROL_PANEL,
      VKEY_SETTINGS},                              // 0x0C019F Launch Assistant
     {DomCode::LAUNCH_ASSISTANT, VKEY_ASSISTANT},  // 0x0C01CB Launch Assistant

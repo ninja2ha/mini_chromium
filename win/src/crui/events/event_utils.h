@@ -10,6 +10,7 @@
 #include <memory>
 
 #include "crbase/strings/string16.h"
+#include "crbase/build_platform.h"
 #include "crui/base/ui_export.h"
 #include "crui/display/display.h"
 #include "crui/events/base_event_utils.h"
@@ -18,7 +19,6 @@
 #include "crui/events/keycodes/keyboard_codes.h"
 #include "crui/events/platform_event.h"
 #include "crui/gfx/native_widget_types.h"
-#include "crui/base/build_platform.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
 #include <windows.h>

@@ -15,7 +15,7 @@ namespace gfx {
 //
 // Used for reversible animations and as a general helper class. Typical usage:
 //
-// #include "crui/gfx/animation/slide_animation.h"
+// #include "ui/gfx/animation/slide_animation.h"
 //
 // class MyClass : public AnimationDelegate {
 //  public:

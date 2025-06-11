@@ -20,6 +20,7 @@
 #define MINI_CHROMIUM_OS_WIN 1
 #elif defined(__linux__)
 #define MINI_CHROMIUM_OS_LINUX 1
+#define MINI_CHROMIUM_USE_X11 1
 #else
 #error Please add support for your platform  in crbase\build_platform.h
 #endif
@@ -34,7 +35,7 @@
 #elif defined(_MSC_VER)
 #define MINI_CHROMIUM_COMPILER_MSVC 1
 #else
-#error Please add support for your compipler in crbase\build_platform.h
+#error Please add support for your compipler in crbase/build_platform.h
 #endif
 
 // arch
@@ -49,7 +50,7 @@
 #define MINI_CHROMIUM_ARCH_CPU_32_BITS 1
 #define MINI_CHROMIUM_ARCH_CPU_LITTLE_ENDIAN 1
 #else
-#error Please add support for your architecture in crbase\build_platform.h
+#error Please add support for your architecture in crbase/build_platform.h
 #endif
 
 // Type detection for wchar_t.

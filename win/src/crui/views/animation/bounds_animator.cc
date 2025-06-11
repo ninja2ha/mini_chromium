@@ -2,16 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/views/animation/bounds_animator.h"
+#include "crui/views/animation/bounds_animator.h"
 
 #include <memory>
 
-#include "ui/gfx/animation/animation_container.h"
-#include "ui/gfx/animation/slide_animation.h"
-#include "ui/views/animation/bounds_animator_observer.h"
-#include "ui/views/view.h"
-#include "ui/views/widget/widget.h"
+#include "crui/gfx/animation/animation_container.h"
+#include "crui/gfx/animation/slide_animation.h"
+#include "crui/views/animation/bounds_animator_observer.h"
+#include "crui/views/view.h"
+#include "crui/views/widget/widget.h"
 
+namespace crui {
 namespace views {
 
 BoundsAnimator::BoundsAnimator(View* parent)
@@ -35,8 +36,8 @@ void BoundsAnimator::AnimateViewTo(
     View* view,
     const gfx::Rect& target,
     std::unique_ptr<gfx::AnimationDelegate> delegate) {
-  DCHECK(view);
-  DCHECK_EQ(view->parent(), parent_);
+  CR_DCHECK(view);
+  CR_DCHECK(view->parent() == parent_);
 
   Data existing_data;
 
@@ -80,7 +81,7 @@ gfx::Rect BoundsAnimator::GetTargetBounds(const View* view) const {
 void BoundsAnimator::SetAnimationForView(
     View* view,
     std::unique_ptr<gfx::SlideAnimation> animation) {
-  DCHECK(animation);
+  CR_DCHECK(animation);
 
   const auto i = data_.find(view);
   if (i == data_.end())
@@ -108,7 +109,7 @@ void BoundsAnimator::SetAnimationDelegate(
     View* view,
     std::unique_ptr<AnimationDelegate> delegate) {
   const auto i = data_.find(view);
-  DCHECK(i != data_.end());
+  CR_DCHECK(i != data_.end());
 
   i->second.delegate = std::move(delegate);
 }
@@ -138,7 +139,7 @@ void BoundsAnimator::Cancel() {
   AnimationContainerProgressed(container_.get());
 }
 
-void BoundsAnimator::SetAnimationDuration(base::TimeDelta duration) {
+void BoundsAnimator::SetAnimationDuration(cr::TimeDelta duration) {
   animation_duration_ = duration;
 }
 
@@ -165,8 +166,8 @@ BoundsAnimator::Data::~Data() = default;
 
 BoundsAnimator::Data BoundsAnimator::RemoveFromMaps(View* view) {
   const auto i = data_.find(view);
-  DCHECK(i != data_.end());
-  DCHECK(animation_to_view_.count(i->second.animation.get()) > 0);
+  CR_DCHECK(i != data_.end());
+  CR_DCHECK(animation_to_view_.count(i->second.animation.get()) > 0);
 
   Data old_data = std::move(i->second);
   data_.erase(view);
@@ -203,10 +204,10 @@ std::unique_ptr<gfx::Animation> BoundsAnimator::ResetAnimationForView(
 
 void BoundsAnimator::AnimationEndedOrCanceled(const gfx::Animation* animation,
                                               AnimationEndType type) {
-  DCHECK(animation_to_view_.find(animation) != animation_to_view_.end());
+  CR_DCHECK(animation_to_view_.find(animation) != animation_to_view_.end());
 
   View* view = animation_to_view_[animation];
-  DCHECK(view);
+  CR_DCHECK(view);
 
   // Save the data for later clean up.
   Data data = RemoveFromMaps(view);
@@ -215,7 +216,7 @@ void BoundsAnimator::AnimationEndedOrCanceled(const gfx::Animation* animation,
     if (type == AnimationEndType::kEnded) {
       data.delegate->AnimationEnded(animation);
     } else {
-      DCHECK_EQ(AnimationEndType::kCanceled, type);
+      CR_DCHECK(AnimationEndType::kCanceled == type);
       data.delegate->AnimationCanceled(animation);
     }
   }
@@ -224,10 +225,10 @@ void BoundsAnimator::AnimationEndedOrCanceled(const gfx::Animation* animation,
 }
 
 void BoundsAnimator::AnimationProgressed(const gfx::Animation* animation) {
-  DCHECK(animation_to_view_.find(animation) != animation_to_view_.end());
+  CR_DCHECK(animation_to_view_.find(animation) != animation_to_view_.end());
 
   View* view = animation_to_view_[animation];
-  DCHECK(view);
+  CR_DCHECK(view);
   const Data& data = data_[view];
   gfx::Rect new_bounds =
       animation->CurrentValueBetween(data.start_bounds, data.target_bounds);
@@ -279,7 +280,7 @@ void BoundsAnimator::AnimationContainerEmpty(
 
 void BoundsAnimator::OnChildViewRemoved(views::View* observed_view,
                                         views::View* removed) {
-  DCHECK_EQ(parent_, observed_view);
+  CR_DCHECK(parent_ == observed_view);
   const auto iter = data_.find(removed);
   if (iter == data_.end())
     return;
@@ -287,3 +288,4 @@ void BoundsAnimator::OnChildViewRemoved(views::View* observed_view,
 }
 
 }  // namespace views
+}  // namespace crui

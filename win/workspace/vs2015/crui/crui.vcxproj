@@ -19,80 +19,6 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\crui\aura\client\aura_constants.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\capture_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\cursor_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\cursor_client_observer.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\default_capture_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\drag_drop_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\drag_drop_delegate.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\event_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\focus_change_observer.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\focus_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\screen_position_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\transient_window_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\visibility_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\window_parenting_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\client\window_stacking_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\env.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\env_input_state_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\event_injector.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\input_state_lookup_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\null_window_targeter.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\extensions\workspace_extension.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_delegate.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drag_handler.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drop_handler.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_move_resize_handler.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\platform_window_init_properties.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\platform_window\win\win_window.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\scoped_keyboard_hook.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\scoped_simple_keyboard_hook.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\scoped_window_event_targeting_blocker.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\scoped_window_targeter.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_delegate.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_event_dispatcher.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_layout_manager.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_observer.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_targeter.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_tracker.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_tree_host.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\window_tree_host_platform.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\accelerator_filter.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\base_focus_rules.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\capture_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\compound_event_filter.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\coordinate_conversion.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\cursor_manager.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\default_activation_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\default_screen_position_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\easy_resize_window_targeter.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\focus_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\shadow_controller.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\shadow_types.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\transient_window_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\transient_window_manager.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\transient_window_stacking_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\visibility_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_animations.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_modality_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_properties.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\window_util.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\core\wm_state.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\activation_change_observer.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\activation_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\activation_delegate.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\animation_host.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\scoped_tooltip_disabler.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\tooltip_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\aura\wm\public\window_move_client.cc" />
     <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator.cc" />
     <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_history.cc" />
     <ClCompile Include="..\..\..\src\crui\base\accelerators\accelerator_manager.cc" />
@@ -109,53 +35,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crui\base\base_window.cc" />
     <ClCompile Include="..\..\..\src\crui\base\class_property.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_constants.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_format_type_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_monitor.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_util_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\clipboard_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\custom_data_helper.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\clipboard\scoped_clipboard_writer.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\cursor\cursors_aura.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor_loader_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor_util.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\base\cursor\cursor_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\cursor\image_cursors.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drag_drop_types_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drag_source_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drop_target_event.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\drop_target_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\file_info\file_info.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\os_exchange_data.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_factory.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_win.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      </ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      </ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\crui\base\hit_test.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\layout.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\pointer\pointer_device_util.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\pointer\pointer_device_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\base\pointer\touch_editing_controller.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\base\resource\scale_factor.cc" />
     <ClCompile Include="..\..\..\src\crui\base\ui_base_types.cc" />
     <ClCompile Include="..\..\..\src\crui\base\view_prop.cc" />
     <ClCompile Include="..\..\..\src\crui\base\win\accessibility_misc_utils.cc" />
@@ -172,11 +52,6 @@
     <ClCompile Include="..\..\..\src\crui\base\win\shell.cc" />
     <ClCompile Include="..\..\..\src\crui\base\win\touch_input.cc" />
     <ClCompile Include="..\..\..\src\crui\base\win\window_event_target.cc" />
-    <ClCompile Include="..\..\..\src\crui\compositor\layer.cc" />
-    <ClCompile Include="..\..\..\src\crui\compositor\layer_delegate.cc" />
-    <ClCompile Include="..\..\..\src\crui\compositor\layer_owner.cc" />
-    <ClCompile Include="..\..\..\src\crui\compositor\layer_tree_owner.cc" />
-    <ClCompile Include="..\..\..\src\crui\compositor\layer_type.cc" />
     <ClCompile Include="..\..\..\src\crui\display\display.cc" />
     <ClCompile Include="..\..\..\src\crui\display\display_change_notifier.cc" />
     <ClCompile Include="..\..\..\src\crui\display\display_layout.cc" />
@@ -267,18 +142,12 @@
     <ClCompile Include="..\..\..\src\crui\gfx\canvas.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\canvas_paint_win.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\canvas_skia.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\font\font.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\font\font_render_params.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\font\system_fonts_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\box_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\dip_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\insets_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix3_f.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\matrix4_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point3_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\point_conversions.cc" />
@@ -311,7 +180,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\r_tree_base.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\scroll_offset.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\size_conversions.cc" />
@@ -321,32 +189,23 @@
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector2d_f.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector3d_f.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\geometry\vector4d_f.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\interpolated_transform.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\path.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\path_win.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\sequential_id_generator.cc" />
-    <ClCompile Include="..\..\..\src\crui\gfx\skia_util.cc" />
+    <ClCompile Include="..\..\..\src\crui\gfx\skia\skia_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\hwnd_util.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_hot_key_observer.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.cc" />
     <ClCompile Include="..\..\..\src\crui\gfx\win\window_impl.cc" />
     <ClCompile Include="..\..\..\src\crui\views\animation\animation_delegate_views.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\animation\bounds_animator.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\animation\scroll_animator.cc" />
     <ClCompile Include="..\..\..\src\crui\views\controls\button\button.cc" />
     <ClCompile Include="..\..\..\src\crui\views\controls\button\button_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\corewm\cursor_height_provider_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_aura.cc">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_controller.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\corewm\tooltip_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\cull_set.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\drag_utils.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\drag_utils_aura.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\controls\focusable_border.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\controls\focus_ring.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\controls\highlight_path_generator.cc" />
     <ClCompile Include="..\..\..\src\crui\views\focus\external_focus_tracker.cc" />
     <ClCompile Include="..\..\..\src\crui\views\focus\focus_manager.cc" />
     <ClCompile Include="..\..\..\src\crui\views\focus\focus_manager_factory.cc" />
@@ -366,6 +225,7 @@
     <ClCompile Include="..\..\..\src\crui\views\metadata\metadata_cache.cc" />
     <ClCompile Include="..\..\..\src\crui\views\metadata\metadata_types.cc" />
     <ClCompile Include="..\..\..\src\crui\views\metadata\type_conversion.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\painter.cc" />
     <ClCompile Include="..\..\..\src\crui\views\rect_based_targeting_utils.cc" />
     <ClCompile Include="..\..\..\src\crui\views\style\platform_style.cc" />
     <ClCompile Include="..\..\..\src\crui\views\style\typography.cc">
@@ -380,38 +240,19 @@
     <ClCompile Include="..\..\..\src\crui\views\view_border.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_class_properties.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_constants.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\view_constants_aura.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_targeter.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_targeter_delegate.cc" />
     <ClCompile Include="..\..\..\src\crui\views\view_tracker.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_capture_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drag_drop_client_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drop_target_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_event_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_focus_rules.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_cursor_manager.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_widget_aura.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_position_client.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host_win.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\drop_helper.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\focus_manager_event_handler.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_aura.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_private.cc" />
+    <ClCompile Include="..\..\..\src\crui\views\widget\native_widget_win.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\root_view.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\root_view_targeter.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\tooltip_manager.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\tooltip_manager_aura.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\widget.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\widget_aura_utils.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\widget_delegate.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\widget_deletion_observer.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\widget_focus_manager.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\widget_getter.cc" />
     <ClCompile Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\widget\window_reorderer.cc" />
     <ClCompile Include="..\..\..\src\crui\views\window\client_view.cc" />
     <ClCompile Include="..\..\..\src\crui\views\window\native_frame_view.cc" />
     <ClCompile Include="..\..\..\src\crui\views\window\non_client_view.cc" />
@@ -420,106 +261,9 @@
     <ClCompile Include="..\..\..\src\crui\views\win\hwnd_message_handler.cc" />
     <ClCompile Include="..\..\..\src\crui\views\win\hwnd_util_aurawin.cc" />
     <ClCompile Include="..\..\..\src\crui\views\win\pen_event_processor.cc" />
-    <ClCompile Include="..\..\..\src\crui\views\win\scoped_enable_unadjusted_mouse_events_win.cc" />
     <ClCompile Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.cc" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\crui\aura\client\aura_constants.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\capture_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\capture_client_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\capture_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\cursor_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\cursor_client_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\default_capture_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\drag_drop_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\drag_drop_client_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\drag_drop_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\event_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\focus_change_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\focus_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\screen_position_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\transient_window_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\transient_window_client_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\visibility_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\window_parenting_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\window_stacking_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\client\window_types.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\env.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\env_input_state_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\env_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\event_injector.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\input_state_lookup.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\input_state_lookup_win.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\null_window_targeter.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\extensions\workspace_extension.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\extensions\workspace_extension_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drag_handler.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_drop_handler.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_handler\wm_move_resize_handler.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\platform_window_init_properties.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\platform_window\win\win_window.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\scoped_enable_unadjusted_mouse_events.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\scoped_keyboard_hook.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\scoped_simple_keyboard_hook.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\scoped_window_event_targeting_blocker.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\scoped_window_targeter.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_event_dispatcher.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_event_dispatcher_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_layout_manager.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_targeter.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_tracker.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_tree_host.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_tree_host_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\window_tree_host_platform.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\accelerator_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\accelerator_filter.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\base_focus_rules.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\capture_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\compound_event_filter.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\coordinate_conversion.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\cursor_manager.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\default_activation_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\default_screen_position_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\easy_resize_window_targeter.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\focus_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\focus_rules.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\native_cursor_manager.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\native_cursor_manager_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\shadow_controller.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\shadow_controller_delegate.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\shadow_types.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_manager.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\transient_window_stacking_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\visibility_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_animations.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_modality_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_properties.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\window_util.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\core\wm_state.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\activation_change_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\activation_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\activation_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\animation_host.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\scoped_tooltip_disabler.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\tooltip_client.h" />
-    <ClInclude Include="..\..\..\src\crui\aura\wm\public\window_move_client.h" />
     <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator.h" />
     <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_history.h" />
     <ClInclude Include="..\..\..\src\crui\base\accelerators\accelerator_manager.h" />
@@ -531,49 +275,7 @@
     <ClInclude Include="..\..\..\src\crui\base\base_window.h" />
     <ClInclude Include="..\..\..\src\crui\base\build_platform.h" />
     <ClInclude Include="..\..\..\src\crui\base\class_property.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_buffer.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_constants.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_format_type.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_monitor.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_util_win.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\clipboard_win.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\custom_data_helper.h" />
-    <ClInclude Include="..\..\..\src\crui\base\clipboard\scoped_clipboard_writer.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursors_aura.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_loader.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_loader_win.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_size.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_types.h" />
-    <ClInclude Include="..\..\..\src\crui\base\cursor\cursor_util.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\base\cursor\image_cursors.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\download_file_interface.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drag_drop_types.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drag_source_win.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drop_target_event.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\drop_target_win.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\file_info\file_info.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\os_exchange_data.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_factory.h" />
-    <ClInclude Include="..\..\..\src\crui\base\dragdrop\os_exchange_data_provider_win.h" />
     <ClInclude Include="..\..\..\src\crui\base\hit_test.h" />
-    <ClInclude Include="..\..\..\src\crui\base\i18n\rtl.h" />
-    <ClInclude Include="..\..\..\src\crui\base\layout.h" />
-    <ClInclude Include="..\..\..\src\crui\base\pointer\pointer_device.h" />
-    <ClInclude Include="..\..\..\src\crui\base\pointer\touch_editing_controller.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\base\resource\scale_factor.h" />
     <ClInclude Include="..\..\..\src\crui\base\ui_base_types.h" />
     <ClInclude Include="..\..\..\src\crui\base\ui_export.h" />
     <ClInclude Include="..\..\..\src\crui\base\view_prop.h" />
@@ -596,14 +298,6 @@
     <ClInclude Include="..\..\..\src\crui\base\win\shell.h" />
     <ClInclude Include="..\..\..\src\crui\base\win\touch_input.h" />
     <ClInclude Include="..\..\..\src\crui\base\win\window_event_target.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_owner_delegate.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_tree_owner.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\layer_type.h" />
-    <ClInclude Include="..\..\..\src\crui\compositor\property_change_reason.h" />
     <ClInclude Include="..\..\..\src\crui\display\display.h" />
     <ClInclude Include="..\..\..\src\crui\display\display_change_notifier.h" />
     <ClInclude Include="..\..\..\src\crui\display\display_layout.h" />
@@ -705,22 +399,16 @@
     <ClInclude Include="..\..\..\src\crui\gfx\animation\throb_animation.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\animation\tween.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\canvas.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\canvas_paint.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\canvas_paint_win.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\font\font.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\font\font_render_params.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\font\platform_font.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\font\system_fonts_win.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\angle_conversions.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\axis_transform2d.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\box_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\clamp_float_geometry.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\cubic_bezier.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\decomposed_transform.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\dip_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\insets_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix3_f.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\matrix4_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point3_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\point_conversions.h" />
@@ -753,8 +441,6 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
       </ExcludedFromBuild>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\r_tree_base.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\safe_integer_conversions.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\scalar.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\scroll_offset.h" />
@@ -767,14 +453,12 @@
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector2d_f.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector3d_f.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\geometry\vector4d_f.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\interpolated_transform.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\native_widget_types.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\path.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\path_win.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\scoped_canvas.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\sequential_id_generator.h" />
-    <ClInclude Include="..\..\..\src\crui\gfx\skia_util.h" />
+    <ClInclude Include="..\..\..\src\crui\gfx\skia\skia_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\text_constants.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\hwnd_util.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\msg_util.h" />
@@ -783,23 +467,16 @@
     <ClInclude Include="..\..\..\src\crui\gfx\win\singleton_hwnd_observer.h" />
     <ClInclude Include="..\..\..\src\crui\gfx\win\window_impl.h" />
     <ClInclude Include="..\..\..\src\crui\views\animation\animation_delegate_views.h" />
+    <ClInclude Include="..\..\..\src\crui\views\animation\bounds_animator.h" />
+    <ClInclude Include="..\..\..\src\crui\views\animation\bounds_animator_observer.h" />
+    <ClInclude Include="..\..\..\src\crui\views\animation\scroll_animator.h" />
     <ClInclude Include="..\..\..\src\crui\views\controls\button\button.h" />
     <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller.h" />
     <ClInclude Include="..\..\..\src\crui\views\controls\button\button_controller_delegate.h" />
     <ClInclude Include="..\..\..\src\crui\views\controls\button\button_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\views\corewm\cursor_height_provider_win.h" />
-    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip.h" />
-    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_aura.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\views\corewm\tooltip_win.h" />
-    <ClInclude Include="..\..\..\src\crui\views\cull_set.h" />
-    <ClInclude Include="..\..\..\src\crui\views\drag_controller.h" />
-    <ClInclude Include="..\..\..\src\crui\views\drag_utils.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\focusable_border.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\focus_ring.h" />
+    <ClInclude Include="..\..\..\src\crui\views\controls\highlight_path_generator.h" />
     <ClInclude Include="..\..\..\src\crui\views\focus\external_focus_tracker.h" />
     <ClInclude Include="..\..\..\src\crui\views\focus\focus_manager.h" />
     <ClInclude Include="..\..\..\src\crui\views\focus\focus_manager_delegate.h" />
@@ -824,6 +501,7 @@
     <ClInclude Include="..\..\..\src\crui\views\metadata\metadata_types.h" />
     <ClInclude Include="..\..\..\src\crui\views\metadata\property_metadata.h" />
     <ClInclude Include="..\..\..\src\crui\views\metadata\type_conversion.h" />
+    <ClInclude Include="..\..\..\src\crui\views\painter.h" />
     <ClInclude Include="..\..\..\src\crui\views\rect_based_targeting_utils.h" />
     <ClInclude Include="..\..\..\src\crui\views\style\platform_style.h" />
     <ClInclude Include="..\..\..\src\crui\views\style\typography.h" />
@@ -833,35 +511,17 @@
     <ClInclude Include="..\..\..\src\crui\views\view_border.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_class_properties.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_constants.h" />
-    <ClInclude Include="..\..\..\src\crui\views\view_constants_aura.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_observer.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_targeter.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_targeter_delegate.h" />
     <ClInclude Include="..\..\..\src\crui\views\view_tracker.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_capture_client.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drag_drop_client_win.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_drop_target_win.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_event_client.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_focus_rules.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_cursor_manager.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_native_widget_aura.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_position_client.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_screen_win.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\desktop_aura\desktop_window_tree_host_win.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\drop_helper.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\focus_manager_event_handler.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\native_widget.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_aura.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_delegate.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_private.h" />
+    <ClInclude Include="..\..\..\src\crui\views\widget\native_widget_win.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\root_view.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\root_view_targeter.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\tooltip_manager.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\tooltip_manager_aura.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\widget.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\widget_aura_utils.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\widget_delegate.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\widget_deletion_observer.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\widget_focus_manager.h" />
@@ -869,7 +529,6 @@
     <ClInclude Include="..\..\..\src\crui\views\widget\widget_hwnd_utils.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\widget_observer.h" />
     <ClInclude Include="..\..\..\src\crui\views\widget\widget_removals_observer.h" />
-    <ClInclude Include="..\..\..\src\crui\views\widget\window_reorderer.h" />
     <ClInclude Include="..\..\..\src\crui\views\window\client_view.h" />
     <ClInclude Include="..\..\..\src\crui\views\window\native_frame_view.h" />
     <ClInclude Include="..\..\..\src\crui\views\window\non_client_view.h" />
@@ -879,14 +538,10 @@
     <ClInclude Include="..\..\..\src\crui\views\win\hwnd_message_handler_delegate.h" />
     <ClInclude Include="..\..\..\src\crui\views\win\hwnd_util.h" />
     <ClInclude Include="..\..\..\src\crui\views\win\pen_event_processor.h" />
-    <ClInclude Include="..\..\..\src\crui\views\win\scoped_enable_unadjusted_mouse_events_win.h" />
     <ClInclude Include="..\..\..\src\crui\views\win\scoped_fullscreen_visibility.h" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\src\crui\aura\wm\core\OWNERS" />
-  </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{AE6CCE2F-0A47-4AFD-8DA7-24DB877B77A9}</ProjectGuid>
+    <ProjectGuid>{1D60C29A-6A6B-41B2-A473-37D900BC0142}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>crui</RootNamespace>
     <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>

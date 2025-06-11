@@ -20,12 +20,11 @@ class Point;
 class Rect;
 class Size;
 class Canvas;
-}
+}  // namespace gfx
 
 class Accelerator;
 ///class InputMethod;
 class KeyEvent;
-class GestureEvent;
 class MouseEvent;
 class ScrollEvent;
 class TouchEvent;
@@ -225,7 +224,6 @@ class CRUI_EXPORT HWNDMessageHandlerDelegate {
   // Called to compel the delegate to paint |invalid_rect| accelerated.
   virtual bool HandlePaintAccelerated(const gfx::Rect& invalid_rect) = 0;
 
-  // Called to compel the delegate to paint using the software path.
   virtual void HandlePaint(gfx::Canvas* canvas) = 0;
 
   // Called to forward a WM_NOTIFY message to the tooltip manager.

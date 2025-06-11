@@ -7,7 +7,7 @@
 #include "crui/base/hit_test.h"
 #include "crui/gfx/geometry/insets.h"
 ///#include "crui/views/bubble/bubble_dialog_delegate_view.h"
-///#include "crui/views/controls/highlight_path_generator.h"
+#include "crui/views/controls/highlight_path_generator.h"
 #include "crui/views/layout/flex_layout_types.h"
 #include "crui/base/build_platform.h"
 
@@ -23,8 +23,8 @@ DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT, gfx::Insets*)
 ///DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT,
 ///                                       views::BubbleDialogDelegateView*)
 
-///DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT,
-///                                       views::HighlightPathGenerator*)
+DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT,
+                                       views::HighlightPathGenerator*)
 DEFINE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT, views::FlexSpecification*)
 
 namespace crui {
@@ -36,9 +36,9 @@ DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(gfx::Insets, kInternalPaddingKey, nullptr)
 ///DEFINE_UI_CLASS_PROPERTY_KEY(views::BubbleDialogDelegateView*,
 ///                             kAnchoredDialogKey,
 ///                             nullptr)
-///DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(views::HighlightPathGenerator,
-///                                   kHighlightPathGeneratorKey,
-///                                   nullptr)
+DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(views::HighlightPathGenerator,
+                                   kHighlightPathGeneratorKey,
+                                   nullptr)
 DEFINE_OWNED_UI_CLASS_PROPERTY_KEY(FlexSpecification, kFlexBehaviorKey, nullptr)
 
 }  // namespace views

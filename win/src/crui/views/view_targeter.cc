@@ -38,12 +38,12 @@ crui::EventTarget* ViewTargeter::FindTargetForEvent(crui::EventTarget* root,
   if (event->IsScrollEvent())
     return FindTargetForScrollEvent(view, *event->AsScrollEvent());
 
-  if (event->IsGestureEvent()) {
-    crui::GestureEvent* gesture = event->AsGestureEvent();
-    View* gesture_target = FindTargetForGestureEvent(view, *gesture);
-    root->ConvertEventToTarget(gesture_target, gesture);
-    return gesture_target;
-  }
+  ///if (event->IsGestureEvent()) {
+  ///  ui::GestureEvent* gesture = event->AsGestureEvent();
+  ///  View* gesture_target = FindTargetForGestureEvent(view, *gesture);
+  ///  root->ConvertEventToTarget(gesture_target, gesture);
+  ///  return gesture_target;
+  ///}
 
   CR_NOTREACHED() << "ViewTargeter does not yet support this event type.";
   return nullptr;
@@ -55,13 +55,13 @@ crui::EventTarget* ViewTargeter::FindNextBestTarget(
   if (!previous_target)
     return nullptr;
 
-  if (event->IsGestureEvent()) {
-    crui::GestureEvent* gesture = event->AsGestureEvent();
-    crui::EventTarget* next_target =
-        FindNextBestTargetForGestureEvent(previous_target, *gesture);
-    previous_target->ConvertEventToTarget(next_target, gesture);
-    return next_target;
-  }
+  ///if (event->IsGestureEvent()) {
+  ///  ui::GestureEvent* gesture = event->AsGestureEvent();
+  ///  ui::EventTarget* next_target =
+  ///      FindNextBestTargetForGestureEvent(previous_target, *gesture);
+  ///  previous_target->ConvertEventToTarget(next_target, gesture);
+  ///  return next_target;
+  ///}
 
   return previous_target->GetParentTarget();
 }
@@ -79,24 +79,23 @@ View* ViewTargeter::FindTargetForScrollEvent(View* root,
   return root->GetEffectiveViewTargeter()->TargetForRect(root, rect);
 }
 
-View* ViewTargeter::FindTargetForGestureEvent(
-    View* root,
-    const crui::GestureEvent& gesture) {
-  // TODO(tdanderson): The only code path that performs targeting for gestures
-  //                   uses the ViewTargeter installed on the RootView (i.e.,
-  //                   a RootViewTargeter). Provide a default implementation
-  //                   here if we need to be able to perform gesture targeting
-  //                   starting at an arbitrary node in a Views tree.
-  CR_NOTREACHED();
-  return nullptr;
-}
-
-crui::EventTarget* ViewTargeter::FindNextBestTargetForGestureEvent(
-    crui::EventTarget* previous_target,
-    const crui::GestureEvent& gesture) {
-  CR_NOTREACHED();
-  return nullptr;
-}
+///View* ViewTargeter::FindTargetForGestureEvent(View* root,
+///                                              const ui::GestureEvent& gesture) {
+///  // TODO(tdanderson): The only code path that performs targeting for gestures
+///  //                   uses the ViewTargeter installed on the RootView (i.e.,
+///  //                   a RootViewTargeter). Provide a default implementation
+///  //                   here if we need to be able to perform gesture targeting
+///  //                   starting at an arbitrary node in a Views tree.
+///  NOTREACHED();
+///  return nullptr;
+///}
+///
+///ui::EventTarget* ViewTargeter::FindNextBestTargetForGestureEvent(
+///    ui::EventTarget* previous_target,
+///    const ui::GestureEvent& gesture) {
+///  NOTREACHED();
+///  return nullptr;
+///}
 
 }  // namespace views
 }  // namespace crui

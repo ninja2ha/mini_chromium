@@ -52,11 +52,11 @@ void CalculateWindowStylesFromInitParams(
     *ex_style |= WS_EX_TOPMOST;
   ///if (params.mirror_origin_in_rtl)
   ///  *ex_style |= l10n_util::GetExtendedTooltipStyles();
-#if !defined(MINI_CHROMIUM_USE_AURA)
   // TODO(beng): layered windows with aura. http://crbug.com/154069
-  if (is_translucent)
+  // fixed with: https://codereview.chromium.org/12255051
+  if (is_translucent) {
     *ex_style |= WS_EX_LAYERED;
-#endif
+  }
   if (params.shadow_type == Widget::InitParams::ShadowType::kDrop)
     *class_style |= CS_DROPSHADOW;
 
@@ -116,15 +116,15 @@ void CalculateWindowStylesFromInitParams(
       break;
     case Widget::InitParams::TYPE_MENU:
       *style |= WS_POPUP;
-      ///if (::features::IsFormControlsRefreshEnabled() &&
-      ///    params.remove_standard_frame) {
-      ///  // If the platform doesn't support drop shadow, decorate the Window
-      ///  // with just a border.
-      ///  if (ui::win::IsAeroGlassEnabled())
-      ///    *style |= WS_THICKFRAME;
-      ///  else
-      ///    *style |= WS_BORDER;
-      ///}
+      if (/*::features::IsFormControlsRefreshEnabled() &&
+          */params.remove_standard_frame) {
+        // If the platform doesn't support drop shadow, decorate the Window
+        // with just a border.
+        if (crui::win::IsAeroGlassEnabled())
+          *style |= WS_THICKFRAME;
+        else
+          *style |= WS_BORDER;
+      }
       break;
     case Widget::InitParams::TYPE_TOOLTIP:
       *style |= WS_POPUP;

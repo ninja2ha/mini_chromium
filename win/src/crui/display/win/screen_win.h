@@ -10,6 +10,7 @@
 #include <memory>
 #include <vector>
 
+#include "crbase/memory/singleton.h"
 #include "crbase/functional/bind.h"
 #include "crui/display/display_change_notifier.h"
 #include "crui/display/screen.h"
@@ -42,6 +43,8 @@ class CRUI_EXPORT ScreenWin : public Screen,
  public:
   ScreenWin();
   virtual ~ScreenWin();
+
+  static ScreenWin* GetInstance();
 
   // Converts a screen physical point to a screen DIP point.
   // The DPI scale is performed relative to the display containing the physical
@@ -191,6 +194,7 @@ class CRUI_EXPORT ScreenWin : public Screen,
   virtual int GetSystemMetrics(int metric) const;
 
  private:
+
   void Initialize();
   void OnWndProc(HWND hwnd, UINT message, WPARAM wparam, LPARAM lparam);
   void UpdateAllDisplaysAndNotify();

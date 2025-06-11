@@ -11,7 +11,7 @@
 #include "third_party/skia/include/core/SkRRect.h"
 #include "crui/gfx/geometry/rect_f.h"
 #include "crui/gfx/geometry/rounded_corners_f.h"
-#include "crui/gfx/skia_util.h"
+#include "crui/gfx/skia/skia_util.h"
 
 namespace crui {
 namespace gfx {
@@ -22,7 +22,7 @@ class CRUI_EXPORT RRectF {
   ~RRectF() = default;
   RRectF(const RRectF& rect) = default;
   RRectF& operator=(const RRectF& rect) = default;
-  ///explicit RRectF(const SkRRect& rect) : skrrect_(rect) {}
+  explicit RRectF(const SkRRect& rect) : skrrect_(rect) {}
   explicit RRectF(const gfx::RectF& rect) : RRectF(rect, 0.f) {}
   RRectF(const gfx::RectF& rect, float radius) : RRectF(rect, radius, radius) {}
   RRectF(const gfx::RectF& rect, float x_rad, float y_rad)

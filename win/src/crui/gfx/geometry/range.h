@@ -13,8 +13,8 @@
 #include <string>
 #include <algorithm>
 
+#include "crbase/build_platform.h"
 #include "crui/base/ui_export.h"
-#include "crui/base/build_platform.h"
 
 #if defined(MINI_CHROMIUM_OS_MACOSX)
 #if __OBJC__

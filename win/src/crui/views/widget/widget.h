@@ -19,8 +19,8 @@
 #include "crui/gfx/geometry/rect.h"
 #include "crui/gfx/geometry/size_f.h"
 #include "crui/gfx/native_widget_types.h"
-///#include "crui/native_theme/native_theme.h"
-///#include "crui/native_theme/native_theme_observer.h"
+///#include "ui/native_theme/native_theme.h"
+///#include "ui/native_theme/native_theme_observer.h"
 #include "crui/views/focus/focus_manager.h"
 #include "crui/views/widget/native_widget_delegate.h"
 #include "crui/views/window/client_view.h"
@@ -44,16 +44,16 @@ class Accelerator;
 ///class DefaultThemeProvider;
 class GestureRecognizer;
 ///class InputMethod;
-class Layer;
-class OSExchangeData;
+///class Layer;
+///class OSExchangeData;
 ///class ThemeProvider;
 
 namespace views {
 
-class DesktopWindowTreeHost;
+///class DesktopWindowTreeHost;
 class NativeWidget;
 ///class NonClientFrameView;
-class TooltipManager;
+///class TooltipManager;
 class View;
 class WidgetDelegate;
 class WidgetObserver;
@@ -302,11 +302,11 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
     // of the default one.
     // TODO(beng): Figure out if there's a better way to expose this, e.g. get
     // rid of NW subclasses and do this all via message handling.
-    DesktopWindowTreeHost* desktop_window_tree_host = nullptr;
+    ///DesktopWindowTreeHost* desktop_window_tree_host = nullptr;
 
     // Only used by NativeWidgetAura. Specifies the type of layer for the
     // aura::Window.
-    crui::LayerType layer_type = crui::LAYER_TEXTURED;
+    ///crui::LayerType layer_type = ui::LAYER_TEXTURED;
 
     // Only used by Aura. Provides a context window whose RootWindow is
     // consulted during widget creation to determine where in the Window
@@ -677,18 +677,18 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // dragged_view(). If the view has not been deleted during the drag,
   // OnDragDone() is called on it. |location| is in the widget's coordinate
   // system.
-  void RunShellDrag(View* view,
-                    std::unique_ptr<crui::OSExchangeData> data,
-                    const gfx::Point& location,
-                    int operation,
-                    crui::DragDropTypes::DragEventSource source);
+  ///void RunShellDrag(View* view,
+  ///                  std::unique_ptr<ui::OSExchangeData> data,
+  ///                  const gfx::Point& location,
+  ///                  int operation,
+  ///                  ui::DragDropTypes::DragEventSource source);
 
   // Returns the view that requested the current drag operation via
   // RunShellDrag(), or NULL if there is no such view or drag operation.
-  View* dragged_view() {
-    return const_cast<View*>(const_cast<const Widget*>(this)->dragged_view());
-  }
-  const View* dragged_view() const { return dragged_view_; }
+  ///View* dragged_view() {
+  ///  return const_cast<View*>(const_cast<const Widget*>(this)->dragged_view());
+  ///}
+  ///const View* dragged_view() const { return dragged_view_; }
 
   // Adds the specified |rect| in client area coordinates to the rectangle to be
   // redrawn.
@@ -787,11 +787,11 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   ///const ui::Compositor* GetCompositor() const;
 
   // Returns the widget's layer, if any.
-  crui::Layer* GetLayer() {
-    return const_cast<crui::Layer*>(
-        const_cast<const Widget*>(this)->GetLayer());
-  }
-  const crui::Layer* GetLayer() const;
+  ///ui::Layer* GetLayer() {
+  ///  return const_cast<ui::Layer*>(
+  ///      const_cast<const Widget*>(this)->GetLayer());
+  ///}
+  ///const ui::Layer* GetLayer() const;
 
   // Reorders the widget's child NativeViews which are associated to the view
   // tree (eg via a NativeViewHost) to match the z-order of the views in the
@@ -801,10 +801,6 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // already in the correct z-order relative to each other and does no
   // reordering if there are no views with an associated NativeView.
   void ReorderNativeViews();
-
-  // Called by a View when the status of it's layer or one of the views
-  // descendants layer status changes.
-  void LayerTreeChanged();
 
   const NativeWidget* native_widget() const;
   NativeWidget* native_widget();
@@ -833,8 +829,8 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   }
 
   // Returns the font used for tooltips.
-  TooltipManager* GetTooltipManager();
-  const TooltipManager* GetTooltipManager() const;
+  ///TooltipManager* GetTooltipManager();
+  ///const TooltipManager* GetTooltipManager() const;
 
   void set_focus_on_creation(bool focus_on_creation) {
     focus_on_creation_ = focus_on_creation;
@@ -919,11 +915,11 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   Widget* AsWidget() override;
   const Widget* AsWidget() const override;
   bool SetInitialFocus(crui::WindowShowState show_state) override;
-  bool ShouldDescendIntoChildForEventHandling(
-      crui::Layer* root_layer,
-      gfx::NativeView child,
-      crui::Layer* child_layer,
-      const gfx::Point& location) override;
+  ///bool ShouldDescendIntoChildForEventHandling(
+  ///    ui::Layer* root_layer,
+  ///    gfx::NativeView child,
+  ///    ui::Layer* child_layer,
+  ///    const gfx::Point& location) override;
   void LayoutRootViewIfNecessary() override;
 
   // Overridden from crui::EventSource:
@@ -985,7 +981,7 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
 
   // Returns the Views whose layers are parented directly to the Widget's
   // layer.
-  const View::Views& GetViewsWithLayers();
+  ///const View::Views& GetViewsWithLayers();
 
   // Undoes LockPaintAsActive(). Called by PaintAsActiveLock destructor.
   void UnlockPaintAsActive();
@@ -1096,12 +1092,6 @@ class CRUI_EXPORT Widget : public internal::NativeWidgetDelegate,
   // True if event capture should be released on a mouse up event. Default is
   // true.
   bool auto_release_capture_ = true;
-
-  // See description in GetViewsWithLayers().
-  View::Views views_with_layers_;
-
-  // Does |views_with_layers_| need updating?
-  bool views_with_layers_dirty_ = false;
 
   // True when window movement via mouse interaction with the frame should be
   // disabled.

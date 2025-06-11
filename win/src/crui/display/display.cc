@@ -6,11 +6,11 @@
 
 #include <algorithm>
 
-///#include "crbase/command_line.h"
+///#include "base/command_line.h"
 #include "crbase/logging.h"
 #include "crbase/strings/string_number_conversions.h"
 #include "crbase/strings/stringprintf.h"
-///#include "crui/display/display_switches.h"
+///#include "ui/display/display_switches.h"
 #include "crui/gfx/geometry/insets.h"
 #include "crui/gfx/geometry/rect_conversions.h"
 #include "crui/gfx/geometry/rect_f.h"

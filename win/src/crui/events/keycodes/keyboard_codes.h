@@ -5,7 +5,7 @@
 #ifndef UI_EVENTS_KEYCODES_KEYBOARD_CODES_H_
 #define UI_EVENTS_KEYCODES_KEYBOARD_CODES_H_
 
-#include "crui/base/build_platform.h"
+#include "crbase/build_platform.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
 #include "crui/events/keycodes/keyboard_codes_win.h"

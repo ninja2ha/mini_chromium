@@ -33,7 +33,7 @@ class CRUI_EXPORT ButtonControllerDelegate {
   ///virtual InkDrop* GetInkDrop() = 0;
 
   // Parallels methods in views::View:
-  virtual int GetDragOperations(const gfx::Point& press_pt) = 0;
+  ///virtual int GetDragOperations(const gfx::Point& press_pt) = 0;
   virtual bool InDrag() = 0;
 
  protected:

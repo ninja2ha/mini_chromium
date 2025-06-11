@@ -4,9 +4,10 @@
 
 #include "crui/views/win/hwnd_util.h"
 
+///#include "crbase/i18n/rtl.h"
+///#include "ui/aura/window.h"
+///#include "ui/aura/window_tree_host.h"
 #include "crui/base/i18n/rtl.h"
-#include "crui/aura/window.h"
-#include "crui/aura/window_tree_host.h"
 #include "crui/views/widget/widget.h"
 #include "crui/base/build_platform.h"
 
@@ -22,43 +23,22 @@ HWND HWNDForWidget(const Widget* widget) {
 }
 
 HWND HWNDForNativeView(const gfx::NativeView view) {
-#if defined(MINI_CHROMIUM_USE_AURA)
-  return view && view->GetRootWindow() ? view->GetHost()->GetAcceleratedWidget()
-                                       : nullptr;
-#else
   return view;
-#endif
 }
 
 HWND HWNDForNativeWindow(const gfx::NativeWindow window) {
-#if defined(MINI_CHROMIUM_USE_AURA)
-  return window && window->GetRootWindow()
-             ? window->GetHost()->GetAcceleratedWidget()
-             : nullptr;
-#else
   return window;
-#endif
 }
 
 gfx::Rect GetWindowBoundsForClientBounds(View* view,
                                          const gfx::Rect& client_bounds) {
   CR_DCHECK(view);
-#if defined(MINI_CHROMIUM_USE_AURA)
-  aura::WindowTreeHost* host = view->GetWidget()->GetNativeWindow()->GetHost();
-  if (host) {
-    HWND hwnd = host->GetAcceleratedWidget();
-#else
-    HWND hwnd = view->GetWidget()->GetNativeWindow();
-#endif
-    RECT rect = client_bounds.ToRECT();
-    DWORD style = ::GetWindowLongW(hwnd, GWL_STYLE);
-    DWORD ex_style = ::GetWindowLongW(hwnd, GWL_EXSTYLE);
-    AdjustWindowRectEx(&rect, style, FALSE, ex_style);
-    return gfx::Rect(rect);
-#if defined(MINI_CHROMIUM_USE_AURA)
-  }
-  return client_bounds;
-#endif
+  HWND hwnd = view->GetWidget()->GetNativeWindow();
+  RECT rect = client_bounds.ToRECT();
+  DWORD style = ::GetWindowLongW(hwnd, GWL_STYLE);
+  DWORD ex_style = ::GetWindowLongW(hwnd, GWL_EXSTYLE);
+  AdjustWindowRectEx(&rect, style, FALSE, ex_style);
+  return gfx::Rect(rect);
 }
 
 void ShowSystemMenuAtScreenPixelLocation(HWND window, const gfx::Point& point) {

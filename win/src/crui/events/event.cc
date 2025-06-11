@@ -9,10 +9,9 @@
 #include <utility>
 
 #include "crbase/memory/ptr_util.h"
-///#include "crbase/metrics/histogram.h"
-///#include "crbase/metrics/histogram_macros.h"
 #include "crbase/strings/string_number_conversions.h"
 #include "crbase/strings/stringprintf.h"
+#include "crbase/build_platform.h"
 #include "crui/events/base_event_utils.h"
 #include "crui/events/event_utils.h"
 #include "crui/events/keycodes/dom/dom_code.h"
@@ -24,8 +23,7 @@
 #include "crui/gfx/geometry/safe_integer_conversions.h"
 #include "crui/gfx/geometry/transform.h"
 #include "crui/gfx/geometry/transform_util.h"
-#include "crui/base/build_platform.h"
-
+ 
 #if defined(MINI_CHROMIUM_USE_X11)
 #include "crui/events/devices/x11/touch_factory_x11.h"        // nogncheck
 #include "crui/events/keycodes/keyboard_code_conversion_x.h"  // nogncheck
@@ -436,20 +434,20 @@ LocatedEvent::LocatedEvent(const LocatedEvent& copy) = default;
 void LocatedEvent::UpdateForRootTransform(
     const gfx::Transform& reversed_root_transform,
     const gfx::Transform& reversed_local_transform) {
-  ///if (target()) {
-  ///  gfx::Point3F transformed_location(location_);
-  ///  reversed_local_transform.TransformPoint(&transformed_location);
-  ///  location_ = transformed_location.AsPointF();
-  ///
-  ///  gfx::Point3F transformed_root_location(root_location_);
-  ///  reversed_root_transform.TransformPoint(&transformed_root_location);
-  ///  root_location_ = transformed_root_location.AsPointF();
-  ///} else {
-  ///  // This mirrors what the code previously did.
-  ///  gfx::Point3F transformed_location(location_);
-  ///  reversed_root_transform.TransformPoint(&transformed_location);
-  ///  root_location_ = location_ = transformed_location.AsPointF();
-  ///}
+  if (target()) {
+    gfx::Point3F transformed_location(location_);
+    reversed_local_transform.TransformPoint(&transformed_location);
+    location_ = transformed_location.AsPointF();
+  
+    gfx::Point3F transformed_root_location(root_location_);
+    reversed_root_transform.TransformPoint(&transformed_root_location);
+    root_location_ = transformed_root_location.AsPointF();
+  } else {
+    // This mirrors what the code previously did.
+    gfx::Point3F transformed_location(location_);
+    reversed_root_transform.TransformPoint(&transformed_location);
+    root_location_ = location_ = transformed_location.AsPointF();
+  }
 }
 
 std::string LocatedEvent::ToString() const {
@@ -761,15 +759,15 @@ TouchEvent::~TouchEvent() {
 void TouchEvent::UpdateForRootTransform(
     const gfx::Transform& inverted_root_transform,
     const gfx::Transform& inverted_local_transform) {
-  ///LocatedEvent::UpdateForRootTransform(inverted_root_transform,
-  ///                                     inverted_local_transform);
-  ///gfx::DecomposedTransform decomp;
-  ///bool success = gfx::DecomposeTransform(&decomp, inverted_root_transform);
-  ///CR_DCHECK(success);
-  ///if (decomp.scale[0])
-  ///  pointer_details_.radius_x *= decomp.scale[0];
-  ///if (decomp.scale[1])
-  ///  pointer_details_.radius_y *= decomp.scale[1];
+  LocatedEvent::UpdateForRootTransform(inverted_root_transform,
+                                       inverted_local_transform);
+  gfx::DecomposedTransform decomp;
+  bool success = gfx::DecomposeTransform(&decomp, inverted_root_transform);
+  CR_DCHECK(success);
+  if (decomp.scale[0])
+    pointer_details_.radius_x *= decomp.scale[0];
+  if (decomp.scale[1])
+    pointer_details_.radius_y *= decomp.scale[1];
 }
 
 void TouchEvent::DisableSynchronousHandling() {

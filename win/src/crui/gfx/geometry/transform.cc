@@ -1,429 +1,288 @@
-// Copyright 2012 The Chromium Authors
+// Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
 #include "crui/gfx/geometry/transform.h"
 
-#include <array>
-#include <ostream>
-
 #include "crbase/logging.h"
 #include "crbase/strings/stringprintf.h"
 #include "crui/gfx/geometry/angle_conversions.h"
-#include "crui/gfx/geometry/axis_transform2d.h"
 #include "crui/gfx/geometry/box_f.h"
-#include "crui/gfx/geometry/clamp_float_geometry.h"
-#include "crui/gfx/geometry/decomposed_transform.h"
 #include "crui/gfx/geometry/point3_f.h"
 #include "crui/gfx/geometry/point_conversions.h"
-#include "crui/gfx/geometry/quad_f.h"
 #include "crui/gfx/geometry/quaternion.h"
 #include "crui/gfx/geometry/rect.h"
-#include "crui/gfx/geometry/rect_conversions.h"
-#include "crui/gfx/geometry/sin_cos_degrees.h"
-#include "crui/gfx/geometry/transform_util.h"
+#include "crui/gfx/geometry/safe_integer_conversions.h"
 #include "crui/gfx/geometry/vector3d_f.h"
-#include "crui/gfx/geometry/vector4d_f.h"
+#include "crui/gfx/geometry/transform_util.h"
+#include "crui/gfx/geometry/rrect_f.h"
+#include "crui/gfx/skia/skia_util.h"
 
 namespace crui {
 namespace gfx {
 
 namespace {
 
-const double kEpsilon = std::numeric_limits<float>::epsilon();
+const SkScalar kEpsilon = std::numeric_limits<float>::epsilon();
 
-double TanDegrees(double degrees) {
-  return std::tan(gfx::DegToRad(degrees));
+SkScalar TanDegrees(double degrees) {
+  return SkDoubleToScalar(std::tan(gfx::DegToRad(degrees)));
 }
 
-inline bool ApproximatelyZero(double x, double tolerance) {
+inline bool ApproximatelyZero(SkScalar x, SkScalar tolerance) {
   return std::abs(x) <= tolerance;
 }
 
-inline bool ApproximatelyOne(double x, double tolerance) {
+inline bool ApproximatelyOne(SkScalar x, SkScalar tolerance) {
   return std::abs(x - 1) <= tolerance;
-}
-
-Matrix4F AxisTransform2dToMatrix4F(const AxisTransform2d& axis_2d) {
-  return Matrix4F(axis_2d.scale().x(), 0, 0, 0,  // col 0
-                  0, axis_2d.scale().y(), 0, 0,  // col 1
-                  0, 0, 1, 0,                    // col 2
-                  axis_2d.translation().x(), axis_2d.translation().y(), 0, 1);
-}
-
-template <typename T>
-void AxisTransform2dToColMajor(const AxisTransform2d& axis_2d, T a[16]) {
-  a[0] = axis_2d.scale().x();
-  a[5] = axis_2d.scale().y();
-  a[12] = axis_2d.translation().x();
-  a[13] = axis_2d.translation().y();
-  a[1] = a[2] = a[3] = a[4] = a[6] = a[7] = a[8] = a[9] = a[11] = a[14] = 0;
-  a[10] = a[15] = 1;
 }
 
 }  // namespace
 
-// clang-format off
+Transform::Transform(SkScalar col1row1,
+                     SkScalar col2row1,
+                     SkScalar col3row1,
+                     SkScalar col4row1,
+                     SkScalar col1row2,
+                     SkScalar col2row2,
+                     SkScalar col3row2,
+                     SkScalar col4row2,
+                     SkScalar col1row3,
+                     SkScalar col2row3,
+                     SkScalar col3row3,
+                     SkScalar col4row3,
+                     SkScalar col1row4,
+                     SkScalar col2row4,
+                     SkScalar col3row4,
+                     SkScalar col4row4)
+    : matrix_(SkMatrix44::kUninitialized_Constructor) {
+  matrix_.set(0, 0, col1row1);
+  matrix_.set(1, 0, col1row2);
+  matrix_.set(2, 0, col1row3);
+  matrix_.set(3, 0, col1row4);
+
+  matrix_.set(0, 1, col2row1);
+  matrix_.set(1, 1, col2row2);
+  matrix_.set(2, 1, col2row3);
+  matrix_.set(3, 1, col2row4);
+
+  matrix_.set(0, 2, col3row1);
+  matrix_.set(1, 2, col3row2);
+  matrix_.set(2, 2, col3row3);
+  matrix_.set(3, 2, col3row4);
+
+  matrix_.set(0, 3, col4row1);
+  matrix_.set(1, 3, col4row2);
+  matrix_.set(2, 3, col4row3);
+  matrix_.set(3, 3, col4row4);
+}
+
+Transform::Transform(SkScalar col1row1,
+                     SkScalar col2row1,
+                     SkScalar col1row2,
+                     SkScalar col2row2,
+                     SkScalar x_translation,
+                     SkScalar y_translation)
+    : matrix_(SkMatrix44::kIdentity_Constructor) {
+  matrix_.set(0, 0, col1row1);
+  matrix_.set(1, 0, col1row2);
+  matrix_.set(0, 1, col2row1);
+  matrix_.set(1, 1, col2row2);
+  matrix_.set(0, 3, x_translation);
+  matrix_.set(1, 3, y_translation);
+}
+
 Transform::Transform(const Quaternion& q)
-    : Transform(
-          // Col 0.
-          1.0 - 2.0 * (q.y() * q.y() + q.z() * q.z()),
-          2.0 * (q.x() * q.y() + q.z() * q.w()),
-          2.0 * (q.x() * q.z() - q.y() * q.w()),
-          0,
-          // Col 1.
-          2.0 * (q.x() * q.y() - q.z() * q.w()),
-          1.0 - 2.0 * (q.x() * q.x() + q.z() * q.z()),
-          2.0 * (q.y() * q.z() + q.x() * q.w()),
-          0,
-          // Col 2.
-          2.0 * (q.x() * q.z() + q.y() * q.w()),
-          2.0 * (q.y() * q.z() - q.x() * q.w()),
-          1.0 - 2.0 * (q.x() * q.x() + q.y() * q.y()),
-          0,
-          // Col 3.
-          0, 0, 0, 1) {}
-// clang-format on
+    : matrix_(SkMatrix44::kUninitialized_Constructor) {
+  double x = q.x();
+  double y = q.y();
+  double z = q.z();
+  double w = q.w();
 
-Matrix4F Transform::GetFullMatrix() const {
-  if (!full_matrix_) {
-    return AxisTransform2dToMatrix4F(axis_2d_);
-  }
-  return matrix_;
-}
-
-Matrix4F& Transform::EnsureFullMatrix() {
-  if (!full_matrix_) {
-    full_matrix_ = true;
-    matrix_ = AxisTransform2dToMatrix4F(axis_2d_);
-  }
-  return matrix_;
-}
-
-// static
-Transform Transform::ColMajor(const double a[16]) {
-  return Transform(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9],
-                   a[10], a[11], a[12], a[13], a[14], a[15]);
-}
-
-// static
-///Transform Transform::ColMajorF(const float a[16]) {
-///  if (AllTrue(Float4{a[1], a[2], a[3], a[4]} == Float4{0, 0, 0, 0} &
-///              Float4{a[6], a[7], a[8], a[9]} == Float4{0, 0, 0, 0} &
-///              Float4{a[10], a[11], a[14], a[15]} == Float4{1, 0, 0, 1})) {
-///    return Transform(a[0], a[5], a[12], a[13]);
-///  }
-///  return Transform(a[0], a[1], a[2], a[3], a[4], a[5], a[6], a[7], a[8], a[9],
-///                   a[10], a[11], a[12], a[13], a[14], a[15]);
-///}
-
-void Transform::GetColMajor(double a[16]) const {
-  if (!full_matrix_) {
-    AxisTransform2dToColMajor(axis_2d_, a);
-  } else {
-    matrix_.GetColMajor(a);
-  }
-}
-
-void Transform::GetColMajorF(float a[16]) const {
-  if (!full_matrix_) {
-    AxisTransform2dToColMajor(axis_2d_, a);
-  } else {
-    matrix_.GetColMajorF(a);
-  }
+  // Implicitly calls matrix.setIdentity()
+  matrix_.set3x3(SkDoubleToScalar(1.0 - 2.0 * (y * y + z * z)),
+                 SkDoubleToScalar(2.0 * (x * y + z * w)),
+                 SkDoubleToScalar(2.0 * (x * z - y * w)),
+                 SkDoubleToScalar(2.0 * (x * y - z * w)),
+                 SkDoubleToScalar(1.0 - 2.0 * (x * x + z * z)),
+                 SkDoubleToScalar(2.0 * (y * z + x * w)),
+                 SkDoubleToScalar(2.0 * (x * z + y * w)),
+                 SkDoubleToScalar(2.0 * (y * z - x * w)),
+                 SkDoubleToScalar(1.0 - 2.0 * (x * x + y * y)));
 }
 
 void Transform::RotateAboutXAxis(double degrees) {
-  SinCos sin_cos = SinCosDegrees(degrees);
-  if (sin_cos.IsZeroAngle())
-    return;
-  EnsureFullMatrix().RotateAboutXAxisSinCos(sin_cos.sin, sin_cos.cos);
+  double radians = gfx::DegToRad(degrees);
+  SkScalar cosTheta = SkDoubleToScalar(std::cos(radians));
+  SkScalar sinTheta = SkDoubleToScalar(std::sin(radians));
+  if (matrix_.isIdentity()) {
+      matrix_.set3x3(1, 0, 0,
+                     0, cosTheta, sinTheta,
+                     0, -sinTheta, cosTheta);
+  } else {
+    SkMatrix44 rot(SkMatrix44::kUninitialized_Constructor);
+    rot.set3x3(1, 0, 0,
+               0, cosTheta, sinTheta,
+               0, -sinTheta, cosTheta);
+    matrix_.preConcat(rot);
+  }
 }
 
 void Transform::RotateAboutYAxis(double degrees) {
-  SinCos sin_cos = SinCosDegrees(degrees);
-  if (sin_cos.IsZeroAngle())
-    return;
-  EnsureFullMatrix().RotateAboutYAxisSinCos(sin_cos.sin, sin_cos.cos);
+  double radians = gfx::DegToRad(degrees);
+  SkScalar cosTheta = SkDoubleToScalar(std::cos(radians));
+  SkScalar sinTheta = SkDoubleToScalar(std::sin(radians));
+  if (matrix_.isIdentity()) {
+      // Note carefully the placement of the -sinTheta for rotation about
+      // y-axis is different than rotation about x-axis or z-axis.
+      matrix_.set3x3(cosTheta, 0, -sinTheta,
+                     0, 1, 0,
+                     sinTheta, 0, cosTheta);
+  } else {
+    SkMatrix44 rot(SkMatrix44::kUninitialized_Constructor);
+    rot.set3x3(cosTheta, 0, -sinTheta,
+               0, 1, 0,
+               sinTheta, 0, cosTheta);
+    matrix_.preConcat(rot);
+  }
 }
 
 void Transform::RotateAboutZAxis(double degrees) {
-  SinCos sin_cos = SinCosDegrees(degrees);
-  if (sin_cos.IsZeroAngle())
-    return;
-  EnsureFullMatrix().RotateAboutZAxisSinCos(sin_cos.sin, sin_cos.cos);
-}
-
-void Transform::RotateAbout(double x, double y, double z, double degrees) {
-  SinCos sin_cos = SinCosDegrees(degrees);
-  if (sin_cos.IsZeroAngle())
-    return;
-
-  double square_length = x * x + y * y + z * z;
-  if (square_length == 0)
-    return;
-  if (square_length != 1) {
-    double scale = 1.0 / sqrt(square_length);
-    x *= scale;
-    y *= scale;
-    z *= scale;
+  double radians = gfx::DegToRad(degrees);
+  SkScalar cosTheta = SkDoubleToScalar(std::cos(radians));
+  SkScalar sinTheta = SkDoubleToScalar(std::sin(radians));
+  if (matrix_.isIdentity()) {
+      matrix_.set3x3(cosTheta, sinTheta, 0,
+                     -sinTheta, cosTheta, 0,
+                     0, 0, 1);
+  } else {
+    SkMatrix44 rot(SkMatrix44::kUninitialized_Constructor);
+    rot.set3x3(cosTheta, sinTheta, 0,
+               -sinTheta, cosTheta, 0,
+               0, 0, 1);
+    matrix_.preConcat(rot);
   }
-  EnsureFullMatrix().RotateUnitSinCos(x, y, z, sin_cos.sin, sin_cos.cos);
 }
 
 void Transform::RotateAbout(const Vector3dF& axis, double degrees) {
-  RotateAbout(axis.x(), axis.y(), axis.z(), degrees);
-}
-
-double Transform::Determinant() const {
-  if (!full_matrix_) {
-    return axis_2d_.Determinant();
-  }
-  return matrix_.Determinant();
-}
-
-void Transform::Scale(float x, float y) {
-  if (!full_matrix_) {
-    axis_2d_.PreScale(Vector2dF(x, y));
+  if (matrix_.isIdentity()) {
+    matrix_.setRotateDegreesAbout(axis.x(), axis.y(), axis.z(),
+                                  SkDoubleToScalar(degrees));
   } else {
-    matrix_.PreScale(x, y);
+    SkMatrix44 rot(SkMatrix44::kUninitialized_Constructor);
+    rot.setRotateDegreesAbout(axis.x(), axis.y(), axis.z(),
+                              SkDoubleToScalar(degrees));
+    matrix_.preConcat(rot);
   }
 }
 
-void Transform::PostScale(float x, float y) {
-  if (!full_matrix_) {
-    axis_2d_.PostScale(Vector2dF(x, y));
-  } else {
-    matrix_.PostScale(x, y);
-  }
+void Transform::Scale(SkScalar x, SkScalar y) {
+  matrix_.preScale(x, y, 1);
 }
 
-void Transform::Scale3d(float x, float y, float z) {
-  if (z == 1)
-    Scale(x, y);
-  else
-    EnsureFullMatrix().PreScale3d(x, y, z);
+void Transform::PostScale(SkScalar x, SkScalar y) {
+  matrix_.postScale(x, y, 1);
 }
 
-void Transform::PostScale3d(float x, float y, float z) {
-  if (z == 1)
-    PostScale(x, y);
-  else
-    EnsureFullMatrix().PostScale3d(x, y, z);
+void Transform::Scale3d(SkScalar x, SkScalar y, SkScalar z) {
+  matrix_.preScale(x, y, z);
 }
 
 void Transform::Translate(const Vector2dF& offset) {
   Translate(offset.x(), offset.y());
 }
 
-void Transform::Translate(float x, float y) {
-  if (!full_matrix_) {
-    axis_2d_.PreTranslate(Vector2dF(x, y));
-  } else {
-    matrix_.PreTranslate(x, y);
-  }
+void Transform::Translate(SkScalar x, SkScalar y) {
+  matrix_.preTranslate(x, y, 0);
 }
 
 void Transform::PostTranslate(const Vector2dF& offset) {
   PostTranslate(offset.x(), offset.y());
 }
 
-void Transform::PostTranslate(float x, float y) {
-  if (!full_matrix_) {
-    axis_2d_.PostTranslate(Vector2dF(x, y));
-  } else {
-    matrix_.PostTranslate(x, y);
-  }
-}
-
-void Transform::PostTranslate3d(const Vector3dF& offset) {
-  PostTranslate3d(offset.x(), offset.y(), offset.z());
-}
-
-void Transform::PostTranslate3d(float x, float y, float z) {
-  if (z == 0)
-    PostTranslate(x, y);
-  else
-    EnsureFullMatrix().PostTranslate3d(x, y, z);
+void Transform::PostTranslate(SkScalar x, SkScalar y) {
+  matrix_.postTranslate(x, y, 0);
 }
 
 void Transform::Translate3d(const Vector3dF& offset) {
   Translate3d(offset.x(), offset.y(), offset.z());
 }
 
-void Transform::Translate3d(float x, float y, float z) {
-  if (z == 0)
-    Translate(x, y);
-  else
-    EnsureFullMatrix().PreTranslate3d(x, y, z);
+void Transform::Translate3d(SkScalar x, SkScalar y, SkScalar z) {
+  matrix_.preTranslate(x, y, z);
 }
 
-void Transform::Skew(double degrees_x, double degrees_y) {
-  if (!degrees_x && !degrees_y)
-    return;
-  EnsureFullMatrix().Skew(TanDegrees(degrees_x), TanDegrees(degrees_y));
+void Transform::Skew(double angle_x, double angle_y) {
+  if (matrix_.isIdentity()) {
+    matrix_.set(0, 1, TanDegrees(angle_x));
+    matrix_.set(1, 0, TanDegrees(angle_y));
+  } else {
+    SkMatrix44 skew(SkMatrix44::kIdentity_Constructor);
+    skew.set(0, 1, TanDegrees(angle_x));
+    skew.set(1, 0, TanDegrees(angle_y));
+    matrix_.preConcat(skew);
+  }
 }
 
-void Transform::ApplyPerspectiveDepth(double depth) {
+void Transform::ApplyPerspectiveDepth(SkScalar depth) {
   if (depth == 0)
     return;
-
-  EnsureFullMatrix().ApplyPerspectiveDepth(depth);
-}
-
-void Transform::PreConcat(const Transform& transform) {
-  if (!transform.full_matrix_) {
-    PreConcat(transform.axis_2d_);
-  } else if (!full_matrix_) {
-    AxisTransform2d self = axis_2d_;
-    *this = transform;
-    PostConcat(self);
+  if (matrix_.isIdentity()) {
+    matrix_.set(3, 2, -SK_Scalar1 / depth);
   } else {
-    matrix_.PreConcat(transform.matrix_);
+    SkMatrix44 m(SkMatrix44::kIdentity_Constructor);
+    m.set(3, 2, -SK_Scalar1 / depth);
+    matrix_.preConcat(m);
   }
 }
 
-void Transform::PostConcat(const Transform& transform) {
-  if (!transform.full_matrix_) {
-    PostConcat(transform.axis_2d_);
-  } else if (!full_matrix_) {
-    AxisTransform2d self = axis_2d_;
-    *this = transform;
-    PreConcat(self);
-  } else {
-    matrix_.PostConcat(transform.matrix_);
-  }
+void Transform::PreconcatTransform(const Transform& transform) {
+  matrix_.preConcat(transform.matrix_);
 }
 
-Transform Transform::operator*(const Transform& transform) const {
-  if (!transform.full_matrix_) {
-    Transform result = *this;
-    result.PreConcat(transform.axis_2d_);
-    return result;
-  }
-  if (!full_matrix_) {
-    Transform result = transform;
-    result.PostConcat(axis_2d_);
-    return result;
-  }
-  Transform result(Matrix4F::kUninitialized);
-  result.matrix_.SetConcat(matrix_, transform.matrix_);
-  return result;
+void Transform::ConcatTransform(const Transform& transform) {
+  matrix_.postConcat(transform.matrix_);
 }
 
-void Transform::PreConcat(const AxisTransform2d& transform) {
-  Translate(transform.translation());
-  Scale(transform.scale().x(), transform.scale().y());
-}
-
-void Transform::PostConcat(const AxisTransform2d& transform) {
-  PostScale(transform.scale().x(), transform.scale().y());
-  PostTranslate(transform.translation());
-}
-
-bool Transform::IsApproximatelyIdentityOrTranslation(double tolerance) const {
+bool Transform::IsApproximatelyIdentityOrTranslation(SkScalar tolerance) const {
   CR_DCHECK(tolerance >= 0);
-  if (!full_matrix_) {
-    return ApproximatelyOne(axis_2d_.scale().x(), tolerance) &&
-           ApproximatelyOne(axis_2d_.scale().y(), tolerance);
-  }
-
-  if (!ApproximatelyOne(matrix_.rc(0, 0), tolerance) ||
-      !ApproximatelyZero(matrix_.rc(1, 0), tolerance) ||
-      !ApproximatelyZero(matrix_.rc(2, 0), tolerance) ||
-      !ApproximatelyZero(matrix_.rc(0, 1), tolerance) ||
-      !ApproximatelyOne(matrix_.rc(1, 1), tolerance) ||
-      !ApproximatelyZero(matrix_.rc(2, 1), tolerance) ||
-      !ApproximatelyZero(matrix_.rc(0, 2), tolerance) ||
-      !ApproximatelyZero(matrix_.rc(1, 2), tolerance) ||
-      !ApproximatelyOne(matrix_.rc(2, 2), tolerance)) {
-    return false;
-  }
-
-  // Check perspective components more strictly by using the smaller of float
-  // epsilon and |tolerance|.
-  const double perspective_tolerance = std::min(kEpsilon, tolerance);
-  return ApproximatelyZero(matrix_.rc(3, 0), perspective_tolerance) &&
-         ApproximatelyZero(matrix_.rc(3, 1), perspective_tolerance) &&
-         ApproximatelyZero(matrix_.rc(3, 2), perspective_tolerance) &&
-         ApproximatelyOne(matrix_.rc(3, 3), perspective_tolerance);
-}
-
-bool Transform::IsApproximatelyIdentityOrIntegerTranslation(
-    double tolerance) const {
-  if (!IsApproximatelyIdentityOrTranslation(tolerance))
-    return false;
-
-  if (!full_matrix_) {
-    for (float t : {axis_2d_.translation().x(), axis_2d_.translation().y()}) {
-      if (!cr::IsValueInRangeForNumericType<int>(t) ||
-          std::abs(std::round(t) - t) > tolerance)
-        return false;
-    }
-    return true;
-  }
-
-  for (double t : {matrix_.rc(0, 3), matrix_.rc(1, 3), matrix_.rc(2, 3)}) {
-    if (!cr::IsValueInRangeForNumericType<int>(t) ||
-        std::abs(std::round(t) - t) > tolerance)
-      return false;
-  }
-  return true;
-}
-
-bool Transform::Is2dProportionalUpscaleAndOr2dTranslation() const {
-  if (!full_matrix_) {
-    return axis_2d_.scale().x() >= 1 &&
-           axis_2d_.scale().x() == axis_2d_.scale().y();
-  }
-
-  return matrix_.IsScaleOrTranslation() &&
-         // Check proportional upscale.
-         matrix_.rc(0, 0) >= 1 && matrix_.rc(1, 1) == matrix_.rc(0, 0) &&
-         // Check no scale/translation in z axis.
-         matrix_.rc(2, 2) == 1 && matrix_.rc(2, 3) == 0;
+  return
+      ApproximatelyOne(matrix_.get(0, 0), tolerance) &&
+      ApproximatelyZero(matrix_.get(1, 0), tolerance) &&
+      ApproximatelyZero(matrix_.get(2, 0), tolerance) &&
+      matrix_.get(3, 0) == 0 &&
+      ApproximatelyZero(matrix_.get(0, 1), tolerance) &&
+      ApproximatelyOne(matrix_.get(1, 1), tolerance) &&
+      ApproximatelyZero(matrix_.get(2, 1), tolerance) &&
+      matrix_.get(3, 1) == 0 &&
+      ApproximatelyZero(matrix_.get(0, 2), tolerance) &&
+      ApproximatelyZero(matrix_.get(1, 2), tolerance) &&
+      ApproximatelyOne(matrix_.get(2, 2), tolerance) &&
+      matrix_.get(3, 2) == 0 &&
+      matrix_.get(3, 3) == 1;
 }
 
 bool Transform::IsIdentityOrIntegerTranslation() const {
   if (!IsIdentityOrTranslation())
     return false;
 
-  if (!full_matrix_) {
-    for (float t : {axis_2d_.translation().x(), axis_2d_.translation().y()}) {
-      if (!cr::IsValueInRangeForNumericType<int>(t) ||
-          static_cast<int>(t) != t) {
-        return false;
-      }
-    }
-    return true;
-  }
+  float t[] = {matrix_.get(0, 3), matrix_.get(1, 3), matrix_.get(2, 3)};
+  bool no_fractional_translation =
+      cr::IsValueInRangeForNumericType<int>(t[0]) &&
+      cr::IsValueInRangeForNumericType<int>(t[1]) &&
+      cr::IsValueInRangeForNumericType<int>(t[2]) &&
+      static_cast<int>(t[0]) == t[0] && static_cast<int>(t[1]) == t[1] &&
+      static_cast<int>(t[2]) == t[2];
 
-  for (double t : {matrix_.rc(0, 3), matrix_.rc(1, 3), matrix_.rc(2, 3)}) {
-    if (!cr::IsValueInRangeForNumericType<int>(t) || static_cast<int>(t) != t)
-      return false;
-  }
-  return true;
-}
-
-bool Transform::IsIdentityOrInteger2dTranslation() const {
-  return IsIdentityOrIntegerTranslation() && rc(2, 3) == 0;
-}
-
-bool Transform::Creates3d() const {
-  if (!full_matrix_) {
-    return false;
-  }
-  return matrix_.rc(2, 0) != 0 || matrix_.rc(2, 1) != 0 ||
-         matrix_.rc(2, 3) != 0;
+  return no_fractional_translation;
 }
 
 bool Transform::IsBackFaceVisible() const {
-  if (!full_matrix_) {
-    return false;
-  }
-
   // Compute whether a layer with a forward-facing normal of (0, 0, 1, 0)
   // would have its back face visible after applying the transform.
+  if (matrix_.isIdentity())
+    return false;
+
   // This is done by transforming the normal and seeing if the resulting z
   // value is positive or negative. However, note that transforming a normal
   // actually requires using the inverse-transpose of the original transform.
@@ -438,7 +297,7 @@ bool Transform::IsBackFaceVisible() const {
   //   http://en.wikipedia.org/wiki/Invertible_matrix#Analytic_solution
   //
 
-  double determinant = matrix_.Determinant();
+  double determinant = matrix_.determinant();
 
   // If matrix was not invertible, then just assume back face is not visible.
   if (determinant == 0)
@@ -446,25 +305,30 @@ bool Transform::IsBackFaceVisible() const {
 
   // Compute the cofactor of the 3rd row, 3rd column.
   double cofactor_part_1 =
-      matrix_.rc(0, 0) * matrix_.rc(1, 1) * matrix_.rc(3, 3);
+      matrix_.get(0, 0) * matrix_.get(1, 1) * matrix_.get(3, 3);
 
   double cofactor_part_2 =
-      matrix_.rc(0, 1) * matrix_.rc(1, 3) * matrix_.rc(3, 0);
+      matrix_.get(0, 1) * matrix_.get(1, 3) * matrix_.get(3, 0);
 
   double cofactor_part_3 =
-      matrix_.rc(0, 3) * matrix_.rc(1, 0) * matrix_.rc(3, 1);
+      matrix_.get(0, 3) * matrix_.get(1, 0) * matrix_.get(3, 1);
 
   double cofactor_part_4 =
-      matrix_.rc(0, 0) * matrix_.rc(1, 3) * matrix_.rc(3, 1);
+      matrix_.get(0, 0) * matrix_.get(1, 3) * matrix_.get(3, 1);
 
   double cofactor_part_5 =
-      matrix_.rc(0, 1) * matrix_.rc(1, 0) * matrix_.rc(3, 3);
+      matrix_.get(0, 1) * matrix_.get(1, 0) * matrix_.get(3, 3);
 
   double cofactor_part_6 =
-      matrix_.rc(0, 3) * matrix_.rc(1, 1) * matrix_.rc(3, 0);
+      matrix_.get(0, 3) * matrix_.get(1, 1) * matrix_.get(3, 0);
 
-  double cofactor33 = cofactor_part_1 + cofactor_part_2 + cofactor_part_3 -
-                      cofactor_part_4 - cofactor_part_5 - cofactor_part_6;
+  double cofactor33 =
+      cofactor_part_1 +
+      cofactor_part_2 +
+      cofactor_part_3 -
+      cofactor_part_4 -
+      cofactor_part_5 -
+      cofactor_part_6;
 
   // Technically the transformed z component is cofactor33 / determinant.  But
   // we can avoid the costly division because we only care about the resulting
@@ -473,76 +337,17 @@ bool Transform::IsBackFaceVisible() const {
 }
 
 bool Transform::GetInverse(Transform* transform) const {
-  if (!full_matrix_) {
-    transform->full_matrix_ = false;
-    if (axis_2d_.IsInvertible()) {
-      transform->axis_2d_ = axis_2d_;
-      transform->axis_2d_.Invert();
-      return true;
-    }
-    transform->axis_2d_ = AxisTransform2d();
+  if (!matrix_.invert(&transform->matrix_)) {
+    // Initialize the return value to identity if this matrix turned
+    // out to be un-invertible.
+    transform->MakeIdentity();
     return false;
   }
 
-  if (matrix_.GetInverse(transform->matrix_)) {
-    transform->full_matrix_ = true;
-    return true;
-  }
-
-  // Initialize the return value to identity if this matrix turned
-  // out to be un-invertible.
-  transform->MakeIdentity();
-  return false;
-}
-
-Transform Transform::GetCheckedInverse() const {
-  Transform inverse;
-  if (!GetInverse(&inverse))
-    CR_NOTREACHED() << ToString() << " is not invertible";
-  return inverse;
-}
-
-Transform Transform::InverseOrIdentity() const {
-  Transform inverse;
-  bool invertible = GetInverse(&inverse);
-  CR_DCHECK(invertible || inverse.IsIdentity());
-  return inverse;
-}
-
-bool Transform::Preserves2dAffine() const {
-  if (!full_matrix_) {
-    return true;
-  }
-
-  // The first two columns of row 2 allow the x and y axis to skew in the z
-  // direction. We also check there is no z translation. We can ignore the z
-  // scale component since it cannot affect coordinates where z = 0.
-  const bool is_flat_ignore_z = gfx::Vector4dF(matrix_.rc(2, 0),
-                                               matrix_.rc(2, 1),
-                                               0,
-                                               matrix_.rc(2, 3)).IsZero();
-
-  // We must ensure that the x and y perspective components are 0 since they can
-  // affect the affine-ness of the x/y plane. We can ignore the z perspective
-  // component since it does not affect values on the x/y plane.
-  const bool has_no_perspective_ignore_z =
-      gfx::Vector4dF(matrix_.rc(3, 0),
-                     matrix_.rc(3, 1),
-                     0,
-                     matrix_.rc(3, 3)) == gfx::Vector4dF(0, 0, 0, 1);
-
-  if (is_flat_ignore_z && has_no_perspective_ignore_z) {
-    return true;
-  }
-
-  return false;
+  return true;
 }
 
 bool Transform::Preserves2dAxisAlignment() const {
-  if (!full_matrix_) {
-    return true;
-  }
-
   // Check whether an axis aligned 2-dimensional rect would remain axis-aligned
   // after being transformed by this matrix (and implicitly projected by
   // dropping any non-zero z-values).
@@ -561,269 +366,155 @@ bool Transform::Preserves2dAxisAlignment() const {
   // values: The current implementation conservatively assumes that axis
   // alignment is not preserved.
 
-  bool has_x_or_y_perspective = matrix_.rc(3, 0) != 0 || matrix_.rc(3, 1) != 0;
+  bool has_x_or_y_perspective =
+      matrix_.get(3, 0) != 0 || matrix_.get(3, 1) != 0;
 
   int num_non_zero_in_row_0 = 0;
   int num_non_zero_in_row_1 = 0;
   int num_non_zero_in_col_0 = 0;
   int num_non_zero_in_col_1 = 0;
 
-  if (std::abs(matrix_.rc(0, 0)) > kEpsilon) {
+  if (std::abs(matrix_.get(0, 0)) > kEpsilon) {
     num_non_zero_in_row_0++;
     num_non_zero_in_col_0++;
   }
 
-  if (std::abs(matrix_.rc(0, 1)) > kEpsilon) {
+  if (std::abs(matrix_.get(0, 1)) > kEpsilon) {
     num_non_zero_in_row_0++;
     num_non_zero_in_col_1++;
   }
 
-  if (std::abs(matrix_.rc(1, 0)) > kEpsilon) {
+  if (std::abs(matrix_.get(1, 0)) > kEpsilon) {
     num_non_zero_in_row_1++;
     num_non_zero_in_col_0++;
   }
 
-  if (std::abs(matrix_.rc(1, 1)) > kEpsilon) {
+  if (std::abs(matrix_.get(1, 1)) > kEpsilon) {
     num_non_zero_in_row_1++;
     num_non_zero_in_col_1++;
   }
 
-  return num_non_zero_in_row_0 <= 1 && num_non_zero_in_row_1 <= 1 &&
-         num_non_zero_in_col_0 <= 1 && num_non_zero_in_col_1 <= 1 &&
-         !has_x_or_y_perspective;
-}
-
-bool Transform::NonDegeneratePreserves2dAxisAlignment() const {
-  if (!full_matrix_) {
-    return axis_2d_.scale().x() > kEpsilon && axis_2d_.scale().y() > kEpsilon;
-  }
-
-  // See comments above for Preserves2dAxisAlignment.
-
-  // This function differs from it by requiring:
-  //  (1) that there are exactly two nonzero values on a diagonal in
-  //      the upper left 2x2 submatrix, and
-  //  (2) that the w perspective value is positive.
-
-  bool has_x_or_y_perspective = matrix_.rc(3, 0) != 0 || matrix_.rc(3, 1) != 0;
-  bool positive_w_perspective = matrix_.rc(3, 3) > kEpsilon;
-
-  bool have_0_0 = std::abs(matrix_.rc(0, 0)) > kEpsilon;
-  bool have_0_1 = std::abs(matrix_.rc(0, 1)) > kEpsilon;
-  bool have_1_0 = std::abs(matrix_.rc(1, 0)) > kEpsilon;
-  bool have_1_1 = std::abs(matrix_.rc(1, 1)) > kEpsilon;
-
-  return have_0_0 == have_1_1 && have_0_1 == have_1_0 && have_0_0 != have_0_1 &&
-         !has_x_or_y_perspective && positive_w_perspective;
+  return
+      num_non_zero_in_row_0 <= 1 &&
+      num_non_zero_in_row_1 <= 1 &&
+      num_non_zero_in_col_0 <= 1 &&
+      num_non_zero_in_col_1 <= 1 &&
+      !has_x_or_y_perspective;
 }
 
 void Transform::Transpose() {
-  if (!IsScale2d())
-    EnsureFullMatrix().Transpose();
+  matrix_.transpose();
 }
 
-void Transform::ApplyTransformOrigin(float x, float y, float z) {
-  PostTranslate3d(x, y, z);
-  Translate3d(-x, -y, -z);
-}
-
-void Transform::Zoom(float zoom_factor) {
-  if (!full_matrix_) {
-    axis_2d_.Zoom(zoom_factor);
-  } else {
-    matrix_.Zoom(zoom_factor);
-  }
-}
-
-void Transform::Flatten() {
-  if (full_matrix_) {
-    matrix_.Flatten();
-  }
-  CR_DCHECK(IsFlat());
+void Transform::FlattenTo2d() {
+  float tmp[16];
+  matrix_.asColMajorf(tmp);
+  tmp[2] = 0.0;
+  tmp[6] = 0.0;
+  tmp[8] = 0.0;
+  tmp[9] = 0.0;
+  tmp[10] = 1.0;
+  tmp[11] = 0.0;
+  tmp[14] = 0.0;
+  matrix_.setColMajorf(tmp);
 }
 
 bool Transform::IsFlat() const {
-  if (!full_matrix_) {
-    return true;
-  }
-  return matrix_.IsFlat();
-}
-
-bool Transform::Is2dTransform() const {
-  if (!full_matrix_) {
-    return true;
-  }
-  return matrix_.Is2dTransform();
+  return matrix_.get(2, 0) == 0.0 && matrix_.get(2, 1) == 0.0 &&
+         matrix_.get(0, 2) == 0.0 && matrix_.get(1, 2) == 0.0 &&
+         matrix_.get(2, 2) == 1.0 && matrix_.get(3, 2) == 0.0 &&
+         matrix_.get(2, 3) == 0.0;
 }
 
 Vector2dF Transform::To2dTranslation() const {
-  if (!full_matrix_) {
-    return Vector2dF(ClampFloatGeometry(axis_2d_.translation().x()),
-                     ClampFloatGeometry(axis_2d_.translation().y()));
-  }
-  return Vector2dF(ClampFloatGeometry(matrix_.rc(0, 3)),
-                   ClampFloatGeometry(matrix_.rc(1, 3)));
+  return gfx::Vector2dF(SkScalarToFloat(matrix_.get(0, 3)),
+                        SkScalarToFloat(matrix_.get(1, 3)));
 }
 
-Vector3dF Transform::To3dTranslation() const {
-  if (!full_matrix_) {
-    return Vector3dF(ClampFloatGeometry(axis_2d_.translation().x()),
-                     ClampFloatGeometry(axis_2d_.translation().y()), 0);
-  }
-  return Vector3dF(ClampFloatGeometry(matrix_.rc(0, 3)),
-                   ClampFloatGeometry(matrix_.rc(1, 3)),
-                   ClampFloatGeometry(matrix_.rc(2, 3)));
+void Transform::TransformPoint(Point* point) const {
+  CR_DCHECK(point);
+  TransformPointInternal(matrix_, point);
 }
 
-Vector2dF Transform::To2dScale() const {
-  if (!full_matrix_) {
-    return Vector2dF(ClampFloatGeometry(axis_2d_.scale().x()),
-                     ClampFloatGeometry(axis_2d_.scale().y()));
-  }
-  return Vector2dF(ClampFloatGeometry(matrix_.rc(0, 0)),
-                   ClampFloatGeometry(matrix_.rc(1, 1)));
+void Transform::TransformPoint(PointF* point) const {
+  CR_DCHECK(point);
+  TransformPointInternal(matrix_, point);
 }
 
-Point Transform::MapPoint(const Point& point) const {
-  return gfx::ToRoundedPoint(MapPoint(gfx::PointF(point)));
+void Transform::TransformPoint(Point3F* point) const {
+  CR_DCHECK(point);
+  TransformPointInternal(matrix_, point);
 }
 
-PointF Transform::MapPoint(const PointF& point) const {
-  if (!full_matrix_) {
-    return axis_2d_.MapPoint(point);
-  }
-  return MapPointInternal(matrix_, point);
-}
-
-Point3F Transform::MapPoint(const Point3F& point) const {
-  if (!full_matrix_) {
-    PointF result = axis_2d_.MapPoint(point.AsPointF());
-    return Point3F(result.x(), result.y(), ClampFloatGeometry(point.z()));
-  }
-  return MapPointInternal(matrix_, point);
-}
-
-Vector3dF Transform::MapVector(const Vector3dF& vector) const {
-  if (!full_matrix_) {
-    return Vector3dF(ClampFloatGeometry(vector.x() * axis_2d_.scale().x()),
-                     ClampFloatGeometry(vector.y() * axis_2d_.scale().y()),
-                     ClampFloatGeometry(vector.z()));
-  }
-  Vector4dF p (vector.x(), vector.y(), vector.z(), 0);
-  matrix_.MapVector4(p);
-  return Vector3dF(ClampFloatGeometry(p.x()), ClampFloatGeometry(p.y()),
-                   ClampFloatGeometry(p.z()));
-}
-
-void Transform::TransformVector4(float vector[4]) const {
+void Transform::TransformVector(Vector3dF* vector) const {
   CR_DCHECK(vector);
-  if (!full_matrix_) {
-    vector[0] = vector[0] * axis_2d_.scale().x() +
-                vector[3] * axis_2d_.translation().x();
-    vector[1] = vector[1] * axis_2d_.scale().y() +
-                vector[3] * axis_2d_.translation().y();
-    for (int i = 0; i < 4; i++)
-      vector[i] = ClampFloatGeometry(vector[i]);
-  } else {
-    Vector4dF v(vector[0], vector[1], vector[2], vector[3]);
-    matrix_.MapVector4(v);
-    ///for (int i = 0; i < 4; i++)
-    vector[0] = ClampFloatGeometry(v.x());
-    vector[1] = ClampFloatGeometry(v.y());
-    vector[2] = ClampFloatGeometry(v.z());
-    vector[3] = ClampFloatGeometry(v.w());
-  }
+  TransformVectorInternal(matrix_, vector);
 }
 
-cr::Optional<PointF> Transform::InverseMapPoint(const PointF& point) const {
-  if (!full_matrix_) {
-    if (!axis_2d_.IsInvertible())
-      return cr::nullopt;
-    return axis_2d_.InverseMapPoint(point);
-  }
-  Matrix4F inverse(Matrix4F::kUninitialized);
-  if (!matrix_.GetInverse(inverse))
-    return cr::nullopt;
-  return MapPointInternal(inverse, point);
+bool Transform::TransformPointReverse(Point* point) const {
+  CR_DCHECK(point);
+
+  // TODO(sad): Try to avoid trying to invert the matrix.
+  SkMatrix44 inverse(SkMatrix44::kUninitialized_Constructor);
+  if (!matrix_.invert(&inverse))
+    return false;
+
+  TransformPointInternal(inverse, point);
+  return true;
 }
 
-cr::Optional<Point> Transform::InverseMapPoint(const Point& point) const {
-  if (cr::Optional<PointF> point_f = InverseMapPoint(PointF(point))) {
-    return ToRoundedPoint(*point_f);
-  }
-  return cr::nullopt;
+bool Transform::TransformPointReverse(Point3F* point) const {
+  CR_DCHECK(point);
+
+  // TODO(sad): Try to avoid trying to invert the matrix.
+  SkMatrix44 inverse(SkMatrix44::kUninitialized_Constructor);
+  if (!matrix_.invert(&inverse))
+    return false;
+
+  TransformPointInternal(inverse, point);
+  return true;
 }
 
-cr::Optional<Point3F> Transform::InverseMapPoint(const Point3F& point) const {
-  if (!full_matrix_) {
-    if (!axis_2d_.IsInvertible())
-      return cr::nullopt;
-    PointF result = axis_2d_.InverseMapPoint(point.AsPointF());
-    return Point3F(result.x(), result.y(), ClampFloatGeometry(point.z()));
-  }
-  Matrix4F inverse(Matrix4F::kUninitialized);
-  if (!matrix_.GetInverse(inverse))
-    return cr::nullopt;
-  return cr::make_optional(MapPointInternal(inverse, point));
+void Transform::TransformRect(RectF* rect) const {
+  if (matrix_.isIdentity())
+    return;
+
+  SkRect src = RectFToSkRect(*rect);
+  SkMatrix(matrix_).mapRect(&src);
+  *rect = SkRectToRectF(src);
 }
 
-RectF Transform::MapRect(const RectF& rect) const {
-  if (IsIdentity())
-    return rect;
+bool Transform::TransformRectReverse(RectF* rect) const {
+  if (matrix_.isIdentity())
+    return true;
 
-  if (!full_matrix_) {
-    if (axis_2d_.scale().x() >= 0 && axis_2d_.scale().y() >= 0) {
-      return axis_2d_.MapRect(rect);
-    }
-  }
+  SkMatrix44 inverse(SkMatrix44::kUninitialized_Constructor);
+  if (!matrix_.invert(&inverse))
+    return false;
 
-  return MapQuad(QuadF(rect)).BoundingBox();
+  SkRect src = RectFToSkRect(*rect);
+  SkMatrix(inverse).mapRect(&src);
+  *rect = SkRectToRectF(src);
+  return true;
 }
 
-Rect Transform::MapRect(const Rect& rect) const {
-  if (IsIdentity())
-    return rect;
-
-  return ToEnclosingRect(MapRect(RectF(rect)));
+bool Transform::TransformRRectF(RRectF* rrect) const {
+  SkRRect result;
+  if (!SkRRect(*rrect).transform(SkMatrix(matrix_), &result))
+    return false;
+  *rrect = gfx::RRectF(result);
+  return true;
 }
 
-cr::Optional<RectF> Transform::InverseMapRect(const RectF& rect) const {
-  if (IsIdentity())
-    return rect;
-
-  if (!full_matrix_) {
-    if (!axis_2d_.IsInvertible())
-      return cr::nullopt;
-    if (axis_2d_.scale().x() > 0 && axis_2d_.scale().y() > 0)
-      return axis_2d_.InverseMapRect(rect);
-  }
-
-  Transform inverse;
-  if (!GetInverse(&inverse))
-    return cr::nullopt;
-
-  return inverse.MapQuad(QuadF(rect)).BoundingBox();
-}
-
-cr::Optional<Rect> Transform::InverseMapRect(const Rect& rect) const {
-  if (IsIdentity())
-    return rect;
-
-  if (cr::Optional<RectF> mapped = InverseMapRect(RectF(rect))) {
-    return ToEnclosingRect(mapped.value());
-  }
-  return cr::nullopt;
-}
-
-BoxF Transform::MapBox(const BoxF& box) const {
+void Transform::TransformBox(BoxF* box) const {
   BoxF bounds;
   bool first_point = true;
   for (int corner = 0; corner < 8; ++corner) {
-    gfx::Point3F point = box.origin();
-    point += gfx::Vector3dF(corner & 1 ? box.width() : 0.f,
-                            corner & 2 ? box.height() : 0.f,
-                            corner & 4 ? box.depth() : 0.f);
-    point = MapPoint(point);
+    gfx::Point3F point = box->origin();
+    point += gfx::Vector3dF(corner & 1 ? box->width() : 0.f,
+                            corner & 2 ? box->height() : 0.f,
+                            corner & 4 ? box->depth() : 0.f);
+    TransformPoint(&point);
     if (first_point) {
       bounds.set_origin(point);
       first_point = false;
@@ -831,307 +522,130 @@ BoxF Transform::MapBox(const BoxF& box) const {
       bounds.ExpandTo(point);
     }
   }
-  return bounds;
+  *box = bounds;
 }
 
-QuadF Transform::MapQuad(const QuadF& quad) const {
-  return QuadF(MapPoint(quad.p1()), MapPoint(quad.p2()), MapPoint(quad.p3()),
-               MapPoint(quad.p4()));
-}
-
-PointF Transform::ProjectPoint(const PointF& point, bool* clamped) const {
-  // This is basically ray-tracing. We have a point in the destination plane
-  // with z=0, and we cast a ray parallel to the z-axis from that point to find
-  // the z-position at which it intersects the z=0 plane with the transform
-  // applied. Once we have that point we apply the inverse transform to find
-  // the corresponding point in the source space.
-  //
-  // Given a plane with normal Pn, and a ray starting at point R0 and with
-  // direction defined by the vector Rd, we can find the intersection point as
-  // a distance d from R0 in units of Rd by:
-  //
-  // d = -dot (Pn', R0) / dot (Pn', Rd)
-
-  if (clamped)
-    *clamped = false;
-
-  if (!full_matrix_) {
-    return axis_2d_.MapPoint(point);
-  }
-
-  if (!std::isnormal(matrix_.rc(2, 2))) {
-    // In this case, the projection plane is parallel to the ray we are trying
-    // to trace, and there is no well-defined value for the projection.
-    if (clamped)
-      *clamped = true;
-    return gfx::PointF();
-  }
-
-  double x = point.x();
-  double y = point.y();
-  double z = -(matrix_.rc(2, 0) * x + matrix_.rc(2, 1) * y + matrix_.rc(2, 3)) /
-             matrix_.rc(2, 2);
-  if (!std::isfinite(z)) {
-    // Same as the previous condition.
-    if (clamped)
-      *clamped = true;
-    return gfx::PointF();
-  }
-
-  Vector4dF v(x, y, z, 1);
-  matrix_.MapVector4(v);
-
-  if (v.z() <= 0) {
-    // To represent infinity and ensure the bounding box of ProjectQuad() is
-    // accurate in both float, int and blink::LayoutUnit, we use a large but
-    // not-too-large number here when clamping.
-    constexpr double kBigNumber = 1 << (std::numeric_limits<float>::digits - 1);
-    if (clamped)
-      *clamped = true;
-    return PointF(static_cast<float>(std::copysign(kBigNumber, v.x())),
-                  static_cast<float>(std::copysign(kBigNumber, v.y())));
-  }
-
-  if (v.w() != 1) {
-    v.set_x(v.x() / v.w());
-    v.set_y(v.y() / v.w());
-  }
-  return PointF(ClampFloatGeometry(v.x()), ClampFloatGeometry(v.y()));
-}
-
-QuadF Transform::ProjectQuad(const QuadF& quad) const {
-  bool clamped1 = false;
-  bool clamped2 = false;
-  bool clamped3 = false;
-  bool clamped4 = false;
-
-  QuadF projected_quad(
-      ProjectPoint(quad.p1(), &clamped1), ProjectPoint(quad.p2(), &clamped2),
-      ProjectPoint(quad.p3(), &clamped3), ProjectPoint(quad.p4(), &clamped4));
-
-  // If all points on the quad had w < 0, then the entire quad would not be
-  // visible to the projected surface.
-  if (clamped1 && clamped2 && clamped3 && clamped4)
-    return QuadF();
-
-  return projected_quad;
-}
-
-cr::Optional<DecomposedTransform> Transform::Decompose() const {
-  if (!full_matrix_) {
-    // Consider letting 2d decomposition always succeed.
-    if (!axis_2d_.IsInvertible())
-      return cr::nullopt;
-    return axis_2d_.Decompose();
-  }
-  return matrix_.Decompose();
-}
-
-// static
-Transform Transform::Compose(const DecomposedTransform& decomp) {
-  Transform result;
-
-  for (int i = 0; i < 3; i++) {
-    if (decomp.perspective[i] != 0)
-      result.set_rc(3, i, decomp.perspective[i]);
-  }
-  if (decomp.perspective[3] != 1)
-    result.set_rc(3, 3, decomp.perspective[3]);
-
-  result.Translate3d(static_cast<float>(decomp.translate[0]), 
-                     static_cast<float>(decomp.translate[1]),
-                     static_cast<float>(decomp.translate[2]));
-
-  result.PreConcat(Transform(decomp.quaternion));
-
-  if (decomp.skew[0] || decomp.skew[1] || decomp.skew[2])
-    result.EnsureFullMatrix().ApplyDecomposedSkews(decomp.skew);
-
-  result.Scale3d(static_cast<float>(decomp.scale[0]), 
-                 static_cast<float>(decomp.scale[1]), 
-                 static_cast<float>(decomp.scale[2]));
-
-  return result;
+bool Transform::TransformBoxReverse(BoxF* box) const {
+  gfx::Transform inverse = *this;
+  if (!GetInverse(&inverse))
+    return false;
+  inverse.TransformBox(box);
+  return true;
 }
 
 bool Transform::Blend(const Transform& from, double progress) {
-  cr::Optional<DecomposedTransform> to_decomp = Decompose();
-  if (!to_decomp)
-    return false;
-  cr::Optional<DecomposedTransform> from_decomp = from.Decompose();
-  if (!from_decomp)
+  DecomposedTransform to_decomp;
+  DecomposedTransform from_decomp;
+  if (!DecomposeTransform(&to_decomp, *this) ||
+      !DecomposeTransform(&from_decomp, from))
     return false;
 
-  *to_decomp = BlendDecomposedTransforms(*to_decomp, *from_decomp, progress);
+  to_decomp = BlendDecomposedTransforms(to_decomp, from_decomp, progress);
 
-  *this = Compose(*to_decomp);
+  matrix_ = ComposeTransform(to_decomp).matrix();
   return true;
 }
 
-bool Transform::Accumulate(const Transform& other) {
-  cr::Optional<DecomposedTransform> this_decomp = Decompose();
-  if (!this_decomp)
-    return false;
-  cr::Optional<DecomposedTransform> other_decomp = other.Decompose();
-  if (!other_decomp)
-    return false;
-
-  *this_decomp = AccumulateDecomposedTransforms(*this_decomp, *other_decomp);
-
-  *this = Compose(*this_decomp);
-  return true;
+void Transform::RoundTranslationComponents() {
+  // TODO(pkasting): Use SkScalarRound() when
+  // https://bugs.chromium.org/p/skia/issues/detail?id=6852 is fixed.
+  matrix_.set(0, 3, std::round(matrix_.get(0, 3)));
+  matrix_.set(1, 3, std::round(matrix_.get(1, 3)));
 }
 
-void Transform::Round2dTranslationComponents() {
-  if (!full_matrix_) {
-    axis_2d_ = AxisTransform2d::FromScaleAndTranslation(
-        axis_2d_.scale(), Vector2dF(std::round(axis_2d_.translation().x()),
-                                    std::round(axis_2d_.translation().y())));
+void Transform::TransformPointInternal(const SkMatrix44& xform,
+                                       Point3F* point) const {
+  if (xform.isIdentity())
+    return;
+
+  SkScalar p[4] = {point->x(), point->y(), point->z(), 1};
+
+  xform.mapScalars(p);
+
+  if (p[3] != SK_Scalar1 && p[3] != 0.f) {
+    float w_inverse = SK_Scalar1 / p[3];
+    point->SetPoint(p[0] * w_inverse, p[1] * w_inverse, p[2] * w_inverse);
   } else {
-    matrix_.set_rc(0, 3, std::round(matrix_.rc(0, 3)));
-    matrix_.set_rc(1, 3, std::round(matrix_.rc(1, 3)));
+    point->SetPoint(p[0], p[1], p[2]);
   }
 }
 
-void Transform::Floor2dTranslationComponents() {
-  if (!full_matrix_) {
-    axis_2d_ = AxisTransform2d::FromScaleAndTranslation(
-        axis_2d_.scale(), Vector2dF(std::floor(axis_2d_.translation().x()),
-                                    std::floor(axis_2d_.translation().y())));
-  } else {
-    matrix_.set_rc(0, 3, std::floor(matrix_.rc(0, 3)));
-    matrix_.set_rc(1, 3, std::floor(matrix_.rc(1, 3)));
-  }
+void Transform::TransformVectorInternal(const SkMatrix44& xform,
+                                        Vector3dF* vector) const {
+  if (xform.isIdentity())
+    return;
+
+  SkScalar p[4] = {vector->x(), vector->y(), vector->z(), 0};
+
+  xform.mapScalars(p);
+
+  vector->set_x(p[0]);
+  vector->set_y(p[1]);
+  vector->set_z(p[2]);
 }
 
-void Transform::RoundToIdentityOrIntegerTranslation() {
-  if (!full_matrix_) {
-    axis_2d_ = AxisTransform2d::FromScaleAndTranslation(
-        Vector2dF(1, 1), Vector2dF(std::round(axis_2d_.translation().x()),
-                                   std::round(axis_2d_.translation().y())));
-  } else {
-    matrix_ =
-        Matrix4F(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0,  // col0-2
-                 std::round(matrix_.rc(0, 3)),        // col3
-                 std::round(matrix_.rc(1, 3)), std::round(matrix_.rc(2, 3)), 1);
-  }
+void Transform::TransformPointInternal(const SkMatrix44& xform,
+                                       PointF* point) const {
+  if (xform.isIdentity())
+    return;
+
+  SkScalar p[4] = {SkIntToScalar(point->x()), SkIntToScalar(point->y()), 0, 1};
+
+  xform.mapScalars(p);
+
+  point->SetPoint(p[0], p[1]);
 }
 
-PointF Transform::MapPointInternal(const Matrix4F& matrix,
-                                   const PointF& point) const {
-  CR_DCHECK(full_matrix_);
-
-  double p[2] = {point.x(), point.y()};
-
-  double w = matrix.MapVector2(p);
-
-  if (w != 1.0 && std::isnormal(w)) {
-    double w_inverse = 1.0 / w;
-    return PointF(ClampFloatGeometry(p[0] * w_inverse),
-                  ClampFloatGeometry(p[1] * w_inverse));
-  }
-  return PointF(ClampFloatGeometry(p[0]), ClampFloatGeometry(p[1]));
+void Transform::TransformPointInternal(const SkMatrix44& xform,
+                                       Point* point) const {
+  PointF point_float(*point);
+  TransformPointInternal(xform, &point_float);
+  *point = ToRoundedPoint(point_float);
 }
 
-Point3F Transform::MapPointInternal(const Matrix4F& matrix,
-                                    const Point3F& point) const {
-  CR_DCHECK(full_matrix_);
+bool Transform::ApproximatelyEqual(const gfx::Transform& transform) const {
+  static const float component_tolerance = 0.1f;
 
-  Vector4dF p(point.x(), point.y(), point.z(), 1);
-
-  matrix.MapVector4(p);
-
-  if (p.w() != 1.0 && std::isnormal(p.w())) {
-    double w_inverse = 1.0 / p.w();
-    return Point3F(ClampFloatGeometry(p.x() * w_inverse),
-                   ClampFloatGeometry(p.y() * w_inverse),
-                   ClampFloatGeometry(p.z() * w_inverse));
-  }
-  return Point3F(ClampFloatGeometry(p.x()), ClampFloatGeometry(p.y()),
-                 ClampFloatGeometry(p.z()));
-}
-
-bool Transform::ApproximatelyEqual(const gfx::Transform& transform,
-                                   float abs_translation_tolerance,
-                                   float abs_other_tolerance,
-                                   float rel_scale_tolerance) const {
-  if (*this == transform)
-    return true;
-
-  if (abs_translation_tolerance == 0 && abs_other_tolerance == 0)
-    return false;
-
-  auto approximately_equal = [abs_other_tolerance](float a, float b) {
-    return std::abs(a - b) <= abs_other_tolerance;
-  };
-  auto translation_approximately_equal = [abs_translation_tolerance](float a,
-                                                                     float b) {
-    return std::abs(a - b) <= abs_translation_tolerance;
-  };
-  auto scale_approximately_equal = [abs_other_tolerance, rel_scale_tolerance](
-                                       float a, float b) {
-    float diff = std::abs(a - b);
-    return diff <= abs_other_tolerance &&
-           (rel_scale_tolerance == 0 ||
-            diff <= (std::abs(a) + std::abs(b)) * rel_scale_tolerance);
-  };
-
-  if (!full_matrix_ && !transform.full_matrix_) {
-    return scale_approximately_equal(axis_2d_.scale().x(),
-                                     transform.axis_2d_.scale().x()) &&
-           scale_approximately_equal(axis_2d_.scale().y(),
-                                     transform.axis_2d_.scale().y()) &&
-           translation_approximately_equal(
-               axis_2d_.translation().x(),
-               transform.axis_2d_.translation().x()) &&
-           translation_approximately_equal(
-               axis_2d_.translation().y(),
-               transform.axis_2d_.translation().y());
-  }
+  // We may have a larger discrepancy in the scroll components due to snapping
+  // (floating point error might round the other way).
+  static const float translation_tolerance = 1.f;
 
   for (int row = 0; row < 4; row++) {
     for (int col = 0; col < 4; col++) {
-      float x = static_cast<float>(rc(row, col));
-      float y = static_cast<float>(transform.rc(row, col));
-      if (row < 3 && col == 3) {
-        if (!translation_approximately_equal(x, y))
-          return false;
-      } else if (row < 3 && col == row) {
-        if (!scale_approximately_equal(x, y))
-          return false;
-      } else if (!approximately_equal(x, y)) {
+      const float delta =
+          std::abs(matrix().get(row, col) - transform.matrix().get(row, col));
+      const float tolerance =
+          col == 3 && row < 3 ? translation_tolerance : component_tolerance;
+      if (delta > tolerance)
         return false;
-      }
     }
   }
+
   return true;
 }
 
 std::string Transform::ToString() const {
   return cr::StringPrintf(
-      "[ %lg %lg %lg %lg\n"
-      "  %lg %lg %lg %lg\n"
-      "  %lg %lg %lg %lg\n"
-      "  %lg %lg %lg %lg ]\n",
-      rc(0, 0), rc(0, 1), rc(0, 2), rc(0, 3), rc(1, 0), rc(1, 1), rc(1, 2),
-      rc(1, 3), rc(2, 0), rc(2, 1), rc(2, 2), rc(2, 3), rc(3, 0), rc(3, 1),
-      rc(3, 2), rc(3, 3));
-}
-
-std::string Transform::ToDecomposedString() const {
-  cr::Optional<gfx::DecomposedTransform> decomp = Decompose();
-  if (!decomp)
-    return ToString() + "(degenerate)";
-
-  if (IsIdentity())
-    return "identity";
-
-  if (IsIdentityOrTranslation()) {
-    return cr::StringPrintf("translate: %lg,%lg,%lg", decomp->translate[0],
-                            decomp->translate[1], decomp->translate[2]);
-  }
-
-  return decomp->ToString();
+      "[ %+0.4f %+0.4f %+0.4f %+0.4f  \n"
+      "  %+0.4f %+0.4f %+0.4f %+0.4f  \n"
+      "  %+0.4f %+0.4f %+0.4f %+0.4f  \n"
+      "  %+0.4f %+0.4f %+0.4f %+0.4f ]\n",
+      matrix_.get(0, 0),
+      matrix_.get(0, 1),
+      matrix_.get(0, 2),
+      matrix_.get(0, 3),
+      matrix_.get(1, 0),
+      matrix_.get(1, 1),
+      matrix_.get(1, 2),
+      matrix_.get(1, 3),
+      matrix_.get(2, 0),
+      matrix_.get(2, 1),
+      matrix_.get(2, 2),
+      matrix_.get(2, 3),
+      matrix_.get(3, 0),
+      matrix_.get(3, 1),
+      matrix_.get(3, 2),
+      matrix_.get(3, 3));
 }
 
 }  // namespace gfx

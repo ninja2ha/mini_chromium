@@ -19,7 +19,7 @@ namespace crui {
 
 ///class InputMethod;
 class GestureRecognizer;
-class OSExchangeData;
+///class OSExchangeData;
 
 namespace gfx {
 class ImageSkia;
@@ -28,7 +28,7 @@ class Rect;
 
 namespace views {
 
-class TooltipManager;
+///class TooltipManager;
 class View;
 
 namespace internal {
@@ -109,7 +109,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
   ///virtual const ui::Compositor* GetCompositor() const = 0;
 
   // Returns the NativeWidget's layer, if any.
-  virtual const crui::Layer* GetLayer() const = 0;
+  ///virtual const ui::Layer* GetLayer() const = 0;
 
   // Reorders the widget's child NativeViews which are associated to the view
   // tree (eg via a NativeViewHost) to match the z-order of the views in the
@@ -132,7 +132,7 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
 
   // Returns the native widget's tooltip manager. Called from the View hierarchy
   // to update tooltips.
-  virtual TooltipManager* GetTooltipManager() const = 0;
+  ///virtual TooltipManager* GetTooltipManager() const = 0;
 
   // Sets or releases event capturing for this native widget.
   virtual void SetCapture() = 0;
@@ -203,11 +203,11 @@ class CRUI_EXPORT NativeWidgetPrivate : public NativeWidget,
   virtual void SetOpacity(float opacity) = 0;
   virtual void SetAspectRatio(const gfx::SizeF& aspect_ratio) = 0;
   virtual void FlashFrame(bool flash) = 0;
-  virtual void RunShellDrag(View* view,
-                            std::unique_ptr<crui::OSExchangeData> data,
-                            const gfx::Point& location,
-                            int operation,
-                            crui::DragDropTypes::DragEventSource source) = 0;
+  ///virtual void RunShellDrag(View* view,
+  ///                          std::unique_ptr<ui::OSExchangeData> data,
+  ///                          const gfx::Point& location,
+  ///                          int operation,
+  ///                          ui::DragDropTypes::DragEventSource source) = 0;
   virtual void SchedulePaintInRect(const gfx::Rect& rect) = 0;
   virtual void ScheduleLayout() = 0;
   virtual void SetCursor(gfx::NativeCursor cursor) = 0;

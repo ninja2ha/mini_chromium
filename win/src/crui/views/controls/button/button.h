@@ -16,8 +16,8 @@
 ///#include "ui/views/animation/ink_drop_state.h"
 #include "crui/events/event.h"
 #include "crui/views/controls/button/button_controller_delegate.h"
-///#include "crui/views/controls/focus_ring.h"
-///#include "crui/views/painter.h"
+#include "crui/views/controls/focus_ring.h"
+#include "crui/views/painter.h"
 #include "crui/views/widget/widget_observer.h"
 
 namespace crui {
@@ -92,7 +92,7 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
     bool ShouldEnterPushedState(const crui::Event& event) override;
     bool ShouldEnterHoveredState() override;
     ///InkDrop* GetInkDrop() override;
-    int GetDragOperations(const gfx::Point& press_pt) override;
+    ///int GetDragOperations(const gfx::Point& press_pt) override;
     bool InDrag() override;
   };
 
@@ -160,7 +160,7 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
   void SetHotTracked(bool is_hot_tracked);
   bool IsHotTracked() const;
 
-  ///void SetFocusPainter(std::unique_ptr<Painter> focus_painter);
+  void SetFocusPainter(std::unique_ptr<Painter> focus_painter);
 
   // Highlights the ink drop for the button.
   void SetHighlighted(bool bubble_visible);
@@ -184,7 +184,7 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
   cr::string16 GetTooltipText(const gfx::Point& p) const override;
   void ShowContextMenu(const gfx::Point& p,
                        crui::MenuSourceType source_type) override;
-  void OnDragDone() override;
+  ///void OnDragDone() override;
   // Instead of overriding this, subclasses that want custom painting should use
   // PaintButtonContents.
   void OnPaint(gfx::Canvas* canvas) final;
@@ -273,7 +273,7 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
     return hover_animation_;
   }
 
-  ///FocusRing* focus_ring() { return focus_ring_.get(); }
+  FocusRing* focus_ring() { return focus_ring_.get(); }
 
   // The button's listener. Notified when clicked.
   ButtonListener* listener_;
@@ -333,9 +333,9 @@ class CRUI_EXPORT Button : public View,///InkDropHostView,
   bool request_focus_on_press_ = false;
 
   // The focus ring for this Button.
-  ///std::unique_ptr<FocusRing> focus_ring_;
+  std::unique_ptr<FocusRing> focus_ring_;
 
-  ///std::unique_ptr<Painter> focus_painter_;
+  std::unique_ptr<Painter> focus_painter_;
 
   std::unique_ptr<WidgetObserverButtonBridge> widget_observer_;
 

@@ -17,8 +17,8 @@ class Insets;
 namespace views {
 
 ///class BubbleDialogDelegateView;
-///class HighlightPathGenerator;
-  class FlexSpecification;
+class HighlightPathGenerator;
+class FlexSpecification;
 
 // The hit test component (e.g. HTCLIENT) for a View in a window frame. Defaults
 // to HTNOWHERE.
@@ -48,8 +48,8 @@ CRUI_EXPORT extern const crui::ClassProperty<gfx::Insets*>* const
 
 // A property to store a highlight-path generator. This generator is used to
 // generate a highlight path for focus rings or ink-drop effects.
-///CRUI_EXPORT extern const crui::ClassProperty<HighlightPathGenerator*>* const
-///    kHighlightPathGeneratorKey;
+CRUI_EXPORT extern const crui::ClassProperty<HighlightPathGenerator*>* const
+    kHighlightPathGeneratorKey;
 
 // A property to store how a view should flex when placed in a layout.
 // Currently only supported by FlexLayout.
@@ -67,8 +67,8 @@ CRUI_EXPORT extern const crui::ClassProperty<FlexSpecification*>* const
 DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT, gfx::Insets*)
 ///DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT,
 ///                                        views::BubbleDialogDelegateView*)
-///DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT,
-///                                        views::HighlightPathGenerator*)
+DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT,
+                                        views::HighlightPathGenerator*)
 DECLARE_EXPORTED_UI_CLASS_PROPERTY_TYPE(CRUI_EXPORT, views::FlexSpecification*)
 
 

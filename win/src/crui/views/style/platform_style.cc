@@ -4,16 +4,16 @@
 
 #include "crui/views/style/platform_style.h"
 
-///#include "ui/base/resource/resource_bundle.h"
+#include "crbase/build_platform.h"
+///#include "crui/base/resource/resource_bundle.h"
 ///#include "crui/gfx/range/range.h"
-///#include "ui/gfx/utf16_indexing.h"
-///#include "ui/native_theme/native_theme.h"
-///#include "ui/views/background.h"
-///#include "ui/views/buildflags.h"
-///#include "ui/views/controls/button/label_button.h"
-///#include "ui/views/controls/button/label_button_border.h"
-///#include "ui/views/controls/focusable_border.h"
-///#include "ui/views/controls/scrollbar/scroll_bar_views.h"
+///#include "crui/gfx/utf16_indexing.h"
+///#include "crui/native_theme/native_theme.h"
+#include "crui/views/view_background.h"
+///#include "crui/views/controls/button/label_button.h"
+///#include "crui/views/controls/button/label_button_border.h"
+#include "crui/views/controls/focusable_border.h"
+///#include "crui/views/controls/scrollbar/scroll_bar_views.h"
 
 namespace crui {
 namespace views {
@@ -66,8 +66,7 @@ void PlatformStyle::OnTextfieldEditFailed() {}
 
 #endif  // OS_MACOSX
 
-#if !defined(MINI_CHROMIUM_ENABLE_DESKTOP_AURA) || \
-    !defined(MINI_CHROMIUM_OS_LINUX)
+#if !defined(MINI_CHROMIUM_OS_LINUX)
 // static
 ///std::unique_ptr<Border> PlatformStyle::CreateThemedLabelButtonBorder(
 ///    LabelButton* button) {

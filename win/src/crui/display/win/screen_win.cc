@@ -9,6 +9,7 @@
 
 #include <algorithm>
 
+#include "crbase/memory/singleton.h"
 #include "crbase/functional/bind.h"
 #include "crbase/functional/bind_helpers.h"
 ///#include "crbase/metrics/histogram_functions.h"
@@ -429,6 +430,11 @@ gfx::PointF ScalePointRelative(const gfx::Point& from_origin,
 }
 }  // namespace
 
+// static 
+ScreenWin* ScreenWin::GetInstance() {
+  return cr::Singleton<ScreenWin>::get();
+}
+
 ScreenWin::ScreenWin() : ScreenWin(true) {}
 
 ScreenWin::ScreenWin(bool initialize)
@@ -660,13 +666,15 @@ void ScreenWin::SetHDREnabled(bool hdr_enabled) {
 }
 
 HWND ScreenWin::GetHWNDFromNativeView(gfx::NativeView window) const {
-  CR_NOTREACHED();
-  return nullptr;
+  ///CR_NOTREACHED();
+  ///return nullptr;
+  return window;
 }
 
 gfx::NativeWindow ScreenWin::GetNativeWindowFromHWND(HWND hwnd) const {
-  CR_NOTREACHED();
-  return nullptr;
+  ///CR_NOTREACHED();
+  ///return nullptr;
+  return hwnd;
 }
 
 void ScreenWin::OnUwpTextScaleFactorChanged() {

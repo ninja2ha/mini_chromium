@@ -3,7 +3,6 @@
 // found in the LICENSE file.
 
 #include "crui/events/gesture_detection/gesture_configuration.h"
-#include "crui/base/build_platform.h"
 
 namespace crui {
 namespace {

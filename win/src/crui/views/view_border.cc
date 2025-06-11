@@ -12,7 +12,7 @@
 #include "crui/gfx/geometry/rect_f.h"
 #include "crui/gfx/geometry/dip_util.h"
 #include "crui/gfx/scoped_canvas.h"
-#include "crui/gfx/skia_util.h"
+#include "crui/gfx/skia/skia_util.h"
 ///#include "crui/views/painter.h"
 #include "crui/views/view.h"
 
@@ -49,14 +49,14 @@ void SolidSidedBorder::Paint(const View& view, gfx::Canvas* canvas) {
   float dsf = canvas->UndoDeviceScaleFactor();
 
   gfx::RectF scaled_bounds;
-  if (view.layer()) {
-    scaled_bounds =
-        gfx::RectF(gfx::ConvertRectToPixel(view.layer()->device_scale_factor(), 
-                   view.GetLocalBounds()));
-  } else {
+  ///if (view.layer()) {
+  ///  scaled_bounds =
+  ///      gfx::RectF(gfx::ConvertRectToPixel(view.layer()->device_scale_factor(), 
+  ///                 view.GetLocalBounds()));
+  ///} else {
     scaled_bounds = gfx::RectF(view.GetLocalBounds());
     scaled_bounds.Scale(dsf);
-  }
+  ///}
 
   // This scaling operation floors the inset values.
   scaled_bounds.Inset(insets_.Scale(dsf));

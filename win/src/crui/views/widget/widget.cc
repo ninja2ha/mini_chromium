@@ -11,31 +11,32 @@
 #include "crbase/containers/adapters.h"
 #include "crbase/logging.h"
 #include "crbase/strings/utf_string_conversions.h"
-///#include "crbase/trace_event/trace_event.h"
-#include "crui/base/cursor/cursor.h"
+///#include "base/trace_event/trace_event.h"
+///#include "crui/base/cursor/cursor.h"
 ///#include "crui/base/default_style.h"
 ///#include "crui/base/default_theme_provider.h"
 #include "crui/base/hit_test.h"
 ///#include "crui/base/ime/input_method.h"
 ///#include "crui/base/l10n/l10n_font_util.h"
-///#include "crui/base/resource/resource_bundle.h"
-///#include "crui/compositor/compositor.h"
-#include "crui/compositor/layer.h"
+///#include "ui/base/resource/resource_bundle.h"
+///#include "ui/compositor/compositor.h"
+///#include "ui/compositor/layer.h"
 #include "crui/display/screen.h"
 #include "crui/events/event.h"
 #include "crui/events/event_utils.h"
-///#include "crui/gfx/image/image_skia.h"
-///#include "crui/views/controls/menu/menu_controller.h"
-///#include "crui/views/event_monitor.h"
+///#include "ui/gfx/image/image_skia.h"
+///#include "ui/views/controls/menu/menu_controller.h"
+///#include "ui/views/event_monitor.h"
 #include "crui/views/focus/focus_manager.h"
 #include "crui/views/focus/focus_manager_factory.h"
 #include "crui/views/views_delegate.h"
 #include "crui/views/widget/native_widget_private.h"
 #include "crui/views/widget/widget_focus_manager.h"
 #include "crui/views/widget/root_view.h"
+///#include "crui/views/widget/tooltip_manager.h"
+#include "crui/views/widget/widget_delegate.h"
 #include "crui/views/widget/widget_deletion_observer.h"
 #include "crui/views/widget/widget_observer.h"
-#include "crui/views/widget/widget_delegate.h"
 #include "crui/views/widget/widget_removals_observer.h"
 ///#include "crui/views/window/custom_frame_view.h"
 ///#include "crui/views/window/dialog_delegate.h"
@@ -48,14 +49,14 @@ namespace {
 // If |view| has a layer the layer is added to |layers|. Else this recurses
 // through the children. This is used to build a list of the layers created by
 // views that are direct children of the Widgets layer.
-void BuildViewsWithLayers(View* view, View::Views* views) {
-  if (view->layer()) {
-    views->push_back(view);
-  } else {
-    for (View* child : view->children())
-      BuildViewsWithLayers(child, views);
-  }
-}
+///void BuildViewsWithLayers(View* view, View::Views* views) {
+///  if (view->layer()) {
+///    views->push_back(view);
+///  } else {
+///    for (View* child : view->children())
+///      BuildViewsWithLayers(child, views);
+///  }
+///}
 
 // Create a native widget implementation.
 // First, use the supplied one if non-NULL.
@@ -823,36 +824,36 @@ const FocusManager* Widget::GetFocusManager() const {
 ///  }
 ///}
 
-void Widget::RunShellDrag(View* view,
-                          std::unique_ptr<crui::OSExchangeData> data,
-                          const gfx::Point& location,
-                          int operation,
-                          crui::DragDropTypes::DragEventSource source) {
-  dragged_view_ = view;
-  OnDragWillStart();
-
-  for (WidgetObserver& observer : observers_)
-    observer.OnWidgetDragWillStart(this);
-
-  WidgetDeletionObserver widget_deletion_observer(this);
-  native_widget_->RunShellDrag(view, std::move(data), location, operation,
-                               source);
-
-  // The widget may be destroyed during the drag operation.
-  if (!widget_deletion_observer.IsWidgetAlive())
-    return;
-
-  // If the view is removed during the drag operation, dragged_view_ is set to
-  // NULL.
-  if (view && dragged_view_ == view) {
-    dragged_view_ = nullptr;
-    view->OnDragDone();
-  }
-  OnDragComplete();
-
-  for (WidgetObserver& observer : observers_)
-    observer.OnWidgetDragComplete(this);
-}
+///void Widget::RunShellDrag(View* view,
+///                          std::unique_ptr<ui::OSExchangeData> data,
+///                          const gfx::Point& location,
+///                          int operation,
+///                          ui::DragDropTypes::DragEventSource source) {
+///  dragged_view_ = view;
+///  OnDragWillStart();
+///
+///  for (WidgetObserver& observer : observers_)
+///    observer.OnWidgetDragWillStart(this);
+///
+///  WidgetDeletionObserver widget_deletion_observer(this);
+///  native_widget_->RunShellDrag(view, std::move(data), location, operation,
+///                               source);
+///
+///  // The widget may be destroyed during the drag operation.
+///  if (!widget_deletion_observer.IsWidgetAlive())
+///    return;
+///
+///  // If the view is removed during the drag operation, dragged_view_ is set to
+///  // NULL.
+///  if (view && dragged_view_ == view) {
+///    dragged_view_ = nullptr;
+///    view->OnDragDone();
+///  }
+///  OnDragComplete();
+///
+///  for (WidgetObserver& observer : observers_)
+///    observer.OnWidgetDragComplete(this);
+///}
 
 void Widget::SchedulePaintInRect(const gfx::Rect& rect) {
   native_widget_->SchedulePaintInRect(rect);
@@ -974,19 +975,12 @@ void Widget::FrameTypeChanged() {
 ///  return native_widget_->GetCompositor();
 ///}
 
-const crui::Layer* Widget::GetLayer() const {
-  return native_widget_->GetLayer();
-}
+///const ui::Layer* Widget::GetLayer() const {
+///  return native_widget_->GetLayer();
+///}
 
 void Widget::ReorderNativeViews() {
   native_widget_->ReorderNativeViews();
-}
-
-void Widget::LayerTreeChanged() {
-  // Calculate the layers requires traversing the tree, and since nearly any
-  // mutation of the tree can trigger this call we delay until absolutely
-  // necessary.
-  views_with_layers_dirty_ = true;
 }
 
 const NativeWidget* Widget::native_widget() const {
@@ -1020,13 +1014,13 @@ bool Widget::HasCapture() {
   return native_widget_->HasCapture();
 }
 
-TooltipManager* Widget::GetTooltipManager() {
-  return native_widget_->GetTooltipManager();
-}
+///TooltipManager* Widget::GetTooltipManager() {
+///  return native_widget_->GetTooltipManager();
+///}
 
-const TooltipManager* Widget::GetTooltipManager() const {
-  return native_widget_->GetTooltipManager();
-}
+///const TooltipManager* Widget::GetTooltipManager() const {
+///  return native_widget_->GetTooltipManager();
+///}
 
 gfx::Rect Widget::GetWorkAreaBoundsInScreen() const {
   return native_widget_->GetWorkAreaBoundsInScreen();
@@ -1235,7 +1229,7 @@ void Widget::OnNativeWidgetPaint(gfx::Canvas* canvas) {
   // SetInitialBounds call.
   if (!native_widget_initialized_)
     return;
-  GetRootView()->PaintFromPaintRoot(canvas);
+  GetRootView()->Paint(canvas);
 }
 
 int Widget::GetNonClientComponent(const gfx::Point& point) {
@@ -1269,33 +1263,12 @@ void Widget::OnMouseEvent(crui::MouseEvent* event) {
       // We may get deleted by the time we return from OnMousePressed. So we
       // use an observer to make sure we are still alive.
       WidgetDeletionObserver widget_deletion_observer(this);
-      
-      gfx::NativeView current_capture =
-          internal::NativeWidgetPrivate::GetGlobalCapture(
-              native_widget_->GetNativeView());
-      // Make sure we're still visible before we attempt capture as the mouse
-      // press processing may have made the window hide (as happens with menus).
-      //
-      // It is possible that capture has changed as a result of a mouse-press.
-      // In these cases do not update internal state.
-      //
-      // A mouse-press may trigger a nested message-loop, and absorb the paired
-      // release. If so the code returns here. So make sure that that
-      // mouse-button is still down before attempting to do a capture.
-      if (root_view && root_view->OnMousePressed(*event) &&
-          widget_deletion_observer.IsWidgetAlive() && IsVisible() &&
-          native_widget_->IsMouseButtonDown() &&
-          current_capture == internal::NativeWidgetPrivate::GetGlobalCapture(
-                                 native_widget_->GetNativeView())) {
-        is_mouse_button_pressed_ = true;
-        if (!native_widget_->HasCapture())
-          native_widget_->SetCapture();
-        event->SetHandled();
-      }
 
       // Make sure we're still visible before we attempt capture as the mouse
       // press processing may have made the window hide (as happens with menus).
-      if (root_view->OnMousePressed(*event) && IsVisible()) {
+      if (root_view && root_view->OnMousePressed(*event) &&
+          widget_deletion_observer.IsWidgetAlive() && IsVisible() &&
+          native_widget_->IsMouseButtonDown()) {
         is_mouse_button_pressed_ = true;
         if (!native_widget_->HasCapture())
           native_widget_->SetCapture();
@@ -1428,53 +1401,6 @@ bool Widget::SetInitialFocus(crui::WindowShowState show_state) {
       focus_manager->AdvanceFocus(false);
   }
   return !!focus_manager->GetFocusedView();
-}
-
-bool Widget::ShouldDescendIntoChildForEventHandling(
-    crui::Layer* root_layer,
-    gfx::NativeView child,
-    crui::Layer* child_layer,
-    const gfx::Point& location) {
-  if (widget_delegate_ &&
-      !widget_delegate_->ShouldDescendIntoChildForEventHandling(child,
-                                                                location)) {
-    return false;
-  }
-
-  const View::Views& views_with_layers = GetViewsWithLayers();
-  if (views_with_layers.empty())
-    return true;
-
-  // Don't descend into |child| if there is a view with a Layer that contains
-  // the point and is stacked above |child_layer|.
-  auto child_layer_iter = std::find(root_layer->children().begin(),
-                                    root_layer->children().end(), child_layer);
-  if (child_layer_iter == root_layer->children().end())
-    return true;
-
-  for (View* view : cr::Reversed(views_with_layers)) {
-    crui::Layer* layer = view->layer();
-    CR_DCHECK(layer);
-    if (layer->visible() && layer->bounds().Contains(location)) {
-      auto root_layer_iter = std::find(root_layer->children().begin(),
-                                       root_layer->children().end(), layer);
-      if (child_layer_iter > root_layer_iter) {
-        // |child| is on top of the remaining layers, no need to continue.
-        return true;
-      }
-
-      // Event targeting uses the visible bounds of the View, which may differ
-      // from the bounds of the layer. Verify the view hosting the layer
-      // actually contains |location|. Use GetVisibleBounds(), which is
-      // effectively what event targetting uses.
-      gfx::Rect vis_bounds = view->GetVisibleBounds();
-      gfx::Point point_in_view = location;
-      View::ConvertPointToTarget(GetRootView(), view, &point_in_view);
-      if (vis_bounds.Contains(point_in_view))
-        return false;
-    }
-  }
-  return true;
 }
 
 void Widget::LayoutRootViewIfNecessary() {
@@ -1649,15 +1575,6 @@ bool Widget::GetSavedWindowPlacement(gfx::Rect* bounds,
     return true;
   }
   return false;
-}
-
-const View::Views& Widget::GetViewsWithLayers() {
-  if (views_with_layers_dirty_) {
-    views_with_layers_dirty_ = false;
-    views_with_layers_.clear();
-    BuildViewsWithLayers(GetRootView(), &views_with_layers_);
-  }
-  return views_with_layers_;
 }
 
 void Widget::UnlockPaintAsActive() {

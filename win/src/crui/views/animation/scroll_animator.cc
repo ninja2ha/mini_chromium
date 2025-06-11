@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "ui/views/animation/scroll_animator.h"
+#include "crui/views/animation/scroll_animator.h"
 
 #include <algorithm>
 #include <cmath>
 
-#include "base/logging.h"
-#include "ui/gfx/animation/slide_animation.h"
+#include "crbase/logging.h"
+#include "crui/gfx/animation/slide_animation.h"
 
 namespace {
 constexpr float kDefaultAcceleration = -1500.0f;  // in pixels per second^2
@@ -27,6 +27,7 @@ float GetDelta(float v0, float a, float t1, float t2) {
 
 }  // namespace
 
+namespace crui {
 namespace views {
 
 ScrollAnimator::ScrollAnimator(ScrollDelegate* delegate)
@@ -36,7 +37,7 @@ ScrollAnimator::ScrollAnimator(ScrollDelegate* delegate)
     last_t_(0.0f),
     duration_(0.0f),
     acceleration_(kDefaultAcceleration) {
-  DCHECK(delegate);
+  CR_DCHECK(delegate);
 }
 
 ScrollAnimator::~ScrollAnimator() {
@@ -52,7 +53,7 @@ void ScrollAnimator::Start(float velocity_x, float velocity_y) {
   velocity_y_ = velocity_y;
   duration_ = -v / acceleration_; // in seconds
   animation_ = std::make_unique<gfx::SlideAnimation>(this);
-  animation_->SetSlideDuration(base::TimeDelta::FromSecondsD(duration_));
+  animation_->SetSlideDuration(cr::TimeDelta::FromSecondsD(duration_));
   animation_->Show();
 }
 
@@ -80,3 +81,4 @@ void ScrollAnimator::AnimationCanceled(const gfx::Animation* animation) {
 }
 
 }  // namespace views
+}  // namespace crui

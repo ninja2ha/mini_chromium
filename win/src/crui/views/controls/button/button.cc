@@ -26,16 +26,10 @@
 ///#include "crui/views/controls/button/menu_button.h"
 ///#include "crui/views/controls/button/radio_button.h"
 ///#include "crui/views/controls/button/toggle_button.h"
-///#include "crui/views/controls/focus_ring.h"
-///#include "crui/views/painter.h"
+#include "crui/views/controls/focus_ring.h"
+#include "crui/views/painter.h"
 #include "crui/views/style/platform_style.h"
 #include "crui/views/widget/widget.h"
-#include "crui/base/build_platform.h"
-
-#if defined(MINI_CHROMIUM_USE_AURA)
-#include "crui/aura/client/capture_client.h"
-#include "crui/aura/window.h"
-#endif
 
 namespace crui {
 namespace views {
@@ -111,13 +105,14 @@ bool Button::DefaultButtonControllerDelegate::ShouldEnterHoveredState() {
 ///  return button()->GetInkDrop();
 ///}
 
-int Button::DefaultButtonControllerDelegate::GetDragOperations(
-    const gfx::Point& press_pt) {
-  return button()->GetDragOperations(press_pt);
-}
+///int Button::DefaultButtonControllerDelegate::GetDragOperations(
+///    const gfx::Point& press_pt) {
+///  return button()->GetDragOperations(press_pt);
+///}
 
 bool Button::DefaultButtonControllerDelegate::InDrag() {
-  return button()->InDrag();
+  ///return button()->InDrag();
+  return false;
 }
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -233,10 +228,10 @@ void Button::SetAnimationDuration(cr::TimeDelta duration) {
 }
 
 void Button::SetInstallFocusRingOnFocus(bool install) {
- ///if (install)
- ///  focus_ring_ = FocusRing::Install(this);
- ///else
- ///  focus_ring_.reset();
+ if (install)
+   focus_ring_ = FocusRing::Install(this);
+ else
+   focus_ring_.reset();
 }
 
 void Button::SetHotTracked(bool is_hot_tracked) {
@@ -257,9 +252,9 @@ bool Button::IsHotTracked() const {
   return state_ == STATE_HOVERED;
 }
 
-///void Button::SetFocusPainter(std::unique_ptr<Painter> focus_painter) {
-///  focus_painter_ = std::move(focus_painter);
-///}
+void Button::SetFocusPainter(std::unique_ptr<Painter> focus_painter) {
+  focus_painter_ = std::move(focus_painter);
+}
 
 void Button::SetHighlighted(bool bubble_visible) {
   ///AnimateInkDrop(bubble_visible ? views::InkDropState::ACTIVATED
@@ -331,8 +326,8 @@ bool Button::OnMouseDragged(const crui::MouseEvent& event) {
     const bool should_show_pending =
         should_enter_pushed &&
         button_controller_->notify_action() ==
-            ButtonController::NotifyAction::kOnRelease &&
-        !InDrag();
+            ButtonController::NotifyAction::kOnRelease /*&&
+        !InDrag()*/;
     if (HitTestPoint(event.location())) {
       SetState(should_enter_pushed ? STATE_PRESSED : STATE_HOVERED);
       ///if (should_show_pending && GetInkDrop()->GetTargetInkDropState() ==
@@ -422,19 +417,19 @@ void Button::ShowContextMenu(const gfx::Point& p,
   ///InkDropHostView::ShowContextMenu(p, source_type);
 }
 
-void Button::OnDragDone() {
-  // Only reset the state to normal if the button isn't currently disabled
-  // (since disabled buttons may still be able to be dragged).
-  if (state_ != STATE_DISABLED)
-    SetState(STATE_NORMAL);
-  ///AnimateInkDrop(InkDropState::HIDDEN, nullptr /* event */);
-}
+///void Button::OnDragDone() {
+///  // Only reset the state to normal if the button isn't currently disabled
+///  // (since disabled buttons may still be able to be dragged).
+///  if (state_ != STATE_DISABLED)
+///    SetState(STATE_NORMAL);
+///  ///AnimateInkDrop(InkDropState::HIDDEN, nullptr /* event */);
+///}
 
 void Button::OnPaint(gfx::Canvas* canvas) {
   ///InkDropHostView::OnPaint(canvas);
   View::OnPaint(canvas);
   PaintButtonContents(canvas);
-  ///Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
+  Painter::PaintFocusPainter(this, canvas, focus_painter_.get());
 }
 
 ///void Button::GetAccessibleNodeData(crui::AXNodeData* node_data) {
@@ -586,22 +581,6 @@ bool Button::ShouldEnterHoveredState() {
     return false;
 
   bool check_mouse_position = true;
-#if defined(MINI_CHROMIUM_USE_AURA)
-  // If another window has capture, we shouldn't check the current mouse
-  // position because the button won't receive any mouse events - so if the
-  // mouse was hovered, the button would be stuck in a hovered state (since it
-  // would never receive OnMouseExited).
-  const Widget* widget = GetWidget();
-  if (widget && widget->GetNativeWindow()) {
-    aura::Window* root_window = widget->GetNativeWindow()->GetRootWindow();
-    aura::client::CaptureClient* capture_client =
-        aura::client::GetCaptureClient(root_window);
-    aura::Window* capture_window =
-        capture_client ? capture_client->GetGlobalCaptureWindow() : nullptr;
-    check_mouse_position = !capture_window || capture_window == root_window;
-  }
-#endif
-
   return check_mouse_position && IsMouseHovered();
 }
 

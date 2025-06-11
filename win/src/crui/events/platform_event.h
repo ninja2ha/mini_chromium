@@ -5,7 +5,7 @@
 #ifndef UI_EVENTS_PLATFORM_EVENT_H_
 #define UI_EVENTS_PLATFORM_EVENT_H_
 
-#include "crui/base/build_platform.h"
+#include "crbase/build_platform.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
 #include <windows.h>

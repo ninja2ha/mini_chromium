@@ -7,8 +7,9 @@
 
 #include <memory>
 
-#include "crui/views/controls/button/button.h"
+#include "crbase/strings/string16.h"
 #include "crui/base/ui_export.h"
+#include "crui/views/controls/button/button.h"
 
 namespace crui {
 
@@ -18,17 +19,13 @@ class Range;
 
 namespace views {
 
-///class Border;
+class Border;
 ///class LabelButton;
 ///class ScrollBar;
 
 // Cross-platform API for providing platform-specific styling for toolkit-views.
 class CRUI_EXPORT PlatformStyle {
  public:
-  PlatformStyle() = delete;
-  PlatformStyle(const PlatformStyle&) = delete;
-  PlatformStyle& operator=(const PlatformStyle&) = delete;
-
   // Whether the ok button is in the leading position (left in LTR) in a
   // typical Cancel/OK button group.
   static const bool kIsOkButtonLeading;
@@ -101,8 +98,8 @@ class CRUI_EXPORT PlatformStyle {
   // This is to support deleting entire graphemes instead of individual
   // characters when necessary on Mac, and code points made from surrogate
   // pairs on other platforms.
-  static gfx::Range RangeToDeleteBackwards(const cr::string16& text,
-                                           size_t cursor_position);
+  ///static gfx::Range RangeToDeleteBackwards(const cr::string16& text,
+  ///                                         size_t cursor_position);
 };
 
 }  // namespace views

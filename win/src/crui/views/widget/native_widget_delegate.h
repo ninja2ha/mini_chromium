@@ -15,16 +15,16 @@
 namespace crui {
 
 namespace gfx {
+class Canvas;
 class Point;
 class Size;
-class Canvas;
 }  // namespace gfx
 
 class GestureEvent;
 class KeyEvent;
 class MouseEvent;
 class ScrollEvent;
-class Layer;
+///class Layer;
 ///class PaintContext;
 
 namespace views {
@@ -148,11 +148,11 @@ class CRUI_EXPORT NativeWidgetDelegate {
   // Returns true if event handling should descend into |child|. |root_layer| is
   // the layer associated with the root Window and |child_layer| the layer
   // associated with |child|. |location| is in terms of the Window.
-  virtual bool ShouldDescendIntoChildForEventHandling(
-      crui::Layer* root_layer,
-      gfx::NativeView child,
-      crui::Layer* child_layer,
-      const gfx::Point& location) = 0;
+  ///virtual bool ShouldDescendIntoChildForEventHandling(
+  ///    ui::Layer* root_layer,
+  ///    gfx::NativeView child,
+  ///    ui::Layer* child_layer,
+  ///    const gfx::Point& location) = 0;
 
   // Called to process a previous call to ScheduleLayout().
   virtual void LayoutRootViewIfNecessary() = 0;

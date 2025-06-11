@@ -8,8 +8,8 @@
 #include "crbase/atomic/atomic_sequence_num.h"
 #include "crbase/memory/lazy_instance.h"
 #include "crbase/time/time.h"
+#include "crbase/build_platform.h"
 #include "crui/events/event_constants.h"
-#include "crui/base/build_platform.h"
 
 namespace crui {
 

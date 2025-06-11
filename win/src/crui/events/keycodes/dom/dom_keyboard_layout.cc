@@ -5,6 +5,7 @@
 #include "crui/events/keycodes/dom/dom_keyboard_layout.h"
 
 #include "crbase/logging.h"
+#include "crbase/compiler_specific.h"
 #include "crbase/helper/stl_util.h"
 #include "crbase/strings/utf_string_conversion_utils.h"
 #include "crui/events/keycodes/dom/dom_code.h"
@@ -87,7 +88,9 @@ cr::flat_map<std::string, std::string> DomKeyboardLayout::GetMap() {
     // to switch between half-width and full-width mode.
     if (unicode == kHankakuZenkakuPlaceholder) {
       // 半角/全角 = hankaku/zenkaku = halfwidth/fullwidth
+      MSVC_PUSH_DISABLE_WARNING(4566);
       key_str = "\u534a\u89d2/\u5168\u89d2";
+      MSVC_POP_WARNING();
     } else {
       size_t len = cr::WriteUnicodeCharacter(unicode, &key_str);
       if (len == 0)

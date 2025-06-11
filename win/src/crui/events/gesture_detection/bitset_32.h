@@ -8,7 +8,7 @@
 #include <stdint.h>
 
 #include "crbase/logging.h"
-#include "crui/base/build_platform.h"
+#include "crbase/build_platform.h"
 
 namespace crui {
 
