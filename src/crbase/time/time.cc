@@ -325,7 +325,7 @@ double Time::ToDoubleT() const {
                    : std::numeric_limits<double>::infinity();
 }
 
-#if defined(OS_POSIX) || defined(OS_FUCHSIA)
+#if defined(MINI_CHROMIUM_OS_POSIX)
 // static
 Time Time::FromTimeSpec(const timespec& ts) {
   return FromDoubleT(ts.tv_sec + double{ts.tv_nsec} / kNanosecondsPerSecond);
