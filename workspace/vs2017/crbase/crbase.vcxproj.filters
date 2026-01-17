@@ -398,6 +398,22 @@
     <ClInclude Include="..\..\..\src\crbase\strings\format_macros.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\version.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\win\file_version_info_win.h">
+      <Filter>files\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\files\file_version_info.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\resource_util.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\registry.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\windows_version.h">
+      <Filter>win</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc">
@@ -530,9 +546,6 @@
     <ClCompile Include="..\..\..\src\crbase\files\file.cc">
       <Filter>files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crbase\files\scoped_file.cc">
-      <Filter>files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\win\scoped_handle.cc">
       <Filter>win</Filter>
     </ClCompile>
@@ -545,6 +558,19 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\threading\sequence_token.cc">
       <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\version.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\win\file_version_info_win.cc">
+      <Filter>files\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\win\resource_util.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\win\registry.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\win\windows_version.cc">
+      <Filter>win</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

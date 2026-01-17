@@ -351,4 +351,4 @@ std::string WideToASCII(WStringPiece wide) {
   return std::string(wide.begin(), wide.end());
 }
 
-}  // namespace base
+}  // namespace cr
