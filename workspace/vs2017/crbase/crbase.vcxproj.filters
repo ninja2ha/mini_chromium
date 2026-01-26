@@ -475,6 +475,19 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase\observer_list.h" />
     <ClInclude Include="..\..\..\src\crbase\observer_list_types.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\cancelable_callback.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\win\current_module.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\numerics\ranges.h">
+      <Filter>numerics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\auto_reset.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\callback_helpers.h">
+      <Filter>functional</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc">
@@ -688,6 +701,9 @@
       <Filter>internal</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\observer_list_types.cc" />
+    <ClCompile Include="..\..\..\src\crbase\functional\callback_helpers.cc">
+      <Filter>functional</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\src\crbase\CMakeLists.txt" />

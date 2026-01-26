@@ -4,7 +4,6 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\sequenced_task_runner_helpers.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\sequenced_task_runner.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\task_runner.h" />
-    <ClInclude Include="..\..\..\src\crbase_runtime\post_task_and_reply_with_result_internal.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\single_thread_task_runner.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\post_task_and_reply_impl.h">
       <Filter>threading</Filter>
@@ -13,6 +12,73 @@
       <Filter>threading</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase_runtime\run_loop.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\internal\post_task_and_reply_with_result_internal.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\pending_task.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\win\message_window.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_for_io.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_for_ui.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_type.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\timer_slack.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop.h">
+      <Filter>message_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.h">
+      <Filter>message_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.h">
+      <Filter>message_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_slot.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_map.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\sequenced_task_source.h">
+      <Filter>message_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.h">
+      <Filter>message_loop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\win\object_watcher.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread.h">
+      <Filter>threading</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
@@ -23,10 +89,69 @@
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequenced_task_runner_handle.cc">
       <Filter>threading</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\run_loop.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\pending_task.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\win\message_window.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop.cc">
+      <Filter>message_loop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.cc">
+      <Filter>message_loop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.cc">
+      <Filter>message_loop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_slot.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_map.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.cc">
+      <Filter>message_loop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\win\object_watcher.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="threading">
       <UniqueIdentifier>{b3155375-9d55-4abe-9fc6-a0827fbd269d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{9aa1e68e-ea39-4795-bf8c-827d9090a79c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{abae8e95-c089-4b1e-8664-6d983e2cb17f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message_pump">
+      <UniqueIdentifier>{45af8d33-b65e-4a06-8256-81ead47d5f17}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message_loop">
+      <UniqueIdentifier>{db1f310a-a87e-48c6-8c53-51f48c236e29}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

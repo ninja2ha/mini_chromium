@@ -1,6 +1,7 @@
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+// * VERSION: 91.0.4472.169
 
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_RUN_LOOP_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_RUN_LOOP_H_
@@ -16,10 +17,10 @@
 #include "crbase/location.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/memory/weak_ptr.h"
-///#include "base/observer_list.h"
+#include "crbase/observer_list.h"
 #include "crbase/time/time.h"
 #include "crbase/threading/sequence_checker.h"
-///#include "crbase_runtime/threading/thread_checker.h"
+#include "crbase_runtime/threading/thread_checker.h"
 #include "crbuild/build_config.h"
 
 namespace cr {
@@ -228,7 +229,7 @@ class CRBASE_EXPORT RunLoop {
     bool bound_ = false;
 
     // Thread-affine per its use of TLS.
-    ///THREAD_CHECKER(bound_thread_checker_);
+    CR_THREAD_CHECKER(bound_thread_checker_);
   };
 
   // Registers |delegate| on the current thread. Must be called once and only

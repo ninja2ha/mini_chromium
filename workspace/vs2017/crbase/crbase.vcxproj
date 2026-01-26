@@ -25,6 +25,7 @@
     <ClInclude Include="..\..\..\src\crbase\atomic\atomic_ref_count.h" />
     <ClInclude Include="..\..\..\src\crbase\atomic\atomic_sequence_num.h" />
     <ClInclude Include="..\..\..\src\crbase\at_exit.h" />
+    <ClInclude Include="..\..\..\src\crbase\auto_reset.h" />
     <ClInclude Include="..\..\..\src\crbase\base_export.h" />
     <ClInclude Include="..\..\..\src\crbase\bits.h" />
     <ClInclude Include="..\..\..\src\crbase\bit_cast.h" />
@@ -52,7 +53,9 @@
     <ClInclude Include="..\..\..\src\crbase\functional\bind_internal.h" />
     <ClInclude Include="..\..\..\src\crbase\functional\callback.h" />
     <ClInclude Include="..\..\..\src\crbase\functional\callback_forward.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\callback_helpers.h" />
     <ClInclude Include="..\..\..\src\crbase\functional\callback_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\cancelable_callback.h" />
     <ClInclude Include="..\..\..\src\crbase\guid.h" />
     <ClInclude Include="..\..\..\src\crbase\helper\scoped_clear_last_error.h" />
     <ClInclude Include="..\..\..\src\crbase\helper\scoped_generic.h" />
@@ -75,6 +78,7 @@
     <ClInclude Include="..\..\..\src\crbase\numerics\checked_math_impl.h" />
     <ClInclude Include="..\..\..\src\crbase\numerics\clamped_math.h" />
     <ClInclude Include="..\..\..\src\crbase\numerics\clamped_math_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\ranges.h" />
     <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions.h" />
     <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_arm_impl.h" />
     <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_impl.h" />
@@ -143,6 +147,7 @@
     <ClInclude Include="..\..\..\src\crbase\win\com\scoped_co_mem.h" />
     <ClInclude Include="..\..\..\src\crbase\win\com\scoped_propvariant.h" />
     <ClInclude Include="..\..\..\src\crbase\win\com\scoped_variant.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\current_module.h" />
     <ClInclude Include="..\..\..\src\crbase\win\registry.h" />
     <ClInclude Include="..\..\..\src\crbase\win\resource_util.h" />
     <ClInclude Include="..\..\..\src\crbase\win\scoped_handle.h" />
@@ -172,6 +177,7 @@
     <ClCompile Include="..\..\..\src\crbase\files\win\file_version_info_win.cc" />
     <ClCompile Include="..\..\..\src\crbase\files\win\file_win.cc" />
     <ClCompile Include="..\..\..\src\crbase\files\win\memory_mapped_file_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\functional\callback_helpers.cc" />
     <ClCompile Include="..\..\..\src\crbase\functional\callback_internal.cc" />
     <ClCompile Include="..\..\..\src\crbase\guid.cc" />
     <ClCompile Include="..\..\..\src\crbase\helper\win\scoped_clear_last_error_win.cc" />

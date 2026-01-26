@@ -7,12 +7,17 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crbase", "crbase\crbase.vcx
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{1533E9A4-B2C4-426C-A472-6788DCFE0928}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "tests_crbase", "tests\tests_crbase\tests_crbase.vcxproj", "{27D3CB37-78E6-4A87-A8A5-CCD3CE75D7D9}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crbase_tests", "tests\crbase_tests\crbase_tests.vcxproj", "{27D3CB37-78E6-4A87-A8A5-CCD3CE75D7D9}"
 	ProjectSection(ProjectDependencies) = postProject
 		{20F40B60-978B-4F3E-BDBA-D2756B463185} = {20F40B60-978B-4F3E-BDBA-D2756B463185}
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crbase_runtime", "crbase_runtime\crbase_runtime.vcxproj", "{9827C300-A6A8-466C-89C5-AC2A01984309}"
+	ProjectSection(ProjectDependencies) = postProject
+		{20F40B60-978B-4F3E-BDBA-D2756B463185} = {20F40B60-978B-4F3E-BDBA-D2756B463185}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crbase_runtime_tests", "tests\crbase_runtime_tests\crbase_runtime_tests.vcxproj", "{2B94D897-14A5-43D8-A6AD-C33142863E37}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -46,12 +51,21 @@ Global
 		{9827C300-A6A8-466C-89C5-AC2A01984309}.Release|x64.Build.0 = Release|x64
 		{9827C300-A6A8-466C-89C5-AC2A01984309}.Release|x86.ActiveCfg = Release|Win32
 		{9827C300-A6A8-466C-89C5-AC2A01984309}.Release|x86.Build.0 = Release|Win32
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Debug|x64.ActiveCfg = Debug|x64
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Debug|x64.Build.0 = Debug|x64
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Debug|x86.ActiveCfg = Debug|Win32
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Debug|x86.Build.0 = Debug|Win32
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Release|x64.ActiveCfg = Release|x64
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Release|x64.Build.0 = Release|x64
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Release|x86.ActiveCfg = Release|Win32
+		{2B94D897-14A5-43D8-A6AD-C33142863E37}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{27D3CB37-78E6-4A87-A8A5-CCD3CE75D7D9} = {1533E9A4-B2C4-426C-A472-6788DCFE0928}
+		{2B94D897-14A5-43D8-A6AD-C33142863E37} = {1533E9A4-B2C4-426C-A472-6788DCFE0928}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {FF253D07-41D4-4321-8382-18523390C983}

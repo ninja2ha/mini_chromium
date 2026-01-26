@@ -23,8 +23,10 @@
 
 namespace cr {
 
+// Forward for friend.
 ///class SamplingHeapProfiler;
 class SequenceCheckerImpl;
+class ThreadCheckerImpl;
 
 namespace internal {
 
@@ -152,7 +154,7 @@ class CRBASE_EXPORT ThreadLocalStorage {
   // Slot::Get().
   friend class SequenceCheckerImpl;
   ///friend class SamplingHeapProfiler;
-  ///friend class ThreadCheckerImpl;
+  friend class ThreadCheckerImpl;
   ///friend class internal::ThreadLocalStorageTestInternal;
   ///friend class trace_event::MallocDumpProvider;
   ///friend class debug::GlobalActivityTracker;

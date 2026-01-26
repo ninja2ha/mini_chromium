@@ -1,0 +1,121 @@
+// Copyright (c) 2011 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+// * VERSION: 81.0.4044.156
+
+#include "crbase_runtime/threading/thread_checker_impl.h"
+
+#include "crbase/logging/logging.h"
+#include "crbase/threading/thread_local.h"
+#include "crbase_runtime/threading/thread_checker.h"
+#include "crbase_runtime/threading/thread_task_runner_handle.h"
+
+namespace {
+bool g_log_thread_and_sequence_checker_binding = false;
+}
+
+namespace cr {
+
+// static
+void ThreadCheckerImpl::EnableStackLogging() {
+  g_log_thread_and_sequence_checker_binding = true;
+}
+
+ThreadCheckerImpl::ThreadCheckerImpl() {
+  AutoLock auto_lock(lock_);
+  EnsureAssignedLockRequired();
+}
+
+ThreadCheckerImpl::~ThreadCheckerImpl() = default;
+
+ThreadCheckerImpl::ThreadCheckerImpl(ThreadCheckerImpl&& other) {
+  // Verify that |other| is called on its associated thread and bind it now if
+  // it is currently detached (even if this isn't a DCHECK build).
+  const bool other_called_on_valid_thread = other.CalledOnValidThread();
+  CR_DCHECK(other_called_on_valid_thread);
+
+  // Intentionally not using |other.lock_| to let TSAN catch racy construct from
+  // |other|.
+  thread_id_ = other.thread_id_;
+  task_token_ = other.task_token_;
+  sequence_token_ = other.sequence_token_;
+
+  // other.bound_at_ was moved from so it's null.
+  other.thread_id_ = PlatformThreadRef();
+  other.task_token_ = TaskToken();
+  other.sequence_token_ = SequenceToken();
+}
+
+ThreadCheckerImpl& ThreadCheckerImpl::operator=(ThreadCheckerImpl&& other) {
+  CR_DCHECK(CalledOnValidThread());
+
+  // Verify that |other| is called on its associated thread and bind it now if
+  // it is currently detached (even if this isn't a DCHECK build).
+  const bool other_called_on_valid_thread = other.CalledOnValidThread();
+  CR_DCHECK(other_called_on_valid_thread);
+
+  // Intentionally not using either |lock_| to let TSAN catch racy assign.
+  thread_id_ = other.thread_id_;
+  task_token_ = other.task_token_;
+  sequence_token_ = other.sequence_token_;
+
+  other.thread_id_ = PlatformThreadRef();
+  other.task_token_ = TaskToken();
+  other.sequence_token_ = SequenceToken();
+  return *this;
+}
+
+bool ThreadCheckerImpl::CalledOnValidThread() const {
+  const bool has_thread_been_destroyed = ThreadLocalStorage::HasBeenDestroyed();
+
+  AutoLock auto_lock(lock_);
+  // TaskToken/SequenceToken access thread-local storage. During destruction
+  // the state of thread-local storage is not guaranteed to be in a consistent
+  // state. Further, task-runner only installs the tokens when running a task.
+  if (!has_thread_been_destroyed) {
+    EnsureAssignedLockRequired();
+
+    // Always return true when called from the task from which this
+    // ThreadCheckerImpl was assigned to a thread.
+    if (task_token_ == TaskToken::GetForCurrentThread())
+      return true;
+
+    // If this ThreadCheckerImpl is bound to a valid SequenceToken, it must be
+    // equal to the current SequenceToken and there must be a registered
+    // ThreadTaskRunnerHandle. Otherwise, the fact that the current task runs on
+    // the thread to which this ThreadCheckerImpl is bound is fortuitous.
+    if (sequence_token_.IsValid() &&
+        (sequence_token_ != SequenceToken::GetForCurrentThread() ||
+         !ThreadTaskRunnerHandle::IsSet())) {
+      return false;
+    }
+  } else if (thread_id_.is_null()) {
+    // We're in tls destruction but the |thread_id_| hasn't been assigned yet.
+    // Assign it now. This doesn't call EnsureAssigned() as to do so while in
+    // tls destruction may result in the wrong TaskToken/SequenceToken.
+    thread_id_ = PlatformThread::CurrentRef();
+    return true;
+  }
+
+  if (thread_id_ != PlatformThread::CurrentRef()) {
+    return false;
+  }
+  return true;
+}
+
+void ThreadCheckerImpl::DetachFromThread() {
+  AutoLock auto_lock(lock_);
+  thread_id_ = PlatformThreadRef();
+  task_token_ = TaskToken();
+  sequence_token_ = SequenceToken();
+}
+
+void ThreadCheckerImpl::EnsureAssignedLockRequired() const {
+  if (!thread_id_.is_null())
+    return;
+  thread_id_ = PlatformThread::CurrentRef();
+  task_token_ = TaskToken::GetForCurrentThread();
+  sequence_token_ = SequenceToken::GetForCurrentThread();
+}
+
+}  // namespace cr

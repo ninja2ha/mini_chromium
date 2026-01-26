@@ -1,0 +1,106 @@
+// Copyright 2016 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+#ifndef MINI_CHROMIUM_SRC_CRBASE_RT_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
+#define MINI_CHROMIUM_SRC_CRBASE_RT_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
+
+#include <memory>
+
+#include "crbase/base_export.h"
+#include "crbase/functional/callback.h"
+#include "crbase/memory/ref_counted.h"
+#include "crbase/memory/weak_ptr.h"
+#include "crbase/threading/sequence_checker.h"
+#include "crbase_runtime/message_loop/message_loop.h"
+#include "crbase_runtime/message_pump/message_pump_for_io.h"
+
+namespace cr {
+
+class SingleThreadTaskRunner;
+
+// The FileDescriptorWatcher API allows callbacks to be invoked when file
+// descriptors are readable or writable without blocking.
+//
+// To enable this API in unit tests, use a ScopedTaskEnvironment with
+// MainThreadType::IO.
+//
+// Note: Prefer FileDescriptorWatcher to MessageLoopForIO::WatchFileDescriptor()
+// for non-critical IO. FileDescriptorWatcher works on threads/sequences without
+// MessagePumps but involves going through the task queue after being notified
+// by the OS (a desirablable property for non-critical IO that shouldn't preempt
+// the main queue).
+class CRBASE_EXPORT FileDescriptorWatcher {
+ public:
+  // Instantiated and returned by WatchReadable() or WatchWritable(). The
+  // constructor registers a callback to be invoked when a file descriptor is
+  // readable or writable without blocking and the destructor unregisters it.
+  class Controller {
+   public:
+    Controller(const Controller&) = delete;
+    Controller& operator=(const Controller&) = delete;
+
+    // Unregisters the callback registered by the constructor.
+    ~Controller();
+
+   private:
+    friend class FileDescriptorWatcher;
+    class Watcher;
+
+    // Registers |callback| to be invoked when |fd| is readable or writable
+    // without blocking (depending on |mode|).
+    Controller(MessagePumpForIO::Mode mode, int fd, const Closure& callback);
+
+    // Starts watching the file descriptor.
+    void StartWatching();
+
+    // Runs |callback_|.
+    void RunCallback();
+
+    // The callback to run when the watched file descriptor is readable or
+    // writable without blocking.
+    Closure callback_;
+
+    // TaskRunner associated with the MessageLoopForIO that watches the file
+    // descriptor.
+    const RefPtr<SingleThreadTaskRunner> message_loop_for_io_task_runner_;
+
+    // Notified by the MessageLoopForIO associated with
+    // |message_loop_for_io_task_runner_| when the watched file descriptor is
+    // readable or writable without blocking. Posts a task to run RunCallback()
+    // on the sequence on which the Controller was instantiated. When the
+    // Controller is deleted, ownership of |watcher_| is transfered to a delete
+    // task posted to the MessageLoopForIO. This ensures that |watcher_| isn't
+    // deleted while it is being used by the MessageLoopForIO.
+    std::unique_ptr<Watcher> watcher_;
+
+    // Validates that the Controller is used on the sequence on which it was
+    // instantiated.
+    SequenceChecker sequence_checker_;
+
+    WeakPtrFactory<Controller> weak_factory_;
+  };
+
+  // Registers |message_loop_for_io| to watch file descriptors for which
+  // callbacks are registered from the current thread via WatchReadable() or
+  // WatchWritable(). |message_loop_for_io| may run on another thread. The
+  // constructed FileDescriptorWatcher must not outlive |message_loop_for_io|.
+  FileDescriptorWatcher(MessageLoopForIO* message_loop_for_io);
+  ~FileDescriptorWatcher();
+
+  // Registers |callback| to be posted on the current sequence when |fd| is
+  // readable or writable without blocking. |callback| is unregistered when the
+  // returned Controller is deleted (deletion must happen on the current
+  // sequence). To call these methods, a FileDescriptorWatcher must have been
+  // instantiated on the current thread and SequencedTaskRunnerHandle::IsSet()
+  // must return true (these conditions are met at least on all TaskScheduler
+  // threads as well as on threads backed by a MessageLoopForIO).
+  static std::unique_ptr<Controller> WatchReadable(int fd,
+                                                   const Closure& callback);
+  static std::unique_ptr<Controller> WatchWritable(int fd,
+                                                   const Closure& callback);
+};
+
+}  // namespace cr
+
+#endif  // MINI_CHROMIUM_SRC_CRBASE_RT_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_

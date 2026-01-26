@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -157,7 +157,21 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\crbase_runtime\post_task_and_reply_with_result_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\internal\post_task_and_reply_with_result_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\sequenced_task_source.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_for_io.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_for_ui.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_type.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\timer_slack.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\pending_task.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\run_loop.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\sequenced_task_runner.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\sequenced_task_runner_helpers.h" />
@@ -165,12 +179,37 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\task_runner.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\post_task_and_reply_impl.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequenced_task_runner_handle.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_map.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_slot.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\win\message_window.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\win\object_watcher.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\pending_task.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\run_loop.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\task_runner.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\post_task_and_reply_impl.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequenced_task_runner_handle.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_map.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_slot.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\win\message_window.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\win\object_watcher.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -9,6 +9,7 @@ set(CRBASE_SRC_DIR ${MINI_CHROMIUM_SRC_DIR}/crbase)
 set(CRBASE_SRC_FILES 
 	${CRBASE_SRC_DIR}/at_exit.cc
 	${CRBASE_SRC_DIR}/at_exit.h
+	${CRBASE_SRC_DIR}/auto_reset.h
 	${CRBASE_SRC_DIR}/base_export.h
 	${CRBASE_SRC_DIR}/bit_cast.h
 	${CRBASE_SRC_DIR}/bits.h
@@ -107,6 +108,7 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 	${CRBASE_SRC_DIR}/functional/callback_forward.h
 	${CRBASE_SRC_DIR}/functional/callback_internal.cc
 	${CRBASE_SRC_DIR}/functional/callback_internal.h
+	${CRBASE_SRC_DIR}/functional/cancelable_callback.h
 )
 
 # helper
@@ -177,6 +179,7 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 	${CRBASE_SRC_DIR}/numerics/safe_conversions.h
 	${CRBASE_SRC_DIR}/numerics/safe_conversions_arm_impl.h
 	${CRBASE_SRC_DIR}/numerics/safe_conversions_impl.h
+	${CRBASE_SRC_DIR}/numerics/ranges.h
 	${CRBASE_SRC_DIR}/numerics/safe_math.h
 	${CRBASE_SRC_DIR}/numerics/safe_math_arm_impl.h
 	${CRBASE_SRC_DIR}/numerics/safe_math_clang_gcc_impl.h

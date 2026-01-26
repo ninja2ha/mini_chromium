@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\files\file_enumerator_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\files\file_path_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\files\memory_mapped_file_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\files\scoped_temp_dir_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\functional\bind_unittest.cc">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\strcat_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_number_conversions_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_piece_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_split_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\stringprintf_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\synchronization\lock_unittest.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\synchronization\waitable_event_unittest.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\time\time_unittest.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\time\time_win_unittest.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\win\scoped_bstr_unittest.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\win\scoped_comptr_unittest.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\win\scoped_variant_unittest.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\test\bind.cc">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\test\gtest_main.cc">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\at_exit_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\environment_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\guid_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\observer_list_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\version_unittest.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="files">
+      <UniqueIdentifier>{f4662538-24c7-4049-9c2a-1b509303b911}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functional">
+      <UniqueIdentifier>{936e50b9-f13c-442a-b3ba-fbb82a90ed5f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strings">
+      <UniqueIdentifier>{d50e07eb-5167-49c5-84f5-4028060a373f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="synchronization">
+      <UniqueIdentifier>{4661d814-e956-4db7-979c-8e58b3da5240}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{17e20002-de50-4971-b8db-1a378a149b3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{729a07bf-3269-48ea-ac88-0a03fdc25015}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="test">
+      <UniqueIdentifier>{0bdf7f57-bd62-474b-836a-f3831d819eb3}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\tests\crbase_tests\test\bind.h">
+      <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\tests\crbase_tests\test\gtest_platform_test.h">
+      <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\tests\crbase_tests\test\gtest_util.h">
+      <Filter>test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\tests\crbase_tests\CMakeLists.txt" />
+  </ItemGroup>
+</Project>
