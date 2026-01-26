@@ -57,5 +57,5 @@ endif()
 add_subdirectory(${MINI_CHROMIUM_SRC_DIR}/crbase)
 
 if (${BUILD_TESTS})
-	add_subdirectory(${MINI_CHROMIUM_TESTS_DIR}/crbase)
+	add_subdirectory(${MINI_CHROMIUM_TESTS_DIR}/crbase_tests)
 endif()
