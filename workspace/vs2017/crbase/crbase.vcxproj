@@ -1,0 +1,382 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\crbase\atomic\atomicops.h" />
+    <ClInclude Include="..\..\..\src\crbase\atomic\atomicops_internals_atomicword_compat.h" />
+    <ClInclude Include="..\..\..\src\crbase\atomic\atomicops_internals_portable.h" />
+    <ClInclude Include="..\..\..\src\crbase\atomic\atomic_ref_count.h" />
+    <ClInclude Include="..\..\..\src\crbase\atomic\atomic_sequence_num.h" />
+    <ClInclude Include="..\..\..\src\crbase\at_exit.h" />
+    <ClInclude Include="..\..\..\src\crbase\base_export.h" />
+    <ClInclude Include="..\..\..\src\crbase\bits.h" />
+    <ClInclude Include="..\..\..\src\crbase\bit_cast.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\internal\checked_iterators.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\internal\contiguous_iterator.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\linked_list.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\optional.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\span.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\stack.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\util.h" />
+    <ClInclude Include="..\..\..\src\crbase\debug\alias.h" />
+    <ClInclude Include="..\..\..\src\crbase\debug\immediate_crash.h" />
+    <ClInclude Include="..\..\..\src\crbase\environment.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\file.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\file_enumerator.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\file_path.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\file_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\file_version_info.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\memory_mapped_file.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\platform_file.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\scoped_file.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\scoped_temp_dir.h" />
+    <ClInclude Include="..\..\..\src\crbase\files\win\file_version_info_win.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\bind.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\bind_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\callback.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\callback_forward.h" />
+    <ClInclude Include="..\..\..\src\crbase\functional\callback_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\guid.h" />
+    <ClInclude Include="..\..\..\src\crbase\helper\scoped_clear_last_error.h" />
+    <ClInclude Include="..\..\..\src\crbase\helper\scoped_generic.h" />
+    <ClInclude Include="..\..\..\src\crbase\internal\gtest_prod_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\internal\lazy_instance_helpers.h" />
+    <ClInclude Include="..\..\..\src\crbase\internal\observer_list_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\internal\raw_ref_ptr_mismatch_checker.h" />
+    <ClInclude Include="..\..\..\src\crbase\internal\template_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\location.h" />
+    <ClInclude Include="..\..\..\src\crbase\logging\logging.h" />
+    <ClInclude Include="..\..\..\src\crbase\logging\logging_types.h" />
+    <ClInclude Include="..\..\..\src\crbase\logging\win\logging_internal_win.h" />
+    <ClInclude Include="..\..\..\src\crbase\memory\no_destructor.h" />
+    <ClInclude Include="..\..\..\src\crbase\memory\ptr_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\memory\ref_counted.h" />
+    <ClInclude Include="..\..\..\src\crbase\memory\ref_ptr.h" />
+    <ClInclude Include="..\..\..\src\crbase\memory\singleton.h" />
+    <ClInclude Include="..\..\..\src\crbase\memory\weak_ptr.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\checked_math.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\checked_math_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\clamped_math.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\clamped_math_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_arm_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_conversions_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_arm_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_clang_gcc_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\numerics\safe_math_shared_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\observer_list.h" />
+    <ClInclude Include="..\..\..\src\crbase\observer_list_types.h" />
+    <ClInclude Include="..\..\..\src\crbase\posix\eintr_wrapper.h" />
+    <ClInclude Include="..\..\..\src\crbase\rand_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\stl_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\char_traits.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\format_macros.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\posix\string_util_posix.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\strcat.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\strcat_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\stringprintf.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_number_conversions.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_number_conversions_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_piece.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_split.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_split_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\string_util_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\sys_string_conversions.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\utf_string_conversions.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\utf_string_conversion_utils.h" />
+    <ClInclude Include="..\..\..\src\crbase\strings\win\string_util_win.h" />
+    <ClInclude Include="..\..\..\src\crbase\synchronization\atomic_flag.h" />
+    <ClInclude Include="..\..\..\src\crbase\synchronization\condition_variable.h" />
+    <ClInclude Include="..\..\..\src\crbase\synchronization\lock.h" />
+    <ClInclude Include="..\..\..\src\crbase\synchronization\lock_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\synchronization\waitable_event.h" />
+    <ClInclude Include="..\..\..\src\crbase\system\cpu_info.h" />
+    <ClInclude Include="..\..\..\src\crbase\sys_byteorder.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\bignum-dtoa.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\bignum.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\cached-powers.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\diy-fp.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\double-conversion.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\double-to-string.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\fast-dtoa.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\fixed-dtoa.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\ieee.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\string-to-double.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\strtod.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\utils.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\icu\icu_utf.h" />
+    <ClInclude Include="..\..\..\src\crbase\third_party\nspr\prtime.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\platform_thread.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\sequence_checker.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\sequence_checker_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\sequence_token.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\thread_id_name_manager.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\thread_local.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\thread_local_internal.h" />
+    <ClInclude Include="..\..\..\src\crbase\threading\thread_local_storage.h" />
+    <ClInclude Include="..\..\..\src\crbase\time\time.h" />
+    <ClInclude Include="..\..\..\src\crbase\time\time_override.h" />
+    <ClInclude Include="..\..\..\src\crbase\time\time_to_iso8601.h" />
+    <ClInclude Include="..\..\..\src\crbase\version.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_bstr.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_comptr.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_com_initializer.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_co_mem.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_propvariant.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\com\scoped_variant.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\registry.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\resource_util.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\scoped_handle.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\shlwapi.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\windows_types.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\windows_version.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\win_api_helper.h" />
+    <ClInclude Include="..\..\..\src\crbase\win\win_util.h" />
+    <ClInclude Include="..\..\..\src\cr\build_config.h" />
+    <ClInclude Include="..\..\..\src\cr\compiler_specific.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />
+    <ClCompile Include="..\..\..\src\crbase\containers\linked_list.cc" />
+    <ClCompile Include="..\..\..\src\crbase\debug\alias.cc" />
+    <ClCompile Include="..\..\..\src\crbase\debug\immediate_crash.cc" />
+    <ClCompile Include="..\..\..\src\crbase\environment.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\file.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\file_enumerator.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\file_path.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\file_path_constants.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\file_util.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\memory_mapped_file.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\scoped_temp_dir.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\win\file_enumerator_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\win\file_util_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\win\file_version_info_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\win\file_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\files\win\memory_mapped_file_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\functional\callback_internal.cc" />
+    <ClCompile Include="..\..\..\src\crbase\guid.cc" />
+    <ClCompile Include="..\..\..\src\crbase\helper\win\scoped_clear_last_error_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\internal\lazy_instance_helpers.cc" />
+    <ClCompile Include="..\..\..\src\crbase\internal\observer_list_internal.cc" />
+    <ClCompile Include="..\..\..\src\crbase\location.cc" />
+    <ClCompile Include="..\..\..\src\crbase\logging\logging.cc" />
+    <ClCompile Include="..\..\..\src\crbase\logging\win\logging_internal_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\memory\ref_counted.cc" />
+    <ClCompile Include="..\..\..\src\crbase\memory\weak_ptr.cc" />
+    <ClCompile Include="..\..\..\src\crbase\observer_list_types.cc" />
+    <ClCompile Include="..\..\..\src\crbase\rand_util.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\strcat.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\stringprintf.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\string_number_conversions.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\string_split.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\string_util.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\string_util_constants.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\utf_string_conversions.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\utf_string_conversion_utils.cc" />
+    <ClCompile Include="..\..\..\src\crbase\strings\win\sys_string_conversions_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\synchronization\atomic_flag.cc" />
+    <ClCompile Include="..\..\..\src\crbase\synchronization\lock.cc" />
+    <ClCompile Include="..\..\..\src\crbase\synchronization\win\condition_variable_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\synchronization\win\lock_impl_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\synchronization\win\waitable_event_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\system\cpu_info.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\bignum-dtoa.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\bignum.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\cached-powers.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\double-to-string.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\fast-dtoa.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\fixed-dtoa.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\string-to-double.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\double_conversion\double-conversion\strtod.cc" />
+    <ClCompile Include="..\..\..\src\crbase\third_party\nspr\prtime.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\platform_thread.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\sequence_checker_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\sequence_token.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\thread_id_name_manager.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\thread_local_storage.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\win\platform_thread_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\threading\win\thread_local_storage_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\time\time.cc" />
+    <ClCompile Include="..\..\..\src\crbase\time\time_override.cc" />
+    <ClCompile Include="..\..\..\src\crbase\time\time_to_iso8601.cc" />
+    <ClCompile Include="..\..\..\src\crbase\time\win\time_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\version.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\com\scoped_bstr.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\com\scoped_variant.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\rand_util_win.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\registry.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\resource_util.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\scoped_handle.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\windows_version.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\win_api_helper.cc" />
+    <ClCompile Include="..\..\..\src\crbase\win\win_util.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\src\crbase\CMakeLists.txt" />
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{20F40B60-978B-4F3E-BDBA-D2756B463185}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>crbase</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\tests\crbase\at_exit_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase\strings\string_number_conversions_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\strings\string_piece_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\strings\string_split_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\strings\strcat_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\strings\stringprintf_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\time\time_unittest.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\time\time_win_unittest.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\synchronization\waitable_event_unittest.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\version_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase\files\file_path_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\synchronization\lock_unittest.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\functional\bind_unittest.cc">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\bind.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase\files\scoped_temp_dir_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\files\memory_mapped_file_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\files\file_enumerator_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\environment_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase\guid_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase\win\scoped_comptr_unittest.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\win\scoped_bstr_unittest.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\win\scoped_variant_unittest.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase\gtest_main.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase\observer_list_unittest.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="strings">
+      <UniqueIdentifier>{dd9702a4-f521-4e5d-9b3c-52427c6e0216}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{45d139a9-4e30-4ab5-aa75-58f131f5954a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="synchronization">
+      <UniqueIdentifier>{e0b72929-c1fe-465e-a7e9-231ea8276389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{18b4308b-bd2b-48b8-83d1-31af75e95117}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functional">
+      <UniqueIdentifier>{3ebcbf82-d198-4311-9e4a-746a80d912f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{7db98ebc-e390-4e8c-a860-e602d536137a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\tests\crbase\gtest_util.h" />
+    <ClInclude Include="..\..\..\..\tests\crbase\bind.h" />
+    <ClInclude Include="..\..\..\..\tests\crbase\gtest_platform_test.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\tests\crbase\CMakeLists.txt" />
+  </ItemGroup>
+</Project>
