@@ -69,7 +69,7 @@
 //     }
 //
 //    private:
-//     base::ObserverList<Observer> observers_;
+//     cr::ObserverList<Observer> observers_;
 //   };
 //
 //

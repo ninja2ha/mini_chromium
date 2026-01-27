@@ -41,12 +41,14 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 
 # containers
 set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES} 
+	${CRBASE_SRC_DIR}/containers/circular_deque.h
 	${CRBASE_SRC_DIR}/containers/optional.h
 	${CRBASE_SRC_DIR}/containers/span.h
 	${CRBASE_SRC_DIR}/containers/stack.h
 	${CRBASE_SRC_DIR}/containers/util.h
 	${CRBASE_SRC_DIR}/containers/internal/checked_iterators.h
 	${CRBASE_SRC_DIR}/containers/internal/contiguous_iterator.h
+	${CRBASE_SRC_DIR}/containers/internal/vector_buffer.h
 )
 
 # debug
@@ -303,6 +305,14 @@ endif()
 
 # time
 set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES} 
+	${CRBASE_SRC_DIR}/time/clock.cc
+	${CRBASE_SRC_DIR}/time/clock.h
+	${CRBASE_SRC_DIR}/time/default_clock.cc
+	${CRBASE_SRC_DIR}/time/default_clock.h
+	${CRBASE_SRC_DIR}/time/default_tick_clock.cc
+	${CRBASE_SRC_DIR}/time/default_tick_clock.h
+	${CRBASE_SRC_DIR}/time/tick_clock.cc
+	${CRBASE_SRC_DIR}/time/tick_clock.h
 	${CRBASE_SRC_DIR}/time/time.cc
 	${CRBASE_SRC_DIR}/time/time.h
 	${CRBASE_SRC_DIR}/time/time_override.cc

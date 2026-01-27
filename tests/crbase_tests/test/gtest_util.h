@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MINI_CHROMIUM_SRC_CRBASE_TEST_GTEST_UTIL_H_
-#define MINI_CHROMIUM_SRC_CRBASE_TEST_GTEST_UTIL_H_
+#ifndef MINI_CHROMIUM_SRC_CRBASE_TESTS_TEST_GTEST_UTIL_H_
+#define MINI_CHROMIUM_SRC_CRBASE_TESTS_TEST_GTEST_UTIL_H_
 
 #include <string>
 #include <utility>
@@ -70,4 +70,4 @@
 
 #endif  // defined(GTEST_HAS_DEATH_TEST)
 
-#endif  // MINI_CHROMIUM_SRC_CRBASE_TEST_GTEST_UTIL_H_
+#endif  // MINI_CHROMIUM_SRC_CRBASE_TESTS_TEST_GTEST_UTIL_H_

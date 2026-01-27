@@ -98,6 +98,7 @@
       <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -112,6 +113,7 @@
       <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -129,6 +131,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -148,6 +151,7 @@
       <ConformanceMode>true</ConformanceMode>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
       <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+      <LanguageStandard>stdcpp14</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -157,12 +161,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\crbase_runtime\containers\intrusive_heap.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\internal\post_task_and_reply_with_result_internal.h" />
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop.h" />
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.h" />
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.h" />
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.h" />
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\sequenced_task_source.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_for_io.h" />
@@ -171,11 +171,49 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\timer_slack.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\work_id_provider.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\parameter_pack.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\pending_task.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\run_loop.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\sequenced_task_runner.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\sequenced_task_runner_helpers.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\single_thread_task_runner.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\checked_lock.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\checked_lock_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\intrusive_heap.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\operations_controller.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\scoped_defer_task_posting.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\current_thread.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\associated_thread_id.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\atomic_flag_set.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\enqueue_order.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\enqueue_order_generator.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\lazily_deallocated_deque.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\lazy_now.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\real_time_domain.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequenced_task_source.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\tasks.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_selector.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_selector_logic.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_time_observer.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_with_message_pump_impl.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\time_domain.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_deduplicator.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue_sets.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\simple_task_executor.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\single_thread_task_executor.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\single_thread_task_runner_thread_mode.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_executor.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_observer.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_traits.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_traits_extension.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\task_runner.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\post_task_and_reply_impl.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequenced_task_runner_handle.h" />
@@ -185,21 +223,45 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\traits_bag.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\win\message_window.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\win\object_watcher.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop.cc" />
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.cc" />
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.cc" />
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\containers\intrusive_heap.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\work_id_provider.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\pending_task.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\run_loop.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\common\checked_lock_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\common\operations_controller.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\common\scoped_defer_task_posting.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\current_thread.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\associated_thread_id.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\atomic_flag_set.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\enqueue_order_generator.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\lazy_now.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\real_time_domain.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\tasks.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_selector.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_with_message_pump_impl.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\time_domain.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_deduplicator.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue_sets.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\simple_task_executor.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\single_thread_task_executor.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\task_executor.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\task_runner.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\post_task_and_reply_impl.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequenced_task_runner_handle.cc" />

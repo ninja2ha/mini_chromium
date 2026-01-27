@@ -1,23 +1,35 @@
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+// * VERSION: 91.0.4472.169
 
 #include "crbase_runtime/threading/thread.h"
 
-#include "crbase/logging/logging.h"
+#include <memory>
+#include <type_traits>
+
 #include "crbase/functional/bind.h"
-#include "crbase/location.h"
-#include "crbase/stl_util.h"
+#include "crbase/functional/callback_helpers.h"
 #include "crbase/memory/no_destructor.h"
+#include "crbase/location.h"
+#include "crbase/logging/logging.h"
+#include "crbase/memory/ptr_util.h"
+#include "crbase/memory/ref_ptr.h"
 #include "crbase/synchronization/waitable_event.h"
 #include "crbase/threading/thread_id_name_manager.h"
 #include "crbase/threading/thread_local.h"
+#include "crbase_runtime/message_pump/message_pump.h"
 #include "crbase_runtime/run_loop.h"
-///#include "crbase_runtime/task/sequence_manager/sequence_manager.h"
+#include "crbase_runtime/task/current_thread.h"
+#include "crbase_runtime/task/sequence_manager/sequence_manager_impl.h"
+#include "crbase_runtime/task/sequence_manager/task_queue.h"
+#include "crbase_runtime/task/simple_task_executor.h"
+///#include "base/third_party/dynamic_annotations/dynamic_annotations.h"
+#include "crbase_runtime/threading/thread_task_runner_handle.h"
 #include "crbuild/build_config.h"
 
 #if defined(MINI_CHROMIUM_OS_POSIX)
-#include "crbase_runtime/posix/file_descriptor_watcher_posix.h"
+#include "crbase/posix/file_descriptor_watcher_posix.h"
 #endif
 
 #if defined(MINI_CHROMIUM_OS_WIN)
@@ -32,19 +44,73 @@ namespace {
 // because its Stop method was called.  This allows us to catch cases where
 // MessageLoop::QuitWhenIdle() is called directly, which is unexpected when
 // using a Thread to setup and run a MessageLoop.
-cr::ThreadLocalBoolean* GetTlsBool() {
-  static cr::NoDestructor<cr::ThreadLocalBoolean> lazy_tls_bool;
-  return lazy_tls_bool.get();
+cr::ThreadLocalBoolean* GetLazyTls() {
+  static cr::NoDestructor<cr::ThreadLocalBoolean> tls;
+  return tls.get();
 }
+
+class SequenceManagerThreadDelegate : public Thread::Delegate {
+ public:
+  explicit SequenceManagerThreadDelegate(
+      MessagePumpType message_pump_type,
+      OnceCallback<std::unique_ptr<MessagePump>()> message_pump_factory,
+      sequence_manager::TimeDomain* time_domain)
+      : sequence_manager_(
+            sequence_manager::internal::SequenceManagerImpl::CreateUnbound(
+                sequence_manager::SequenceManager::Settings::Builder()
+                    .SetMessagePumpType(message_pump_type)
+                    .Build())),
+        default_task_queue_(sequence_manager_->CreateTaskQueue(
+            sequence_manager::TaskQueue::Spec("default_tq")
+                .SetTimeDomain(time_domain))),
+        message_pump_factory_(std::move(message_pump_factory)) {
+    sequence_manager_->SetDefaultTaskRunner(default_task_queue_->task_runner());
+  }
+
+  ~SequenceManagerThreadDelegate() override = default;
+
+  RefPtr<SingleThreadTaskRunner> GetDefaultTaskRunner() override {
+    // Surprisingly this might not be default_task_queue_->task_runner() which
+    // we set in the constructor. The Thread::Init() method could create a
+    // SequenceManager on top of the current one and call
+    // SequenceManager::SetDefaultTaskRunner which would propagate the new
+    // TaskRunner down to our SequenceManager. Turns out, code actually relies
+    // on this and somehow relies on
+    // SequenceManagerThreadDelegate::GetDefaultTaskRunner returning this new
+    // TaskRunner. So instead of returning default_task_queue_->task_runner() we
+    // need to query the SequenceManager for it.
+    // The underlying problem here is that Subclasses of Thread can do crazy
+    // stuff in Init() but they are not really in control of what happens in the
+    // Thread::Delegate, as this is passed in on calling StartWithOptions which
+    // could happen far away from where the Thread is created. We should
+    // consider getting rid of StartWithOptions, and pass them as a constructor
+    // argument instead.
+    return sequence_manager_->GetTaskRunner();
+  }
+
+  void BindToCurrentThread(TimerSlack timer_slack) override {
+    sequence_manager_->BindToMessagePump(
+        std::move(message_pump_factory_).Run());
+    sequence_manager_->SetTimerSlack(timer_slack);
+    simple_task_executor_.emplace(GetDefaultTaskRunner());
+  }
+
+ private:
+  std::unique_ptr<sequence_manager::internal::SequenceManagerImpl>
+      sequence_manager_;
+  RefPtr<sequence_manager::TaskQueue> default_task_queue_;
+  OnceCallback<std::unique_ptr<MessagePump>()> message_pump_factory_;
+  cr::Optional<SimpleTaskExecutor> simple_task_executor_;
+};
 
 }  // namespace
 
 Thread::Options::Options() = default;
 
-Thread::Options::Options(MessageLoop::Type type, size_t size)
-    : message_loop_type(type), stack_size(size) {}
+Thread::Options::Options(MessagePumpType type, size_t size)
+    : message_pump_type(type), stack_size(size) {}
 
-Thread::Options::Options(const Options& other) = default;
+Thread::Options::Options(Options&& other) = default;
 
 Thread::Options::~Options() = default;
 
@@ -71,20 +137,21 @@ bool Thread::Start() {
   Options options;
 #if defined(MINI_CHROMIUM_OS_WIN)
   if (com_status_ == STA)
-    options.message_loop_type = MessageLoop::TYPE_UI;
+    options.message_pump_type = MessagePumpType::UI;
 #endif
   return StartWithOptions(options);
 }
 
 bool Thread::StartWithOptions(const Options& options) {
   CR_DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  CR_DCHECK(!message_loop_);
+  CR_DCHECK(!delegate_);
   CR_DCHECK(!IsRunning());
-  CR_DCHECK(!stopping_) << "Starting a non-joinable thread a second time? That's "
-                        << "not allowed!";
+  CR_DCHECK(!stopping_) 
+      << "Starting a non-joinable thread a second time? That's "
+      << "not allowed!";
 #if defined(MINI_CHROMIUM_OS_WIN)
   CR_DCHECK((com_status_ != STA) ||
-      (options.message_loop_type == MessageLoop::TYPE_UI));
+            (options.message_pump_type == MessagePumpType::UI));
 #endif
 
   // Reset |id_| here to support restarting the thread.
@@ -93,21 +160,25 @@ bool Thread::StartWithOptions(const Options& options) {
 
   SetThreadWasQuitProperly(false);
 
-  MessageLoop::Type type = options.message_loop_type;
-  if (!options.message_pump_factory.is_null())
-    type = MessageLoop::TYPE_CUSTOM;
+  timer_slack_ = options.timer_slack;
 
-  message_loop_timer_slack_ = options.timer_slack;
-  std::unique_ptr<MessageLoop> message_loop_owned =
-      MessageLoop::CreateUnbound(type, options.message_pump_factory);
-  message_loop_ = message_loop_owned.get();
+  if (options.delegate) {
+    CR_DCHECK(!options.message_pump_factory);
+    CR_DCHECK(!options.task_queue_time_domain);
+    delegate_ = WrapUnique(options.delegate);
+  } else if (options.message_pump_factory) {
+    delegate_ = std::make_unique<SequenceManagerThreadDelegate>(
+        MessagePumpType::CUSTOM, options.message_pump_factory,
+        options.task_queue_time_domain);
+  } else {
+    delegate_ = std::make_unique<SequenceManagerThreadDelegate>(
+        options.message_pump_type,
+        BindOnce([](MessagePumpType type) { return MessagePump::Create(type); },
+                 options.message_pump_type),
+        options.task_queue_time_domain);
+  }
+
   start_event_.Reset();
-
-  ///if (options.on_sequence_manager_created) {
-  ///  sequence_manager_ =
-  ///      sequence_manager::CreateUnboundSequenceManager(message_loop_);
-  ///  options.on_sequence_manager_created.Run(sequence_manager_.get());
-  ///}
 
   // Hold |thread_lock_| while starting the new thread to synchronize with
   // Stop() while it's not guaranteed to be sequenced (until crbug/629139 is
@@ -122,18 +193,12 @@ bool Thread::StartWithOptions(const Options& options) {
                   options.stack_size, this, options.priority);
     if (!success) {
       CR_DLOG(Error) << "failed to create thread";
-      message_loop_ = nullptr;
       return false;
     }
   }
 
   joinable_ = options.joinable;
 
-  // The ownership of |message_loop_| is managed by the newly created thread
-  // within the ThreadMain.
-  ignore_result(message_loop_owned.release());
-
-  CR_DCHECK(message_loop_);
   return true;
 }
 
@@ -148,16 +213,17 @@ bool Thread::StartAndWaitForTesting() {
 
 bool Thread::WaitUntilThreadStarted() const {
   CR_DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  if (!message_loop_)
+  if (!delegate_)
     return false;
-  ///base::ThreadRestrictions::ScopedAllowWait allow_wait;
+  // https://crbug.com/918039
+  ///base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope allow_wait;
   start_event_.Wait();
   return true;
 }
 
 void Thread::FlushForTesting() {
   CR_DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  if (!message_loop_)
+  if (!delegate_)
     return;
 
   WaitableEvent done(WaitableEvent::ResetPolicy::AUTOMATIC,
@@ -184,15 +250,14 @@ void Thread::Stop() {
 
   // Wait for the thread to exit.
   //
-  // TODO(darin): Unfortunately, we need to keep |message_loop_| around until
-  // the thread exits.  Some consumers are abusing the API.  Make them stop.
-  //
+  // TODO(darin): Unfortunately, we need to keep |delegate_| around
+  // until the thread exits. Some consumers are abusing the API. Make them stop.
   PlatformThread::Join(thread_);
   thread_ = cr::PlatformThreadHandle();
 
-  // The thread should nullify |message_loop_| on exit (note: Join() adds an
-  // implicit memory barrier and no lock is thus required for this check).
-  CR_DCHECK(!message_loop_);
+  // The thread should release |delegate_| on exit (note: Join() adds
+  // an implicit memory barrier and no lock is thus required for this check).
+  CR_DCHECK(!delegate_);
 
   stopping_ = false;
 }
@@ -202,19 +267,10 @@ void Thread::StopSoon() {
   // enable this check.
   // DCHECK(owning_sequence_checker_.CalledOnValidSequence());
 
-  if (stopping_ || !message_loop_)
+  if (stopping_ || !delegate_)
     return;
 
   stopping_ = true;
-
-  if (using_external_message_loop_) {
-    // Setting |stopping_| to true above should have been sufficient for this
-    // thread to be considered "stopped" per it having never set its |running_|
-    // bit by lack of its own ThreadMain.
-    CR_DCHECK(!IsRunning());
-    message_loop_ = nullptr;
-    return;
-  }
 
   task_runner()->PostTask(
       CR_FROM_HERE, 
@@ -227,15 +283,12 @@ void Thread::DetachFromSequence() {
 }
 
 PlatformThreadId Thread::GetThreadId() const {
-  // If the thread is created but not started yet, wait for |id_| being ready.
-  ///base::ThreadRestrictions::ScopedAllowWait allow_wait;
-  id_event_.Wait();
+  if (!id_event_.IsSignaled()) {
+    // If the thread is created but not started yet, wait for |id_| being ready.
+    ///base::ScopedAllowBaseSyncPrimitivesOutsideBlockingScope allow_wait;
+    id_event_.Wait();
+  }
   return id_;
-}
-
-PlatformThreadHandle Thread::GetThreadHandle() const {
-  AutoLock lock(thread_lock_);
-  return thread_;
 }
 
 bool Thread::IsRunning() const {
@@ -243,11 +296,11 @@ bool Thread::IsRunning() const {
   // enable this check.
   // DCHECK(owning_sequence_checker_.CalledOnValidSequence());
 
-  // If the thread's already started (i.e. |message_loop_| is non-null) and not
-  // yet requested to stop (i.e. |stopping_| is false) we can just return true.
-  // (Note that |stopping_| is touched only on the same sequence that starts /
-  // started the new thread so we need no locking here.)
-  if (message_loop_ && !stopping_)
+  // If the thread's already started (i.e. |delegate_| is non-null) and
+  // not yet requested to stop (i.e. |stopping_| is false) we can just return
+  // true. (Note that |stopping_| is touched only on the same sequence that
+  // starts / started the new thread so we need no locking here.)
+  if (delegate_ && !stopping_)
     return true;
   // Otherwise check the |running_| flag, which is set to true by the new thread
   // only while it is inside Run().
@@ -265,29 +318,16 @@ void Thread::Run(RunLoop* run_loop) {
 
 // static
 void Thread::SetThreadWasQuitProperly(bool flag) {
-  GetTlsBool()->Set(flag);
+  GetLazyTls()->Set(flag);
 }
 
 // static
 bool Thread::GetThreadWasQuitProperly() {
   bool quit_properly = true;
-#ifndef NDEBUG
-  quit_properly = GetTlsBool()->Get();
+#if CR_DCHECK_IS_ON()
+  quit_properly = GetLazyTls()->Get();
 #endif
   return quit_properly;
-}
-
-void Thread::SetMessageLoop(MessageLoop* message_loop) {
-  CR_DCHECK(owning_sequence_checker_.CalledOnValidSequence());
-  CR_DCHECK(message_loop);
-
-  // Setting |message_loop_| should suffice for this thread to be considered
-  // as "running", until Stop() is invoked.
-  CR_DCHECK(!IsRunning());
-  message_loop_ = message_loop;
-  CR_DCHECK(IsRunning());
-
-  using_external_message_loop_ = true;
 }
 
 void Thread::ThreadMain() {
@@ -306,40 +346,29 @@ void Thread::ThreadMain() {
   PlatformThread::SetName(name_.c_str());
   ///ANNOTATE_THREAD_NAME(name_.c_str());  // Tell the name to race detector.
 
-  ///if (sequence_manager_) {
-  ///  // Bind the SequenceManager before binding the MessageLoop, so that the
-  ///  // TaskQueues are bound before the MessageLoop. This is required as one of
-  ///  // the TaskQueues may have already replaced the MessageLoop's TaskRunner,
-  ///  // and the MessageLoop's TaskRunner needs to be associated with this thread
-  ///  // when we call MessageLoop::BindToCurrentThread().
-  ///  sequence_manager_->BindToCurrentThread();
-  ///}
-
   // Lazily initialize the |message_loop| so that it can run on this thread.
-  CR_DCHECK(message_loop_);
-  std::unique_ptr<MessageLoop> message_loop(message_loop_);
-  message_loop_->BindToCurrentThread();
-  message_loop_->SetTimerSlack(message_loop_timer_slack_);
-
-  ///if (sequence_manager_) {
-  ///  sequence_manager_->CompleteInitializationOnBoundThread();
-  ///}
+  CR_DCHECK(delegate_);
+  // This binds CurrentThread and ThreadTaskRunnerHandle.
+  delegate_->BindToCurrentThread(timer_slack_);
+  CR_DCHECK(CurrentThread::Get());
+  CR_DCHECK(ThreadTaskRunnerHandle::IsSet());
 
 #if defined(MINI_CHROMIUM_OS_POSIX)
   // Allow threads running a MessageLoopForIO to use FileDescriptorWatcher API.
   std::unique_ptr<FileDescriptorWatcher> file_descriptor_watcher;
-  if (MessageLoopForIO::IsCurrent()) {
-    file_descriptor_watcher.reset(new FileDescriptorWatcher(
-        static_cast<MessageLoopForIO*>(message_loop_)));
+  if (CurrentIOThread::IsSet()) {
+    file_descriptor_watcher = std::make_unique<FileDescriptorWatcher>(
+        delegate_->GetDefaultTaskRunner());
   }
 #endif
 
 #if defined(MINI_CHROMIUM_OS_WIN)
   std::unique_ptr<win::ScopedCOMInitializer> com_initializer;
   if (com_status_ != NONE) {
-    com_initializer.reset((com_status_ == STA) ?
-        new win::ScopedCOMInitializer() :
-        new win::ScopedCOMInitializer(win::ScopedCOMInitializer::kMTA));
+    com_initializer.reset(
+        (com_status_ == STA)
+            ? new win::ScopedCOMInitializer()
+            : new win::ScopedCOMInitializer(win::ScopedCOMInitializer::kMTA));
   }
 #endif
 
@@ -369,18 +398,11 @@ void Thread::ThreadMain() {
   com_initializer.reset();
 #endif
 
-  ///sequence_manager_.reset();
-
-  if (message_loop->type() != MessageLoop::TYPE_CUSTOM) {
-    // Assert that RunLoop::QuitWhenIdle was called by ThreadQuitHelper. Don't
-    // check for custom message pumps, because their shutdown might not allow
-    // this.
-    CR_DCHECK(GetThreadWasQuitProperly());
-  }
+  CR_DCHECK(GetThreadWasQuitProperly());
 
   // We can't receive messages anymore.
   // (The message loop is destructed at the end of this block)
-  message_loop_ = nullptr;
+  delegate_.reset();
   run_loop_ = nullptr;
 }
 

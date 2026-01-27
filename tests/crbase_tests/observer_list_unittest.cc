@@ -12,7 +12,8 @@
 
 #include "gmock/gmock.h"
 #include "gtest/gtest.h"
-#include "gtest_util.h"
+
+#include "crbase_tests/test/gtest_util.h"
 
 namespace cr {
 namespace {

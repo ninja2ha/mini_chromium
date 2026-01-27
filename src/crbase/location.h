@@ -82,7 +82,7 @@ class CRBASE_EXPORT Location {
 
 CRBASE_EXPORT const void* GetProgramCounter();
 
-#define CR_FROM_HERE ::cr::Location::CreateFromHere(nullptr, nullptr, __LINE__)
+#define CR_FROM_HERE ::cr::Location::CreateFromHere(nullptr, nullptr, -1)
 #define CR_FROM_HERE_WITH_EXPLICIT_FUNCTION(function_name) \
   ::cr::Location::CreateFromHere(function_name, nullptr, -1)
 

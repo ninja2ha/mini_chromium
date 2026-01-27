@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MINI_CHROMIUM_TESTS_CRBASE_BIND_H_
-#define MINI_CHROMIUM_TESTS_CRBASE_BIND_H_
+#ifndef MINI_CHROMIUM_TESTS_CRBASE_TESTS_TEST_BIND_H_
+#define MINI_CHROMIUM_TESTS_CRBASE_TESTS_TEST_BIND_H_
 
 #include <type_traits>
 #include <utility>
@@ -86,4 +86,4 @@ RepeatingClosure MakeExpectedNotRunClosure(const Location& location,
 
 }  // namespace cr
 
-#endif  // MINI_CHROMIUM_TESTS_CRBASE_BIND_H_
+#endif  // MINI_CHROMIUM_TESTS_CRBASE_TESTS_TEST_BIND_H_

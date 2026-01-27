@@ -18,20 +18,12 @@
 #error Please add support for your compipler in cr/compiler_specific.h
 #endif
 
-#if defined(NDEBUG)
-#if defined(MINI_CHROMIUM_COMPILER_GCC)
+#if defined(MINI_CHROMIUM_COMPILER_GCC) && defined(NDEBUG)
 #define CR_ALWAYS_INLINE inline __attribute__((__always_inline__))
-#elif defined(MINI_CHROMIUM_COMPILER_MSVC)
-#if (_MSC_VER >= 1200)
+#elif defined(MINI_CHROMIUM_COMPILER_MSVC) && defined(NDEBUG)
 #define CR_ALWAYS_INLINE __forceinline
 #else
 #define CR_ALWAYS_INLINE inline
-#endif
-#else
-#error Please add support for your compipler in cr/compiler_specific.h
-#endif
-#else
-#define CR_ALWAYS_INLINE
 #endif
 
 // Specify memory alignment for structs, classes, etc.

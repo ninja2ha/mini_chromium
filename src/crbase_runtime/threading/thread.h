@@ -1,6 +1,7 @@
 // Copyright (c) 2012 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
+// * VERSION: 91.0.4472.169
 
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_THREAD_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_THREAD_H_
@@ -13,26 +14,25 @@
 #include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/threading/sequence_checker.h"
+#include "crbase_runtime/message_pump/message_pump_type.h"
+#include "crbase_runtime/message_pump/timer_slack.h"
+#include "crbase_runtime/single_thread_task_runner.h"
 #include "crbase/synchronization/atomic_flag.h"
 #include "crbase/synchronization/lock.h"
 #include "crbase/synchronization/waitable_event.h"
 #include "crbase/threading/platform_thread.h"
-#include "crbase_runtime/single_thread_task_runner.h"
-#include "crbase_runtime/message_loop/message_loop.h"
-#include "crbase_runtime/message_pump/timer_slack.h"
 #include "crbuild/build_config.h"
 
 namespace cr {
 
 class MessagePump;
 class RunLoop;
-
 namespace sequence_manager {
-class SequenceManager;
-}  // namespace sequence_manager
+class TimeDomain;
+}
 
 // IMPORTANT: Instead of creating a base::Thread, consider using
-// base::Create(Sequenced|SingleThread)TaskRunnerWithTraits().
+// base::Create(Sequenced|SingleThread)TaskRunner().
 //
 // A simple thread abstraction that establishes a MessageLoop on a new thread.
 // The consumer uses the MessageLoop of the thread to cause code to execute on
@@ -46,7 +46,7 @@ class SequenceManager;
 //
 //  (1) Thread::CleanUp()
 //  (2) MessageLoop::~MessageLoop
-//  (3.b) MessageLoopCurrent::DestructionObserver::WillDestroyCurrentMessageLoop
+//  (3.b) CurrentThread::DestructionObserver::WillDestroyCurrentMessageLoop
 //
 // This API is not thread-safe: unless indicated otherwise its methods are only
 // valid from the owning sequence (which is the one from which Start() is
@@ -61,34 +61,49 @@ class SequenceManager;
 // Thread object (including ~Thread()).
 class CRBASE_EXPORT Thread : PlatformThread::Delegate {
  public:
+  class CRBASE_EXPORT Delegate {
+   public:
+    virtual ~Delegate() {}
+
+    virtual RefPtr<SingleThreadTaskRunner> GetDefaultTaskRunner() = 0;
+
+    // Binds a RunLoop::Delegate and TaskRunnerHandle to the thread. The
+    // underlying MessagePump will have its |timer_slack| set to the specified
+    // amount.
+    virtual void BindToCurrentThread(TimerSlack timer_slack) = 0;
+  };
+
   struct CRBASE_EXPORT Options {
-    typedef Callback<std::unique_ptr<MessagePump>()> MessagePumpFactory;
-    using SequenceManagerCreatedCallback =
-        RepeatingCallback<void(sequence_manager::SequenceManager*)>;
+    using MessagePumpFactory =
+        RepeatingCallback<std::unique_ptr<MessagePump>()>;
 
     Options();
-    Options(MessageLoop::Type type, size_t size);
-    Options(const Options& other);
+    Options(MessagePumpType type, size_t size);
+    Options(Options&& other);
     ~Options();
 
-    // Specifies the type of message loop that will be allocated on the thread.
+    // Specifies the type of message pump that will be allocated on the thread.
     // This is ignored if message_pump_factory.is_null() is false.
-    MessageLoop::Type message_loop_type = MessageLoop::TYPE_DEFAULT;
+    MessagePumpType message_pump_type = MessagePumpType::DEFAULT;
+
+    // An unbound Delegate that will be bound to the thread. Ownership
+    // of |delegate| will be transferred to the thread.
+    // TODO(alexclarke): This should be a std::unique_ptr
+    Delegate* delegate = nullptr;
 
     // Specifies timer slack for thread message loop.
     TimerSlack timer_slack = TIMER_SLACK_NONE;
 
+    // The time domain to be used by the task queue. This is not compatible with
+    // a non-null |delegate|.
+    sequence_manager::TimeDomain* task_queue_time_domain = nullptr;
+
     // Used to create the MessagePump for the MessageLoop. The callback is Run()
     // on the thread. If message_pump_factory.is_null(), then a MessagePump
-    // appropriate for |message_loop_type| is created. Setting this forces the
-    // MessageLoop::Type to TYPE_CUSTOM.
+    // appropriate for |message_pump_type| is created. Setting this forces the
+    // MessagePumpType to TYPE_CUSTOM. This is not compatible with a non-null
+    // |delegate|.
     MessagePumpFactory message_pump_factory;
-
-    // If set, the Thread will create a SequenceManager on the MessageLoop and
-    // execute the provided callback right after it was created. The callback
-    // will be executed on the creator thread before the new Thread is started.
-    // It is typically used to create TaskQueues for the SequenceManager.
-    ///SequenceManagerCreatedCallback on_sequence_manager_created;
 
     // Specifies the maximum stack size that the thread is allowed to use.
     // This does not necessarily correspond to the thread's initial stack size.
@@ -106,9 +121,6 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
     // user-after-frees (proposal @ https://crbug.com/629139#c14)
     bool joinable = true;
   };
-
-  Thread(const Thread&) = delete;
-  Thread& operator=(const Thread&) = delete;
 
   // Constructor.
   // name is a display string to identify the thread.
@@ -131,7 +143,7 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
   // init_com_with_mta(false) and then StartWithOptions() with any message loop
   // type other than TYPE_UI.
   void init_com_with_mta(bool use_mta) {
-    CR_DCHECK(!message_loop_);
+    CR_DCHECK(!delegate_);
     com_status_ = use_mta ? MTA : STA;
   }
 #endif
@@ -203,34 +215,6 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
   // relationship with this one.
   void DetachFromSequence();
 
-  // Returns the message loop for this thread.  Use the MessageLoop's
-  // PostTask methods to execute code on the thread.  This only returns
-  // non-null after a successful call to Start.  After Stop has been called,
-  // this will return nullptr.
-  //
-  // NOTE: You must not call this MessageLoop's Quit method directly.  Use
-  // the Thread's Stop method instead.
-  //
-  // In addition to this Thread's owning sequence, this can also safely be
-  // called from the underlying thread itself.
-  MessageLoop* message_loop() const {
-    // This class doesn't provide synchronization around |message_loop_| and as
-    // such only the owner should access it (and the underlying thread which
-    // never sees it before it's set). In practice, many callers are coming from
-    // unrelated threads but provide their own implicit (e.g. memory barriers
-    // from task posting) or explicit (e.g. locks) synchronization making the
-    // access of |message_loop_| safe... Changing all of those callers is
-    // unfeasible; instead verify that they can reliably see
-    // |message_loop_ != nullptr| without synchronization as a proof that their
-    // external synchronization catches the unsynchronized effects of Start().
-    // TODO(gab): Despite all of the above this test has to be disabled for now
-    // per crbug.com/629139#c6.
-    // DCHECK(owning_sequence_checker_.CalledOnValidSequence() ||
-    //        (id_event_.IsSignaled() && id_ == PlatformThread::CurrentId()) ||
-    //        message_loop_);
-    return message_loop_;
-  }
-
   // Returns a TaskRunner for this thread. Use the TaskRunner's PostTask
   // methods to execute code on the thread. Returns nullptr if the thread is not
   // running (e.g. before Start or after Stop have been called). Callers can
@@ -240,11 +224,20 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
   // In addition to this Thread's owning sequence, this can also safely be
   // called from the underlying thread itself.
   RefPtr<SingleThreadTaskRunner> task_runner() const {
-    // Refer to the DCHECK and comment inside |message_loop()|.
+    // This class doesn't provide synchronization around |message_loop_base_|
+    // and as such only the owner should access it (and the underlying thread
+    // which never sees it before it's set). In practice, many callers are
+    // coming from unrelated threads but provide their own implicit (e.g. memory
+    // barriers from task posting) or explicit (e.g. locks) synchronization
+    // making the access of |message_loop_base_| safe... Changing all of those
+    // callers is unfeasible; instead verify that they can reliably see
+    // |message_loop_base_ != nullptr| without synchronization as a proof that
+    // their external synchronization catches the unsynchronized effects of
+    // Start().
     CR_DCHECK(owning_sequence_checker_.CalledOnValidSequence() ||
               (id_event_.IsSignaled() && id_ == PlatformThread::CurrentId()) ||
-              message_loop_);
-    return message_loop_ ? message_loop_->task_runner() : nullptr;
+              delegate_);
+    return delegate_ ? delegate_->GetDefaultTaskRunner() : nullptr;
   }
 
   // Returns the name of this thread (for display in debugger too).
@@ -258,15 +251,6 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
   //
   // This method is thread-safe.
   PlatformThreadId GetThreadId() const;
-
-  // Returns the current thread handle. If called before Start*() returns or
-  // after Stop() returns, an empty thread handle will be returned.
-  //
-  // This method is thread-safe.
-  //
-  // TODO(robliao): Remove this when it no longer needs to be temporarily
-  // exposed for http://crbug.com/717380.
-  PlatformThreadHandle GetThreadHandle() const;
 
   // Returns true if the thread has been started, and not yet stopped.
   bool IsRunning() const;
@@ -284,17 +268,11 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
   static void SetThreadWasQuitProperly(bool flag);
   static bool GetThreadWasQuitProperly();
 
-  // Bind this Thread to an existing MessageLoop instead of starting a new one.
-  // TODO(gab): Remove this after ios/ has undergone the same surgery as
-  // BrowserThreadImpl (ref.
-  // https://chromium-review.googlesource.com/c/chromium/src/+/969104).
-  void SetMessageLoop(MessageLoop* message_loop);
-
-  bool using_external_message_loop() const {
-    return using_external_message_loop_;
-  }
-
  private:
+  // Friends for message_loop() access:
+  friend class MessageLoopTaskRunnerTest;
+  friend class ScheduleWorkTest;
+
 #if defined(MINI_CHROMIUM_OS_WIN)
   enum ComStatus {
     NONE,
@@ -325,35 +303,25 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
 
   // True while inside of Run().
   bool running_ = false;
-  mutable Lock running_lock_;  // Protects |running_|.
+  mutable cr::Lock running_lock_;  // Protects |running_|.
 
   // The thread's handle.
   PlatformThreadHandle thread_;
-  mutable Lock thread_lock_;  // Protects |thread_|.
+  mutable cr::Lock thread_lock_;  // Protects |thread_|.
 
   // The thread's id once it has started.
   PlatformThreadId id_ = kInvalidThreadId;
   // Protects |id_| which must only be read while it's signaled.
   mutable WaitableEvent id_event_;
 
-  // The thread's MessageLoop and RunLoop. Valid only while the thread is alive.
-  // Set by the created thread.
-  MessageLoop* message_loop_ = nullptr;
+  // The thread's Delegate and RunLoop are valid only while the thread is
+  // alive. Set by the created thread.
+  std::unique_ptr<Delegate> delegate_;
   RunLoop* run_loop_ = nullptr;
 
-  // True only if |message_loop_| was externally provided by |SetMessageLoop()|
-  // in which case this Thread has no underlying |thread_| and should merely
-  // drop |message_loop_| on Stop(). In that event, this remains true after
-  // Stop() was invoked so that subclasses can use this state to build their own
-  // cleanup logic as required.
-  bool using_external_message_loop_ = false;
-
-  // Optionally stores a SequenceManager that manages Tasks on the MessageLoop.
-  ///std::unique_ptr<sequence_manager::SequenceManager> sequence_manager_;
-
-  // Stores Options::timer_slack_ until the message loop has been bound to
+  // Stores Options::timer_slack_ until the sequence manager has been bound to
   // a thread.
-  TimerSlack message_loop_timer_slack_ = TIMER_SLACK_NONE;
+  TimerSlack timer_slack_ = TIMER_SLACK_NONE;
 
   // The name of the thread.  Used for debugging purposes.
   const std::string name_;

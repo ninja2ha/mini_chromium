@@ -49,26 +49,11 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\timer_slack.h">
       <Filter>message_pump</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop.h">
-      <Filter>message_loop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.h">
-      <Filter>message_loop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.h">
-      <Filter>message_loop</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_slot.h">
       <Filter>threading</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_map.h">
       <Filter>threading</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\sequenced_task_source.h">
-      <Filter>message_loop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.h">
-      <Filter>message_loop</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.h">
       <Filter>message_pump</Filter>
@@ -79,6 +64,122 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread.h">
       <Filter>threading</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\checked_lock.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\checked_lock_impl.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\intrusive_heap.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\containers\intrusive_heap.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\operations_controller.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\common\scoped_defer_task_posting.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\associated_thread_id.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\atomic_flag_set.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\enqueue_order.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\enqueue_order_generator.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\lazily_deallocated_deque.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\lazy_now.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\real_time_domain.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequenced_task_source.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_selector.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_selector_logic.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_time_observer.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\tasks.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_with_message_pump_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\time_domain.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_deduplicator.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue_sets.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\message_pump\work_id_provider.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\current_thread.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_observer.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\simple_task_executor.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\single_thread_task_executor.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\single_thread_task_runner_thread_mode.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_executor.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_traits.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\task\task_traits_extension.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\traits_bag.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\parameter_pack.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
@@ -109,23 +210,11 @@
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.cc">
       <Filter>message_pump</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop.cc">
-      <Filter>message_loop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_current.cc">
-      <Filter>message_loop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\message_loop_task_runner.cc">
-      <Filter>message_loop</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_slot.cc">
       <Filter>threading</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\sequence_local_storage_map.cc">
       <Filter>threading</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\crbase_runtime\message_loop\pending_task_queue.cc">
-      <Filter>message_loop</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\watchable_io_message_pump_posix.cc">
       <Filter>message_pump</Filter>
@@ -135,6 +224,87 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread.cc">
       <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\common\checked_lock_impl.cc">
+      <Filter>task\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\containers\intrusive_heap.cc">
+      <Filter>containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\common\operations_controller.cc">
+      <Filter>task\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\common\scoped_defer_task_posting.cc">
+      <Filter>task\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\associated_thread_id.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\atomic_flag_set.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\enqueue_order_generator.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\lazy_now.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\real_time_domain.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\sequence_manager_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\task_queue_selector.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\tasks.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\thread_controller_with_message_pump_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\time_domain.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_deduplicator.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\sequence_manager\work_queue_sets.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\work_id_provider.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\current_thread.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\simple_task_executor.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\single_thread_task_executor.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\task\task_executor.cc">
+      <Filter>task</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -150,8 +320,17 @@
     <Filter Include="message_pump">
       <UniqueIdentifier>{45af8d33-b65e-4a06-8256-81ead47d5f17}</UniqueIdentifier>
     </Filter>
-    <Filter Include="message_loop">
-      <UniqueIdentifier>{db1f310a-a87e-48c6-8c53-51f48c236e29}</UniqueIdentifier>
+    <Filter Include="task">
+      <UniqueIdentifier>{1235fb48-d1c0-4e06-a744-29fda388f930}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task\common">
+      <UniqueIdentifier>{8edf7e56-2fb4-499d-a6ee-e47991633a77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="containers">
+      <UniqueIdentifier>{2ff719ac-0a0c-4cf5-a11e-92229614538b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task\sequence_manager">
+      <UniqueIdentifier>{298ad21e-71a6-4c4a-9613-77e02e5885a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -488,6 +488,24 @@
     <ClInclude Include="..\..\..\src\crbase\functional\callback_helpers.h">
       <Filter>functional</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\time\tick_clock.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\internal\vector_buffer.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\circular_deque.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\time\clock.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\time\default_clock.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\time\default_tick_clock.h">
+      <Filter>time</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc">
@@ -703,6 +721,18 @@
     <ClCompile Include="..\..\..\src\crbase\observer_list_types.cc" />
     <ClCompile Include="..\..\..\src\crbase\functional\callback_helpers.cc">
       <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\time\tick_clock.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\time\clock.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\time\default_clock.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\time\default_tick_clock.cc">
+      <Filter>time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

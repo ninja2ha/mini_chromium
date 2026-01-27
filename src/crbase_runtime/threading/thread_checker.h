@@ -89,7 +89,7 @@
 #define CR_DETACH_FROM_THREAD(name) (name).DetachFromThread()
 #else  // CR_DCHECK_IS_ON()
 #define CR_THREAD_CHECKER(name) static_assert(true, "")
-#define CR_DCHECK_CALLED_ON_VALID_THREAD(name, ...) CR_EAT_CHECK_STREAM_PARAMS()
+#define CR_DCHECK_CALLED_ON_VALID_THREAD(name, ...) CR_EAT_STREAM_PARAMETERS(false)
 #define CR_DETACH_FROM_THREAD(name)
 #endif  // CR_DCHECK_IS_ON()
 

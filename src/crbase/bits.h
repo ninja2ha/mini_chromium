@@ -1,14 +1,12 @@
 // Copyright (c) 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
-// * VERSION: 91.0.4472.169
 
 // This file defines some bit utilities.
 
 #ifndef MINI_CHROMIUM_SRC_CRBASE_BITS_H_
 #define MINI_CHROMIUM_SRC_CRBASE_BITS_H_
 
-#include <limits.h>
 #include <stddef.h>
 #include <stdint.h>
 
@@ -26,8 +24,9 @@ namespace cr {
 namespace bits {
 
 // Returns true iff |value| is a power of 2.
-template <typename T, typename = std::enable_if_t<std::is_integral<T>::value>>
-constexpr bool IsPowerOfTwo(T value) {
+template <typename T,
+          typename = typename std::enable_if<std::is_integral<T>::value>>
+constexpr inline bool IsPowerOfTwo(T value) {
   // From "Hacker's Delight": Section 2.1 Manipulating Rightmost Bits.
   //
   // Only positive integers with a single bit set are powers of two. If only one
@@ -37,43 +36,16 @@ constexpr bool IsPowerOfTwo(T value) {
   return value > 0 && (value & (value - 1)) == 0;
 }
 
-// Round down |size| to a multiple of alignment, which must be a power of two.
-inline size_t AlignDown(size_t size, size_t alignment) {
-  CR_DCHECK(IsPowerOfTwo(alignment));
-  return size & ~(alignment - 1);
-}
-
-// Move |ptr| back to the previous multiple of alignment, which must be a power
-// of two. Defined for types where sizeof(T) is one byte.
-template <typename T, typename = typename std::enable_if<sizeof(T) == 1>::type>
-inline T* AlignDown(T* ptr, size_t alignment) {
-  return reinterpret_cast<T*>(
-      AlignDown(reinterpret_cast<size_t>(ptr), alignment));
-}
-
 // Round up |size| to a multiple of alignment, which must be a power of two.
-inline size_t AlignUp(size_t size, size_t alignment) {
+inline size_t Align(size_t size, size_t alignment) {
   CR_DCHECK(IsPowerOfTwo(alignment));
   return (size + alignment - 1) & ~(alignment - 1);
 }
 
-// Advance |ptr| to the next multiple of alignment, which must be a power of
-// two. Defined for types where sizeof(T) is one byte.
-template <typename T, typename = typename std::enable_if<sizeof(T) == 1>::type>
-inline T* AlignUp(T* ptr, size_t alignment) {
-  return reinterpret_cast<T*>(
-      AlignUp(reinterpret_cast<size_t>(ptr), alignment));
-}
-
-// Deprecated. Use AlignUp() instead.
-inline size_t Align(size_t size, size_t alignment) {
-  return AlignUp(size, alignment);
-}
-
-// Deprecated. Use AlignUp() instead.
-template <typename T, typename = typename std::enable_if<sizeof(T) == 1>::type>
-inline T* Align(T* ptr, size_t alignment) {
-  return AlignUp(ptr, alignment);
+// Round down |size| to a multiple of alignment, which must be a power of two.
+inline size_t AlignDown(size_t size, size_t alignment) {
+  CR_DCHECK(IsPowerOfTwo(alignment));
+  return size & ~(alignment - 1);
 }
 
 // CountLeadingZeroBits(value) returns the number of zero bits following the
@@ -177,7 +149,7 @@ CR_ALWAYS_INLINE uint64_t CountLeadingZeroBits64(uint64_t x) {
 // instructions have defined behaviour for 0. We could drop to raw __asm__ to
 // do better, but we'll avoid doing that unless we see proof that we need to.
 template <typename T, unsigned bits = sizeof(T) * 8>
-CR_ALWAYS_INLINE constexpr
+CR_ALWAYS_INLINE
     typename std::enable_if<std::is_unsigned<T>::value && sizeof(T) <= 8,
                             unsigned>::type
     CountLeadingZeroBits(T value) {
@@ -190,7 +162,7 @@ CR_ALWAYS_INLINE constexpr
 }
 
 template <typename T, unsigned bits = sizeof(T) * 8>
-CR_ALWAYS_INLINE constexpr
+CR_ALWAYS_INLINE
     typename std::enable_if<std::is_unsigned<T>::value && sizeof(T) <= 8,
                             unsigned>::type
     CountTrailingZeroBits(T value) {
@@ -200,45 +172,35 @@ CR_ALWAYS_INLINE constexpr
                           : bits;
 }
 
-CR_ALWAYS_INLINE constexpr uint32_t CountLeadingZeroBits32(uint32_t x) {
+CR_ALWAYS_INLINE uint32_t CountLeadingZeroBits32(uint32_t x) {
   return CountLeadingZeroBits(x);
 }
 
-CR_ALWAYS_INLINE constexpr uint64_t CountLeadingZeroBits64(uint64_t x) {
+CR_ALWAYS_INLINE uint64_t CountLeadingZeroBits64(uint64_t x) {
   return CountLeadingZeroBits(x);
 }
 
 #endif
 
-CR_ALWAYS_INLINE constexpr size_t CountLeadingZeroBitsSizeT(size_t x) {
+CR_ALWAYS_INLINE size_t CountLeadingZeroBitsSizeT(size_t x) {
   return CountLeadingZeroBits(x);
 }
 
-CR_ALWAYS_INLINE constexpr size_t CountTrailingZeroBitsSizeT(size_t x) {
+CR_ALWAYS_INLINE size_t CountTrailingZeroBitsSizeT(size_t x) {
   return CountTrailingZeroBits(x);
 }
 
 // Returns the integer i such as 2^i <= n < 2^(i+1)
-constexpr int Log2Floor(uint32_t n) {
+inline int Log2Floor(uint32_t n) {
   return 31 - CountLeadingZeroBits(n);
 }
 
 // Returns the integer i such as 2^(i-1) < n <= 2^i
-constexpr int Log2Ceiling(uint32_t n) {
+inline int Log2Ceiling(uint32_t n) {
   // When n == 0, we want the function to return -1.
   // When n == 0, (n - 1) will underflow to 0xFFFFFFFF, which is
   // why the statement below starts with (n ? 32 : -1).
   return (n ? 32 : -1) - CountLeadingZeroBits(n - 1);
-}
-
-// Returns a value of type T with a single bit set in the left-most position.
-// Can be used instead of manually shifting a 1 to the left.
-template <typename T>
-constexpr T LeftmostBit() {
-  static_assert(std::is_integral<T>::value,
-                "This function can only be used with integral types.");
-  T one(1u);
-  return one << ((CHAR_BIT * sizeof(T) - 1));
 }
 
 }  // namespace bits

@@ -7,7 +7,7 @@
 #include <utility>
 
 #include "crbase/logging/logging.h"
-///#include "base/lazy_instance.h"
+///#include "crbase/lazy_instance.h"
 #include "crbase/memory/no_destructor.h"
 #include "crbase/threading/thread_local.h"
 
