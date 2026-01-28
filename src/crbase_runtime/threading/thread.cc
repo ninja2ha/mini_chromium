@@ -313,7 +313,7 @@ void Thread::Run(RunLoop* run_loop) {
   CR_DCHECK(id_event_.IsSignaled());
   CR_DCHECK(id_ == PlatformThread::CurrentId());
 
-  run_loop->Run();
+  run_loop->Run(CR_FROM_HERE);
 }
 
 // static

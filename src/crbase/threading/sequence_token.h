@@ -32,7 +32,7 @@ class CRBASE_EXPORT SequenceToken {
 
   // Returns the integer uniquely representing this SequenceToken. This method
   // should only be used for tracing and debugging.
-  AtomicSequenceNumber::IntType ToInternalValue() const;
+  SequenceInt ToInternalValue() const;
 
   // Returns a valid SequenceToken which isn't equal to any previously returned
   // SequenceToken.
@@ -44,11 +44,11 @@ class CRBASE_EXPORT SequenceToken {
   static SequenceToken GetForCurrentThread();
 
  private:
-  explicit SequenceToken(AtomicSequenceNumber::IntType token) 
+  explicit SequenceToken(SequenceInt token)
       : token_(token) {}
 
-  static constexpr AtomicSequenceNumber::IntType kInvalidSequenceToken = -1;
-  AtomicSequenceNumber::IntType token_ = kInvalidSequenceToken;
+  static constexpr SequenceInt kInvalidSequenceToken = -1;
+  SequenceInt token_ = kInvalidSequenceToken;
 };
 
 // A token that identifies a task.
@@ -83,15 +83,15 @@ class CRBASE_EXPORT TaskToken {
  private:
   friend class ScopedSetSequenceTokenForCurrentThread;
 
-  explicit TaskToken(AtomicSequenceNumber::IntType token) : token_(token) {}
+  explicit TaskToken(SequenceInt token) : token_(token) {}
 
   // Returns a valid TaskToken which isn't equal to any previously returned
   // TaskToken. This is private as it only meant to be instantiated by
   // ScopedSetSequenceTokenForCurrentThread.
   static TaskToken Create();
 
-  static constexpr AtomicSequenceNumber::IntType kInvalidTaskToken = -1;
-  AtomicSequenceNumber::IntType token_ = kInvalidTaskToken;
+  static constexpr SequenceInt kInvalidTaskToken = -1;
+  SequenceInt token_ = kInvalidTaskToken;
 };
 
 // Instantiate this in the scope where a single task runs.

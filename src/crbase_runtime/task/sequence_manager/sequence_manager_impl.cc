@@ -855,7 +855,7 @@ void SequenceManagerImpl::NotifyDidProcessTask(ExecutingTask* executing_task,
   ///}
 }
 
-void SequenceManagerImpl::SetWorkBatchSize(int work_batch_size) {
+void SequenceManagerImpl::SetWorkBatchSize(size_t work_batch_size) {
   CR_DCHECK_CALLED_ON_VALID_THREAD(associated_thread_->thread_checker);
   CR_DCHECK(work_batch_size >= 1);
   controller_->SetWorkBatchSize(work_batch_size);

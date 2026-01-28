@@ -141,7 +141,7 @@ void RunLoop::RunUntilIdle() {
   CR_DCHECK_CALLED_ON_VALID_SEQUENCE(sequence_checker_);
 
   quit_when_idle_received_ = true;
-  Run();
+  Run(CR_FROM_HERE);
 }
 
 void RunLoop::Quit() {

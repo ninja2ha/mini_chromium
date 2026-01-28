@@ -95,7 +95,7 @@ void ThreadControllerWithMessagePumpImpl::BindToCurrentThread(
 }
 
 void ThreadControllerWithMessagePumpImpl::SetWorkBatchSize(
-    int work_batch_size) {
+    size_t work_batch_size) {
   CR_DCHECK(work_batch_size >= 1);
   main_thread_only().work_batch_size = work_batch_size;
 }
@@ -313,7 +313,7 @@ TimeDelta ThreadControllerWithMessagePumpImpl::DoWorkImpl(
 
   CR_DCHECK(main_thread_only().task_source);
 
-  for (int i = 0; i < main_thread_only().work_batch_size; i++) {
+  for (size_t i = 0; i < main_thread_only().work_batch_size; i++) {
     const SequencedTaskSource::SelectTaskOption select_task_option =
         SequencedTaskSource::SelectTaskOption::kDefault;
     ///    power_monitor_.IsProcessInPowerSuspendState()

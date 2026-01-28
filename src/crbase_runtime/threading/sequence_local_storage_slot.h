@@ -16,8 +16,7 @@
 namespace cr {
 
 namespace internal {
-CRBASE_EXPORT AtomicSequenceNumber::IntType 
-    GetNextSequenceLocalStorageSlotNumber();
+CRBASE_EXPORT SequenceInt GetNextSequenceLocalStorageSlotNumber();
 }
 
 // SequenceLocalStorageSlot allows arbitrary values to be stored and retrieved
@@ -122,7 +121,7 @@ class SequenceLocalStorageSlot {
   }
 
   // |slot_id_| is used as a key in SequenceLocalStorageMap
-  const AtomicSequenceNumber::IntType slot_id_;
+  const SequenceInt slot_id_;
 };
 
 }  // namespace cr

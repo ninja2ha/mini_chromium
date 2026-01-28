@@ -506,6 +506,9 @@
     <ClInclude Include="..\..\..\src\crbase\time\default_tick_clock.h">
       <Filter>time</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\containers\queue.h">
+      <Filter>containers</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc">

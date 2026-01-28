@@ -82,23 +82,17 @@ class CRBASE_EXPORT Location {
 
 CRBASE_EXPORT const void* GetProgramCounter();
 
-#define CR_FROM_HERE ::cr::Location::CreateFromHere(nullptr, nullptr, -1)
+#if defined(NDEBUG) 
+#define CR_FROM_HERE \
+  ::cr::Location::CreateFromHere(nullptr, nullptr, -1)
+#else
+#define CR_FROM_HERE \
+  ::cr::Location::CreateFromHere(__FUNCTION__, __FILE__, __LINE__)
+#endif
+
 #define CR_FROM_HERE_WITH_EXPLICIT_FUNCTION(function_name) \
   ::cr::Location::CreateFromHere(function_name, nullptr, -1)
 
 }  // namespace cr
-
-///namespace std {
-///
-///// Specialization for using Location in hash tables.
-///template <>
-///struct hash<::cr::Location> {
-///  std::size_t operator()(const ::cr::Location& loc) const {
-///    const void* program_counter = loc.program_counter();
-///    return cr::FastHash(cr::as_bytes(cr::make_span(&program_counter, 1)));
-///  }
-///};
-///
-///}  // namespace std
 
 #endif  // MINI_CHROMIUM_SRC_CRBASE_LOCATION_H_

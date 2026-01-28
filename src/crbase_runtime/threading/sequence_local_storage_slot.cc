@@ -16,7 +16,7 @@ namespace {
 AtomicSequenceNumber g_sequence_local_storage_slot_generator;
 }  // namespace
 
-AtomicSequenceNumber::IntType GetNextSequenceLocalStorageSlotNumber() {
+SequenceInt GetNextSequenceLocalStorageSlotNumber() {
   auto slot_id = g_sequence_local_storage_slot_generator.GetNext();
   ///CR_DCHECK(slot_id < std::numeric_limits<int>::max());
   return slot_id;

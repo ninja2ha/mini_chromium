@@ -176,7 +176,7 @@ void ThreadControllerImpl::DoWork(WorkType work_type) {
 
   WeakPtr<ThreadControllerImpl> weak_ptr = weak_factory_.GetWeakPtr();
   // TODO(scheduler-dev): Consider moving to a time based work batch instead.
-  for (int i = 0; i < main_sequence_only().work_batch_size_; i++) {
+  for (size_t i = 0; i < main_sequence_only().work_batch_size_; i++) {
     Task* task = sequence_->SelectNextTask();
     if (!task)
       break;
@@ -312,7 +312,7 @@ void ThreadControllerImpl::OnExitNestedRunLoop() {
   main_sequence_only().run_level_tracker.OnRunLoopEnded();
 }
 
-void ThreadControllerImpl::SetWorkBatchSize(int work_batch_size) {
+void ThreadControllerImpl::SetWorkBatchSize(size_t work_batch_size) {
   main_sequence_only().work_batch_size_ = work_batch_size;
 }
 

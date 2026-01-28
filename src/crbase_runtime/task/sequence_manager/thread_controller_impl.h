@@ -43,7 +43,7 @@ class CRBASE_EXPORT ThreadControllerImpl : public ThreadController,
       const TickClock* time_source);
 
   // ThreadController:
-  void SetWorkBatchSize(int work_batch_size) override;
+  void SetWorkBatchSize(size_t work_batch_size) override;
   void WillQueueTask(PendingTask* pending_task,
                      const char* task_queue_name) override;
   void ScheduleWork() override;
@@ -91,7 +91,7 @@ class CRBASE_EXPORT ThreadControllerImpl : public ThreadController,
     MainSequenceOnly();
     ~MainSequenceOnly();
 
-    int work_batch_size_ = 1;
+    size_t work_batch_size_ = 1;
 
     TimeTicks next_delayed_do_work = TimeTicks::Max();
 

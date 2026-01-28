@@ -75,7 +75,7 @@ class CRBASE_EXPORT RunLoop {
 
   // Run the current RunLoop::Delegate. This blocks until Quit is called
   // (directly or by running the RunLoop::QuitClosure).
-  void Run(const Location& location = CR_FROM_HERE);
+  void Run(const Location& location);
 
   // Run the current RunLoop::Delegate until it doesn't find any tasks or
   // messages in its queue (it goes idle).

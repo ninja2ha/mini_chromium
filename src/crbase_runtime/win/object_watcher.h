@@ -74,7 +74,7 @@ class CRBASE_EXPORT ObjectWatcher {
   // Returns whether watching was successfully initiated.
   bool StartWatchingOnce(HANDLE object,
                          Delegate* delegate,
-                         const Location& from_here = CR_FROM_HERE);
+                         const Location& from_here);
 
   // Notifies the delegate, on the sequence where this method is called, each
   // time the object is set. By definition, the handle must be an auto-reset
@@ -84,7 +84,7 @@ class CRBASE_EXPORT ObjectWatcher {
   bool StartWatchingMultipleTimes(
       HANDLE object,
       Delegate* delegate,
-      const Location& from_here = CR_FROM_HERE);
+      const Location& from_here);
 
   // Stops watching.  Does nothing if the watch has already completed.  If the
   // watch is still active, then it is canceled, and the associated delegate is

@@ -10,10 +10,19 @@
 #include <time.h>
 #include <io.h>
 
+#include <winsock2.h>
 #include <psapi.h>
+
+#if defined(_MSC_VER)
+#pragma warning(push)
+#pragma warning(disable:4091)
+#endif
 #include <shellapi.h>
 #include <shlobj.h>
-#include <winsock2.h>
+
+#if defined(_MSC_VER)
+#pragma warning(pop)
+#endif
 
 #include <algorithm>
 #include <limits>

@@ -7,12 +7,11 @@
 #define MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_LOOP_PENDING_TASK_H_
 
 #include <array>
-#include <queue>
 
 #include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/containers/optional.h"
-///#include "crbase/containers/queue.h"
+#include "crbase/containers/queue.h"
 #include "crbase/location.h"
 #include "crbase/time/time.h"
 
@@ -84,7 +83,7 @@ struct CRBASE_EXPORT PendingTask {
   bool is_high_res = false;
 };
 
-using TaskQueue = std::queue<PendingTask>;
+using TaskQueue = cr::Queue<PendingTask>;
 
 // PendingTasks are sorted by their |delayed_run_time| property.
 using DelayedTaskQueue = std::priority_queue<cr::PendingTask>;

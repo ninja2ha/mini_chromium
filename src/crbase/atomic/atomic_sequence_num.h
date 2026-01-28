@@ -12,16 +12,17 @@
 
 namespace cr {
 
+#if defined(MINI_CHROMIUM_ARCH_CPU_64_BITS)
+  using SequenceInt = uint64_t;
+#else
+  using SequenceInt = uint32_t;
+#endif
+
 // AtomicSequenceNumber is a thread safe increasing sequence number generator.
 // Its constructor doesn't emit a static initializer, so it's safe to use as a
 // global variable or static member.
 class AtomicSequenceNumber {
  public:
-#if defined(MINI_CHROMIUM_ARCH_CPU_64_BITS)
-   using IntType = uint64_t;
-#else
-   using IntType = uint32_t;
-#endif
 
   constexpr AtomicSequenceNumber() = default;
   AtomicSequenceNumber(const AtomicSequenceNumber&) = delete;
@@ -29,12 +30,12 @@ class AtomicSequenceNumber {
 
   // Returns an increasing sequence number starts from 0 for each call.
   // This function can be called from any thread without data race.
-  inline IntType GetNext() {
+  inline SequenceInt GetNext() {
     return seq_.fetch_add(1, std::memory_order_relaxed); 
   }
 
  private:
-  std::atomic<IntType> seq_{0};
+  std::atomic<SequenceInt> seq_{0};
 };
 
 }  // namespace cr

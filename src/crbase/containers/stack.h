@@ -7,11 +7,12 @@
 #define MINI_CHROMIUM_SRC_CRBASE_CONTAINERS_STACK_H_
 
 #include <stack>
-#include <deque>
+
+#include "crbase/containers/circular_deque.h"
 
 namespace cr {
 
-template <class T, class Container = std::deque<T>>
+template <class T, class Container = circular_deque<T>>
 using Stack = std::stack<T, Container>;
 
 }  // namespace cr

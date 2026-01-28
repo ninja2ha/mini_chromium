@@ -42,7 +42,7 @@ bool SequenceToken::IsValid() const {
   return token_ != kInvalidSequenceToken;
 }
 
-AtomicSequenceNumber::IntType SequenceToken::ToInternalValue() const {
+SequenceInt SequenceToken::ToInternalValue() const {
   return token_;
 }
 

@@ -45,6 +45,7 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 	${CRBASE_SRC_DIR}/containers/optional.h
 	${CRBASE_SRC_DIR}/containers/span.h
 	${CRBASE_SRC_DIR}/containers/stack.h
+	${CRBASE_SRC_DIR}/containers/queue.h
 	${CRBASE_SRC_DIR}/containers/util.h
 	${CRBASE_SRC_DIR}/containers/internal/checked_iterators.h
 	${CRBASE_SRC_DIR}/containers/internal/contiguous_iterator.h

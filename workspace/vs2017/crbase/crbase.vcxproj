@@ -35,6 +35,7 @@
     <ClInclude Include="..\..\..\src\crbase\containers\internal\vector_buffer.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\linked_list.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\optional.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\queue.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\span.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\stack.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\util.h" />

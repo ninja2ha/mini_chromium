@@ -106,7 +106,6 @@ class CRBASE_EXPORT TaskQueueImpl {
   const char* GetName() const;
   bool IsQueueEnabled() const;
   void SetQueueEnabled(bool enabled);
-  void SetShouldReportPostedTasksWhenDisabled(bool should_report);
   bool IsEmpty() const;
   size_t GetNumberOfPendingTasks() const;
   bool HasTaskToRunImmediately() const;
@@ -331,7 +330,7 @@ class CRBASE_EXPORT TaskQueueImpl {
     PQueue queue_;
 
     // Number of pending tasks in the queue that need high resolution timing.
-    int pending_high_res_tasks_ = 0;
+    intptr_t pending_high_res_tasks_ = 0;
   };
 
   struct MainThreadOnly {
@@ -385,9 +384,6 @@ class CRBASE_EXPORT TaskQueueImpl {
     // The time at which the task queue was disabled, if it is currently
     // disabled.
     Optional<TimeTicks> disabled_time;
-    // Whether or not the task queue should emit tracing events for tasks
-    // posted to this queue when it is disabled.
-    bool should_report_posted_tasks_when_disabled = false;
   };
 
   void PostTask(PostedTask task);
@@ -437,21 +433,6 @@ class CRBASE_EXPORT TaskQueueImpl {
   void MaybeLogPostTask(PostedTask* task);
   void MaybeAdjustTaskDelay(PostedTask* task, CurrentThread current_thread);
 
-  // Reports the task if it was due to IPC and was posted to a disabled queue.
-  // This should be called after WillQueueTask has been called for the task.
-  void MaybeReportIpcTaskQueuedFromMainThread(Task* pending_task,
-                                              const char* task_queue_name);
-  bool ShouldReportIpcTaskQueuedFromAnyThreadLocked(
-      cr::TimeDelta* time_since_disabled);
-  void MaybeReportIpcTaskQueuedFromAnyThreadLocked(Task* pending_task,
-                                                   const char* task_queue_name);
-  void MaybeReportIpcTaskQueuedFromAnyThreadUnlocked(
-      Task* pending_task,
-      const char* task_queue_name);
-  void ReportIpcTaskQueued(Task* pending_task,
-                           const char* task_queue_name,
-                           const cr::TimeDelta& time_since_disabled);
-
   // Invoked when the queue becomes enabled and not blocked by a fence.
   void OnQueueUnblocked();
 
@@ -465,16 +446,6 @@ class CRBASE_EXPORT TaskQueueImpl {
   mutable cr::internal::CheckedLock any_thread_lock_;
 
   struct AnyThread {
-    // Mirrored from MainThreadOnly. These are only used for tracing.
-    struct TracingOnly {
-      TracingOnly();
-      ~TracingOnly();
-
-      bool is_enabled = true;
-      Optional<TimeTicks> disabled_time;
-      bool should_report_posted_tasks_when_disabled = false;
-    };
-
     explicit AnyThread(TimeDomain* time_domain);
     ~AnyThread();
 
@@ -501,10 +472,8 @@ class CRBASE_EXPORT TaskQueueImpl {
     // to index into
     // SequenceManager::Settings::per_priority_cross_thread_task_delay to apply
     // a priority specific delay for debugging purposes.
-    int queue_set_index = 0;
+    size_t queue_set_index = 0;
 #endif
-
-    TracingOnly tracing_only;
   };
 
   AnyThread any_thread_ /* GUARDED_BY(any_thread_lock_) */;

@@ -39,7 +39,7 @@ class ThreadController {
   // Sets the number of tasks executed in a single invocation of DoWork.
   // Increasing the batch size can reduce the overhead of yielding back to the
   // main message loop.
-  virtual void SetWorkBatchSize(int work_batch_size = 1) = 0;
+  virtual void SetWorkBatchSize(size_t work_batch_size = 1) = 0;
 
   // Notifies that |pending_task| is about to be enqueued. Needed for tracing
   // purposes. The impl may use this opportunity add metadata to |pending_task|

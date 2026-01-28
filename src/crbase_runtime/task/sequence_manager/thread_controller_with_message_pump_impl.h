@@ -53,7 +53,7 @@ class CRBASE_EXPORT ThreadControllerWithMessagePumpImpl
   // ThreadController implementation:
   void SetSequencedTaskSource(SequencedTaskSource* task_source) override;
   void BindToCurrentThread(std::unique_ptr<MessagePump> message_pump) override;
-  void SetWorkBatchSize(int work_batch_size) override;
+  void SetWorkBatchSize(size_t work_batch_size) override;
   void WillQueueTask(PendingTask* pending_task,
                      const char* task_queue_name) override;
   void ScheduleWork() override;
@@ -109,7 +109,7 @@ class CRBASE_EXPORT ThreadControllerWithMessagePumpImpl
     bool in_high_res_mode = false;
 
     // Number of tasks processed in a single DoWork invocation.
-    int work_batch_size = 1;
+    size_t work_batch_size = 1;
 
     // Tracks the number and state of each run-level managed by this instance.
     RunLevelTracker run_level_tracker;

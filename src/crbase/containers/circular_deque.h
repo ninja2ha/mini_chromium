@@ -33,8 +33,8 @@
 //  - Container-wide comparisons are not implemented. If you want to compare
 //    two containers, use an algorithm so the expensive iteration is explicit.
 //
-// If you want a similar container with only a queue API, use base::queue in
-// base/containers/queue.h.
+// If you want a similar container with only a queue API, use cr::queue in
+// crbase/containers/queue.h.
 //
 // Constructors:
 //   circular_deque();

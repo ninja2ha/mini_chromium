@@ -186,7 +186,7 @@ class CRBASE_EXPORT SequenceManager {
   // Set the number of tasks executed in a single SequenceManager invocation.
   // Increasing this number reduces the overhead of the tasks dispatching
   // logic at the cost of a potentially worse latency. 1 by default.
-  virtual void SetWorkBatchSize(int work_batch_size) = 0;
+  virtual void SetWorkBatchSize(size_t work_batch_size) = 0;
 
   // Requests desired timer precision from the OS.
   // Has no effect on some platforms.

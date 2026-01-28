@@ -109,7 +109,7 @@ class CRBASE_EXPORT SequenceManagerImpl
       RefPtr<SingleThreadTaskRunner> task_runner) override;
   void ReclaimMemory() override;
   bool GetAndClearSystemIsQuiescentBit() override;
-  void SetWorkBatchSize(int work_batch_size) override;
+  void SetWorkBatchSize(size_t work_batch_size) override;
   void SetTimerSlack(TimerSlack timer_slack) override;
   void EnableCrashKeys(const char* async_stack_crash_key) override;
   const MetricRecordingSettings& GetMetricRecordingSettings() const override;
@@ -146,9 +146,6 @@ class CRBASE_EXPORT SequenceManagerImpl
   void SetAddQueueTimeToTasks(bool enable);
   void SetTaskExecutionAllowed(bool allowed);
   bool IsTaskExecutionAllowed() const;
-#if defined(OS_IOS)
-  void AttachToMessagePump();
-#endif
   bool IsIdleForTesting() override;
   void BindToCurrentThread(std::unique_ptr<MessagePump> pump);
   MessagePumpType GetType() const;
