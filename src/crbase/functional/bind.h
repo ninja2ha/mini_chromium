@@ -110,12 +110,6 @@ RepeatingCallback<Signature> BindRepeating(
   return callback;
 }
 
-template <typename Signature>
-Callback<Signature> Bind(Callback<Signature> callback) {
-  CR_CHECK(callback);
-  return callback;
-}
-
 // Unretained() allows binding a non-refcounted class, and to disable
 // refcounting on arguments that are refcounted objects.
 //

@@ -18,6 +18,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crbase_runtime", "crbase_ru
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "crbase_runtime_tests", "tests\crbase_runtime_tests\crbase_runtime_tests.vcxproj", "{2B94D897-14A5-43D8-A6AD-C33142863E37}"
+	ProjectSection(ProjectDependencies) = postProject
+		{9827C300-A6A8-466C-89C5-AC2A01984309} = {9827C300-A6A8-466C-89C5-AC2A01984309}
+		{20F40B60-978B-4F3E-BDBA-D2756B463185} = {20F40B60-978B-4F3E-BDBA-D2756B463185}
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

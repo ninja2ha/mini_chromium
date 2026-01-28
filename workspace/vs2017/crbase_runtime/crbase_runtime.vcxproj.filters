@@ -180,6 +180,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase_runtime\traits_bag.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\parameter_pack.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\timer\timer.h">
+      <Filter>timer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
@@ -306,6 +309,9 @@
     <ClCompile Include="..\..\..\src\crbase_runtime\task\task_executor.cc">
       <Filter>task</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\timer\timer.cc">
+      <Filter>timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="threading">
@@ -331,6 +337,9 @@
     </Filter>
     <Filter Include="task\sequence_manager">
       <UniqueIdentifier>{298ad21e-71a6-4c4a-9613-77e02e5885a3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timer">
+      <UniqueIdentifier>{533dd1e1-ec5f-4003-8302-efb7fe98a0a3}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

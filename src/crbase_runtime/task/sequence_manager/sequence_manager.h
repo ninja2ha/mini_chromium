@@ -228,9 +228,6 @@ class CRBASE_EXPORT SequenceManager {
   // The total number of posted tasks that haven't executed yet.
   virtual size_t GetPendingTaskCountForTesting() const = 0;
 
-  // Returns a JSON string which describes all pending tasks.
-  virtual std::string DescribeAllPendingTasks() const = 0;
-
   // Indicates that the underlying sequence (e.g., the message pump) has pending
   // work at priority |priority|. If the priority of the work in this
   // SequenceManager is lower, it will yield to let the native work run. The

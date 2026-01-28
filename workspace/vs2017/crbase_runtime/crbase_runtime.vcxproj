@@ -223,6 +223,7 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\timer\timer.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\traits_bag.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\win\message_window.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\win\object_watcher.h" />
@@ -270,6 +271,7 @@
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread_checker_impl.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\threading\thread_task_runner_handle.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\timer\timer.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\win\message_window.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\win\object_watcher.cc" />
   </ItemGroup>

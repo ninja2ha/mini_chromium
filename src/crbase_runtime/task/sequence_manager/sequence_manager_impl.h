@@ -116,7 +116,6 @@ class CRBASE_EXPORT SequenceManagerImpl
   size_t GetPendingTaskCountForTesting() const override;
   RefPtr<TaskQueue> CreateTaskQueue(
       const TaskQueue::Spec& spec) override;
-  std::string DescribeAllPendingTasks() const override;
   std::unique_ptr<NativeWorkHandle> OnNativeWorkPending(
       TaskQueue::QueuePriority priority) override;
   void AddTaskObserver(TaskObserver* task_observer) override;
