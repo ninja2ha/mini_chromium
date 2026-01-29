@@ -6,6 +6,8 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_LOOP_PENDING_TASK_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_LOOP_PENDING_TASK_H_
 
+#include <stdint.h>
+
 #include <array>
 
 #include "crbase/base_export.h"
@@ -72,7 +74,7 @@ struct CRBASE_EXPORT PendingTask {
   const char* ipc_interface_name = nullptr;
 
   // Secondary sort key for run time.
-  int sequence_num = 0;
+  intptr_t sequence_num = 0;
 
   bool task_backtrace_overflow = false;
 

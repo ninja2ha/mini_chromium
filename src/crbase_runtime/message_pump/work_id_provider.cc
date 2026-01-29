@@ -23,13 +23,13 @@ WorkIdProvider* WorkIdProvider::GetForCurrentThread() {
 // This function must support being invoked while other threads are suspended so
 // must not take any locks, including indirectly through use of heap allocation,
 // LOG, CHECK, or DCHECK.
-unsigned int WorkIdProvider::GetWorkId() {
+uintptr_t WorkIdProvider::GetWorkId() {
   return work_id_.load(std::memory_order_acquire);
 }
 
 WorkIdProvider::~WorkIdProvider() = default;
 
-void WorkIdProvider::SetCurrentWorkIdForTesting(unsigned int id) {
+void WorkIdProvider::SetCurrentWorkIdForTesting(uintptr_t id) {
   work_id_.store(id, std::memory_order_relaxed);
 }
 
@@ -42,7 +42,7 @@ WorkIdProvider::WorkIdProvider() : work_id_(0) {}
 void WorkIdProvider::IncrementWorkId() {
   CR_DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
 
-  unsigned int next_id = work_id_.load(std::memory_order_relaxed) + 1;
+  uintptr_t next_id = work_id_.load(std::memory_order_relaxed) + 1;
   // Reserve 0 to mean no work items have been executed.
   if (next_id == 0)
     ++next_id;

@@ -50,7 +50,7 @@ struct CRBASE_EXPORT PostedTask {
 // same point in time will be ordered by their sequence numbers.
 struct DelayedWakeUp {
   TimeTicks time;
-  int sequence_num;
+  intptr_t sequence_num;
   WakeUpResolution resolution;
 
   bool operator!=(const DelayedWakeUp& other) const {

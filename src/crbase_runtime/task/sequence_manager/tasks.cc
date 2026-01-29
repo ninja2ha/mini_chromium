@@ -24,8 +24,8 @@ Task::Task(internal::PostedTask posted_task,
   // may wrap around to a negative number during the static cast, hence,
   // the relevant code is especially sensitive to a potential change of
   // |PendingTask::sequence_num|'s type.
-  static_assert(std::is_same<decltype(sequence_num), int>::value, "");
-  sequence_num = static_cast<int>(sequence_order);
+  static_assert(std::is_same<decltype(sequence_num), intptr_t>::value, "");
+  sequence_num = static_cast<intptr_t>(sequence_order);
   this->is_high_res = resolution == internal::WakeUpResolution::kHigh;
   queue_time = posted_task.queue_time;
 }

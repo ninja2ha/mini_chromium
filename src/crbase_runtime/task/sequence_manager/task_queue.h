@@ -6,6 +6,8 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_TASK_QUEUE_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_TASK_QUEUE_H_
 
+#include <stdint.h>
+
 #include <memory>
 
 #include "crbase/memory/weak_ptr.h"
@@ -394,8 +396,8 @@ class CRBASE_EXPORT TaskQueue : public RefCountedThreadSafe<TaskQueue> {
   RefPtr<internal::AssociatedThreadId> associated_thread_;
   RefPtr<SingleThreadTaskRunner> default_task_runner_;
 
-  int enabled_voter_count_ = 0;
-  int voter_count_ = 0;
+  intptr_t enabled_voter_count_ = 0;
+  intptr_t voter_count_ = 0;
   const char* name_;
 
   cr::WeakPtrFactory<TaskQueue> weak_ptr_factory_{this};

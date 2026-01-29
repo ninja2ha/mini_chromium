@@ -22,7 +22,7 @@
 //   class MyClass {
 //    public:
 //     void StartDoingStuff() {
-//       timer_.Start(FROM_HERE, TimeDelta::FromSeconds(1),
+//       timer_.Start(CR_FROM_HERE, TimeDelta::FromSeconds(1),
 //                    this, &MyClass::DoStuff);
 //     }
 //     void StopDoingStuff() {
@@ -33,7 +33,7 @@
 //       // This method is called every second to do stuff.
 //       ...
 //     }
-//     base::RepeatingTimer timer_;
+//     cr::RepeatingTimer timer_;
 //   };
 //
 // Timers also support a Reset method, which allows you to easily defer the

@@ -5,6 +5,8 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_PUMP_WORK_ID_PROVIDER_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_PUMP_WORK_ID_PROVIDER_H_
 
+#include <stdint.h>
+
 #include <atomic>
 
 #include "crbase/base_export.h"
@@ -41,12 +43,12 @@ class CRBASE_EXPORT WorkIdProvider {
   // other threads are suspended, and thus is guaranteed to take no locks,
   // directly or indirectly. May be called from any thread, as long as the
   // owning thread hasn't been destroyed.
-  unsigned int GetWorkId();
+  uintptr_t GetWorkId();
 
   // Public to support unique_ptr<WorkIdProvider>.
   ~WorkIdProvider();
 
-  void SetCurrentWorkIdForTesting(unsigned int id);
+  void SetCurrentWorkIdForTesting(uintptr_t id);
   void IncrementWorkIdForTesting();
 
   WorkIdProvider(const WorkIdProvider&) = delete;
@@ -60,7 +62,7 @@ class CRBASE_EXPORT WorkIdProvider {
 
   void IncrementWorkId();
 
-  std::atomic_uint work_id_;
+  std::atomic_uintptr_t work_id_;
 
   CR_THREAD_CHECKER(thread_checker_);
 };

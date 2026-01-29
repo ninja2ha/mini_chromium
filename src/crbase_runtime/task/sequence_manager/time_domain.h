@@ -6,6 +6,8 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_TIME_DOMAIN_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_TIME_DOMAIN_H_
 
+#include <stdint.h>
+
 #include <map>
 
 #include "crbase/logging/logging.h"
@@ -142,7 +144,7 @@ class CRBASE_EXPORT TimeDomain {
 
   internal::SequenceManagerImpl* sequence_manager_;  // Not owned.
   cr::internal::IntrusiveHeap<ScheduledDelayedWakeUp> delayed_wake_up_queue_;
-  int pending_high_res_wake_up_count_ = 0;
+  intptr_t pending_high_res_wake_up_count_ = 0;
 
   RefPtr<internal::AssociatedThreadId> associated_thread_;
 };
