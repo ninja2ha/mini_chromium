@@ -97,6 +97,9 @@
     <Filter Include="win\com">
       <UniqueIdentifier>{15d10bc2-ea13-483b-950d-5c5df0e1dc55}</UniqueIdentifier>
     </Filter>
+    <Filter Include="token">
+      <UniqueIdentifier>{0c3627df-3ff8-4ef0-93c8-4312c6ee5690}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr\build_config.h">
@@ -509,6 +512,12 @@
     <ClInclude Include="..\..\..\src\crbase\containers\queue.h">
       <Filter>containers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\token\unguessable_token.h">
+      <Filter>token</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase\token\token.h">
+      <Filter>token</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\strings\string_piece.cc">
@@ -736,6 +745,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\crbase\time\default_tick_clock.cc">
       <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\token\unguessable_token.cc">
+      <Filter>token</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase\token\token.cc">
+      <Filter>token</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

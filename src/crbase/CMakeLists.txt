@@ -277,6 +277,14 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 	${CRBASE_SRC_DIR}/system/cpu_info.h
 )
 
+# token
+set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES} 
+	${CRBASE_SRC_DIR}/token/token.cc
+	${CRBASE_SRC_DIR}/token/token.h
+	${CRBASE_SRC_DIR}/token/unguessable_token.cc
+	${CRBASE_SRC_DIR}/token/unguessable_token.h
+)
+
 # threading
 set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES} 
 	${CRBASE_SRC_DIR}/threading/platform_thread.cc
