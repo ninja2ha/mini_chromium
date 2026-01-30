@@ -10,15 +10,17 @@
 #include <list>
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/location.h"
 #include "crbase/observer_list.h"
 #include "crbase/containers/optional.h"
 #include "crbase/time/time.h"
 #include "crbase/win/scoped_handle.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/threading/thread_checker.h"
 #include "crbase_runtime/message_pump/message_pump.h"
 #include "crbase_runtime/win/message_window.h"
+
 #include "crbuild/compiler_specific.h"
 
 namespace cr {
@@ -26,7 +28,7 @@ namespace cr {
 // MessagePumpWin serves as the base for specialized versions of the MessagePump
 // for Windows. It provides basic functionality like handling of observers and
 // controlling the lifetime of the message pump.
-class CRBASE_EXPORT MessagePumpWin : public MessagePump {
+class CRBASE_RT_EXPORT MessagePumpWin : public MessagePump {
  public:
   MessagePumpWin();
   ~MessagePumpWin() override;
@@ -125,7 +127,7 @@ class CRBASE_EXPORT MessagePumpWin : public MessagePump {
 // an excellent choice.  It is also helpful that the starter messages that are
 // placed in the queue when new task arrive also awakens DoRunLoop.
 //
-class CRBASE_EXPORT MessagePumpForUI : public MessagePumpWin {
+class CRBASE_RT_EXPORT MessagePumpForUI : public MessagePumpWin {
  public:
   MessagePumpForUI();
   ~MessagePumpForUI() override;
@@ -139,7 +141,7 @@ class CRBASE_EXPORT MessagePumpForUI : public MessagePumpWin {
 
   // An observer interface to give the scheduler an opportunity to log
   // information about MSGs before and after they are dispatched.
-  class CRBASE_EXPORT Observer {
+  class CRBASE_RT_EXPORT Observer {
    public:
     virtual void WillDispatchMSG(const MSG& msg) = 0;
     virtual void DidDispatchMSG(const MSG& msg) = 0;
@@ -189,9 +191,9 @@ class CRBASE_EXPORT MessagePumpForUI : public MessagePumpWin {
 // deal with Windows mesagges, and instead has a Run loop based on Completion
 // Ports so it is better suited for IO operations.
 //
-class CRBASE_EXPORT MessagePumpForIO : public MessagePumpWin {
+class CRBASE_RT_EXPORT MessagePumpForIO : public MessagePumpWin {
  public:
-  struct CRBASE_EXPORT IOContext {
+  struct CRBASE_RT_EXPORT IOContext {
     IOContext();
     OVERLAPPED overlapped;
   };
@@ -232,7 +234,7 @@ class CRBASE_EXPORT MessagePumpForIO : public MessagePumpWin {
   //         message_pump->WaitForIOCompletion(INFINITE, this);
   //     }
   //
-  class CRBASE_EXPORT IOHandler {
+  class CRBASE_RT_EXPORT IOHandler {
    public:
     explicit IOHandler(const Location& from_here);
     virtual ~IOHandler();

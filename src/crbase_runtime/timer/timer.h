@@ -62,13 +62,14 @@
 
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/functional/bind.h"
 #include "crbase/functional/callback.h"
 #include "crbase/functional/callback_helpers.h"
 #include "crbase/location.h"
 #include "crbase/time/time.h"
 #include "crbase/threading/sequence_checker_impl.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 
 namespace cr {
@@ -85,7 +86,7 @@ class BaseTimerTaskInternal;
 // Do not use this class directly. Use one of OneShotTimer, RepeatingTimer or
 // RetainingOneShotTimer.
 //
-class CRBASE_EXPORT TimerBase {
+class CRBASE_RT_EXPORT TimerBase {
  public:
   TimerBase(const TimerBase&) = delete;
   TimerBase& operator=(const TimerBase&) = delete;
@@ -216,7 +217,7 @@ class CRBASE_EXPORT TimerBase {
 
 //-----------------------------------------------------------------------------
 // A simple, one-shot timer.  See usage notes at the top of the file.
-class CRBASE_EXPORT OneShotTimer : public internal::TimerBase {
+class CRBASE_RT_EXPORT OneShotTimer : public internal::TimerBase {
  public:
   OneShotTimer(const OneShotTimer&) = delete;
   OneShotTimer& operator=(const OneShotTimer&) = delete;
@@ -255,7 +256,7 @@ class CRBASE_EXPORT OneShotTimer : public internal::TimerBase {
 
 //-----------------------------------------------------------------------------
 // A simple, repeating timer.  See usage notes at the top of the file.
-class CRBASE_EXPORT RepeatingTimer : public internal::TimerBase {
+class CRBASE_RT_EXPORT RepeatingTimer : public internal::TimerBase {
  public:
   RepeatingTimer(const RepeatingTimer&) = delete;
   RepeatingTimer& operator=(const RepeatingTimer&) = delete;
@@ -303,7 +304,7 @@ class CRBASE_EXPORT RepeatingTimer : public internal::TimerBase {
 //-----------------------------------------------------------------------------
 // A simple, one-shot timer with the retained user_task which is reused for
 // multiple invocations of Start(). See usage notes at the top of the file.
-class CRBASE_EXPORT RetainingOneShotTimer : public internal::TimerBase {
+class CRBASE_RT_EXPORT RetainingOneShotTimer : public internal::TimerBase {
  public:
   RetainingOneShotTimer(const RetainingOneShotTimer&) = delete;
   RetainingOneShotTimer& operator=(const RetainingOneShotTimer&) = delete;

@@ -6,7 +6,7 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_THREAD_TASK_RUNNER_HANDLE_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_THREAD_TASK_RUNNER_HANDLE_H_
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase/logging/logging.h"
 #include "crbase/memory/ref_ptr.h"
 #include "crbase/internal/gtest_prod_util.h"
@@ -22,7 +22,7 @@ namespace cr {
 // for the current thread by calling ThreadTaskRunnerHandle::Get().
 // At most one TaskRunner may be bound to each thread at a time.
 // Prefer SequencedTaskRunnerHandle to this unless thread affinity is required.
-class CRBASE_EXPORT ThreadTaskRunnerHandle {
+class CRBASE_RT_EXPORT ThreadTaskRunnerHandle {
  public:
   ThreadTaskRunnerHandle(const ThreadTaskRunnerHandle&) = delete;
   ThreadTaskRunnerHandle& operator=(const ThreadTaskRunnerHandle&) = delete;
@@ -61,7 +61,7 @@ class CRBASE_EXPORT ThreadTaskRunnerHandle {
 // hence the need to friend and request a //base/OWNERS review for usage outside
 // of tests. Use ThreadTaskRunnerHandleOverrideForTesting to bypass the friend
 // requirement in tests.
-class CRBASE_EXPORT ThreadTaskRunnerHandleOverride {
+class CRBASE_RT_EXPORT ThreadTaskRunnerHandleOverride {
  public:
   ThreadTaskRunnerHandleOverride(const ThreadTaskRunnerHandleOverride&) =
       delete;

@@ -29,7 +29,7 @@ class SequenceManagerImpl;
 // used for workers in blink although we'd intend to migrate those to
 // ThreadControllerWithMessagePumpImpl (https://crbug.com/948051). Long term we
 // intend to use this for sequence funneling.
-class CRBASE_EXPORT ThreadControllerImpl : public ThreadController,
+class CRBASE_RT_EXPORT ThreadControllerImpl : public ThreadController,
                                          public RunLoop::NestingObserver {
  public:
   ThreadControllerImpl(const ThreadControllerImpl&) = delete;

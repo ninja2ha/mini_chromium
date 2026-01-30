@@ -14,7 +14,7 @@ namespace cr {
 // A simple TaskExecutor with exactly one SingleThreadTaskRunner.
 // Must be instantiated and destroyed on the thread that runs tasks for the
 // SingleThreadTaskRunner.
-class CRBASE_EXPORT SimpleTaskExecutor : public TaskExecutor {
+class CRBASE_RT_EXPORT SimpleTaskExecutor : public TaskExecutor {
  public:
   explicit SimpleTaskExecutor(RefPtr<SingleThreadTaskRunner> task_queue);
 

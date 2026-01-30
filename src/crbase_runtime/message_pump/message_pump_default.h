@@ -6,15 +6,17 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_LOOP_MESSAGE_PUMP_DEFAULT_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_LOOP_MESSAGE_PUMP_DEFAULT_H_
 
-#include "crbase/base_export.h"
 #include "crbase/synchronization/waitable_event.h"
 #include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/message_pump/message_pump.h"
+
 #include "crbuild/build_config.h"
 
 namespace cr {
 
-class CRBASE_EXPORT MessagePumpDefault : public MessagePump {
+class CRBASE_RT_EXPORT MessagePumpDefault : public MessagePump {
  public:
   MessagePumpDefault(const MessagePumpDefault&) = delete;
   MessagePumpDefault& operator=(const MessagePumpDefault&) = delete;

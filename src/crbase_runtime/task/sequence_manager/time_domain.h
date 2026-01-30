@@ -12,10 +12,12 @@
 
 #include "crbase/logging/logging.h"
 #include "crbase/functional/callback.h"
+#include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/common/intrusive_heap.h"
 #include "crbase_runtime/task/sequence_manager/lazy_now.h"
 #include "crbase_runtime/task/sequence_manager/task_queue_impl.h"
-#include "crbase/time/time.h"
 
 namespace cr {
 namespace sequence_manager {
@@ -35,7 +37,7 @@ class TaskQueueImpl;
 // TaskQueue maintains its own next wake-up time and communicates it
 // to the TimeDomain, which aggregates wake-ups across registered TaskQueues
 // into a global wake-up, which ultimately gets passed to the ThreadController.
-class CRBASE_EXPORT TimeDomain {
+class CRBASE_RT_EXPORT TimeDomain {
  public:
   TimeDomain(const TimeDomain&) = delete;
   TimeDomain& operator=(const TimeDomain&) = delete;

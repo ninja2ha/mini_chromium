@@ -22,7 +22,7 @@ enum class WakeUpResolution { kLow, kHigh };
 
 // Wrapper around PostTask method arguments and the assigned task type.
 // Eventually it becomes a PendingTask once accepted by a TaskQueueImpl.
-struct CRBASE_EXPORT PostedTask {
+struct CRBASE_RT_EXPORT PostedTask {
   explicit PostedTask(RefPtr<SequencedTaskRunner> task_runner,
                       OnceClosure callback = OnceClosure(),
                       Location location = Location(),
@@ -85,7 +85,7 @@ struct DelayedWakeUp {
 }  // namespace internal
 
 // PendingTask with extra metadata for SequenceManager.
-struct CRBASE_EXPORT Task : public PendingTask {
+struct CRBASE_RT_EXPORT Task : public PendingTask {
   Task(internal::PostedTask posted_task,
        TimeTicks delayed_run_time,
        EnqueueOrder sequence_order,

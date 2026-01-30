@@ -11,7 +11,7 @@
 
 #include <atomic>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/sequence_manager/enqueue_order.h"
 
 namespace cr {
@@ -20,7 +20,7 @@ namespace internal {
 
 // EnqueueOrder can't be created from a raw number in non-test code.
 // EnqueueOrderGenerator is used to create it with strictly monotonic guarantee.
-class CRBASE_EXPORT EnqueueOrderGenerator {
+class CRBASE_RT_EXPORT EnqueueOrderGenerator {
  public:
   EnqueueOrderGenerator();
   EnqueueOrderGenerator(const EnqueueOrderGenerator&) = delete;

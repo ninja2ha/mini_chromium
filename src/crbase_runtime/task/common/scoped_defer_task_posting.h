@@ -8,8 +8,9 @@
 
 #include <vector>
 
-#include "crbase/base_export.h"
 #include "crbase/location.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 
 namespace cr {
@@ -23,7 +24,7 @@ namespace cr {
 // TODO(altimin): It should be possible to get rid of this scope, but this
 // requires refactoring TimeDomain to ensure that TimeDomain never changes and
 // we can read current time without grabbing a lock.
-class CRBASE_EXPORT ScopedDeferTaskPosting {
+class CRBASE_RT_EXPORT ScopedDeferTaskPosting {
  public:
   static void PostOrDefer(RefPtr<SequencedTaskRunner> task_runner,
                           const Location& from_here,

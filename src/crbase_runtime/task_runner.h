@@ -8,13 +8,14 @@
 
 #include <stddef.h>
 
-#include "crbase/base_export.h"
 #include "crbase/logging/logging.h"
 #include "crbase/functional/bind.h"
 #include "crbase/functional/callback.h"
 #include "crbase/location.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/internal/post_task_and_reply_with_result_internal.h"
 
 namespace cr {
@@ -57,7 +58,7 @@ struct TaskRunnerTraits;
 //
 //   - A TaskRunner that stores the list of posted tasks and has a
 //     method Run() that runs each runnable task in random order.
-class CRBASE_EXPORT TaskRunner
+class CRBASE_RT_EXPORT TaskRunner
     : public RefCountedThreadSafe<TaskRunner, TaskRunnerTraits> {
  public:
   // Posts the given task to be run.  Returns true if the task may be
@@ -164,7 +165,7 @@ class CRBASE_EXPORT TaskRunner
   virtual void OnDestruct() const;
 };
 
-struct CRBASE_EXPORT TaskRunnerTraits {
+struct CRBASE_RT_EXPORT TaskRunnerTraits {
   static void Destruct(const TaskRunner* task_runner);
 };
 

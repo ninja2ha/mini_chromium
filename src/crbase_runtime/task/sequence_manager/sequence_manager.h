@@ -44,7 +44,7 @@ class NativeWorkHandle {
 // a single backing sequence (currently bound to a single thread, which is
 // refererred as *main thread* in the comments below). SequenceManager
 // implementation can be used in a various ways to apply scheduling logic.
-class CRBASE_EXPORT SequenceManager {
+class CRBASE_RT_EXPORT SequenceManager {
  public:
   class Observer {
    public:
@@ -79,7 +79,7 @@ class CRBASE_EXPORT SequenceManager {
 
   // Settings defining the desired SequenceManager behaviour: the type of the
   // MessageLoop and whether randomised sampling should be enabled.
-  struct CRBASE_EXPORT Settings {
+  struct CRBASE_RT_EXPORT Settings {
     class Builder;
 
     Settings();
@@ -252,7 +252,7 @@ class CRBASE_EXPORT SequenceManager {
       const TaskQueue::Spec& spec) = 0;
 };
 
-class CRBASE_EXPORT SequenceManager::Settings::Builder {
+class CRBASE_RT_EXPORT SequenceManager::Settings::Builder {
  public:
   Builder();
   ~Builder();
@@ -307,13 +307,13 @@ class CRBASE_EXPORT SequenceManager::Settings::Builder {
 // Create SequenceManager using MessageLoop on the current thread.
 // Implementation is located in sequence_manager_impl.cc.
 // TODO(scheduler-dev): Remove after every thread has a SequenceManager.
-CRBASE_EXPORT std::unique_ptr<SequenceManager>
+CRBASE_RT_EXPORT std::unique_ptr<SequenceManager>
 CreateSequenceManagerOnCurrentThread(SequenceManager::Settings settings);
 
 // Create a SequenceManager using the given MessagePump on the current thread.
 // MessagePump instances can be created with
 // MessagePump::CreateMessagePumpForType().
-CRBASE_EXPORT std::unique_ptr<SequenceManager>
+CRBASE_RT_EXPORT std::unique_ptr<SequenceManager>
 CreateSequenceManagerOnCurrentThreadWithPump(
     std::unique_ptr<MessagePump> message_pump,
     SequenceManager::Settings settings = SequenceManager::Settings());
@@ -322,7 +322,7 @@ CreateSequenceManagerOnCurrentThreadWithPump(
 // additional setup is required before binding). The SequenceManager can be
 // initialized on the current thread and then needs to be bound and initialized
 // on the target thread by calling one of the Bind*() methods.
-CRBASE_EXPORT std::unique_ptr<SequenceManager> CreateUnboundSequenceManager(
+CRBASE_RT_EXPORT std::unique_ptr<SequenceManager> CreateUnboundSequenceManager(
     SequenceManager::Settings settings = SequenceManager::Settings());
 
 }  // namespace sequence_manager

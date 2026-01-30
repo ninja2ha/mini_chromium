@@ -7,7 +7,7 @@
 
 #include <unordered_map>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 ///#include "crbase/containers/flat_map.h"
 
 namespace cr {
@@ -22,7 +22,7 @@ namespace internal {
 // The Get() and Set() methods should not be accessed directly.
 // Use SequenceLocalStorageSlot to Get() and Set() values in the current
 // sequence's SequenceLocalStorageMap.
-class CRBASE_EXPORT SequenceLocalStorageMap {
+class CRBASE_RT_EXPORT SequenceLocalStorageMap {
  public:
   SequenceLocalStorageMap(const SequenceLocalStorageMap&) = delete;
   SequenceLocalStorageMap& operator=(const SequenceLocalStorageMap&) = delete;
@@ -37,7 +37,7 @@ class CRBASE_EXPORT SequenceLocalStorageMap {
 
   // Holds a pointer to a value alongside a destructor for this pointer.
   // Calls the destructor on the value upon destruction.
-  class CRBASE_EXPORT ValueDestructorPair {
+  class CRBASE_RT_EXPORT ValueDestructorPair {
    public:
     using DestructorFunc = void(void*);
 
@@ -78,7 +78,7 @@ class CRBASE_EXPORT SequenceLocalStorageMap {
 // SequenceLocalStorageMap::GetForCurrentThread() will return a reference to the
 // SequenceLocalStorageMap object passed to the constructor. There can be only
 // one ScopedSetSequenceLocalStorageMapForCurrentThread instance per scope.
-class CRBASE_EXPORT ScopedSetSequenceLocalStorageMapForCurrentThread {
+class CRBASE_RT_EXPORT ScopedSetSequenceLocalStorageMapForCurrentThread {
  public:
   ScopedSetSequenceLocalStorageMapForCurrentThread(
       const ScopedSetSequenceLocalStorageMapForCurrentThread&) = delete;

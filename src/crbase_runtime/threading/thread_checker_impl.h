@@ -8,7 +8,7 @@
 
 #include <memory>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase/synchronization/lock.h"
 #include "crbase/threading/sequence_token.h"
 #include "crbase/threading/platform_thread.h"
@@ -28,7 +28,7 @@ namespace cr {
 // version for your build configuration.
 // Note: This is only a check, not a "lock". It is marked "LOCKABLE" only in
 // order to support thread_annotations.h.
-class CRBASE_EXPORT ThreadCheckerImpl {
+class CRBASE_RT_EXPORT ThreadCheckerImpl {
  public:
   static void EnableStackLogging();
 

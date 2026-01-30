@@ -9,8 +9,9 @@
 #include <atomic>
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/sequence_manager/associated_thread_id.h"
 
 namespace cr {
@@ -23,7 +24,7 @@ namespace internal {
 // for all active flags. Creating releasing or destroying an AtomicFlag must be
 // done on the associated thread, as must calling RunActiveCallbacks. This
 // class is thread-affine.
-class CRBASE_EXPORT AtomicFlagSet {
+class CRBASE_RT_EXPORT AtomicFlagSet {
  protected:
   struct Group;
 
@@ -36,7 +37,7 @@ class CRBASE_EXPORT AtomicFlagSet {
 
   // This class is thread-affine in addition SetActive can be called
   // concurrently from any thread.
-  class CRBASE_EXPORT AtomicFlag {
+  class CRBASE_RT_EXPORT AtomicFlag {
    public:
     AtomicFlag();
 
@@ -89,7 +90,7 @@ class CRBASE_EXPORT AtomicFlagSet {
 
   // Wraps a single std::atomic<size_t> which is shared by a number of
   // AtomicFlag's with one bit per flag.
-  struct CRBASE_EXPORT Group {
+  struct CRBASE_RT_EXPORT Group {
     Group();
     Group(const Group&) = delete;
     Group& operator=(const Group&) = delete;

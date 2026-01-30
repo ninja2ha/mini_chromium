@@ -137,9 +137,10 @@
 #include <utility>
 #include <vector>
 
-#include "crbase/base_export.h"
 #include "crbase/logging/logging.h"
 #include "crbase/memory/ptr_util.h"
+
+#include "crbase_runtime/runtime_export.h"
 
 namespace cr {
 
@@ -148,7 +149,7 @@ namespace cr {
 // IntrusiveHeap, and is maintained by the heap as the object moves around
 // within it. It can be used to subsequently remove the element, or update it
 // in place.
-class CRBASE_EXPORT HeapHandle {
+class CRBASE_RT_EXPORT HeapHandle {
  public:
   enum : size_t { kInvalidIndex = std::numeric_limits<size_t>::max() };
 
@@ -583,7 +584,7 @@ class IntrusiveHeap {
 // from this type you endow your class with self-owned storage for a HeapHandle.
 // This is a move-only type so that the handle follows the element across moves
 // and resizes of the underlying vector.
-class CRBASE_EXPORT InternalHeapHandleStorage {
+class CRBASE_RT_EXPORT InternalHeapHandleStorage {
  public:
   InternalHeapHandleStorage();
   InternalHeapHandleStorage(const InternalHeapHandleStorage&) = delete;
@@ -685,12 +686,12 @@ class WithHeapHandle : public InternalHeapHandleStorage {
 
 namespace intrusive_heap {
 
-CRBASE_EXPORT inline size_t ParentIndex(size_t i) {
+CRBASE_RT_EXPORT inline size_t ParentIndex(size_t i) {
   CR_DCHECK(0u != i);
   return (i - 1) / 2;
 }
 
-CRBASE_EXPORT inline size_t LeftIndex(size_t i) {
+CRBASE_RT_EXPORT inline size_t LeftIndex(size_t i) {
   return 2 * i + 1;
 }
 
@@ -699,7 +700,7 @@ bool IsInvalid(const HandleType& handle) {
   return !handle || !handle->IsValid();
 }
 
-CRBASE_EXPORT inline void CheckInvalidOrEqualTo(HeapHandle handle, 
+CRBASE_RT_EXPORT inline void CheckInvalidOrEqualTo(HeapHandle handle, 
                                                 size_t index) {
   if (handle.IsValid())
     CR_DCHECK(index == handle.index());

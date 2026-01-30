@@ -8,12 +8,14 @@
 
 #include <stdint.h>
 
-#include "crbase/base_export.h"
 #include "crbase/memory/ref_counted.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 #include "crbase_runtime/single_thread_task_runner.h"
 #include "crbase_runtime/task/single_thread_task_runner_thread_mode.h"
 #include "crbase_runtime/task_runner.h"
+
 #include "crbuild/build_config.h"
 
 namespace cr {
@@ -24,7 +26,7 @@ class TaskTraits;
 // A TaskExecutor can execute Tasks with a specific TaskTraits extension id. To
 // handle Tasks posted via the //base/task/post_task.h API, the TaskExecutor
 // should be registered by calling RegisterTaskExecutor().
-class CRBASE_EXPORT TaskExecutor {
+class CRBASE_RT_EXPORT TaskExecutor {
  public:
   virtual ~TaskExecutor() = default;
 
@@ -71,20 +73,22 @@ class CRBASE_EXPORT TaskExecutor {
 // given |extension_id|. All executors need to be registered before any tasks
 // are posted with |extension_id|. Only one executor per |extension_id| is
 // supported.
-CRBASE_EXPORT void RegisterTaskExecutor(uint8_t extension_id,
-                                        TaskExecutor* task_executor);
-CRBASE_EXPORT void UnregisterTaskExecutorForTesting(uint8_t extension_id);
+CRBASE_RT_EXPORT void RegisterTaskExecutor(uint8_t extension_id,
+                                           TaskExecutor* task_executor);
+CRBASE_RT_EXPORT void UnregisterTaskExecutorForTesting(uint8_t extension_id);
 
 // Stores the provided TaskExecutor in TLS for the current thread, to be used by
 // tasks with the CurrentThread() trait.
-CRBASE_EXPORT void SetTaskExecutorForCurrentThread(TaskExecutor* task_executor);
+CRBASE_RT_EXPORT void SetTaskExecutorForCurrentThread(
+    TaskExecutor* task_executor);
 
 // Returns the task executor registered for the current thread.
-CRBASE_EXPORT TaskExecutor* GetTaskExecutorForCurrentThread();
+CRBASE_RT_EXPORT TaskExecutor* GetTaskExecutorForCurrentThread();
 
 // Determines whether a registered TaskExecutor will handle tasks with the given
 // |traits| and, if so, returns a pointer to it. Otherwise, returns |nullptr|.
-TaskExecutor* GetRegisteredTaskExecutorForTraits(const TaskTraits& traits);
+CRBASE_RT_EXPORT TaskExecutor* GetRegisteredTaskExecutorForTraits(
+    const TaskTraits& traits);
 
 }  // namespace cr
 

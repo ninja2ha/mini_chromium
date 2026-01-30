@@ -6,7 +6,6 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_PUMP_TIMER_SLACK_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_MESSAGE_PUMP_TIMER_SLACK_H_
 
-#include "crbase/base_export.h"
 #include "crbase/time/time.h"
 
 namespace cr {

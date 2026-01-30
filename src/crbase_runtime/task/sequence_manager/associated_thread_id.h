@@ -13,6 +13,8 @@
 #include "crbase/containers/optional.h"
 #include "crbase/threading/sequence_checker.h"
 #include "crbase/threading/platform_thread.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/threading/thread_checker.h"
 
 namespace cr {
@@ -24,7 +26,7 @@ namespace internal {
 //
 // This class is thread-safe. But see notes about memory ordering guarantees for
 // the various methods.
-class CRBASE_EXPORT AssociatedThreadId
+class CRBASE_RT_EXPORT AssociatedThreadId
     : public cr::RefCountedThreadSafe<AssociatedThreadId> {
  public:
   AssociatedThreadId();

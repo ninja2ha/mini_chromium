@@ -8,17 +8,19 @@
 
 #include <string>
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/win/windows_types.h"
 #include "crbase_runtime/threading/thread_checker.h"
+
+#include "crbase_runtime/runtime_export.h"
+
 #include "crbuild/compiler_specific.h"
 
 namespace cr {
 namespace win {
 
 // Implements a message-only window.
-class CRBASE_EXPORT MessageWindow {
+class CRBASE_RT_EXPORT MessageWindow {
  public:
   // Used to register a process-wide message window class.
   class WindowClass;

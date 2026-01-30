@@ -67,7 +67,7 @@ class ThreadControllerImpl;
 //    the incoming task queue (if any) are moved here. The work queues are
 //    registered with the selector as input to the scheduling decision.
 //
-class CRBASE_EXPORT SequenceManagerImpl
+class CRBASE_RT_EXPORT SequenceManagerImpl
     : public SequenceManager,
       public internal::SequencedTaskSource,
       public internal::TaskQueueSelector::Observer,

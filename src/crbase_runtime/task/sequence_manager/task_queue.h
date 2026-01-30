@@ -42,7 +42,7 @@ class TimeDomain;
 // unregistered immediately and might accept some last minute tasks until
 // SequenceManager will unregister it at some point. It's done to ensure that
 // task queue always gets unregistered on the main thread.
-class CRBASE_EXPORT TaskQueue : public RefCountedThreadSafe<TaskQueue> {
+class CRBASE_RT_EXPORT TaskQueue : public RefCountedThreadSafe<TaskQueue> {
  public:
   class Observer {
    public:
@@ -144,7 +144,7 @@ class CRBASE_EXPORT TaskQueue : public RefCountedThreadSafe<TaskQueue> {
   //
   // start_* should be called after RecordTaskStart.
   // end_* and *_duration should be called after RecordTaskEnd.
-  class CRBASE_EXPORT TaskTiming {
+  class CRBASE_RT_EXPORT TaskTiming {
    public:
     enum class State { NotStarted, Running, Finished };
     enum class TimeRecordingPolicy { DoRecord, DoNotRecord };
@@ -199,7 +199,7 @@ class CRBASE_EXPORT TaskQueue : public RefCountedThreadSafe<TaskQueue> {
 
   // An interface that lets the owner vote on whether or not the associated
   // TaskQueue should be enabled.
-  class CRBASE_EXPORT QueueEnabledVoter {
+  class CRBASE_RT_EXPORT QueueEnabledVoter {
    public:
     ~QueueEnabledVoter();
 

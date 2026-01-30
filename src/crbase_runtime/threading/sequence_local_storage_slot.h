@@ -8,15 +8,16 @@
 #include <memory>
 #include <utility>
 
-#include "crbase/base_export.h"
 #include "crbase/internal/template_util.h"
 #include "crbase/atomic/atomic_sequence_num.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/threading/sequence_local_storage_map.h"
 
 namespace cr {
 
 namespace internal {
-CRBASE_EXPORT SequenceInt GetNextSequenceLocalStorageSlotNumber();
+CRBASE_RT_EXPORT SequenceInt GetNextSequenceLocalStorageSlotNumber();
 }
 
 // SequenceLocalStorageSlot allows arbitrary values to be stored and retrieved

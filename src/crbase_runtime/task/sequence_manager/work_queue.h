@@ -6,7 +6,7 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_WORK_QUEUE_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_WORK_QUEUE_H_
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/common/intrusive_heap.h"
 #include "crbase_runtime/task/sequence_manager/enqueue_order.h"
 #include "crbase_runtime/task/sequence_manager/sequenced_task_source.h"
@@ -27,7 +27,7 @@ class WorkQueueSets;
 // API subset used by WorkQueueSets pretends the WorkQueue is empty until the
 // fence is removed.  This functionality is a primitive intended for use by
 // throttling mechanisms.
-class CRBASE_EXPORT WorkQueue {
+class CRBASE_RT_EXPORT WorkQueue {
  public:
   using QueueType = internal::TaskQueueImpl::WorkQueueType;
 
@@ -65,7 +65,7 @@ class CRBASE_EXPORT WorkQueue {
   void Push(Task task);
 
   // RAII helper that helps efficiently push N Tasks to a WorkQueue.
-  class CRBASE_EXPORT TaskPusher {
+  class CRBASE_RT_EXPORT TaskPusher {
    public:
     TaskPusher(const TaskPusher&) = delete;
     TaskPusher(TaskPusher&& other);

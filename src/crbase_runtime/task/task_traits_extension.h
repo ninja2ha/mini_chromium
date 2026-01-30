@@ -12,7 +12,7 @@
 #include <tuple>
 #include <utility>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/traits_bag.h"
 
 namespace cr {
@@ -128,7 +128,7 @@ namespace cr {
 // Stores extension traits opaquely inside a fixed-size data array. We store
 // this data directly (rather than in a separate object on the heap) to support
 // constexpr-compatible TaskTraits construction.
-struct CRBASE_EXPORT TaskTraitsExtensionStorage {
+struct CRBASE_RT_EXPORT TaskTraitsExtensionStorage {
   // Size in bytes.
   // Keep in sync with org.chromium.base.task.TaskTraits.EXTENSION_STORAGE_SIZE
   static constexpr size_t kStorageSize = 8;

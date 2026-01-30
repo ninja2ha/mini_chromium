@@ -6,9 +6,10 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_LAZY_NOW_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_LAZY_NOW_H_
 
-#include "crbase/base_export.h"
 #include "crbase/containers/optional.h"
 #include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 
 namespace cr {
 
@@ -19,7 +20,7 @@ namespace sequence_manager {
 // Now() is somewhat expensive so it makes sense not to call Now() unless we
 // really need to and to avoid subsequent calls if already called once.
 // LazyNow objects are expected to be short-living to represent accurate time.
-class CRBASE_EXPORT LazyNow {
+class CRBASE_RT_EXPORT LazyNow {
  public:
   explicit LazyNow(TimeTicks now);
   explicit LazyNow(const TickClock* tick_clock);

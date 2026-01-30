@@ -8,8 +8,9 @@
 
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/synchronization/lock.h"
+
+#include "crbase_runtime/runtime_export.h"
 
 namespace cr {
 
@@ -24,7 +25,7 @@ struct UniversalSuccessor {};
 // This lock tracks all of the available locks to make sure that any locks are
 // acquired in an expected order.
 // See scheduler_lock.h for details.
-class CRBASE_EXPORT CheckedLockImpl {
+class CRBASE_RT_EXPORT CheckedLockImpl {
  public:
   CheckedLockImpl(const CheckedLockImpl&) = delete;
   CheckedLockImpl& operator=(const CheckedLockImpl&) = delete;

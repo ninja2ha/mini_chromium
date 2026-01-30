@@ -9,7 +9,7 @@
 
 #include <atomic>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/threading/thread_checker.h"
 
 namespace cr {
@@ -31,7 +31,7 @@ class ThreadControllerWithMessagePumpImpl;
 // ThreadProfiler because the lifetime relationship between the two classes
 // varies depending on which thread is being profiled, plus the fact that
 // MessageLoop doesn't have a well-defined creation point/owner on some threads.
-class CRBASE_EXPORT WorkIdProvider {
+class CRBASE_RT_EXPORT WorkIdProvider {
  public:
   // Returns the WorkIdProvider for the current thread. Allocates a
   // WorkIdProvider in TLS if not already present.

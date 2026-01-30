@@ -8,8 +8,9 @@
 
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/sequenced_task_runner_helpers.h"
 #include "crbase_runtime/task_runner.h"
 
@@ -97,7 +98,7 @@ namespace cr {
 //     has a method Run() that runs each runnable task in FIFO order
 //     that can be called from any thread, but only if another
 //     (non-nested) Run() call isn't already happening.
-class CRBASE_EXPORT SequencedTaskRunner : public TaskRunner {
+class CRBASE_RT_EXPORT SequencedTaskRunner : public TaskRunner {
  public:
   // The two PostNonNestable*Task methods below are like their
   // nestable equivalents in TaskRunner, but they guarantee that the
@@ -180,7 +181,7 @@ class CRBASE_EXPORT SequencedTaskRunner : public TaskRunner {
 //     new Foo, cr::OnTaskRunnerDeleter(my_task_runner));
 //
 // For RefCounted see cr::RefCountedDeleteOnSequence.
-struct CRBASE_EXPORT OnTaskRunnerDeleter {
+struct CRBASE_RT_EXPORT OnTaskRunnerDeleter {
   explicit OnTaskRunnerDeleter(RefPtr<SequencedTaskRunner> task_runner);
   ~OnTaskRunnerDeleter();
 

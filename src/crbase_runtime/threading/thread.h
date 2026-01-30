@@ -11,7 +11,7 @@
 #include <memory>
 #include <string>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/threading/sequence_checker.h"
 #include "crbase_runtime/message_pump/message_pump_type.h"
@@ -59,9 +59,9 @@ class TimeDomain;
 // ownership. The caller is then responsible to ensure a happens-after
 // relationship between the DetachFromSequence() call and the next use of that
 // Thread object (including ~Thread()).
-class CRBASE_EXPORT Thread : PlatformThread::Delegate {
+class CRBASE_RT_EXPORT Thread : PlatformThread::Delegate {
  public:
-  class CRBASE_EXPORT Delegate {
+  class CRBASE_RT_EXPORT Delegate {
    public:
     virtual ~Delegate() {}
 
@@ -73,7 +73,7 @@ class CRBASE_EXPORT Thread : PlatformThread::Delegate {
     virtual void BindToCurrentThread(TimerSlack timer_slack) = 0;
   };
 
-  struct CRBASE_EXPORT Options {
+  struct CRBASE_RT_EXPORT Options {
     using MessagePumpFactory =
         RepeatingCallback<std::unique_ptr<MessagePump>()>;
 

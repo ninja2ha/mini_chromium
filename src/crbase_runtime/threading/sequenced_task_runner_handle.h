@@ -6,7 +6,7 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_SEQUENCED_TASK_RUNNER_HANDLE_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_SEQUENCED_TASK_RUNNER_HANDLE_H_
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase/memory/ref_ptr.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 #include "crbuild/compiler_specific.h"
@@ -15,7 +15,7 @@ namespace cr {
 
 class ThreadTaskRunnerHandle;
 
-class CRBASE_EXPORT SequencedTaskRunnerHandle {
+class CRBASE_RT_EXPORT SequencedTaskRunnerHandle {
  public:
   SequencedTaskRunnerHandle(const SequencedTaskRunnerHandle&) = delete;
   SequencedTaskRunnerHandle& operator=(const SequencedTaskRunnerHandle&) 

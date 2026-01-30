@@ -6,7 +6,7 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_SINGLE_THREAD_TASK_RUNNER_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_SINGLE_THREAD_TASK_RUNNER_H_
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 
 namespace cr {
@@ -23,7 +23,7 @@ namespace cr {
 //   - Add tasks to a FIFO and signal to a non-MessageLoop thread for them to
 //     be processed. This allows TaskRunner-oriented code run on threads
 //     running other kinds of message loop, e.g. Jingle threads.
-class CRBASE_EXPORT SingleThreadTaskRunner : public SequencedTaskRunner {
+class CRBASE_RT_EXPORT SingleThreadTaskRunner : public SequencedTaskRunner {
  public:
   // A more explicit alias to RunsTasksInCurrentSequence().
   bool BelongsToCurrentThread() const { return RunsTasksInCurrentSequence(); }

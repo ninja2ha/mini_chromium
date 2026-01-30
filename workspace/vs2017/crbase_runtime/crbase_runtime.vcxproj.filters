@@ -183,6 +183,7 @@
     <ClInclude Include="..\..\..\src\crbase_runtime\timer\timer.h">
       <Filter>timer</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crbase_runtime\runtime_export.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
@@ -341,5 +342,8 @@
     <Filter Include="timer">
       <UniqueIdentifier>{533dd1e1-ec5f-4003-8302-efb7fe98a0a3}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\src\crbase_runtime\CMakeLists.txt" />
   </ItemGroup>
 </Project>

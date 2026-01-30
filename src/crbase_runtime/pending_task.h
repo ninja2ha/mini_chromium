@@ -10,12 +10,13 @@
 
 #include <array>
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/containers/optional.h"
 #include "crbase/containers/queue.h"
 #include "crbase/location.h"
 #include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 
 namespace cr {
 
@@ -26,7 +27,7 @@ enum class Nestable : uint8_t {
 
 // Contains data about a pending task. Stored in TaskQueue and DelayedTaskQueue
 // for use by classes that queue and execute tasks.
-struct CRBASE_EXPORT PendingTask {
+struct CRBASE_RT_EXPORT PendingTask {
   PendingTask();
   PendingTask(const Location& posted_from,
               OnceClosure task,

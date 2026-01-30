@@ -8,8 +8,9 @@
 
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/memory/ref_ptr.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/message_pump/message_pump_type.h"
 #include "crbase_runtime/single_thread_task_runner.h"
 #include "crbase_runtime/task/simple_task_executor.h"
@@ -26,7 +27,7 @@ class TaskQueue;
 // A simple single thread TaskExecutor intended for non-test usage. Tests should
 // generally use TaskEnvironment or BrowserTaskEnvironment instead.
 // TODO(alexclarke): Inherit from TaskExecutor to support base::Here().
-class CRBASE_EXPORT SingleThreadTaskExecutor {
+class CRBASE_RT_EXPORT SingleThreadTaskExecutor {
  public:
   SingleThreadTaskExecutor(const SingleThreadTaskExecutor&) = delete;
   SingleThreadTaskExecutor& operator=(const SingleThreadTaskExecutor&) = delete;

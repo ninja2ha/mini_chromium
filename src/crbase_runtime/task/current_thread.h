@@ -8,15 +8,17 @@
 
 #include <ostream>
 
-#include "crbase/base_export.h"
 #include "crbase/logging/logging.h"
 #include "crbase/memory/ref_ptr.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/message_pump/message_pump_for_io.h"
 #include "crbase_runtime/message_pump/message_pump_for_ui.h"
 #include "crbase_runtime/pending_task.h"
 #include "crbase_runtime/single_thread_task_runner.h"
 #include "crbase_runtime/task/sequence_manager/task_time_observer.h"
 #include "crbase_runtime/task/task_observer.h"
+
 #include "crbuild/build_config.h"
 
 namespace cr {
@@ -47,7 +49,7 @@ class SequenceManagerImpl;
 //
 // As such, many methods below are flagged as deprecated and should be removed
 // once all static callers have been migrated.
-class CRBASE_EXPORT CurrentThread {
+class CRBASE_RT_EXPORT CurrentThread {
  public:
   // CurrentThread is effectively just a disguised pointer and is fine to
   // copy/move around.
@@ -87,7 +89,7 @@ class CRBASE_EXPORT CurrentThread {
   // Deprecation note: Prefer SequenceLocalStorageSlot<std::unique_ptr<Foo>> to
   // DestructionObserver to bind an object's lifetime to the current
   // thread/sequence.
-  class CRBASE_EXPORT DestructionObserver {
+  class CRBASE_RT_EXPORT DestructionObserver {
    public:
     // TODO(https://crbug.com/891670): Rename to
     // WillDestroyCurrentTaskExecutionEnvironment
@@ -143,7 +145,7 @@ class CRBASE_EXPORT CurrentThread {
   //
   // Use RunLoop::Type::kNestableTasksAllowed when nesting is triggered by the
   // application RunLoop rather than by native code.
-  class CRBASE_EXPORT ScopedAllowApplicationTasksInNativeNestedLoop {
+  class CRBASE_RT_EXPORT ScopedAllowApplicationTasksInNativeNestedLoop {
    public:
     ScopedAllowApplicationTasksInNativeNestedLoop();
     ~ScopedAllowApplicationTasksInNativeNestedLoop();
@@ -191,7 +193,7 @@ class CRBASE_EXPORT CurrentThread {
 };
 
 // UI extension of CurrentThread.
-class CRBASE_EXPORT CurrentUIThread : public CurrentThread {
+class CRBASE_RT_EXPORT CurrentUIThread : public CurrentThread {
  public:
   // Returns an interface for the CurrentUIThread of the current thread.
   // Asserts that IsSet().
@@ -228,7 +230,7 @@ class CRBASE_EXPORT CurrentUIThread : public CurrentThread {
 };
 
 // ForIO extension of CurrentThread.
-class CRBASE_EXPORT CurrentIOThread : public CurrentThread {
+class CRBASE_RT_EXPORT CurrentIOThread : public CurrentThread {
  public:
   // Returns an interface for the CurrentIOThread of the current thread.
   // Asserts that IsSet().

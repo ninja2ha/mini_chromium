@@ -67,7 +67,7 @@ class WorkQueueSets;
 // queue is selected, it round-robins between the |immediate_work_queue| and
 // |delayed_work_queue|.  The reason for this is we want to make sure delayed
 // tasks (normally the most common type) don't starve out immediate work.
-class CRBASE_EXPORT TaskQueueImpl {
+class CRBASE_RT_EXPORT TaskQueueImpl {
  public:
   TaskQueueImpl(SequenceManagerImpl* sequence_manager,
                 TimeDomain* time_domain,

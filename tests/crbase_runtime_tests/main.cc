@@ -1,4 +1,5 @@
 #include "crbase/at_exit.h"
+#include "crbase/strings/stringprintf.h"
 #include "crbase_runtime/run_loop.h"
 #include "crbase_runtime/task/single_thread_task_executor.h"
 #include "crbase_runtime/threading/thread_task_runner_handle.h"
@@ -7,7 +8,7 @@
 int main(int argc, char* argv[]) {
   cr::AtExitManager at_exit_manager;
 
-  cr::SingleThreadTaskExecutor task_executor(cr::MessagePumpType::UI);
+  cr::SingleThreadTaskExecutor task_executor(cr::MessagePumpType::IO);
 
   cr::RepeatingTimer timer;
   timer.SetTaskRunner(cr::ThreadTaskRunnerHandle::Get());
@@ -16,7 +17,8 @@ int main(int argc, char* argv[]) {
       cr::TimeDelta::FromSeconds(2), 
       cr::BindRepeating([]{
         static int times = 1;
-        printf("hello chromium, %d!!\n", times++);
+        std::string msg = cr::StringPrintf("hello chromium, %d!!\n", times++);
+        printf(msg.data(), times++);
       }));
 
   cr::ThreadTaskRunnerHandle::Get()->PostTask(

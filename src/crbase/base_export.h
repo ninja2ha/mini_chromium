@@ -11,21 +11,21 @@
 #if defined(MINI_CHROMIUM_COMPILER_MSVC)
 #pragma warning(disable: 4251)
 
-#if defined(MINI_CHROMIUM_IMPLEMENTATION)
+#if defined(CRBASE_IMPLEMENTATION)
 #define CRBASE_EXPORT __declspec(dllexport)
 #else
 #define CRBASE_EXPORT __declspec(dllimport)
-#endif  // defined(MINI_CHROMIUM_IMPLEMENTATION)
+#endif  // defined(CRBASE_IMPLEMENTATION)
 
 #else  // defined(MINI_CHROMIUM_COMPILER_MSVC)
-#if defined(MINI_CHROMIUM_IMPLEMENTATION)
+#if defined(CRBASE_IMPLEMENTATION)
 #define CRBASE_EXPORT __attribute__((visibility("default")))
 #else
 #define CRBASE_EXPORT
-#endif  // defined(MINI_CHROMIUM_IMPLEMENTATION)
+#endif  // defined(CRBASE_IMPLEMENTATION)
 #endif
 
-#else  // defined(MINI_CHROMIUM_IMPLEMENTATION)
+#else  // defined(MINI_CHROMIUM_COMPONENT_BUILD)
 #define CRBASE_EXPORT
 #endif
 

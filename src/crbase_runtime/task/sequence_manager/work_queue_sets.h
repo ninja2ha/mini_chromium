@@ -10,8 +10,9 @@
 #include <map>
 #include <vector>
 
-#include "crbase/base_export.h"
 #include "crbase/logging/logging.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/common/intrusive_heap.h"
 #include "crbase_runtime/task/sequence_manager/sequence_manager.h"
 #include "crbase_runtime/task/sequence_manager/task_queue_impl.h"
@@ -27,9 +28,9 @@ namespace internal {
 // TaskQueueSelector chooses to run a task a given priority).  The reason this
 // works is because std::map is a tree based associative container and all the
 // values are kept in sorted order.
-class CRBASE_EXPORT WorkQueueSets {
+class CRBASE_RT_EXPORT WorkQueueSets {
  public:
-  class Observer {
+  class CRBASE_RT_EXPORT Observer {
    public:
     virtual ~Observer() {}
 

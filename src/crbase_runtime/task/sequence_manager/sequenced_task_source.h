@@ -16,7 +16,7 @@ namespace sequence_manager {
 namespace internal {
 
 // Interface to pass tasks to ThreadController.
-class SequencedTaskSource {
+class CRBASE_RT_EXPORT SequencedTaskSource {
  public:
   enum class SelectTaskOption { kDefault, kSkipDelayedTask };
 

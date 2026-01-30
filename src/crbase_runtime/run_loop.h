@@ -10,7 +10,6 @@
 #include <utility>
 #include <vector>
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/containers/stack.h"
 #include "crbase/internal/gtest_prod_util.h"
@@ -20,7 +19,10 @@
 #include "crbase/observer_list.h"
 #include "crbase/time/time.h"
 #include "crbase/threading/sequence_checker.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/threading/thread_checker.h"
+
 #include "crbuild/build_config.h"
 
 namespace cr {
@@ -39,7 +41,7 @@ class SingleThreadTaskRunner;
 // IsRunning/IsNestedOnCurrentThread()). RunLoop::Run can only be called once
 // per RunLoop lifetime. Create a RunLoop on the stack and call Run/Quit to run
 // a nested RunLoop but please avoid nested loops in production code!
-class CRBASE_EXPORT RunLoop {
+class CRBASE_RT_EXPORT RunLoop {
  public:
   // The type of RunLoop: a kDefault RunLoop at the top-level (non-nested) will
   // process system and application tasks assigned to its Delegate. When nested
@@ -149,7 +151,7 @@ class CRBASE_EXPORT RunLoop {
   static bool IsNestedOnCurrentThread();
 
   // A NestingObserver is notified when a nested RunLoop begins and ends.
-  class CRBASE_EXPORT NestingObserver {
+  class CRBASE_RT_EXPORT NestingObserver {
    public:
     // Notified before a nested loop starts running work on the current thread.
     virtual void OnBeginNestedRunLoop() = 0;
@@ -169,7 +171,7 @@ class CRBASE_EXPORT RunLoop {
   // One and only one RunLoop::Delegate must be registered on a given thread
   // via RunLoop::RegisterDelegateForCurrentThread() before RunLoop instances
   // and RunLoop static methods can be used on it.
-  class CRBASE_EXPORT Delegate {
+  class CRBASE_RT_EXPORT Delegate {
    public:
     Delegate();
     Delegate(const Delegate&) = delete;
@@ -255,7 +257,7 @@ class CRBASE_EXPORT RunLoop {
   // RunLoop::Delegate per thread and RunLoop::Run() should only be invoked from
   // it (or it would result in incorrectly driving TaskRunner A while in
   // TaskRunner B's context).
-  class CRBASE_EXPORT ScopedDisallowRunning {
+  class CRBASE_RT_EXPORT ScopedDisallowRunning {
    public:
     ScopedDisallowRunning();
     ScopedDisallowRunning(const ScopedDisallowRunning&) = delete;
@@ -271,7 +273,7 @@ class CRBASE_EXPORT RunLoop {
 
   // Support for //base/test/scoped_run_loop_timeout.h.
   // This must be public for access by the implementation code in run_loop.cc.
-  struct CRBASE_EXPORT RunLoopTimeout {
+  struct CRBASE_RT_EXPORT RunLoopTimeout {
     RunLoopTimeout();
     ~RunLoopTimeout();
     TimeDelta timeout;

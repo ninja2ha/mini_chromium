@@ -30,7 +30,7 @@ namespace sequence_manager {
 namespace internal {
 
 // This is the interface between the SequenceManager and the MessagePump.
-class CRBASE_EXPORT ThreadControllerWithMessagePumpImpl
+class CRBASE_RT_EXPORT ThreadControllerWithMessagePumpImpl
     : public ThreadController,
       public MessagePump::Delegate,
       public RunLoop::Delegate,

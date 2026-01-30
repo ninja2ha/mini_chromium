@@ -8,9 +8,10 @@
 
 #include <memory>
 
-#include "crbase/base_export.h"
 #include "crbase/synchronization/condition_variable.h"
 #include "crbase/synchronization/lock.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/common/checked_lock_impl.h"
 
 namespace cr {

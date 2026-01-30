@@ -8,7 +8,7 @@
 
 #include <atomic>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/sequence_manager/associated_thread_id.h"
 
 namespace cr {
@@ -31,7 +31,7 @@ namespace internal {
 //
 // Most methods are thread-affine except for On(Delayed)WorkRequested which are
 // is thread-safe.
-class CRBASE_EXPORT WorkDeduplicator {
+class CRBASE_RT_EXPORT WorkDeduplicator {
  public:
   // Creates an unbound WorkDeduplicator. BindToCurrentThread must be called
   // before work can be scheduled.

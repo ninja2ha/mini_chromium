@@ -5,11 +5,12 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_WIN_OBJECT_WATCHER_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_WIN_OBJECT_WATCHER_H_
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/memory/weak_ptr.h"
 #include "crbase/win/windows_types.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 
 namespace cr {
@@ -51,9 +52,9 @@ namespace win {
 //
 // NOTE: Except for the constructor, all public methods of this class must be
 // called in sequence, in a scope where SequencedTaskRunnerHandle::IsSet().
-class CRBASE_EXPORT ObjectWatcher {
+class CRBASE_RT_EXPORT ObjectWatcher {
  public:
-  class CRBASE_EXPORT Delegate {
+  class CRBASE_RT_EXPORT Delegate {
    public:
     virtual ~Delegate() = default;
     // Called from the sequence that started the watch when a signaled object is

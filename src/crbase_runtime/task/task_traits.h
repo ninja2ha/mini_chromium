@@ -13,10 +13,12 @@
 #include <type_traits>
 #include <utility>
 
-#include "crbase/base_export.h"
 #include "crbase/logging/logging.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/task_traits_extension.h"
 #include "crbase_runtime/traits_bag.h"
+
 #include "crbuild/build_config.h"
 
 namespace cr {
@@ -196,7 +198,7 @@ struct MayBlock {};
 struct WithBaseSyncPrimitives {};
 
 // Describes metadata for a single task or a group of tasks.
-class CRBASE_EXPORT TaskTraits {
+class CRBASE_RT_EXPORT TaskTraits {
  public:
   // ValidTrait ensures TaskTraits' constructor only accepts appropriate types.
   struct ValidTrait {
@@ -372,15 +374,16 @@ class CRBASE_EXPORT TaskTraits {
 
 // Returns string literals for the enums defined in this file. These methods
 // should only be used for tracing and debugging.
-CRBASE_EXPORT const char* TaskPriorityToString(TaskPriority task_priority);
-CRBASE_EXPORT const char* TaskShutdownBehaviorToString(
+CRBASE_RT_EXPORT const char* TaskPriorityToString(TaskPriority task_priority);
+CRBASE_RT_EXPORT const char* TaskShutdownBehaviorToString(
     TaskShutdownBehavior task_priority);
 
 // Stream operators so that the enums defined in this file can be used in
 // DCHECK and EXPECT statements.
-CRBASE_EXPORT std::ostream& operator<<(std::ostream& os,
-                                       const TaskPriority& shutdown_behavior);
-CRBASE_EXPORT std::ostream& operator<<(
+CRBASE_RT_EXPORT std::ostream& operator<<(
+    std::ostream& os,
+    const TaskPriority& shutdown_behavior);
+CRBASE_RT_EXPORT std::ostream& operator<<(
     std::ostream& os,
     const TaskShutdownBehavior& shutdown_behavior);
 

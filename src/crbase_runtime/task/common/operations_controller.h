@@ -11,6 +11,8 @@
 
 #include "crbase/synchronization/waitable_event.h"
 
+#include "crbase_runtime/runtime_export.h"
+
 namespace cr {
 namespace internal {
 
@@ -51,7 +53,7 @@ namespace internal {
 // This class is thread-safe.
 // But note that StartAcceptingOperations can never be called after
 // ShutdownAndWaitForZeroOperations.
-class CRBASE_EXPORT OperationsController {
+class CRBASE_RT_EXPORT OperationsController {
  public:
   // The owner of an OperationToken which evaluates to true can safely perform
   // an operation while being certain it happens-after

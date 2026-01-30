@@ -8,12 +8,14 @@
 
 #include <utility>
 
-#include "crbase/base_export.h"
 #include "crbase/logging/logging.h"
 #include "crbase/threading/sequence_checker.h"
 #include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/message_pump/message_pump_type.h"
 #include "crbase_runtime/message_pump/timer_slack.h"
+
 #include "crbuild/compiler_specific.h"
 #include "crbuild/build_config.h"
 
@@ -21,7 +23,7 @@ namespace cr {
 
 class TimeTicks;
 
-class CRBASE_EXPORT MessagePump {
+class CRBASE_RT_EXPORT MessagePump {
  public:
   using MessagePumpFactory = std::unique_ptr<MessagePump>();
   // Uses the given base::MessagePumpFactory to override the default MessagePump
@@ -36,7 +38,7 @@ class CRBASE_EXPORT MessagePump {
 
   // Please see the comments above the Run method for an illustration of how
   // these delegate methods are used.
-  class CRBASE_EXPORT Delegate {
+  class CRBASE_RT_EXPORT Delegate {
    public:
     virtual ~Delegate() = default;
 

@@ -10,7 +10,7 @@
 
 #include <vector>
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/pending_task.h"
 #include "crbase_runtime/task/sequence_manager/sequence_manager.h"
 #include "crbase_runtime/task/sequence_manager/sequenced_task_source.h"
@@ -25,7 +25,7 @@ class AssociatedThreadId;
 
 // TaskQueueSelector is used by the SchedulerHelper to enable prioritization
 // of particular task queues.
-class CRBASE_EXPORT TaskQueueSelector : public WorkQueueSets::Observer {
+class CRBASE_RT_EXPORT TaskQueueSelector : public WorkQueueSets::Observer {
  public:
   using SelectTaskOption = SequencedTaskSource::SelectTaskOption;
 
@@ -61,7 +61,7 @@ class CRBASE_EXPORT TaskQueueSelector : public WorkQueueSets::Observer {
   WorkQueue* SelectWorkQueueToService(
       SelectTaskOption option = SelectTaskOption::kDefault);
 
-  class CRBASE_EXPORT Observer {
+  class CRBASE_RT_EXPORT Observer {
    public:
     virtual ~Observer() = default;
 
@@ -108,7 +108,7 @@ class CRBASE_EXPORT TaskQueueSelector : public WorkQueueSets::Observer {
   // priorities, and because we always run tasks in order from highest to lowest
   // priority, we can use a single integer to represent enabled priorities,
   // using a bit per priority.
-  class CRBASE_EXPORT ActivePriorityTracker {
+  class CRBASE_RT_EXPORT ActivePriorityTracker {
    public:
     ActivePriorityTracker();
 

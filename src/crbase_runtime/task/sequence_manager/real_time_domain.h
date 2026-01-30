@@ -6,14 +6,14 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_REAL_TIME_DOMAIN_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_TASK_SEQUENCE_MANAGER_REAL_TIME_DOMAIN_H_
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/task/sequence_manager/time_domain.h"
 
 namespace cr {
 namespace sequence_manager {
 namespace internal {
 
-class CRBASE_EXPORT RealTimeDomain : public TimeDomain {
+class CRBASE_RT_EXPORT RealTimeDomain : public TimeDomain {
  public:
   RealTimeDomain() = default;
   RealTimeDomain(const RealTimeDomain&) = delete;

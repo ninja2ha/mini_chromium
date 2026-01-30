@@ -8,9 +8,10 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_POST_TASK_AND_REPLY_IMPL_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_THREADING_POST_TASK_AND_REPLY_IMPL_H_
 
-#include "crbase/base_export.h"
 #include "crbase/functional/callback.h"
 #include "crbase/location.h"
+
+#include "crbase_runtime/runtime_export.h"
 
 namespace cr {
 namespace internal {
@@ -20,7 +21,7 @@ namespace internal {
 //
 // If you're looking for a concrete implementation of PostTaskAndReply, you
 // probably want base::TaskRunner or base/task/post_task.h
-class CRBASE_EXPORT PostTaskAndReplyImpl {
+class CRBASE_RT_EXPORT PostTaskAndReplyImpl {
  public:
   virtual ~PostTaskAndReplyImpl() = default;
 

@@ -6,7 +6,7 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_RT_TASK_TASK_OBSERVER_H_
 #define MINI_CHROMIUM_SRC_CRBASE_RT_TASK_TASK_OBSERVER_H_
 
-#include "crbase/base_export.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/pending_task.h"
 
 namespace cr {
@@ -16,7 +16,7 @@ namespace cr {
 //
 // NOTE: A TaskObserver implementation should be extremely fast!
 
-class CRBASE_EXPORT TaskObserver {
+class CRBASE_RT_EXPORT TaskObserver {
  public:
   // This method is called before processing a task.
   // |was_blocked_or_low_priority| indicates if the task was at some point in a

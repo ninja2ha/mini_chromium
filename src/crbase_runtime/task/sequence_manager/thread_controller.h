@@ -9,12 +9,14 @@
 #include <stack>
 #include <vector>
 
-#include "crbase/base_export.h"
 #include "crbase/time/time.h"
+
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/message_pump/message_pump.h"
 #include "crbase_runtime/run_loop.h"
 #include "crbase_runtime/single_thread_task_runner.h"
 #include "crbase_runtime/task/sequence_manager/lazy_now.h"
+
 #include "crbuild/build_config.h"
 
 namespace cr {
@@ -32,7 +34,7 @@ class SequencedTaskSource;
 // Implementation of this interface is used by SequenceManager to schedule
 // actual work to be run. Hopefully we can stop using MessageLoop and this
 // interface will become more concise.
-class ThreadController {
+class CRBASE_RT_EXPORT ThreadController {
  public:
   virtual ~ThreadController() = default;
 
@@ -157,7 +159,7 @@ class ThreadController {
   //         and everything balances out.
   //     iii) Same as (ii) but we're back to kSelectingNextTask or kIdle as
   //          before and (A) was a no-op on the RunLevels.
-  class CRBASE_EXPORT RunLevelTracker {
+  class RunLevelTracker {
    public:
     enum State {
       // Waiting for work.
