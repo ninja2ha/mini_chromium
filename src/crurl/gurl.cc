@@ -475,11 +475,12 @@ void GURL::Swap(GURL* other) {
   inner_url_.swap(other->inner_url_);
 }
 
-///size_t GURL::EstimateMemoryUsage() const {
-///  return base::trace_event::EstimateMemoryUsage(spec_) +
-///         base::trace_event::EstimateMemoryUsage(inner_url_) +
-///         (parsed_.inner_parsed() ? sizeof(url::Parsed) : 0);
-///}
+size_t GURL::EstimateMemoryUsage() const {
+  return sizeof(spec_) + spec_.capacity() +
+         sizeof(inner_url_) +
+         (inner_url_ ? inner_url_->EstimateMemoryUsage() : 0) +
+         (parsed_.inner_parsed() ? sizeof(crurl::Parsed) : 0);
+}
 
 bool GURL::IsAboutUrl(cr::StringPiece allowed_path) const {
   if (!SchemeIs(crurl::kAboutScheme))
