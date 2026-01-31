@@ -512,35 +512,35 @@ bool GURL::IsAboutPath(cr::StringPiece actual_path,
   return false;
 }
 
-}  // namespace crurl
-
-std::ostream& operator<<(std::ostream& out, const crurl::GURL& url) {
+std::ostream& operator<<(std::ostream& out, const GURL& url) {
   return out << url.possibly_invalid_spec();
 }
 
-bool operator==(const crurl::GURL& x, const crurl::GURL& y) {
+bool operator==(const GURL& x, const GURL& y) {
   return x.possibly_invalid_spec() == y.possibly_invalid_spec();
 }
 
-bool operator!=(const crurl::GURL& x, const crurl::GURL& y) {
+bool operator!=(const GURL& x, const GURL& y) {
   return !(x == y);
 }
 
-bool operator==(const crurl::GURL& x, const cr::StringPiece& spec) {
+bool operator==(const GURL& x, const cr::StringPiece& spec) {
   CR_DCHECK(crurl::GURL(spec).possibly_invalid_spec() == spec)
       << "Comparisons of GURLs and strings must ensure as a precondition that "
          "the string is fully canonicalized.";
   return x.possibly_invalid_spec() == spec;
 }
 
-bool operator==(const cr::StringPiece& spec, const crurl::GURL& x) {
+bool operator==(const cr::StringPiece& spec, const GURL& x) {
   return x == spec;
 }
 
-bool operator!=(const crurl::GURL& x, const cr::StringPiece& spec) {
+bool operator!=(const GURL& x, const cr::StringPiece& spec) {
   return !(x == spec);
 }
 
-bool operator!=(const cr::StringPiece& spec, const crurl::GURL& x) {
+bool operator!=(const cr::StringPiece& spec, const GURL& x) {
   return !(x == spec);
 }
+
+}  // namespace crurl

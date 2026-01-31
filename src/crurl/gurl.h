@@ -486,24 +486,24 @@ class CRURL_EXPORT GURL {
   std::unique_ptr<GURL> inner_url_;
 };
 
-}  // namespace crurl
-
 // Stream operator so GURL can be used in assertion statements.
 CRURL_EXPORT std::ostream& operator<<(std::ostream& out, 
-                                      const crurl::GURL& url);
+                                      const GURL& url);
 
-CRURL_EXPORT bool operator==(const crurl::GURL& x, const crurl::GURL& y);
-CRURL_EXPORT bool operator!=(const crurl::GURL& x, const crurl::GURL& y);
+CRURL_EXPORT bool operator==(const GURL& x, const GURL& y);
+CRURL_EXPORT bool operator!=(const GURL& x, const GURL& y);
 
 // Equality operator for comparing raw spec_. This should be used in place of
 // url == GURL(spec) where |spec| is known (i.e. constants). This is to prevent
 // needlessly re-parsing |spec| into a temporary GURL.
-CRURL_EXPORT bool operator==(const crurl::GURL& x, const cr::StringPiece& spec);
+CRURL_EXPORT bool operator==(const GURL& x, const cr::StringPiece& spec);
 CRURL_EXPORT bool operator==(const cr::StringPiece& spec, 
-                             const crurl::GURL& x);
-CRURL_EXPORT bool operator!=(const crurl::GURL& x, const cr::StringPiece& spec);
+                             const GURL& x);
+CRURL_EXPORT bool operator!=(const GURL& x, const cr::StringPiece& spec);
 CRURL_EXPORT bool operator!=(const cr::StringPiece& spec, 
-                             const crurl::GURL& x);
+                             const GURL& x);
+
+}  // namespace crurl
 
 // DEBUG_ALIAS_FOR_GURL(var_name, url) copies |url| into a new stack-allocated
 // variable named |<var_name>|.  This helps ensure that the value of |url| gets

@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\tests\crurl_tests\gurl_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\test\gtest_main.cc">
+      <Filter>test</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crurl_tests\url_canon_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crurl_tests\url_util_unittest.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\tests\crurl_tests\gurl_abstract_tests.h" />
+    <ClInclude Include="..\..\..\..\tests\crurl_tests\url_test_utils.h" />
+    <ClInclude Include="..\..\..\..\tests\crbase_tests\test\gtest_platform_test.h">
+      <Filter>test</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\tests\crbase_tests\test\gtest_util.h">
+      <Filter>test</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="test">
+      <UniqueIdentifier>{d6e623a7-8d2d-4eb2-9de4-031961ae764b}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
