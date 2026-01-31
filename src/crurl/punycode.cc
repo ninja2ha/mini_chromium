@@ -11,14 +11,14 @@
 
 namespace {
 
-const int32_t maxInt = 0x7FFFFFFF;
-const int32_t base = 36;
-const int32_t damp = 700;
-const int32_t initialBias = 72;
-const int32_t initialN = 128;
-const int32_t skew = 38;
-const int32_t tmax = 26;
-const int32_t tmin = 1;
+constexpr int32_t maxInt = 0x7FFFFFFF;
+constexpr int32_t base = 36;
+constexpr int32_t damp = 700;
+constexpr int32_t initialBias = 72;
+constexpr int32_t initialN = 128;
+constexpr int32_t skew = 38;
+constexpr int32_t tmax = 26;
+constexpr int32_t tmin = 1;
 
 // adapt is the bias adaptation function specified in section 6.1.
 int32_t adapt(int32_t delta, int32_t numPoints, bool firstTime) {
