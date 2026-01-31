@@ -24,6 +24,8 @@
     <ClCompile Include="..\..\..\src\crurl\third_party\mozilla\url_parse.cc">
       <Filter>third_party\mozilla</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crurl\punycode.cc" />
+    <ClCompile Include="..\..\..\src\crurl\url_canon_icu.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\crurl\gurl.h" />
@@ -43,6 +45,7 @@
     <ClInclude Include="..\..\..\src\crurl\third_party\mozilla\url_parse.h">
       <Filter>third_party\mozilla</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\crurl\punycode.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="third_party">

@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_CANON_STDSTRING_H_
-#define URL_URL_CANON_STDSTRING_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_CANON_STDSTRING_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_CANON_STDSTRING_H_
 
 // This header file defines a canonicalizer output method class for STL
 // strings. Because the canonicalizer tries not to be dependent on the STL,
@@ -109,4 +109,4 @@ class StringPieceReplacements : public Replacements<CharT> {
 
 }  // namespace crurl
 
-#endif  // URL_URL_CANON_STDSTRING_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_CANON_STDSTRING_H_

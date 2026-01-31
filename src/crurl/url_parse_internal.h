@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_PARSE_INTERNAL_H_
-#define URL_URL_PARSE_INTERNAL_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_PARSE_INTERNAL_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_PARSE_INTERNAL_H_
 
 // Contains common inline helper functions used by the URL parsing routines.
 
@@ -87,4 +87,4 @@ void ParseAfterScheme(const char16_t* spec,
 
 }  // namespace crurl
 
-#endif  // URL_URL_PARSE_INTERNAL_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_PARSE_INTERNAL_H_

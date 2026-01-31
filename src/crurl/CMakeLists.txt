@@ -13,6 +13,8 @@ set(CRURL_SRC_FILES
 	${CRURL_SRC_DIR}/gurl.h
 	${CRURL_SRC_DIR}/origin.cc
 	${CRURL_SRC_DIR}/origin.h
+	${CRURL_SRC_DIR}/punycode.cc
+	${CRURL_SRC_DIR}/punycode.h
 	${CRURL_SRC_DIR}/scheme_host_port.cc
 	${CRURL_SRC_DIR}/scheme_host_port.h
 	${CRURL_SRC_DIR}/url_canon.cc

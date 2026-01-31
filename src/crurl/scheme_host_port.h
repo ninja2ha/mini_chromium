@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_SCHEME_HOST_PORT_H_
-#define URL_SCHEME_HOST_PORT_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_SCHEME_HOST_PORT_H_
+#define MINI_CHROMIUM_SRC_CRURL_SCHEME_HOST_PORT_H_
 
 #include <stdint.h>
 
@@ -12,10 +12,9 @@
 #include "crbase/strings/string_piece.h"
 #include "crurl/url_export.h"
 
-class GURL;
-
 namespace crurl {
 
+class GURL;
 struct Parsed;
 
 // This class represents a (scheme, host, port) tuple extracted from a URL.
@@ -166,4 +165,4 @@ CRURL_EXPORT std::ostream& operator<<(std::ostream& out,
 
 }  // namespace crurl
 
-#endif  // URL_SCHEME_HOST_PORT_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_SCHEME_HOST_PORT_H_

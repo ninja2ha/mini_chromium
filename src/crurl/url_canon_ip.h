@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_CANON_IP_H_
-#define URL_URL_CANON_IP_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_CANON_IP_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_CANON_IP_H_
 
 #include <string>
 
@@ -124,4 +124,4 @@ CRURL_EXPORT HostSafetyStatus CheckHostnameSafety(const char16_t* hostname,
 
 }  // namespace crurl
 
-#endif  // URL_URL_CANON_IP_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_CANON_IP_H_

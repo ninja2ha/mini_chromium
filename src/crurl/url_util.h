@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_UTIL_H_
-#define URL_URL_UTIL_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_UTIL_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_UTIL_H_
 
 #include <memory>
 #include <string>
@@ -289,4 +289,4 @@ CRURL_EXPORT void EncodeURIComponent(const char* input,
 
 }  // namespace crurl
 
-#endif  // URL_URL_UTIL_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_UTIL_H_

@@ -18,6 +18,8 @@
 #include "crurl/url_canon_stdstring.h"
 #include "crurl/url_util.h"
 
+namespace crurl {
+
 GURL::GURL() : is_valid_(false) {
 }
 
@@ -101,7 +103,8 @@ void GURL::InitializeFromCanonicalSpec() {
     // We can't do this check on the inner_url of a filesystem URL, as
     // canonical_spec actually points to the start of the outer URL, so we'd
     // end up with infinite recursion in this constructor.
-    if (!crurl::FindAndCompareScheme(spec_.data(), spec_.length(),
+    if (!crurl::FindAndCompareScheme(spec_.data(), 
+                                     static_cast<int>(spec_.length()), // unsafe_cast
                                      crurl::kFileSystemScheme, &scheme) ||
         scheme.begin == parsed_.scheme.begin) {
       // We need to retain trailing whitespace on path URLs, as the |parsed_|
@@ -508,33 +511,35 @@ bool GURL::IsAboutPath(cr::StringPiece actual_path,
   return false;
 }
 
-std::ostream& operator<<(std::ostream& out, const GURL& url) {
+}  // namespace crurl
+
+std::ostream& operator<<(std::ostream& out, const crurl::GURL& url) {
   return out << url.possibly_invalid_spec();
 }
 
-bool operator==(const GURL& x, const GURL& y) {
+bool operator==(const crurl::GURL& x, const crurl::GURL& y) {
   return x.possibly_invalid_spec() == y.possibly_invalid_spec();
 }
 
-bool operator!=(const GURL& x, const GURL& y) {
+bool operator!=(const crurl::GURL& x, const crurl::GURL& y) {
   return !(x == y);
 }
 
-bool operator==(const GURL& x, const cr::StringPiece& spec) {
-  CR_DCHECK(GURL(spec).possibly_invalid_spec() == spec)
+bool operator==(const crurl::GURL& x, const cr::StringPiece& spec) {
+  CR_DCHECK(crurl::GURL(spec).possibly_invalid_spec() == spec)
       << "Comparisons of GURLs and strings must ensure as a precondition that "
          "the string is fully canonicalized.";
   return x.possibly_invalid_spec() == spec;
 }
 
-bool operator==(const cr::StringPiece& spec, const GURL& x) {
+bool operator==(const cr::StringPiece& spec, const crurl::GURL& x) {
   return x == spec;
 }
 
-bool operator!=(const GURL& x, const cr::StringPiece& spec) {
+bool operator!=(const crurl::GURL& x, const cr::StringPiece& spec) {
   return !(x == spec);
 }
 
-bool operator!=(const cr::StringPiece& spec, const GURL& x) {
+bool operator!=(const cr::StringPiece& spec, const crurl::GURL& x) {
   return !(x == spec);
 }

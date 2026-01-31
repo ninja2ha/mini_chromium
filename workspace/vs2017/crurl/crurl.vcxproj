@@ -29,6 +29,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crurl\gurl.cc" />
     <ClCompile Include="..\..\..\src\crurl\origin.cc" />
+    <ClCompile Include="..\..\..\src\crurl\punycode.cc" />
     <ClCompile Include="..\..\..\src\crurl\scheme_host_port.cc" />
     <ClCompile Include="..\..\..\src\crurl\third_party\mozilla\url_parse.cc" />
     <ClCompile Include="..\..\..\src\crurl\url_canon.cc" />
@@ -36,6 +37,7 @@
     <ClCompile Include="..\..\..\src\crurl\url_canon_filesystemurl.cc" />
     <ClCompile Include="..\..\..\src\crurl\url_canon_fileurl.cc" />
     <ClCompile Include="..\..\..\src\crurl\url_canon_host.cc" />
+    <ClCompile Include="..\..\..\src\crurl\url_canon_icu.cc" />
     <ClCompile Include="..\..\..\src\crurl\url_canon_internal.cc" />
     <ClCompile Include="..\..\..\src\crurl\url_canon_ip.cc" />
     <ClCompile Include="..\..\..\src\crurl\url_canon_mailtourl.cc" />
@@ -51,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\crurl\gurl.h" />
+    <ClInclude Include="..\..\..\src\crurl\punycode.h" />
     <ClInclude Include="..\..\..\src\crurl\third_party\mozilla\url_parse.h" />
     <ClInclude Include="..\..\..\src\crurl\url_export.h" />
     <ClInclude Include="..\..\..\src\crurl\origin.h" />

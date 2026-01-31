@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_ORIGIN_H_
-#define URL_ORIGIN_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_ORIGIN_H_
+#define MINI_CHROMIUM_SRC_CRURL_ORIGIN_H_
 
 #include <stdint.h>
 
@@ -23,13 +23,13 @@
 #include "crurl/third_party/mozilla/url_parse.h"
 #include "crbuild/build_config.h"
 
-class GURL;
-
 namespace crnet {
 class SchemefulSite;
 }  // namespace crnet
 
 namespace crurl {
+
+class GURL;
 
 // Per https://html.spec.whatwg.org/multipage/origin.html#origin, an origin is
 // either:
@@ -348,22 +348,6 @@ class CRURL_EXPORT Origin {
   // used only when trying to send an Origin across an IPC pipe.
   cr::Optional<cr::UnguessableToken> GetNonceForSerialization() const;
 
-  // Serializes this Origin, including its nonce if it is opaque. If an opaque
-  // origin's |tuple_| is invalid nullopt is returned. If the nonce is not
-  // initialized, a nonce of 0 is used. Use of this method should be limited as
-  // an opaque origin will never be matchable in future browser sessions.
-  cr::Optional<std::string> SerializeWithNonce() const;
-
-  // Like SerializeWithNonce(), but forces |nonce_| to be initialized prior to
-  // serializing.
-  cr::Optional<std::string> SerializeWithNonceAndInitIfNeeded();
-
-  cr::Optional<std::string> SerializeWithNonceImpl() const;
-
-  // Deserializes an origin from |ToValueWithNonce|. Returns nullopt if the
-  // value was invalid in any way.
-  static cr::Optional<Origin> Deserialize(const std::string& value);
-
   // The tuple is used for both tuple origins (e.g. https://example.com:80), as
   // well as for opaque origins, where it tracks the tuple origin from which
   // the opaque origin was initially derived (we call this the "precursor"
@@ -391,4 +375,4 @@ CRURL_EXPORT bool IsSameOriginWith(const GURL& a, const GURL& b);
 
 }  // namespace crurl
 
-#endif  // URL_ORIGIN_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_ORIGIN_H_

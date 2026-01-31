@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MINI_CHROMIUM_SRC_CRGURL_URL_EXPORT_H_
-#define MINI_CHROMIUM_SRC_CRGURL_URL_EXPORT_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_EXPORT_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_EXPORT_H_
 
 #include "crbuild/build_config.h"
 
@@ -29,4 +29,4 @@
 #define CRURL_EXPORT
 #endif
 
-#endif  // MINI_CHROMIUM_SRC_CRGURL_URL_EXPORT_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_EXPORT_H_

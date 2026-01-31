@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_CANON_INTERNAL_FILE_H_
-#define URL_URL_CANON_INTERNAL_FILE_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_CANON_INTERNAL_FILE_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_CANON_INTERNAL_FILE_H_
 
 // As with url_canon_internal.h, this file is intended to be included in
 // another C++ file where the template types are defined. This allows the
@@ -132,4 +132,4 @@ static bool DoCanonicalizeFileURL(const URLComponentSource<CHAR>& source,
 
 }  // namespace crurl
 
-#endif  // URL_URL_CANON_INTERNAL_FILE_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_CANON_INTERNAL_FILE_H_

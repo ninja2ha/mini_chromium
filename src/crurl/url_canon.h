@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_CANON_H_
-#define URL_URL_CANON_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_CANON_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_CANON_H_
 
 #include <stdlib.h>
 #include <string.h>
@@ -987,4 +987,4 @@ CRURL_EXPORT bool ResolveRelativeURL(const char* base_url,
 
 }  // namespace crurl
 
-#endif  // URL_URL_CANON_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_CANON_H_

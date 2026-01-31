@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_CANON_INTERNAL_H_
-#define URL_URL_CANON_INTERNAL_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_CANON_INTERNAL_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_CANON_INTERNAL_H_
 
 // This file is intended to be included in another C++ file where the character
 // types are defined. This allows us to write mostly generic code, but not have
@@ -446,4 +446,4 @@ inline unsigned long long _strtoui64(const char* nptr,
 
 }  // namespace crurl
 
-#endif  // URL_URL_CANON_INTERNAL_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_CANON_INTERNAL_H_

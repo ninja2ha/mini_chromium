@@ -2,8 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef URL_URL_FILE_H_
-#define URL_URL_FILE_H_
+#ifndef MINI_CHROMIUM_SRC_CRURL_URL_FILE_H_
+#define MINI_CHROMIUM_SRC_CRURL_URL_FILE_H_
 
 // Provides shared functions used by the internals of the parser and
 // canonicalizer for file URLs. Do not use outside of these modules.
@@ -81,4 +81,4 @@ inline bool DoesBeginUNCPath(const CHAR* text,
 
 }  // namespace crurl
 
-#endif  // URL_URL_FILE_H_
+#endif  // MINI_CHROMIUM_SRC_CRURL_URL_FILE_H_
