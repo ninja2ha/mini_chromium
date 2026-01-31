@@ -263,7 +263,8 @@ inline bool DoLowerCaseEqualsASCII(BasicStringPiece<CharT> str,
                                    StringPiece lowercase_ascii) {
   return std::equal(
       str.begin(), str.end(), lowercase_ascii.begin(),
-      lowercase_ascii.begin());
+      lowercase_ascii.end(),
+      [](auto lhs, auto rhs) { return ToLowerASCII(lhs) == rhs; });
 }
 
 template <typename CharT>
