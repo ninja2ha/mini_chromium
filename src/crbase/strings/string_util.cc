@@ -766,7 +766,7 @@ size_t wcslcpy(wchar_t* dst, const wchar_t* src, size_t dst_size) {
 }
 
 // doc: https://www.ibm.com/docs/zh-tw/i/7.5.0?topic=tables-unicode-uppercase-lowercase-conversion-mapping-table
-int32_t ToLower(int32_t c) {
+uint32_t ToLower(uint32_t c) {
   if (c >= 0x0041 && c <= 0x005A) return c + 0x20;
   if (c >= 0x00C0 && c <= 0x00DE) return c + 0x20;
 

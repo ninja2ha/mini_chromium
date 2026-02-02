@@ -107,6 +107,11 @@ constexpr StringPiece16 MakeStringPiece16(Iter begin, Iter end) {
 }
 
 template <typename Iter>
+constexpr StringPiece32 MakeStringPiece32(Iter begin, Iter end) {
+  return MakeBasicStringPiece<char32_t>(begin, end);
+}
+
+template <typename Iter>
 constexpr WStringPiece MakeWStringPiece(Iter begin, Iter end) {
   return MakeBasicStringPiece<wchar_t>(begin, end);
 }
@@ -126,9 +131,6 @@ template <typename CharT,
 CharT ToUpperASCII(CharT c) {
   return (c >= 'a' && c <= 'z') ? (c + ('A' - 'a')) : c;
 }
-
-// UNICODE-specific tolower
-CRBASE_EXPORT int32_t ToLower(int32_t c);
 
 // Converts the given string to it's ASCII-lowercase equivalent.
 CRBASE_EXPORT std::string ToLowerASCII(StringPiece str);
@@ -644,6 +646,8 @@ CRBASE_EXPORT std::u32string ReplaceStringPlaceholders(
     const std::u32string& a,
     size_t* offset);
 
+// UNICODE-specific tolower
+CRBASE_EXPORT uint32_t ToLower(uint32_t c);
 
 #if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
 
