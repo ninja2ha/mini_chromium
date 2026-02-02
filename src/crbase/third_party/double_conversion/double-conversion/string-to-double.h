@@ -192,6 +192,11 @@ class StringToDoubleConverter {
                         int length,
                         int* processed_characters_count) const;
 
+  // Same as StringToDouble above but for 32 bit characters.
+  double StringToDouble(const uc32* buffer,
+                        int length,
+                        int* processed_characters_count) const;
+
   // Same as StringToDouble but reads a float.
   // Note that this is not equivalent to static_cast<float>(StringToDouble(...))
   // due to potential double-rounding.
@@ -204,6 +209,10 @@ class StringToDoubleConverter {
                       int length,
                       int* processed_characters_count) const;
 
+  float StringToFloat(const uc32* buffer,
+                      int length,
+                      int* processed_characters_count) const;
+
   // Same as StringToDouble for T = double, and StringToFloat for T = float.
   template <typename T>
   T StringTo(const char* buffer,
@@ -213,6 +222,12 @@ class StringToDoubleConverter {
   // Same as StringTo above but for 16 bit characters.
   template <typename T>
   T StringTo(const uc16* buffer,
+             int length,
+             int* processed_characters_count) const;
+             
+  // Same as StringTo above but for 32 bit characters.
+  template <typename T>
+  T StringTo(const uc32* buffer,
              int length,
              int* processed_characters_count) const;
 

@@ -45,6 +45,7 @@ template <typename CharT>
 class BasicStringPiece;
 typedef BasicStringPiece<char> StringPiece;
 typedef BasicStringPiece<char16_t> StringPiece16;
+typedef BasicStringPiece<char32_t> StringPiece32;
 typedef BasicStringPiece<wchar_t> WStringPiece;
 
 // internal --------------------------------------------------------------------
@@ -60,13 +61,18 @@ namespace internal {
 
 CRBASE_EXPORT size_t find(StringPiece self, StringPiece s, size_t pos);
 CRBASE_EXPORT size_t find(StringPiece16 self, StringPiece16 s, size_t pos);
+CRBASE_EXPORT size_t find(StringPiece32 self, StringPiece32 s, size_t pos);
 
 CRBASE_EXPORT size_t rfind(StringPiece self, StringPiece s, size_t pos);
 CRBASE_EXPORT size_t rfind(StringPiece16 self, StringPiece16 s, size_t pos);
+CRBASE_EXPORT size_t rfind(StringPiece32 self, StringPiece32 s, size_t pos);
 
 CRBASE_EXPORT size_t find_first_of(StringPiece self, StringPiece s, size_t pos);
 CRBASE_EXPORT size_t find_first_of(StringPiece16 self,
                                    StringPiece16 s,
+                                   size_t pos);
+CRBASE_EXPORT size_t find_first_of(StringPiece32 self,
+                                   StringPiece32 s,
                                    size_t pos);
 
 CRBASE_EXPORT size_t find_first_not_of(StringPiece self,
@@ -75,10 +81,16 @@ CRBASE_EXPORT size_t find_first_not_of(StringPiece self,
 CRBASE_EXPORT size_t find_first_not_of(StringPiece16 self,
                                        StringPiece16 s,
                                        size_t pos);
+CRBASE_EXPORT size_t find_first_not_of(StringPiece32 self,
+                                       StringPiece32 s,
+                                       size_t pos);
 
 CRBASE_EXPORT size_t find_last_of(StringPiece self, StringPiece s, size_t pos);
 CRBASE_EXPORT size_t find_last_of(StringPiece16 self,
                                   StringPiece16 s,
+                                  size_t pos);
+CRBASE_EXPORT size_t find_last_of(StringPiece32 self,
+                                  StringPiece32 s,
                                   size_t pos);
 
 CRBASE_EXPORT size_t find_last_not_of(StringPiece self,
@@ -86,6 +98,9 @@ CRBASE_EXPORT size_t find_last_not_of(StringPiece self,
                                       size_t pos);
 CRBASE_EXPORT size_t find_last_not_of(StringPiece16 self,
                                       StringPiece16 s,
+                                      size_t pos);
+CRBASE_EXPORT size_t find_last_not_of(StringPiece32 self,
+                                      StringPiece32 s,
                                       size_t pos);
 
 CRBASE_EXPORT size_t find(WStringPiece self, WStringPiece s, size_t pos);
@@ -424,6 +439,8 @@ const typename BasicStringPiece<CharT>::size_type
 #if !defined(MINI_CHROMIUM_COMPILER_MSVC)
 extern template class CRBASE_EXPORT BasicStringPiece<char>;
 extern template class CRBASE_EXPORT BasicStringPiece<char16_t>;
+extern template class CRBASE_EXPORT BasicStringPiece<char32_t>;
+extern template class CRBASE_EXPORT BasicStringPiece<wchar_t>;
 #endif
 
 // Comparison operators --------------------------------------------------------
@@ -555,6 +572,7 @@ constexpr bool operator>=(std::common_type_t<BasicStringPiece<CharT>> lhs,
 
 CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, StringPiece piece);
 CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, StringPiece16 piece);
+CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, StringPiece32 piece);
 CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, WStringPiece piece);
 
 // Hashing ---------------------------------------------------------------------
@@ -578,6 +596,7 @@ struct StringPieceHashImpl {
 
 using StringPieceHash = StringPieceHashImpl<StringPiece>;
 using StringPiece16Hash = StringPieceHashImpl<StringPiece16>;
+using StringPiece32Hash = StringPieceHashImpl<StringPiece32>;
 using WStringPieceHash = StringPieceHashImpl<WStringPiece>;
 
 }  // namespace cr

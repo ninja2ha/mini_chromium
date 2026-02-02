@@ -1418,20 +1418,20 @@ TEST(URLCanonTest, CanonicalizeStandardURL) {
       {"http://user:pass@/", "http://user:pass@/", false},
       {"http://%25DOMAIN:foobar@foodomain.com/",
        "http://%25DOMAIN:foobar@foodomain.com/", true},
-
-      // Backslashes should get converted to forward slashes.
+      
+      /// Backslashes should get converted to forward slashes.
       {"http:\\\\www.google.com\\foo", "http://www.google.com/foo", true},
-
-      // Busted refs shouldn't make the whole thing fail.
+      
+      /// Busted refs shouldn't make the whole thing fail.
       {"http://www.google.com/asdf#\xc2",
        "http://www.google.com/asdf#%EF%BF%BD", true},
-
-      // Basic port tests.
+      
+      /// Basic port tests.
       {"http://foo:80/", "http://foo/", true},
       {"http://foo:81/", "http://foo:81/", true},
       {"httpa://foo:80/", "httpa://foo:80/", true},
       {"http://foo:-80/", "http://foo:-80/", false},
-
+      
       {"https://foo:443/", "https://foo/", true},
       {"https://foo:80/", "https://foo:80/", true},
       {"ftp://foo:21/", "ftp://foo/", true},
@@ -2495,7 +2495,7 @@ TEST(URLCanonTest, IDNToASCII) {
 
   // Characters that need mapping (the resulting Punycode is the encoding for
   // "1⁄4").
-  str = u"¼";
+  str = u"1⁄4";
   EXPECT_TRUE(IDNToASCII(str.data(), str.length(), &output));
   EXPECT_EQ(u"xn--14-c6t", std::u16string(output.data()));
   output.set_length(0);

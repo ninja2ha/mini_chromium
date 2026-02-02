@@ -55,6 +55,11 @@ CRBASE_EXPORT std::vector<std::u16string> SplitString(
     StringPiece16 separators,
     WhitespaceHandling whitespace,
     SplitResult result_type) CR_WARN_UNUSED_RESULT;
+CRBASE_EXPORT std::vector<std::u32string> SplitString(
+    StringPiece32 input,
+    StringPiece32 separators,
+    WhitespaceHandling whitespace,
+    SplitResult result_type) CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::vector<std::wstring> SplitString(
     WStringPiece input,
     WStringPiece separators,
@@ -83,6 +88,11 @@ CRBASE_EXPORT std::vector<StringPiece> SplitStringPiece(
 CRBASE_EXPORT std::vector<StringPiece16> SplitStringPiece(
     StringPiece16 input,
     StringPiece16 separators,
+    WhitespaceHandling whitespace,
+    SplitResult result_type) CR_WARN_UNUSED_RESULT;
+CRBASE_EXPORT std::vector<StringPiece32> SplitStringPiece(
+    StringPiece32 input,
+    StringPiece32 separators,
     WhitespaceHandling whitespace,
     SplitResult result_type) CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::vector<WStringPiece> SplitStringPiece(
@@ -122,6 +132,11 @@ CRBASE_EXPORT std::vector<std::u16string> SplitStringUsingSubstr(
     StringPiece16 delimiter,
     WhitespaceHandling whitespace,
     SplitResult result_type) CR_WARN_UNUSED_RESULT;
+CRBASE_EXPORT std::vector<std::u32string> SplitStringUsingSubstr(
+    StringPiece32 input,
+    StringPiece32 delimiter,
+    WhitespaceHandling whitespace,
+    SplitResult result_type) CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::vector<std::wstring> SplitStringUsingSubstr(
     WStringPiece input,
     WStringPiece delimiter,
@@ -148,6 +163,11 @@ CRBASE_EXPORT std::vector<StringPiece> SplitStringPieceUsingSubstr(
 CRBASE_EXPORT std::vector<StringPiece16> SplitStringPieceUsingSubstr(
     StringPiece16 input,
     StringPiece16 delimiter,
+    WhitespaceHandling whitespace,
+    SplitResult result_type) CR_WARN_UNUSED_RESULT;
+CRBASE_EXPORT std::vector<StringPiece32> SplitStringPieceUsingSubstr(
+    StringPiece32 input,
+    StringPiece32 delimiter,
     WhitespaceHandling whitespace,
     SplitResult result_type) CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::vector<WStringPiece> SplitStringPieceUsingSubstr(

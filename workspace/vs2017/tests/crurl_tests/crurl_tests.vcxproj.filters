@@ -7,6 +7,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\tests\crurl_tests\url_canon_unittest.cc" />
     <ClCompile Include="..\..\..\..\tests\crurl_tests\url_util_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crurl_tests\punycode_unittest.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\tests\crurl_tests\gurl_abstract_tests.h" />

@@ -39,24 +39,31 @@ namespace cr {
 // Ignores locale! see warning above.
 CRBASE_EXPORT std::string NumberToString(int value);
 CRBASE_EXPORT std::u16string NumberToString16(int value);
+CRBASE_EXPORT std::u32string NumberToString32(int value);
 CRBASE_EXPORT std::wstring NumberToWString(int value);
 CRBASE_EXPORT std::string NumberToString(unsigned int value);
 CRBASE_EXPORT std::u16string NumberToString16(unsigned int value);
+CRBASE_EXPORT std::u32string NumberToString32(unsigned int value);
 CRBASE_EXPORT std::wstring NumberToWString(unsigned int value);
 CRBASE_EXPORT std::string NumberToString(long value);
 CRBASE_EXPORT std::u16string NumberToString16(long value);
+CRBASE_EXPORT std::u32string NumberToString32(long value);
 CRBASE_EXPORT std::wstring NumberToWString(long value);
 CRBASE_EXPORT std::string NumberToString(unsigned long value);
 CRBASE_EXPORT std::u16string NumberToString16(unsigned long value);
+CRBASE_EXPORT std::u32string NumberToString32(unsigned long value);
 CRBASE_EXPORT std::wstring NumberToWString(unsigned long value);
 CRBASE_EXPORT std::string NumberToString(long long value);
 CRBASE_EXPORT std::u16string NumberToString16(long long value);
+CRBASE_EXPORT std::u32string NumberToString32(long long value);
 CRBASE_EXPORT std::wstring NumberToWString(long long value);
 CRBASE_EXPORT std::string NumberToString(unsigned long long value);
 CRBASE_EXPORT std::u16string NumberToString16(unsigned long long value);
+CRBASE_EXPORT std::u32string NumberToString32(unsigned long long value);
 CRBASE_EXPORT std::wstring NumberToWString(unsigned long long value);
 CRBASE_EXPORT std::string NumberToString(double value);
 CRBASE_EXPORT std::u16string NumberToString16(double value);
+CRBASE_EXPORT std::u32string NumberToString32(double value);
 CRBASE_EXPORT std::wstring NumberToWString(double value);
 
 // String -> number conversions ------------------------------------------------
@@ -79,22 +86,27 @@ CRBASE_EXPORT std::wstring NumberToWString(double value);
 //          Read the comments above carefully.
 CRBASE_EXPORT bool StringToInt(StringPiece input, int* output);
 CRBASE_EXPORT bool StringToInt(StringPiece16 input, int* output);
+CRBASE_EXPORT bool StringToInt(StringPiece32 input, int* output);
 CRBASE_EXPORT bool StringToInt(WStringPiece input, int* output);
 
 CRBASE_EXPORT bool StringToUint(StringPiece input, unsigned* output);
 CRBASE_EXPORT bool StringToUint(StringPiece16 input, unsigned* output);
+CRBASE_EXPORT bool StringToUint(StringPiece32 input, unsigned* output);
 CRBASE_EXPORT bool StringToUint(WStringPiece input, unsigned* output);
 
 CRBASE_EXPORT bool StringToInt64(StringPiece input, int64_t* output);
 CRBASE_EXPORT bool StringToInt64(StringPiece16 input, int64_t* output);
+CRBASE_EXPORT bool StringToInt64(StringPiece32 input, int64_t* output);
 CRBASE_EXPORT bool StringToInt64(WStringPiece input, int64_t* output);
 
 CRBASE_EXPORT bool StringToUint64(StringPiece input, uint64_t* output);
 CRBASE_EXPORT bool StringToUint64(StringPiece16 input, uint64_t* output);
+CRBASE_EXPORT bool StringToUint64(StringPiece32 input, uint64_t* output);
 CRBASE_EXPORT bool StringToUint64(WStringPiece input, uint64_t* output);
 
 CRBASE_EXPORT bool StringToSizeT(StringPiece input, size_t* output);
 CRBASE_EXPORT bool StringToSizeT(StringPiece16 input, size_t* output);
+CRBASE_EXPORT bool StringToSizeT(StringPiece32 input, size_t* output);
 CRBASE_EXPORT bool StringToSizeT(WStringPiece input, size_t* output);
 
 // For floating-point conversions, only conversions of input strings in decimal
@@ -107,6 +119,7 @@ CRBASE_EXPORT bool StringToSizeT(WStringPiece input, size_t* output);
 //          Read the comments here and above StringToInt() carefully.
 CRBASE_EXPORT bool StringToDouble(StringPiece input, double* output);
 CRBASE_EXPORT bool StringToDouble(StringPiece16 input, double* output);
+CRBASE_EXPORT bool StringToDouble(StringPiece32 input, double* output);
 CRBASE_EXPORT bool StringToDouble(WStringPiece input, double* output);
 
 // Hex encoding ----------------------------------------------------------------

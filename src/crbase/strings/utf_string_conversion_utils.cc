@@ -55,7 +55,7 @@ bool ReadUnicodeCharacter(const char16_t* src,
   return IsValidCodepoint(*code_point);
 }
 
-bool ReadUnicodeCharacter(const wchar_t* src,
+bool ReadUnicodeCharacter(const char32_t* src,
                           int32_t src_len,
                           int32_t* char_index,
                           uint32_t* code_point) {
@@ -64,6 +64,22 @@ bool ReadUnicodeCharacter(const wchar_t* src,
 
   // Validate the value.
   return IsValidCodepoint(*code_point);
+}
+
+bool ReadUnicodeCharacter(const wchar_t* src,
+                          int32_t src_len,
+                          int32_t* char_index,
+                          uint32_t* code_point) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return ReadUnicodeCharacter(
+      reinterpret_cast<const char16_t*>(src), src_len, char_index, code_point);
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  // Conversion is easy since the source is 32-bit.
+  *code_point = src[*char_index];
+
+  // Validate the value.
+  return IsValidCodepoint(*code_point);
+#endif
 }
 
 // WriteUnicodeCharacter -------------------------------------------------------
@@ -102,6 +118,21 @@ size_t WriteUnicodeCharacter(uint32_t code_point, std::u16string* output) {
   return CBU16_MAX_LENGTH;
 }
 
+size_t WriteUnicodeCharacter(uint32_t code_point, std::u32string* output) {
+  output->push_back(code_point);
+  return 1;
+}
+
+size_t WriteUnicodeCharacter(uint32_t code_point, std::wstring* output) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return WriteUnicodeCharacter(
+      code_point, reinterpret_cast<std::u16string*>(output));
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  output->push_back(code_point);
+  return 1;
+#endif
+}
+
 // Generalized Unicode converter -----------------------------------------------
 
 template<typename CHAR>
@@ -111,24 +142,26 @@ void PrepareForUTF8Output(const CHAR* src,
   output->clear();
   if (src_len == 0)
     return;
-  if (src[0] < 0x80) {
-    // Assume that the entire input will be ASCII.
-    output->reserve(src_len);
-  } else {
-    // Assume that the entire input is non-ASCII and will have 3 bytes per char.
-    output->reserve(src_len * 3);
-  }
+
+  // Assume that the entire input is non-ASCII and will have 3 bytes per char.
+  output->reserve(src_len * 3);
 }
 
 // Instantiate versions we know callers will need.
 // wchar_t and char16_t are the same thing on Windows.
-void PrepareForUTF8Output(const wchar_t* src, 
+void PrepareForUTF8Output(const char16_t* src, 
                           size_t src_len, 
                           std::string* output) {
   PrepareForUTF8Output<>(src, src_len, output);
 }
 
-void PrepareForUTF8Output(const char16_t* src, 
+void PrepareForUTF8Output(const char32_t* src, 
+                          size_t src_len, 
+                          std::string* output) {
+  PrepareForUTF8Output<>(src, src_len, output);
+}
+
+void PrepareForUTF8Output(const wchar_t* src, 
                           size_t src_len, 
                           std::string* output) {
   PrepareForUTF8Output<>(src, src_len, output);
@@ -141,27 +174,29 @@ void PrepareForUTF16Or32Output(const char* src,
   output->clear();
   if (src_len == 0)
     return;
-  if (static_cast<unsigned char>(src[0]) < 0x80) {
-    // Assume the input is all ASCII, which means 1:1 correspondence.
-    output->reserve(src_len);
-  } else {
-    // Otherwise assume that the UTF-8 sequences will have 2 bytes for each
-    // character.
-    output->reserve(src_len / 2);
-  }
+
+  // Otherwise assume that the UTF-8 sequences will have 2 bytes for each
+  // character.
+  output->reserve(src_len / 2);
 }
 
 // Instantiate versions we know callers will need.
 // std::wstring and std::u16string are the same thing on Windows.
 void PrepareForUTF16Or32Output(const char* src, 
                                size_t src_len, 
-                               std::wstring* output) {
+                               std::u16string* output) {
   PrepareForUTF16Or32Output<>(src, src_len, output);
 }
 
 void PrepareForUTF16Or32Output(const char* src, 
                                size_t src_len, 
-                               std::u16string* output) {
+                               std::u32string* output) {
+  PrepareForUTF16Or32Output<>(src, src_len, output);
+}
+
+void PrepareForUTF16Or32Output(const char* src, 
+                               size_t src_len, 
+                               std::wstring* output) {
   PrepareForUTF16Or32Output<>(src, src_len, output);
 }
 

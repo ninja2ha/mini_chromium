@@ -21,17 +21,22 @@ BasicStringPiece<CharT> WhitespaceForType();
 
 template <>
 inline StringPiece WhitespaceForType<char>() {
-  return kWhitespaceASCII;
+  return cr::WhitespaceASCII();
 }
 
 template <>
 inline StringPiece16 WhitespaceForType<char16_t>() {
-  return kWhitespaceUTF16;
+  return cr::WhitespaceUTF16();
+}
+
+template <>
+inline StringPiece32 WhitespaceForType<char32_t>() {
+  return cr::WhitespaceUTF32();
 }
 
 template <>
 inline WStringPiece WhitespaceForType<wchar_t>() {
-  return kWhitespaceWide;
+  return cr::WhitespaceWide();
 }
 
 // General string splitter template. Can take 8- or 16-bit input, can produce

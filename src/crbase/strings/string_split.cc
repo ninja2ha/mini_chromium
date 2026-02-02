@@ -64,6 +64,14 @@ std::vector<std::u16string> SplitString(StringPiece16 input,
                                                 result_type);
 }
 
+std::vector<std::u32string> SplitString(StringPiece32 input,
+                                        StringPiece32 separators,
+                                        WhitespaceHandling whitespace,
+                                        SplitResult result_type) {
+  return internal::SplitStringT<std::u32string>(input, separators, whitespace,
+                                                result_type);
+}
+
 std::vector<std::wstring> SplitString(WStringPiece input,
                                       WStringPiece separators,
                                       WhitespaceHandling whitespace,
@@ -85,6 +93,14 @@ std::vector<StringPiece16> SplitStringPiece(StringPiece16 input,
                                             WhitespaceHandling whitespace,
                                             SplitResult result_type) {
   return internal::SplitStringT<StringPiece16>(input, separators, whitespace,
+                                               result_type);
+}
+
+std::vector<StringPiece32> SplitStringPiece(StringPiece32 input,
+                                            StringPiece32 separators,
+                                            WhitespaceHandling whitespace,
+                                            SplitResult result_type) {
+  return internal::SplitStringT<StringPiece32>(input, separators, whitespace,
                                                result_type);
 }
 
@@ -144,6 +160,15 @@ std::vector<std::u16string> SplitStringUsingSubstr(
       input, delimiter, whitespace, result_type);
 }
 
+std::vector<std::u32string> SplitStringUsingSubstr(
+    StringPiece32 input,
+    StringPiece32 delimiter,
+    WhitespaceHandling whitespace,
+    SplitResult result_type) {
+  return internal::SplitStringUsingSubstrT<std::u32string>(
+      input, delimiter, whitespace, result_type);
+}
+
 std::vector<std::wstring> SplitStringUsingSubstr(WStringPiece input,
                                                  WStringPiece delimiter,
                                                  WhitespaceHandling whitespace,
@@ -168,6 +193,16 @@ std::vector<StringPiece16> SplitStringPieceUsingSubstr(
     SplitResult result_type) {
   std::vector<StringPiece16> result;
   return internal::SplitStringUsingSubstrT<StringPiece16>(
+      input, delimiter, whitespace, result_type);
+}
+
+std::vector<StringPiece32> SplitStringPieceUsingSubstr(
+    StringPiece32 input,
+    StringPiece32 delimiter,
+    WhitespaceHandling whitespace,
+    SplitResult result_type) {
+  std::vector<StringPiece32> result;
+  return internal::SplitStringUsingSubstrT<StringPiece32>(
       input, delimiter, whitespace, result_type);
 }
 

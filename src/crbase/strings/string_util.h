@@ -127,14 +127,19 @@ CharT ToUpperASCII(CharT c) {
   return (c >= 'a' && c <= 'z') ? (c + ('A' - 'a')) : c;
 }
 
+// UNICODE-specific tolower
+CRBASE_EXPORT int32_t ToLower(int32_t c);
+
 // Converts the given string to it's ASCII-lowercase equivalent.
 CRBASE_EXPORT std::string ToLowerASCII(StringPiece str);
 CRBASE_EXPORT std::u16string ToLowerASCII(StringPiece16 str);
+CRBASE_EXPORT std::u32string ToLowerASCII(StringPiece32 str);
 CRBASE_EXPORT std::wstring ToLowerASCII(WStringPiece str);
 
 // Converts the given string to it's ASCII-uppercase equivalent.
 CRBASE_EXPORT std::string ToUpperASCII(StringPiece str);
 CRBASE_EXPORT std::u16string ToUpperASCII(StringPiece16 str);
+CRBASE_EXPORT std::u32string ToUpperASCII(StringPiece32 str);
 CRBASE_EXPORT std::wstring ToUpperASCII(WStringPiece str);
 
 // Functor for case-insensitive ASCII comparisons for STL algorithms like
@@ -161,6 +166,7 @@ template<typename Char> struct CaseInsensitiveCompareASCII {
 // and then just call the normal string operators on the result.
 CRBASE_EXPORT int CompareCaseInsensitiveASCII(StringPiece a, StringPiece b);
 CRBASE_EXPORT int CompareCaseInsensitiveASCII(StringPiece16 a, StringPiece16 b);
+CRBASE_EXPORT int CompareCaseInsensitiveASCII(StringPiece32 a, StringPiece32 b);
 CRBASE_EXPORT int CompareCaseInsensitiveASCII(WStringPiece a, WStringPiece b);
 
 // Equality for ASCII case-insensitive comparisons. For full Unicode support,
@@ -168,6 +174,7 @@ CRBASE_EXPORT int CompareCaseInsensitiveASCII(WStringPiece a, WStringPiece b);
 // == or !=.
 CRBASE_EXPORT bool EqualsCaseInsensitiveASCII(StringPiece a, StringPiece b);
 CRBASE_EXPORT bool EqualsCaseInsensitiveASCII(StringPiece16 a, StringPiece16 b);
+CRBASE_EXPORT bool EqualsCaseInsensitiveASCII(StringPiece32 a, StringPiece32 b);
 CRBASE_EXPORT bool EqualsCaseInsensitiveASCII(WStringPiece a, WStringPiece b);
 
 // These threadsafe functions return references to globally unique empty
@@ -185,17 +192,23 @@ CRBASE_EXPORT bool EqualsCaseInsensitiveASCII(WStringPiece a, WStringPiece b);
 // values for functions which return by value or outparam.
 CRBASE_EXPORT const std::string& EmptyString();
 CRBASE_EXPORT const std::u16string& EmptyString16();
+CRBASE_EXPORT const std::u32string& EmptyString32();
 CRBASE_EXPORT const std::wstring& EmptyWString();
 
 // Contains the set of characters representing whitespace in the corresponding
 // encoding. Null-terminated. The ASCII versions are the whitespaces as defined
 // by HTML5, and don't include control characters.
-CRBASE_EXPORT extern const wchar_t kWhitespaceWide[];  // Includes Unicode.
+CRBASE_EXPORT extern const char kWhitespaceASCII[];
+CRBASE_EXPORT extern const char32_t kWhitespaceUTF32[];  // Includes Unicode.
 CRBASE_EXPORT extern const char16_t kWhitespaceUTF16[];  // Includes Unicode.
 CRBASE_EXPORT extern const char16_t
     kWhitespaceNoCrLfUTF16[];  // Unicode w/o CR/LF.
-CRBASE_EXPORT extern const char kWhitespaceASCII[];
 CRBASE_EXPORT extern const char16_t kWhitespaceASCIIAs16[];  // No unicode.
+
+CRBASE_EXPORT const StringPiece& WhitespaceASCII();
+CRBASE_EXPORT const StringPiece16& WhitespaceUTF16();
+CRBASE_EXPORT const StringPiece32& WhitespaceUTF32();
+CRBASE_EXPORT const WStringPiece& WhitespaceWide();
 
 // Null-terminated string representing the UTF-8 byte order mark.
 CRBASE_EXPORT extern const char kUtf8ByteOrderMark[];
@@ -209,6 +222,9 @@ CRBASE_EXPORT bool RemoveChars(StringPiece input,
 CRBASE_EXPORT bool RemoveChars(StringPiece16 input,
                                StringPiece16 remove_chars,
                                std::u16string* output);
+CRBASE_EXPORT bool RemoveChars(StringPiece32 input,
+                               StringPiece32 remove_chars,
+                               std::u32string* output);
 CRBASE_EXPORT bool RemoveChars(WStringPiece input,
                                WStringPiece remove_chars,
                                std::wstring* output);
@@ -226,6 +242,10 @@ CRBASE_EXPORT bool ReplaceChars(StringPiece16 input,
                                 StringPiece16 replace_chars,
                                 StringPiece16 replace_with,
                                 std::u16string* output);
+CRBASE_EXPORT bool ReplaceChars(StringPiece32 input,
+                                StringPiece32 replace_chars,
+                                StringPiece32 replace_with,
+                                std::u32string* output);
 CRBASE_EXPORT bool ReplaceChars(WStringPiece input,
                                 WStringPiece replace_chars,
                                 WStringPiece replace_with,
@@ -250,6 +270,9 @@ CRBASE_EXPORT bool TrimString(StringPiece input,
 CRBASE_EXPORT bool TrimString(StringPiece16 input,
                               StringPiece16 trim_chars,
                               std::u16string* output);
+CRBASE_EXPORT bool TrimString(StringPiece32 input,
+                              StringPiece32 trim_chars,
+                              std::u32string* output);
 CRBASE_EXPORT bool TrimString(WStringPiece input,
                               WStringPiece trim_chars,
                               std::wstring* output);
@@ -261,6 +284,9 @@ CRBASE_EXPORT StringPiece TrimString(StringPiece input,
                                      TrimPositions positions);
 CRBASE_EXPORT StringPiece16 TrimString(StringPiece16 input,
                                        StringPiece16 trim_chars,
+                                       TrimPositions positions);
+CRBASE_EXPORT StringPiece32 TrimString(StringPiece32 input,
+                                       StringPiece32 trim_chars,
                                        TrimPositions positions);
 CRBASE_EXPORT WStringPiece TrimString(WStringPiece input,
                                       WStringPiece trim_chars,
@@ -284,11 +310,24 @@ CRBASE_EXPORT TrimPositions TrimWhitespaceASCII(StringPiece input,
                                                 std::string* output);
 CRBASE_EXPORT StringPiece TrimWhitespaceASCII(StringPiece input,
                                               TrimPositions positions);
+
 CRBASE_EXPORT TrimPositions TrimWhitespace(StringPiece16 input,
                                            TrimPositions positions,
                                            std::u16string* output);
 CRBASE_EXPORT StringPiece16 TrimWhitespace(StringPiece16 input,
                                            TrimPositions positions);
+
+CRBASE_EXPORT TrimPositions TrimWhitespace(StringPiece32 input,
+                                           TrimPositions positions,
+                                           std::u32string* output);
+CRBASE_EXPORT StringPiece32 TrimWhitespace(StringPiece32 input,
+                                           TrimPositions positions);
+
+CRBASE_EXPORT TrimPositions TrimWhitespace(WStringPiece input,
+                                           TrimPositions positions,
+                                           std::wstring* output);
+CRBASE_EXPORT WStringPiece TrimWhitespace(WStringPiece input,
+                                          TrimPositions positions);
 
 // Searches for CR or LF characters.  Removes all contiguous whitespace
 // strings that contain them.  This is useful when trying to deal with text
@@ -304,6 +343,9 @@ CRBASE_EXPORT std::string CollapseWhitespaceASCII(
 CRBASE_EXPORT std::u16string CollapseWhitespace(
     StringPiece16 text,
     bool trim_sequences_with_line_breaks);
+CRBASE_EXPORT std::u32string CollapseWhitespace(
+    StringPiece32 text,
+    bool trim_sequences_with_line_breaks);
 CRBASE_EXPORT std::wstring CollapseWhitespaceASCII(
     WStringPiece text,
     bool trim_sequences_with_line_breaks);
@@ -313,6 +355,8 @@ CRBASE_EXPORT std::wstring CollapseWhitespaceASCII(
 CRBASE_EXPORT bool ContainsOnlyChars(StringPiece input, StringPiece characters);
 CRBASE_EXPORT bool ContainsOnlyChars(StringPiece16 input,
                                      StringPiece16 characters);
+CRBASE_EXPORT bool ContainsOnlyChars(StringPiece32 input,
+                                     StringPiece32 characters);
 CRBASE_EXPORT bool ContainsOnlyChars(WStringPiece input,
                                      WStringPiece characters);
 
@@ -335,6 +379,7 @@ CRBASE_EXPORT bool IsStringUTF8AllowingNoncharacters(StringPiece str);
 // does not leave early if it is not the case.
 CRBASE_EXPORT bool IsStringASCII(StringPiece str);
 CRBASE_EXPORT bool IsStringASCII(StringPiece16 str);
+CRBASE_EXPORT bool IsStringASCII(StringPiece32 str);
 CRBASE_EXPORT bool IsStringASCII(WStringPiece str);
 
 // Compare the lower-case form of the given string against the given
@@ -343,6 +388,8 @@ CRBASE_EXPORT bool LowerCaseEqualsASCII(StringPiece str,
                                         StringPiece lowercase_ascii);
 CRBASE_EXPORT bool LowerCaseEqualsASCII(StringPiece16 str,
                                         StringPiece lowercase_ascii);
+CRBASE_EXPORT bool LowerCaseEqualsASCII(StringPiece32 str,
+                                        StringPiece lowercase_ascii);
 CRBASE_EXPORT bool LowerCaseEqualsASCII(WStringPiece str,
                                         StringPiece lowercase_ascii);
 
@@ -350,6 +397,7 @@ CRBASE_EXPORT bool LowerCaseEqualsASCII(WStringPiece str,
 // the given 8-bit ASCII string (typically a constant). The behavior is
 // undefined if the |ascii| string is not ASCII.
 CRBASE_EXPORT bool EqualsASCII(StringPiece16 str, StringPiece ascii);
+CRBASE_EXPORT bool EqualsASCII(StringPiece32 str, StringPiece ascii);
 CRBASE_EXPORT bool EqualsASCII(WStringPiece str, StringPiece ascii);
 
 // Indicates case sensitivity of comparisons. Only ASCII case insensitivity
@@ -374,6 +422,10 @@ CRBASE_EXPORT bool StartsWith(
     StringPiece16 search_for,
     CompareCase case_sensitivity = CompareCase::SENSITIVE);
 CRBASE_EXPORT bool StartsWith(
+    StringPiece32 str,
+    StringPiece32 search_for,
+    CompareCase case_sensitivity = CompareCase::SENSITIVE);
+CRBASE_EXPORT bool StartsWith(
     WStringPiece str,
     WStringPiece search_for,
     CompareCase case_sensitivity = CompareCase::SENSITIVE);
@@ -384,6 +436,10 @@ CRBASE_EXPORT bool EndsWith(
 CRBASE_EXPORT bool EndsWith(
     StringPiece16 str,
     StringPiece16 search_for,
+    CompareCase case_sensitivity = CompareCase::SENSITIVE);
+CRBASE_EXPORT bool EndsWith(
+    StringPiece32 str,
+    StringPiece32 search_for,
     CompareCase case_sensitivity = CompareCase::SENSITIVE);
 CRBASE_EXPORT bool EndsWith(
     WStringPiece str,
@@ -432,7 +488,7 @@ inline bool IsHexDigit(Char c) {
 CRBASE_EXPORT char HexDigitToInt(wchar_t c);
 
 // Returns true if it's a Unicode whitespace character.
-CRBASE_EXPORT bool IsUnicodeWhitespace(wchar_t c);
+CRBASE_EXPORT bool IsUnicodeWhitespace(int32_t c);
 
 // Return a byte string in human-readable format with a unit suffix. Not
 // appropriate for use in any UI; use of FormatBytes and friends in ui/base is
@@ -452,6 +508,11 @@ CRBASE_EXPORT void ReplaceFirstSubstringAfterOffset(
     size_t start_offset,
     StringPiece16 find_this,
     StringPiece16 replace_with);
+CRBASE_EXPORT void ReplaceFirstSubstringAfterOffset(
+    std::u32string* str,
+    size_t start_offset,
+    StringPiece32 find_this,
+    StringPiece32 replace_with);
 CRBASE_EXPORT void ReplaceFirstSubstringAfterOffset(
     std::wstring* str,
     size_t start_offset,
@@ -474,6 +535,11 @@ CRBASE_EXPORT void ReplaceSubstringsAfterOffset(
     size_t start_offset,
     StringPiece16 find_this,
     StringPiece16 replace_with);
+CRBASE_EXPORT void ReplaceSubstringsAfterOffset(
+    std::u32string* str,
+    size_t start_offset,
+    StringPiece32 find_this,
+    StringPiece32 replace_with);
 CRBASE_EXPORT void ReplaceSubstringsAfterOffset(
     std::wstring* str,
     size_t start_offset,
@@ -498,6 +564,7 @@ CRBASE_EXPORT void ReplaceSubstringsAfterOffset(
 // to this function (probably 0).
 CRBASE_EXPORT char* WriteInto(std::string* str, size_t length_with_null);
 CRBASE_EXPORT char16_t* WriteInto(std::u16string* str, size_t length_with_null);
+CRBASE_EXPORT char32_t* WriteInto(std::u32string* str, size_t length_with_null);
 CRBASE_EXPORT wchar_t* WriteInto(std::wstring* str, size_t length_with_null);
 
 // Joins a list of strings into a single string, inserting |separator| (which
@@ -517,12 +584,16 @@ CRBASE_EXPORT std::string JoinString(Span<const std::string> parts,
                                      StringPiece separator);
 CRBASE_EXPORT std::u16string JoinString(Span<const std::u16string> parts,
                                         StringPiece16 separator);
+CRBASE_EXPORT std::u32string JoinString(Span<const std::u32string> parts,
+                                        StringPiece32 separator);
 CRBASE_EXPORT std::wstring JoinString(Span<const std::wstring> parts,
                                       WStringPiece separator);
 CRBASE_EXPORT std::string JoinString(Span<const StringPiece> parts,
                                       StringPiece separator);
 CRBASE_EXPORT std::u16string JoinString(Span<const StringPiece16> parts,
                                         StringPiece16 separator);
+CRBASE_EXPORT std::u32string JoinString(Span<const StringPiece32> parts,
+                                        StringPiece32 separator);
 CRBASE_EXPORT std::wstring JoinString(Span<const WStringPiece> parts,
                                       WStringPiece separator);
 // Explicit initializer_list overloads are required to break ambiguity when used
@@ -534,6 +605,9 @@ CRBASE_EXPORT std::string JoinString(
 CRBASE_EXPORT std::u16string JoinString(
     std::initializer_list<StringPiece16> parts,
     StringPiece16 separator);
+CRBASE_EXPORT std::u32string JoinString(
+    std::initializer_list<StringPiece32> parts,
+    StringPiece32 separator);
 CRBASE_EXPORT std::wstring JoinString(
     std::initializer_list<WStringPiece> parts,
     WStringPiece separator);
@@ -550,6 +624,10 @@ CRBASE_EXPORT std::u16string ReplaceStringPlaceholders(
     StringPiece16 format_string,
     const std::vector<std::u16string>& subst,
     std::vector<size_t>* offsets);
+CRBASE_EXPORT std::u32string ReplaceStringPlaceholders(
+    StringPiece32 format_string,
+    const std::vector<std::u32string>& subst,
+    std::vector<size_t>* offsets);
 CRBASE_EXPORT std::wstring ReplaceStringPlaceholders(
     WStringPiece format_string,
     const std::vector<std::wstring>& subst,
@@ -560,6 +638,142 @@ CRBASE_EXPORT std::u16string ReplaceStringPlaceholders(
     const std::u16string& format_string,
     const std::u16string& a,
     size_t* offset);
+
+CRBASE_EXPORT std::u32string ReplaceStringPlaceholders(
+    const std::u32string& format_string,
+    const std::u32string& a,
+    size_t* offset);
+
+
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+
+// Utility functions to access the underlying string buffer as a wide char
+// pointer.
+//
+// Note: These functions violate strict aliasing when char16_t and wchar_t are
+// unrelated types. We thus pass -fno-strict-aliasing to the compiler on
+// non-Windows platforms [1], and rely on it being off in Clang's CL mode [2].
+//
+// [1] https://crrev.com/b9a0976622/build/config/compiler/BUILD.gn#244
+// [2]
+// https://github.com/llvm/llvm-project/blob/1e28a66/clang/lib/Driver/ToolChains/Clang.cpp#L3949
+inline wchar_t* as_writable_wcstr(char16_t* str) {
+  return reinterpret_cast<wchar_t*>(str);
+}
+
+inline wchar_t* as_writable_wcstr(std::u16string& str) {
+  return reinterpret_cast<wchar_t*>(data(str));
+}
+
+inline const wchar_t* as_wcstr(const char16_t* str) {
+  return reinterpret_cast<const wchar_t*>(str);
+}
+
+inline const wchar_t* as_wcstr(StringPiece16 str) {
+  return reinterpret_cast<const wchar_t*>(str.data());
+}
+
+// Utility functions to access the underlying string buffer as a char16_t
+// pointer.
+inline char16_t* as_writable_u16cstr(wchar_t* str) {
+  return reinterpret_cast<char16_t*>(str);
+}
+
+inline char16_t* as_writable_u16cstr(std::wstring& str) {
+  return reinterpret_cast<char16_t*>(data(str));
+}
+
+inline const char16_t* as_u16cstr(const wchar_t* str) {
+  return reinterpret_cast<const char16_t*>(str);
+}
+
+inline const char16_t* as_u16cstr(WStringPiece str) {
+  return reinterpret_cast<const char16_t*>(str.data());
+}
+
+// Utility functions to convert between cr::WStringPiece and
+// cr::StringPiece16.
+inline WStringPiece AsWStringPiece(StringPiece16 str) {
+  return WStringPiece(as_wcstr(str.data()), str.size());
+}
+
+inline StringPiece16 AsStringPiece16(WStringPiece str) {
+  return StringPiece16(as_u16cstr(str.data()), str.size());
+}
+
+inline std::wstring AsWString(StringPiece16 str) {
+  return std::wstring(as_wcstr(str.data()), str.size());
+}
+
+inline std::u16string AsString16(WStringPiece str) {
+  return std::u16string(as_u16cstr(str.data()), str.size());
+}
+
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+
+// Utility functions to access the underlying string buffer as a wide char
+// pointer.
+//
+// Note: These functions violate strict aliasing when char16_t and wchar_t are
+// unrelated types. We thus pass -fno-strict-aliasing to the compiler on
+// non-Windows platforms [1], and rely on it being off in Clang's CL mode [2].
+//
+// [1] https://crrev.com/b9a0976622/build/config/compiler/BUILD.gn#244
+// [2]
+// https://github.com/llvm/llvm-project/blob/1e28a66/clang/lib/Driver/ToolChains/Clang.cpp#L3949
+inline wchar_t* as_writable_wcstr(char32_t* str) {
+  return reinterpret_cast<wchar_t*>(str);
+}
+
+inline wchar_t* as_writable_wcstr(std::u32string& str) {
+  return reinterpret_cast<wchar_t*>(data(str));
+}
+
+inline const wchar_t* as_wcstr(const char32_t* str) {
+  return reinterpret_cast<const wchar_t*>(str);
+}
+
+inline const wchar_t* as_wcstr(StringPiece32 str) {
+  return reinterpret_cast<const wchar_t*>(str.data());
+}
+
+// Utility functions to access the underlying string buffer as a char16_t
+// pointer.
+inline char32_t* as_writable_u32cstr(wchar_t* str) {
+  return reinterpret_cast<char16_t*>(str);
+}
+
+inline char32_t* as_writable_u32cstr(std::wstring& str) {
+  return reinterpret_cast<char32_t*>(data(str));
+}
+
+inline const char32_t* as_u32cstr(const wchar_t* str) {
+  return reinterpret_cast<const char32_t*>(str);
+}
+
+inline const char32_t* as_u32cstr(WStringPiece str) {
+  return reinterpret_cast<const char16_t*>(str.data());
+}
+
+// Utility functions to convert between cr::WStringPiece and
+// cr::StringPiece16.
+inline WStringPiece AsWStringPiece(StringPiece32 str) {
+  return WStringPiece(as_wcstr(str.data()), str.size());
+}
+
+inline StringPiece32 AsStringPiece32(WStringPiece str) {
+  return StringPiece16(as_u16cstr(str.data()), str.size());
+}
+
+inline std::wstring AsWString(StringPiece32 str) {
+  return std::wstring(as_wcstr(str.data()), str.size());
+}
+
+inline std::u32string AsString32(WStringPiece str) {
+  return std::u32string(as_u32cstr(str.data()), str.size());
+}
+
+#endif
 
 }  // namespace cr
 

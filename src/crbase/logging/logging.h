@@ -549,7 +549,7 @@ CRBASE_EXPORT LoggingConfig& GetDefaultConfig();
 #define CR_DASSERT(assertion) \
   CR_DLOG_IF(Fatal, !(assertion))  << "Assert failed: " #assertion ". "
 
-#define CR_NOTREACHED() CR_DLOG(Warning) << "NOT REACHED. "
+#define CR_NOTREACHED() CR_DCHECK(false) << "NOT REACHED. "
 #define CR_NOTIMPLEMENTED() CR_DLOG(Error) << "NOT IMPLEMENTED. "
 #define CR_NOTIMPLEMENTED_LOG_ONCE()                                           \
   do {                                                                         \

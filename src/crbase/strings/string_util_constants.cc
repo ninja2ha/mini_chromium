@@ -44,8 +44,8 @@ namespace cr {
 
 #define WHITESPACE_UNICODE WHITESPACE_ASCII, WHITESPACE_UNICODE_NON_ASCII
 
-const wchar_t kWhitespaceWide[] = {WHITESPACE_UNICODE, 0};
-const char16_t kWhitespaceUTF16[] = {WHITESPACE_UNICODE, 0};
+const char32_t kWhitespaceUTF32[] = { WHITESPACE_UNICODE, 0 };
+const char16_t kWhitespaceUTF16[] = { WHITESPACE_UNICODE, 0 };
 const char16_t kWhitespaceNoCrLfUTF16[] = {WHITESPACE_UNICODE_NO_CR_LF, 0};
 const char kWhitespaceASCII[] = {WHITESPACE_ASCII, 0};
 const char16_t kWhitespaceASCIIAs16[] = {WHITESPACE_ASCII, 0};

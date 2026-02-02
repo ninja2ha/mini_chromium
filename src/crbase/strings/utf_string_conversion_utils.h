@@ -58,6 +58,11 @@ CRBASE_EXPORT bool ReadUnicodeCharacter(const char16_t* src,
                                         uint32_t* code_point);
 
 // Reads UTF-32 character. The usage is the same as the 8-bit version above.
+CRBASE_EXPORT bool ReadUnicodeCharacter(const char32_t* src,
+                                        int32_t src_len,
+                                        int32_t* char_index,
+                                        uint32_t* code_point);
+
 CRBASE_EXPORT bool ReadUnicodeCharacter(const wchar_t* src,
                                         int32_t src_len,
                                         int32_t* char_index,
@@ -77,11 +82,11 @@ CRBASE_EXPORT size_t WriteUnicodeCharacter(uint32_t code_point,
 
 // Appends the given UTF-32 character to the given 32-bit string.  Returns the
 // number of 32-bit values written.
-inline size_t WriteUnicodeCharacter(uint32_t code_point, std::wstring* output) {
-  // This is the easy case, just append the character.
-  output->push_back(code_point);
-  return 1;
-}
+CRBASE_EXPORT size_t WriteUnicodeCharacter(uint32_t code_point, 
+                                           std::u32string* output);
+
+CRBASE_EXPORT size_t WriteUnicodeCharacter(uint32_t code_point, 
+                                           std::wstring* output);
 
 // Generalized Unicode converter -----------------------------------------------
 
@@ -90,6 +95,9 @@ inline size_t WriteUnicodeCharacter(uint32_t code_point, std::wstring* output) {
 // character types are unsigned, which will be true for UTF-16 and -32 on our
 // systems.
 void PrepareForUTF8Output(const char16_t* src, 
+                          size_t src_len, 
+                          std::string* output);
+void PrepareForUTF8Output(const char32_t* src, 
                           size_t src_len, 
                           std::string* output);
 void PrepareForUTF8Output(const wchar_t* src, 
@@ -101,6 +109,9 @@ void PrepareForUTF8Output(const wchar_t* src,
 void PrepareForUTF16Or32Output(const char* src, 
                                size_t src_len, 
                                std::u16string* output);
+void PrepareForUTF16Or32Output(const char* src, 
+                               size_t src_len, 
+                               std::u32string* output);
 void PrepareForUTF16Or32Output(const char* src, 
                                size_t src_len, 
                                std::wstring* output);

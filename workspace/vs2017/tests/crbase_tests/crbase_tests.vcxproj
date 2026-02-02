@@ -42,6 +42,7 @@
     <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_piece_unittest.cc" />
     <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_split_unittest.cc" />
     <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_util_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\utf_string_conversions_unittest.cc" />
     <ClCompile Include="..\..\..\..\tests\crbase_tests\synchronization\lock_unittest.cc" />
     <ClCompile Include="..\..\..\..\tests\crbase_tests\synchronization\waitable_event_unittest.cc" />
     <ClCompile Include="..\..\..\..\tests\crbase_tests\test\bind.cc" />

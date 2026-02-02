@@ -22,34 +22,89 @@ namespace cr {
 // do the best it can and put the result in the output buffer. The versions that
 // return strings ignore this error and just return the best conversion
 // possible.
-CRBASE_EXPORT bool WideToUTF8(const wchar_t* src, size_t src_len,
-                              std::string* output);
-CRBASE_EXPORT std::string WideToUTF8(WStringPiece wide) CR_WARN_UNUSED_RESULT;
+
+// UTF8 -> UTF16 ---------------------------------------------------------------
+CRBASE_EXPORT bool UTF8ToUTF16(const char* src,
+                               size_t src_len,
+                               std::u16string* output);
+CRBASE_EXPORT std::u16string UTF8ToUTF16(StringPiece utf8) 
+    CR_WARN_UNUSED_RESULT;
+
+// UTF8 -> UTF32 ---------------------------------------------------------------
+CRBASE_EXPORT bool UTF8ToUTF32(const char* src, 
+                               size_t src_len, 
+                               std::u32string* output);
+CRBASE_EXPORT std::u32string UTF8ToUTF32(StringPiece utf8)
+    CR_WARN_UNUSED_RESULT;
+
+// UTF16 -> UTF8 ---------------------------------------------------------------
+CRBASE_EXPORT bool UTF16ToUTF8(const char16_t* src,
+                               size_t src_len,
+                               std::string* output);
+CRBASE_EXPORT std::string UTF16ToUTF8(StringPiece16 utf16) 
+    CR_WARN_UNUSED_RESULT;
+
+// UTF16 -> UTF32 --------------------------------------------------------------
+CRBASE_EXPORT bool UTF16ToUTF32(const char16_t* src,
+                                size_t src_len,
+                                std::u32string* output);
+CRBASE_EXPORT std::u32string UTF16ToUTF32(StringPiece16 utf16) 
+    CR_WARN_UNUSED_RESULT;
+
+// UTF32 -> UTF8 ---------------------------------------------------------------
+CRBASE_EXPORT bool UTF32ToUTF8(const char32_t* src, 
+                               size_t src_len, 
+                               std::string* output);
+CRBASE_EXPORT std::string UTF32ToUTF8(StringPiece32 utf32)
+    CR_WARN_UNUSED_RESULT;
+
+// UTF32 -> UTF16 --------------------------------------------------------------
+CRBASE_EXPORT bool UTF32ToUTF16(const char32_t* src,
+                                size_t src_len,
+                                std::u16string* output);
+CRBASE_EXPORT std::u16string UTF32ToUTF16(StringPiece32 utf32)
+    CR_WARN_UNUSED_RESULT;
+
+// UTF8 -> Wide ----------------------------------------------------------------
 CRBASE_EXPORT bool UTF8ToWide(const char* src, size_t src_len,
                               std::wstring* output);
 CRBASE_EXPORT std::wstring UTF8ToWide(StringPiece utf8) CR_WARN_UNUSED_RESULT;
 
-CRBASE_EXPORT bool WideToUTF16(const wchar_t* src,
-                             size_t src_len,
-                             std::u16string* output);
-CRBASE_EXPORT std::u16string WideToUTF16(WStringPiece wide) 
-    CR_WARN_UNUSED_RESULT;
+// UTF16 ->Wide ----------------------------------------------------------------
 CRBASE_EXPORT bool UTF16ToWide(const char16_t* src,
-                             size_t src_len,
-                             std::wstring* output);
+                               size_t src_len,
+                               std::wstring* output);
 CRBASE_EXPORT std::wstring UTF16ToWide(StringPiece16 utf16) 
     CR_WARN_UNUSED_RESULT;
 
-CRBASE_EXPORT bool UTF8ToUTF16(const char* src,
-                             size_t src_len,
-                             std::u16string* output);
-CRBASE_EXPORT std::u16string UTF8ToUTF16(StringPiece utf8) 
+// UTF32 ->Wide ----------------------------------------------------------------
+CRBASE_EXPORT bool UTF32ToWide(const char32_t* src,
+                               size_t src_len,
+                               std::wstring* output);
+CRBASE_EXPORT std::wstring UTF32ToWide(StringPiece32 utf32) 
     CR_WARN_UNUSED_RESULT;
-CRBASE_EXPORT bool UTF16ToUTF8(const char16_t* src,
-                             size_t src_len,
-                             std::string* output);
-CRBASE_EXPORT std::string UTF16ToUTF8(StringPiece16 utf16) 
+
+// Wide -> UTF8 ----------------------------------------------------------------
+CRBASE_EXPORT bool WideToUTF8(const wchar_t* src, size_t src_len,
+                              std::string* output);
+CRBASE_EXPORT std::string WideToUTF8(WStringPiece wide) CR_WARN_UNUSED_RESULT;
+
+// Wide -> UTF16 ---------------------------------------------------------------
+CRBASE_EXPORT bool WideToUTF16(const wchar_t* src,
+                               size_t src_len,
+                               std::u16string* output);
+CRBASE_EXPORT std::u16string WideToUTF16(WStringPiece wide) 
     CR_WARN_UNUSED_RESULT;
+
+// Wide -> UTF32 ---------------------------------------------------------------
+CRBASE_EXPORT bool WideToUTF32(const wchar_t* src,
+                               size_t src_len,
+                               std::u32string* output);
+CRBASE_EXPORT std::u32string WideToUTF32(WStringPiece wide) 
+    CR_WARN_UNUSED_RESULT;
+
+
+// ASCII <-> UTF16 -------------------------------------------------------------
 
 // This converts an ASCII string, typically a hardcoded constant, to a UTF16
 // string.
@@ -60,6 +115,20 @@ CRBASE_EXPORT std::u16string ASCIIToUTF16(StringPiece ascii)
 // beforehand.
 CRBASE_EXPORT std::string UTF16ToASCII(StringPiece16 utf16) 
     CR_WARN_UNUSED_RESULT;
+
+// ASCII <-> Wide -------------------------------------------------------------
+
+// This converts an ASCII string, typically a hardcoded constant, to a wide
+// string.
+CRBASE_EXPORT std::u32string ASCIIToUTF32(StringPiece ascii) 
+    CR_WARN_UNUSED_RESULT;
+
+// Converts to 7-bit ASCII by truncating. The result must be known to be ASCII
+// beforehand.
+CRBASE_EXPORT std::string UTF32ToASCII(StringPiece32 wide) 
+    CR_WARN_UNUSED_RESULT;
+
+// ASCII <-> Wide -------------------------------------------------------------
 
 // This converts an ASCII string, typically a hardcoded constant, to a wide
 // string.

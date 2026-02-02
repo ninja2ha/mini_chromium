@@ -128,7 +128,7 @@ std::string StringPrintf(const char* format, ...) {
   return result;
 }
 
-#if defined(MINI_CHROMIUM_OS_WIN)
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
 std::u16string StringPrintf(const char16_t* format, ...) {
   va_list ap;
   va_start(ap, format);
@@ -137,6 +137,16 @@ std::u16string StringPrintf(const char16_t* format, ...) {
   va_end(ap);
   return result;
 }
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+std::u32string StringPrintf(const char16_t* format, ...) {
+  va_list ap;
+  va_start(ap, format);
+  std::u32string result;
+  StringAppendV(&result, format, ap);
+  va_end(ap);
+  return result;
+}
+#endif
 
 std::wstring StringPrintf(const wchar_t* format, ...) {
   va_list ap;
@@ -146,7 +156,6 @@ std::wstring StringPrintf(const wchar_t* format, ...) {
   va_end(ap);
   return result;
 }
-#endif
 
 std::string StringPrintV(const char* format, va_list ap) {
   std::string result;
@@ -163,7 +172,7 @@ const std::string& SStringPrintf(std::string* dst, const char* format, ...) {
   return *dst;
 }
 
-#if defined(MINI_CHROMIUM_OS_WIN)
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
 const std::u16string& SStringPrintf(std::u16string* dst,
                                     const char16_t* format,
                                     ...) {
@@ -174,6 +183,18 @@ const std::u16string& SStringPrintf(std::u16string* dst,
   va_end(ap);
   return *dst;
 }
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+const std::u32string& SStringPrintf(std::u32string* dst,
+                                    const char32_t* format,
+                                    ...) {
+  va_list ap;
+  va_start(ap, format);
+  dst->clear();
+  StringAppendV(dst, format, ap);
+  va_end(ap);
+  return *dst;
+}
+#endif
 
 const std::wstring& SStringPrintf(std::wstring* dst,
                                   const wchar_t* format, ...) {
@@ -184,7 +205,6 @@ const std::wstring& SStringPrintf(std::wstring* dst,
   va_end(ap);
   return *dst;
 }
-#endif
 
 void StringAppendF(std::string* dst, const char* format, ...) {
   va_list ap;
@@ -193,13 +213,21 @@ void StringAppendF(std::string* dst, const char* format, ...) {
   va_end(ap);
 }
 
-#if defined(MINI_CHROMIUM_OS_WIN)
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
 void StringAppendF(std::u16string* dst, const char16_t* format, ...) {
   va_list ap;
   va_start(ap, format);
   StringAppendV(dst, format, ap);
   va_end(ap);
 }
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+void StringAppendF(std::u32string* dst, const char32_t* format, ...) {
+  va_list ap;
+  va_start(ap, format);
+  StringAppendV(dst, format, ap);
+  va_end(ap);
+}
+#endif
 
 void StringAppendF(std::wstring* dst, const wchar_t* format, ...) {
   va_list ap;
@@ -207,20 +235,23 @@ void StringAppendF(std::wstring* dst, const wchar_t* format, ...) {
   StringAppendV(dst, format, ap);
   va_end(ap);
 }
-#endif
 
 void StringAppendV(std::string* dst, const char* format, va_list ap) {
   StringAppendVT(dst, format, ap);
 }
 
-#if defined(MINI_CHROMIUM_OS_WIN)
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
 void StringAppendV(std::u16string* dst, const char16_t* format, va_list ap) {
   StringAppendVT(dst, format, ap);
 }
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+void StringAppendV(std::u32string* dst, const char32_t* format, va_list ap) {
+  StringAppendVT(dst, format, ap);
+}
+#endif
 
 void StringAppendV(std::wstring* dst, const wchar_t* format, va_list ap) {
   StringAppendVT(dst, format, ap);
 }
-#endif
 
 }  // namespace cr

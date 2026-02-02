@@ -22,6 +22,10 @@ std::u16string NumberToString16(int value) {
   return internal::IntToStringT<std::u16string>(value);
 }
 
+std::u32string NumberToString32(int value) {
+  return internal::IntToStringT<std::u32string>(value);
+}
+
 std::wstring NumberToWString(int value) {
   return internal::IntToStringT<std::wstring>(value);
 }
@@ -32,6 +36,10 @@ std::string NumberToString(unsigned int value) {
 
 std::u16string NumberToString16(unsigned int value) {
   return internal::IntToStringT<std::u16string>(value);
+}
+
+std::u32string NumberToString32(unsigned int value) {
+  return internal::IntToStringT<std::u32string>(value);
 }
 
 std::wstring NumberToWString(unsigned int value) {
@@ -46,6 +54,10 @@ std::u16string NumberToString16(long value) {
   return internal::IntToStringT<std::u16string>(value);
 }
 
+std::u32string NumberToString32(long value) {
+  return internal::IntToStringT<std::u32string>(value);
+}
+
 std::wstring NumberToWString(long value) {
   return internal::IntToStringT<std::wstring>(value);
 }
@@ -56,6 +68,10 @@ std::string NumberToString(unsigned long value) {
 
 std::u16string NumberToString16(unsigned long value) {
   return internal::IntToStringT<std::u16string>(value);
+}
+
+std::u32string NumberToString32(unsigned long value) {
+  return internal::IntToStringT<std::u32string>(value);
 }
 
 std::wstring NumberToWString(unsigned long value) {
@@ -70,6 +86,10 @@ std::u16string NumberToString16(long long value) {
   return internal::IntToStringT<std::u16string>(value);
 }
 
+std::u32string NumberToString32(long long value) {
+  return internal::IntToStringT<std::u32string>(value);
+}
+
 std::wstring NumberToWString(long long value) {
   return internal::IntToStringT<std::wstring>(value);
 }
@@ -82,6 +102,10 @@ std::u16string NumberToString16(unsigned long long value) {
   return internal::IntToStringT<std::u16string>(value);
 }
 
+std::u32string NumberToString32(unsigned long long value) {
+  return internal::IntToStringT<std::u32string>(value);
+}
+
 std::wstring NumberToWString(unsigned long long value) {
   return internal::IntToStringT<std::wstring>(value);
 }
@@ -92,6 +116,10 @@ std::string NumberToString(double value) {
 
 std::u16string NumberToString16(double value) {
   return internal::DoubleToStringT<std::u16string>(value);
+}
+
+std::u32string NumberToString32(double value) {
+  return internal::DoubleToStringT<std::u32string>(value);
 }
 
 std::wstring NumberToWString(double value) {
@@ -110,6 +138,10 @@ bool StringToInt(StringPiece16 input, int* output) {
   return internal::StringToIntImpl(input, *output);
 }
 
+bool StringToInt(StringPiece32 input, int* output) {
+  return internal::StringToIntImpl(input, *output);
+}
+
 bool StringToInt(WStringPiece input, int* output) {
   return internal::StringToIntImpl(input, *output);
 }
@@ -119,6 +151,10 @@ bool StringToUint(StringPiece input, unsigned* output) {
 }
 
 bool StringToUint(StringPiece16 input, unsigned* output) {
+  return internal::StringToIntImpl(input, *output);
+}
+
+bool StringToUint(StringPiece32 input, unsigned* output) {
   return internal::StringToIntImpl(input, *output);
 }
 
@@ -134,6 +170,10 @@ bool StringToInt64(StringPiece16 input, int64_t* output) {
   return internal::StringToIntImpl(input, *output);
 }
 
+bool StringToInt64(StringPiece32 input, int64_t* output) {
+  return internal::StringToIntImpl(input, *output);
+}
+
 bool StringToInt64(WStringPiece input, int64_t* output) {
   return internal::StringToIntImpl(input, *output);
 }
@@ -146,6 +186,10 @@ bool StringToUint64(StringPiece16 input, uint64_t* output) {
   return internal::StringToIntImpl(input, *output);
 }
 
+bool StringToUint64(StringPiece32 input, uint64_t* output) {
+  return internal::StringToIntImpl(input, *output);
+}
+
 bool StringToUint64(WStringPiece input, uint64_t* output) {
   return internal::StringToIntImpl(input, *output);
 }
@@ -155,6 +199,10 @@ bool StringToSizeT(StringPiece input, size_t* output) {
 }
 
 bool StringToSizeT(StringPiece16 input, size_t* output) {
+  return internal::StringToIntImpl(input, *output);
+}
+
+bool StringToSizeT(StringPiece32 input, size_t* output) {
   return internal::StringToIntImpl(input, *output);
 }
 
@@ -171,9 +219,19 @@ bool StringToDouble(StringPiece16 input, double* output) {
       input, reinterpret_cast<const uint16_t*>(input.data()), *output);
 }
 
+bool StringToDouble(StringPiece32 input, double* output) {
+  return internal::StringToDoubleImpl(
+      input, reinterpret_cast<const uint32_t*>(input.data()), *output);
+}
+
 bool StringToDouble(WStringPiece input, double* output) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
   return internal::StringToDoubleImpl(
       input, reinterpret_cast<const uint16_t*>(input.data()), *output);
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return internal::StringToDoubleImpl(
+      input, reinterpret_cast<const uint32_t*>(input.data()), *output);
+#endif
 }
 
 std::string HexEncode(const void* bytes, size_t size) {

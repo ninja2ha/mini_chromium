@@ -41,6 +41,7 @@ inline void BuildLookupTable(StringPiece characters_wanted, bool* table) {
 #if !defined(MINI_CHROMIUM_COMPILER_MSVC)
 template class BasicStringPiece<char>;
 template class BasicStringPiece<char16_t>;
+template class BasicStringPiece<char32_t>;
 template class BasicStringPiece<wchar_t>;
 #endif
 
@@ -51,6 +52,10 @@ std::ostream& operator<<(std::ostream& o, StringPiece piece) {
 
 std::ostream& operator<<(std::ostream& o, StringPiece16 piece) {
   return o << UTF16ToUTF8(piece);
+}
+
+std::ostream& operator<<(std::ostream& o, StringPiece32 piece) {
+  return o << UTF32ToUTF8(piece);
 }
 
 std::ostream& operator<<(std::ostream& o, WStringPiece piece) {
@@ -81,6 +86,10 @@ size_t find(StringPiece16 self, StringPiece16 s, size_t pos) {
   return findT(self, s, pos);
 }
 
+size_t find(StringPiece32 self, StringPiece32 s, size_t pos) {
+  return findT(self, s, pos);
+}
+
 template <typename CharT>
 size_t rfindT(BasicStringPiece<CharT> self,
               BasicStringPiece<CharT> s,
@@ -104,6 +113,10 @@ size_t rfind(StringPiece self, StringPiece s, size_t pos) {
 }
 
 size_t rfind(StringPiece16 self, StringPiece16 s, size_t pos) {
+  return rfindT(self, s, pos);
+}
+
+size_t rfind(StringPiece32 self, StringPiece32 s, size_t pos) {
   return rfindT(self, s, pos);
 }
 
@@ -142,6 +155,10 @@ size_t find_first_ofT(BasicStringPiece<CharT> self,
 }
 
 size_t find_first_of(StringPiece16 self, StringPiece16 s, size_t pos) {
+  return find_first_ofT(self, s, pos);
+}
+
+size_t find_first_of(StringPiece32 self, StringPiece32 s, size_t pos) {
   return find_first_ofT(self, s, pos);
 }
 
@@ -193,6 +210,10 @@ size_t find_first_not_of(StringPiece16 self, StringPiece16 s, size_t pos) {
   return find_first_not_ofT(self, s, pos);
 }
 
+size_t find_first_not_of(StringPiece32 self, StringPiece32 s, size_t pos) {
+  return find_first_not_ofT(self, s, pos);
+}
+
 // 8-bit version using lookup table.
 size_t find_last_of(StringPiece self, StringPiece s, size_t pos) {
   if (self.size() == 0 || s.size() == 0)
@@ -234,6 +255,10 @@ size_t find_last_ofT(BasicStringPiece<CharT> self,
 }
 
 size_t find_last_of(StringPiece16 self, StringPiece16 s, size_t pos) {
+  return find_last_ofT(self, s, pos);
+}
+
+size_t find_last_of(StringPiece32 self, StringPiece32 s, size_t pos) {
   return find_last_ofT(self, s, pos);
 }
 
@@ -286,6 +311,10 @@ size_t find_last_not_ofT(BasicStringPiece<CharT> self,
 }
 
 size_t find_last_not_of(StringPiece16 self, StringPiece16 s, size_t pos) {
+  return find_last_not_ofT(self, s, pos);
+}
+
+size_t find_last_not_of(StringPiece32 self, StringPiece32 s, size_t pos) {
   return find_last_not_ofT(self, s, pos);
 }
 

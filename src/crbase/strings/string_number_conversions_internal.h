@@ -57,8 +57,8 @@ static STR IntToStringT(INT value) {
 }
 
 // Utility to convert a character to a digit in a given base
-template <int BASE, typename CHAR>
-Optional<uint8_t> CharToDigit(CHAR c) {
+template <int BASE>
+Optional<uint8_t> CharToDigit(int32_t c) {
   static_assert(1 <= BASE && BASE <= 36, "BASE needs to be in [1, 36]");
   if (c >= '0' && c < '0' + std::min(BASE, 10))
     return c - '0';
@@ -91,6 +91,18 @@ template <>
 class WhitespaceHelper<char16_t> {
  public:
   static bool Invoke(char16_t c) { return 0 != iswspace(c); }
+};
+
+template <>
+class WhitespaceHelper<char32_t> {
+ public:
+  static bool Invoke(char32_t c) { 
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+    return c > 0 && c < 0x10000 && 0 != iswspace(static_cast<wint_t>(c));
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+    return 0 != iswspace(c);
+#endif
+  }
 };
 
 template <>

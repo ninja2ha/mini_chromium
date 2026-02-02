@@ -64,11 +64,15 @@ CRBASE_EXPORT std::string StrCat(Span<const StringPiece> pieces)
     CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::u16string StrCat(Span<const StringPiece16> pieces)
     CR_WARN_UNUSED_RESULT;
+CRBASE_EXPORT std::u32string StrCat(Span<const StringPiece32> pieces)
+    CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::wstring StrCat(Span<const WStringPiece> pieces)
     CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::string StrCat(Span<const std::string> pieces)
     CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::u16string StrCat(Span<const std::u16string> pieces)
+    CR_WARN_UNUSED_RESULT;
+CRBASE_EXPORT std::u32string StrCat(Span<const std::u32string> pieces)
     CR_WARN_UNUSED_RESULT;
 CRBASE_EXPORT std::wstring StrCat(Span<const std::wstring> pieces)
     CR_WARN_UNUSED_RESULT;
@@ -79,6 +83,10 @@ inline std::string StrCat(std::initializer_list<StringPiece> pieces) {
 }
 
 inline std::u16string StrCat(std::initializer_list<StringPiece16> pieces) {
+  return StrCat(MakeSpan(pieces));
+}
+
+inline std::u32string StrCat(std::initializer_list<StringPiece32> pieces) {
   return StrCat(MakeSpan(pieces));
 }
 
@@ -97,11 +105,15 @@ inline std::wstring StrCat(std::initializer_list<WStringPiece> pieces) {
 CRBASE_EXPORT void StrAppend(std::string* dest, Span<const StringPiece> pieces);
 CRBASE_EXPORT void StrAppend(std::u16string* dest,
                              Span<const StringPiece16> pieces);
+CRBASE_EXPORT void StrAppend(std::u32string* dest,
+                             Span<const StringPiece32> pieces);
 CRBASE_EXPORT void StrAppend(std::wstring* dest,
                              Span<const WStringPiece> pieces);
 CRBASE_EXPORT void StrAppend(std::string* dest, Span<const std::string> pieces);
 CRBASE_EXPORT void StrAppend(std::u16string* dest,
                              Span<const std::u16string> pieces);
+CRBASE_EXPORT void StrAppend(std::u32string* dest,
+                             Span<const std::u32string> pieces);
 CRBASE_EXPORT void StrAppend(std::wstring* dest,
                              Span<const std::wstring> pieces);
 
@@ -113,6 +125,11 @@ inline void StrAppend(std::string* dest,
 
 inline void StrAppend(std::u16string* dest,
                       std::initializer_list<StringPiece16> pieces) {
+  StrAppend(dest, MakeSpan(pieces));
+}
+
+inline void StrAppend(std::u32string* dest,
+                      std::initializer_list<StringPiece32> pieces) {
   StrAppend(dest, MakeSpan(pieces));
 }
 

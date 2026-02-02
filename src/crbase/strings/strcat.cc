@@ -19,6 +19,10 @@ std::u16string StrCat(Span<const StringPiece16> pieces) {
   return internal::StrCatT(pieces);
 }
 
+std::u32string StrCat(Span<const StringPiece32> pieces) {
+  return internal::StrCatT(pieces);
+}
+
 std::wstring StrCat(Span<const WStringPiece> pieces) {
   return internal::StrCatT(pieces);
 }
@@ -28,6 +32,10 @@ std::string StrCat(Span<const std::string> pieces) {
 }
 
 std::u16string StrCat(Span<const std::u16string> pieces) {
+  return internal::StrCatT(pieces);
+}
+
+std::u32string StrCat(Span<const std::u32string> pieces) {
   return internal::StrCatT(pieces);
 }
 
@@ -43,6 +51,10 @@ void StrAppend(std::u16string* dest, Span<const StringPiece16> pieces) {
   internal::StrAppendT(*dest, pieces);
 }
 
+void StrAppend(std::u32string* dest, Span<const StringPiece32> pieces) {
+  internal::StrAppendT(*dest, pieces);
+}
+
 void StrAppend(std::wstring* dest, Span<const WStringPiece> pieces) {
   internal::StrAppendT(*dest, pieces);
 }
@@ -52,6 +64,10 @@ void StrAppend(std::string* dest, Span<const std::string> pieces) {
 }
 
 void StrAppend(std::u16string* dest, Span<const std::u16string> pieces) {
+  internal::StrAppendT(*dest, pieces);
+}
+
+void StrAppend(std::u32string* dest, Span<const std::u32string> pieces) {
   internal::StrAppendT(*dest, pieces);
 }
 

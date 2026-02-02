@@ -8,6 +8,7 @@
 
 #include "crbase/logging/logging.h"
 #include "crbase/strings/string_util.h"
+#include "crbase/strings/utf_string_conversion_utils.h"
 
 namespace {
 
@@ -97,6 +98,9 @@ bool encode(Span codepoints, STR& out) {
   int32_t delta = 0, n = initialN, bias = initialBias;
   int32_t b = 0, remaining = 0;
   for (int32_t cp : codepoints) {
+    if (!cr::IsValidCharacter(cp))
+      return false;
+
     if (cp < 0x80) {
       b++;
       out.push_back(static_cast<char>(cp));

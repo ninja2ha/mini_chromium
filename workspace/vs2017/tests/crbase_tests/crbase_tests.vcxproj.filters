@@ -66,6 +66,9 @@
     <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\string_util_unittest.cc">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\crbase_tests\strings\utf_string_conversions_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="files">

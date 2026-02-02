@@ -42,19 +42,48 @@ struct SizeCoefficient<char16_t, char> {
   static constexpr int value = 3;
 };
 
-#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
 template <>
-struct SizeCoefficient<wchar_t, char> {
+struct SizeCoefficient<char32_t, char> {
   // UTF-8 uses at most 4 codeunits per character.
   static constexpr int value = 4;
 };
 
 template <>
-struct SizeCoefficient<wchar_t, char16_t> {
-  // UTF-16 uses at most 2 codeunits per character.
+struct SizeCoefficient<char32_t, char16_t> {
+  // UTF-32 uses at most 2 codeunits per character.
   static constexpr int value = 2;
 };
-#endif  // defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+
+template <>
+struct SizeCoefficient<char32_t, wchar_t> {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  // UTF-32 uses at most 2 codeunits per character.
+  static constexpr int value = 2;
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  static constexpr int value = 1;
+#endif
+};
+
+template <>
+struct SizeCoefficient<wchar_t, char> {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  // One wchar_t codeunit corresponds to at most 3 codeunits in UTF-8.
+  static constexpr int value = 3;
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  // UTF-8 uses at most 4 codeunits per character.
+  static constexpr int value = 4;
+#endif
+};
+
+template <>
+struct SizeCoefficient<wchar_t, char16_t> {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  static constexpr int value = 1;
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  // UTF-32 uses at most 2 codeunits per character.
+  static constexpr int value = 2;
+#endif
+};
 
 template <typename SrcChar, typename DestChar>
 constexpr int size_coefficient_v =
@@ -155,10 +184,8 @@ bool DoUTFConversion(const char16_t* src,
   return success;
 }
 
-#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
-
 template <typename DestChar>
-bool DoUTFConversion(const wchar_t* src,
+bool DoUTFConversion(const char32_t* src,
                      int32_t src_len,
                      DestChar* dest,
                      int32_t* dest_len) {
@@ -178,13 +205,12 @@ bool DoUTFConversion(const wchar_t* src,
   return success;
 }
 
-#endif  // defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
-
 // UTFConversion --------------------------------------------------------------
 // Function template for generating all UTF conversions.
 
 template <typename InputString, typename DestString>
-bool UTFConversion(const InputString& src_str, DestString* dest_str) {
+bool 
+UTFConversion(const InputString& src_str, DestString* dest_str) {
   if (IsStringASCII(src_str)) {
     dest_str->assign(src_str.begin(), src_str.end());
     return true;
@@ -205,14 +231,12 @@ bool UTFConversion(const InputString& src_str, DestString* dest_str) {
 
   dest_str->resize(dest_len32);
   dest_str->shrink_to_fit();
-
   return res;
 }
 
 }  // namespace
 
-// UTF16 <-> UTF8 --------------------------------------------------------------
-
+// UTF8 -> UTF16 --------------------------------------------------------------
 bool UTF8ToUTF16(const char* src, size_t src_len, std::u16string* output) {
   return UTFConversion(StringPiece(src, src_len), output);
 }
@@ -225,6 +249,20 @@ std::u16string UTF8ToUTF16(StringPiece utf8) {
   return ret;
 }
 
+// UTF8 -> UTF32 --------------------------------------------------------------
+bool UTF8ToUTF32(const char* src, size_t src_len, std::u32string* output) {
+  return UTFConversion(StringPiece(src, src_len), output);
+}
+
+std::u32string UTF8ToUTF32(StringPiece utf8) {
+  std::u32string ret;
+  // Ignore the success flag of this call, it will do the best it can for
+  // invalid input, which is what we want here.
+  UTF8ToUTF32(utf8.data(), utf8.size(), &ret);
+  return ret;
+}
+
+// UTF16 -> UTF8 ---------------------------------------------------------------
 bool UTF16ToUTF8(const char16_t* src, size_t src_len, std::string* output) {
   return UTFConversion(StringPiece16(src, src_len), output);
 }
@@ -237,61 +275,46 @@ std::string UTF16ToUTF8(StringPiece16 utf16) {
   return ret;
 }
 
-// UTF-16 <-> Wide -------------------------------------------------------------
-
-#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
-// When wide == UTF-16 the conversions are a NOP.
-
-bool WideToUTF16(const wchar_t* src, size_t src_len, std::u16string* output) {
-  output->assign(src, src + src_len);
-  return true;
-}
-
-std::u16string WideToUTF16(WStringPiece wide) {
-  return std::u16string(wide.begin(), wide.end());
-}
-
-bool UTF16ToWide(const char16_t* src, size_t src_len, std::wstring* output) {
-  output->assign(src, src + src_len);
-  return true;
-}
-
-std::wstring UTF16ToWide(StringPiece16 utf16) {
-  return std::wstring(utf16.begin(), utf16.end());
-}
-
-#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
-
-bool WideToUTF16(const wchar_t* src, size_t src_len, std::u16string* output) {
-  return UTFConversion(cr::WStringPiece(src, src_len), output);
-}
-
-std::u16string WideToUTF16(WStringPiece wide) {
-  std::u16string ret;
-  // Ignore the success flag of this call, it will do the best it can for
-  // invalid input, which is what we want here.
-  WideToUTF16(wide.data(), wide.length(), &ret);
-  return ret;
-}
-
-bool UTF16ToWide(const char16_t* src, size_t src_len, std::wstring* output) {
+// UTF-16 -> UTF32 ------------------------------------------------------------
+bool UTF16ToUTF32(const char16_t* src, size_t src_len, std::u32string* output) {
   return UTFConversion(StringPiece16(src, src_len), output);
 }
 
-std::wstring UTF16ToWide(StringPiece16 utf16) {
-  std::wstring ret;
+std::u32string UTF16ToUTF32(StringPiece16 utf16) {
+  std::u32string ret;
   // Ignore the success flag of this call, it will do the best it can for
   // invalid input, which is what we want here.
-  UTF16ToWide(utf16.data(), utf16.length(), &ret);
+  UTF16ToUTF32(utf16.data(), utf16.length(), &ret);
   return ret;
 }
 
-#endif  // defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+// UTF-32 -> UTF8 -------------------------------------------------------------
+bool UTF32ToUTF8(const char32_t* src, size_t src_len, std::string* output) {
+  return UTFConversion(StringPiece32(src, src_len), output);
+}
 
-// UTF-8 <-> Wide --------------------------------------------------------------
+std::string UTF32ToUTF8(StringPiece32 utf32) {
+  std::string ret;
+  // Ignore the success flag of this call, it will do the best it can for
+  // invalid input, which is what we want here.
+  UTF32ToUTF8(utf32.data(), utf32.length(), &ret);
+  return ret;
+}
 
-// UTF8ToWide is the same code, regardless of whether wide is 16 or 32 bits
+// UTF-32 -> UTF16 -------------------------------------------------------------
+bool UTF32ToUTF16(const char32_t* src, size_t src_len, std::u16string* output) {
+  return UTFConversion(StringPiece32(src, src_len), output);
+}
 
+std::u16string UTF32ToUTF16(StringPiece32 utf32) {
+  std::u16string ret;
+  // Ignore the success flag of this call, it will do the best it can for
+  // invalid input, which is what we want here.
+  UTF32ToUTF16(utf32.data(), utf32.length(), &ret);
+  return ret;
+}
+
+// UTF8 -> Wide ----------------------------------------------------------------
 bool UTF8ToWide(const char* src, size_t src_len, std::wstring* output) {
   return UTFConversion(StringPiece(src, src_len), output);
 }
@@ -304,33 +327,112 @@ std::wstring UTF8ToWide(StringPiece utf8) {
   return ret;
 }
 
+// UTF16 ->Wide ----------------------------------------------------------------
+bool UTF16ToWide(const char16_t* src, size_t src_len, std::wstring* output) {
 #if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
-// Easy case since we can use the "utf" versions we already wrote above.
-
-bool WideToUTF8(const wchar_t* src, size_t src_len, std::string* output) {
-  return UTF16ToUTF8(as_u16cstr(src), src_len, output);
-}
-
-std::string WideToUTF8(WStringPiece wide) {
-  return UTF16ToUTF8(StringPiece16(as_u16cstr(wide), wide.size()));
-}
-
+  output->assign(reinterpret_cast<const wchar_t*>(src), src_len);
+  return true;
 #elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
-
-bool WideToUTF8(const wchar_t* src, size_t src_len, std::string* output) {
-  return UTFConversion(WStringPiece(src, src_len), output);
+  return UTFConversion(StringPiece16(src, src_len), output);
+#endif
 }
 
-std::string WideToUTF8(WStringPiece wide) {
-  std::string ret;
+std::wstring UTF16ToWide(StringPiece16 utf16) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return std::wstring(utf16.begin(), utf16.end());
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  std::wstring ret;
   // Ignore the success flag of this call, it will do the best it can for
   // invalid input, which is what we want here.
-  WideToUTF8(wide.data(), wide.length(), &ret);
+  UTF16ToWide(utf16.data(), utf16.length(), &ret);
   return ret;
+#endif
 }
 
-#endif  // defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+// UTF32 ->Wide ----------------------------------------------------------------
+bool UTF32ToWide(const char32_t* src, size_t src_len, std::wstring* output) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return UTFConversion(StringPiece32(src, src_len), output);
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  output->assign(reinterpret_cast<const wchar_t*>(src), src_len);
+  return true;
+#endif
+}
 
+std::wstring UTF32ToWide(StringPiece32 utf32) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  std::wstring ret;
+  // Ignore the success flag of this call, it will do the best it can for
+  // invalid input, which is what we want here.
+  UTF32ToWide(utf32.data(), utf32.length(), &ret);
+  return ret;
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return std::wstring(utf32.begin(), utf32.end());
+#endif
+}
+
+// Wide -> UTF8 ----------------------------------------------------------------
+bool WideToUTF8(const wchar_t* src, size_t src_len, std::string* output) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return UTF16ToUTF8(reinterpret_cast<const char16_t*>(src), src_len, output);
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return UTF32ToUTF8(reinterpret_cast<const char32_t*>(src), src_len, output);
+#endif
+}
+
+std::string WideToUTF8(WStringPiece wide) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return UTF16ToUTF8(
+      StringPiece16(reinterpret_cast<const char16_t*>(wide.data()), 
+                    wide.size()));
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return UTF32ToUTF8(
+      StringPiece32(reinterpret_cast<const char32_t*>(wide.data()), 
+                    wide.size()));
+#endif
+}
+
+// Wide -> UTF16 ---------------------------------------------------------------
+bool WideToUTF16(const wchar_t* src, size_t src_len, std::u16string* output) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  output->assign(reinterpret_cast<const char16_t*>(src), src_len);
+  return true;
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return UTF32ToUTF16(reinterpret_cast<const char32_t*>(src), src_len, output);
+#endif
+}
+
+std::u16string WideToUTF16(WStringPiece wide) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return std::u16string(wide.begin(), wide.end());
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return UTF32ToUTF16(
+      StringPiece32(reinterpret_cast<const char32_t*>(wide.data()), 
+                    wide.size()));
+#endif
+}
+
+// Wide -> UTF32 ---------------------------------------------------------------
+bool WideToUTF32(const wchar_t* src, size_t src_len, std::u32string* output) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return UTF16ToUTF32(reinterpret_cast<const char16_t*>(src), src_len, output);
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  output->assign(reinterpret_cast<const char32_t*>(src), src_len);
+  return true;
+#endif
+}
+
+std::u32string WideToUTF32(WStringPiece wide) {
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
+  return UTF16ToUTF32(
+      StringPiece16(reinterpret_cast<const char16_t*>(wide.data()), 
+                    wide.size()));
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+  return std::u32string(wide.begin(), wide.end());
+#endif
+}
+
+// ASCII <-> UTF16 -------------------------------------------------------------
 std::u16string ASCIIToUTF16(StringPiece ascii) {
   CR_DCHECK(IsStringASCII(ascii)) << ascii;
   return std::u16string(ascii.begin(), ascii.end());
@@ -339,6 +441,16 @@ std::u16string ASCIIToUTF16(StringPiece ascii) {
 std::string UTF16ToASCII(StringPiece16 utf16) {
   CR_DCHECK(IsStringASCII(utf16)) << UTF16ToUTF8(utf16);
   return std::string(utf16.begin(), utf16.end());
+}
+
+std::u32string ASCIIToUTF32(StringPiece ascii) {
+  CR_DCHECK(IsStringASCII(ascii)) << ascii;
+  return std::u32string(ascii.begin(), ascii.end());
+}
+
+std::string UTF32ToASCII(StringPiece32 utf32) {
+  CR_DCHECK(IsStringASCII(utf32)) << UTF32ToUTF8(utf32);
+  return std::string(utf32.begin(), utf32.end());
 }
 
 std::wstring ASCIIToWide(StringPiece ascii) {
