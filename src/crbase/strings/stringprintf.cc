@@ -33,7 +33,7 @@ inline int vsnprintfT(char* buffer,
   return cr::vsnprintf(buffer, buf_size, format, argptr);
 }
 
-#if defined(MINI_CHROMIUM_OS_WIN)
+#if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
 inline int vsnprintfT(char16_t* buffer,
                       size_t buf_size,
                       const char16_t* format,
@@ -41,13 +41,22 @@ inline int vsnprintfT(char16_t* buffer,
   return cr::vswprintf(reinterpret_cast<wchar_t*>(buffer), buf_size,
                        reinterpret_cast<const wchar_t*>(format), argptr);
 }
+#elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
+inline int vsnprintfT(char32_t* buffer,
+                      size_t buf_size,
+                      const char32_t* format,
+                      va_list argptr) {
+  return cr::vswprintf(reinterpret_cast<wchar_t*>(buffer), buf_size,
+                       reinterpret_cast<const wchar_t*>(format), argptr);
+}
+#endif
+
 inline int vsnprintfT(wchar_t* buffer,
                       size_t buf_size,
                       const wchar_t* format,
                       va_list argptr) {
   return cr::vswprintf(buffer, buf_size, format, argptr);
 }
-#endif
 
 // Templatized backend for StringPrintF/StringAppendF. This does not finalize
 // the va_list, the caller is expected to do that.
@@ -138,7 +147,7 @@ std::u16string StringPrintf(const char16_t* format, ...) {
   return result;
 }
 #elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
-std::u32string StringPrintf(const char16_t* format, ...) {
+std::u32string StringPrintf(const char32_t* format, ...) {
   va_list ap;
   va_start(ap, format);
   std::u32string result;
