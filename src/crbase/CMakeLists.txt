@@ -20,8 +20,8 @@ set(CRBASE_SRC_FILES
 	${CRBASE_SRC_DIR}/location.cc
 	${CRBASE_SRC_DIR}/location.h
 	${CRBASE_SRC_DIR}/observer_list.h
-	${CRBASE_SRC_DIR}/observer_list_type.cc
-	${CRBASE_SRC_DIR}/observer_list_type.h
+	${CRBASE_SRC_DIR}/observer_list_types.cc
+	${CRBASE_SRC_DIR}/observer_list_types.h
 	${CRBASE_SRC_DIR}/rand_util.cc
 	${CRBASE_SRC_DIR}/rand_util.h
 	${CRBASE_SRC_DIR}/stl_util.h
@@ -294,15 +294,18 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 	${CRBASE_SRC_DIR}/threading/sequence_checker_impl.h
 	${CRBASE_SRC_DIR}/threading/sequence_token.cc
 	${CRBASE_SRC_DIR}/threading/sequence_token.h
-	${CRBASE_SRC_DIR}/threading/thread_local.h
+	${CRBASE_SRC_DIR}/threading/thread_id_name_manager.cc
+	${CRBASE_SRC_DIR}/threading/thread_id_name_manager.h
 	${CRBASE_SRC_DIR}/threading/thread_local_internal.h
 	${CRBASE_SRC_DIR}/threading/thread_local_storage.cc
 	${CRBASE_SRC_DIR}/threading/thread_local_storage.h
+	${CRBASE_SRC_DIR}/threading/thread_local.h
 )
 
 # threading - win
 if (${MINI_CHROMIUM_OS_WIN})
 set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES} 
+	${CRBASE_SRC_DIR}/threading/win/platform_thread_win.cc
 	${CRBASE_SRC_DIR}/threading/win/thread_local_storage_win.cc
 )
 endif()
@@ -310,6 +313,7 @@ endif()
 # threading - posix
 if (${MINI_CHROMIUM_OS_POSIX})
 set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES} 
+	${CRBASE_SRC_DIR}/threading/posix/platform_thread_posix.cc
 	${CRBASE_SRC_DIR}/threading/posix/thread_local_storage_posix.cc
 )
 endif()

@@ -52,7 +52,7 @@
 ///#include "crbase/system/sys_info.h"
 ///#include "base/threading/scoped_blocking_call.h"
 #include "crbase/time/time.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 

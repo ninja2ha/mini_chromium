@@ -12,7 +12,7 @@
 
 #include "crbase/logging/logging.h"
 ///#include "crbase/threading/scoped_blocking_call.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 namespace {

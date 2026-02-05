@@ -16,7 +16,7 @@
 #include "crbase/files/file_util.h"
 #include "crbase/numerics/safe_conversions.h"
 ///#include "crbase/threading/scoped_blocking_call.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 

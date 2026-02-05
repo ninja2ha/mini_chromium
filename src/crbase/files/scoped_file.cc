@@ -6,7 +6,7 @@
 #include "crbase/files/scoped_file.h"
 
 #include "crbase/logging/logging.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 #if defined(MINI_CHROMIUM_OS_POSIX)
 #include <errno.h>

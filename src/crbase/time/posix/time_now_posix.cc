@@ -13,7 +13,7 @@
 #include "crbase/logging/logging.h"
 #include "crbase/numerics/safe_math.h"
 #include "crbase/time/time_override.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace {
 

@@ -25,8 +25,8 @@ set(CRBASE_TEST_SRC_FILES ${CRBASE_TEST_SRC_FILES}
 	${CRBASE_TEST_SRC_DIR}/test/gtest_util.h
 	${CRBASE_TEST_SRC_DIR}/test/gtest_platform_test.h
 	${CRBASE_TEST_SRC_DIR}/test/gtest_main.cc
-	${CRBASE_TEST_SRC_DIR}/bind.h
-	${CRBASE_TEST_SRC_DIR}/bind.cc
+	${CRBASE_TEST_SRC_DIR}/test/bind.h
+	${CRBASE_TEST_SRC_DIR}/test/bind.cc
 )
 
 # files

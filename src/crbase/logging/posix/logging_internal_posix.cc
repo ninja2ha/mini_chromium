@@ -16,7 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 namespace logging {

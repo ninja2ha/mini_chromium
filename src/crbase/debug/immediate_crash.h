@@ -6,6 +6,8 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_DEBUG_IMMEDIATE_CRASH_H_
 #define MINI_CHROMIUM_SRC_CRBASE_DEBUG_IMMEDIATE_CRASH_H_
 
+#include <cstddef>
+
 #include "crbuild/build_config.h"
 
 ////////////////////////////////////////////////////////////////////////////////

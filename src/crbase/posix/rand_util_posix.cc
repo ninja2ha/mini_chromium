@@ -13,8 +13,8 @@
 #include "crbase/logging/logging.h"
 #include "crbase/memory/no_destructor.h"
 #include "crbase/posix/eintr_wrapper.h"
-#include "cr/compiler_specific.h"
-#include "cr/build_config.h"
+#include "crbuild/compiler_specific.h"
+#include "crbuild/build_config.h"
 
 namespace {
 

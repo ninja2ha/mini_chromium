@@ -12,11 +12,13 @@
 #include <string>
 
 // for earse
+#include <algorithm>
 #include <deque>
 #include <forward_list>
 #include <vector>
 #include <set>
 #include <map>
+#include <list>
 #include <unordered_map>
 #include <unordered_set>
 

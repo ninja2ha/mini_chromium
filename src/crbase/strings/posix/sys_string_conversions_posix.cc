@@ -11,7 +11,7 @@
 
 #include "crbase/strings/string_piece.h"
 #include "crbase/strings/utf_string_conversions.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 

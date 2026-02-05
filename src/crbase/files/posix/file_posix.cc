@@ -15,7 +15,7 @@
 #include "crbase/posix/eintr_wrapper.h"
 #include "crbase/strings/utf_string_conversions.h"
 ///#include "base/threading/scoped_blocking_call.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 

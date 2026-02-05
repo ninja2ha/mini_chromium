@@ -53,7 +53,7 @@
 #elif defined(__OpenBSD__)
 #define MINI_CHROMIUM_OS_OPENBSD 1
 #else
-#error Please add support for your platform  in cr/build_config.h
+#error Please add support for your platform  in crbuild/build_config.h
 #endif
 
 #if defined(MINI_CHROMIUM_OS_LINUX)  || defined(MINI_CHROMIUM_OS_FREEBSD) || \
@@ -67,7 +67,7 @@
 #elif defined(_MSC_VER)
 #define MINI_CHROMIUM_COMPILER_MSVC 1
 #else
-#error Please add support for your compipler in cr/build_config.h
+#error Please add support for your compipler in crbuild/build_config.h
 #endif
 
 // arch
@@ -137,7 +137,7 @@
 #define MINI_CHROMIUM_ARCH_CPU_LITTLE_ENDIAN 1
 #else
 
-#error Please add support for your architecture in cr/build_config.h
+#error Please add support for your architecture in crbuild/build_config.h
 #endif
 
 // Architecture-specific feature detection.
@@ -178,7 +178,7 @@
 // short wchar works for them.
 #define MINI_CHROMIUM_WCHAR_T_IS_UTF16
 #else
-#error Please add support for your compiler in cr/build_config.h
+#error Please add support for your compiler in crbuild/build_config.h
 #endif
 
 // file: BUILD.gn

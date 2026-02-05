@@ -744,7 +744,7 @@ inline const wchar_t* as_wcstr(StringPiece32 str) {
 // Utility functions to access the underlying string buffer as a char16_t
 // pointer.
 inline char32_t* as_writable_u32cstr(wchar_t* str) {
-  return reinterpret_cast<char16_t*>(str);
+  return reinterpret_cast<char32_t*>(str);
 }
 
 inline char32_t* as_writable_u32cstr(std::wstring& str) {
@@ -756,7 +756,7 @@ inline const char32_t* as_u32cstr(const wchar_t* str) {
 }
 
 inline const char32_t* as_u32cstr(WStringPiece str) {
-  return reinterpret_cast<const char16_t*>(str.data());
+  return reinterpret_cast<const char32_t*>(str.data());
 }
 
 // Utility functions to convert between cr::WStringPiece and
@@ -766,7 +766,7 @@ inline WStringPiece AsWStringPiece(StringPiece32 str) {
 }
 
 inline StringPiece32 AsStringPiece32(WStringPiece str) {
-  return StringPiece16(as_u16cstr(str.data()), str.size());
+  return StringPiece32(as_u32cstr(str.data()), str.size());
 }
 
 inline std::wstring AsWString(StringPiece32 str) {

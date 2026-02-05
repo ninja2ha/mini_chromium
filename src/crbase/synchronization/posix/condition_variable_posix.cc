@@ -12,7 +12,7 @@
 #include "crbase/logging/logging.h"
 #include "crbase/synchronization/lock.h"
 #include "crbase/time/time.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 namespace cr {
 

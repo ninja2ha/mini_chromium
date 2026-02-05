@@ -59,7 +59,7 @@ if (${MINI_CHROMIUM_COMPONENT_BUILD})
 
 	target_link_libraries(crurl crbase)
 else()
-	add_library(crurl STATIC ${CRBASE_SRC_FILES})
+	add_library(crurl STATIC ${CRURL_SRC_FILES})
 	add_dependencies(crurl crbase)
 endif()
 

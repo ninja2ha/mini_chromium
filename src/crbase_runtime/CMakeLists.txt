@@ -7,7 +7,7 @@ project(${MINI_CHROMIUM_PROJECT_NAME})
 set(CRBASE_RT_SRC_DIR ${MINI_CHROMIUM_SRC_DIR}/crbase_runtime)
 
 set(CRBASE_RT_SRC_FILES 
-	${CRBASE_RT_SRC_DIR}/parameter_pack.cc
+	${CRBASE_RT_SRC_DIR}/parameter_pack.h
 	${CRBASE_RT_SRC_DIR}/pending_task.cc
 	${CRBASE_RT_SRC_DIR}/pending_task.h
 	${CRBASE_RT_SRC_DIR}/run_loop.cc
@@ -147,7 +147,7 @@ if (${MINI_CHROMIUM_COMPONENT_BUILD})
 
 	target_link_libraries(crbase_runtime crbase)
 else()
-	add_library(crbase_runtime STATIC ${CRBASE_SRC_FILES})
+	add_library(crbase_runtime STATIC ${CRBASE_RT_SRC_FILES})
 	add_dependencies(crbase_runtime crbase)
 endif()
 

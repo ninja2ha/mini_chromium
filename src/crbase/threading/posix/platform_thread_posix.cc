@@ -9,6 +9,7 @@
 #include <sched.h>
 #include <stddef.h>
 #include <stdint.h>
+
 #include <sys/time.h>
 #include <sys/types.h>
 #include <sys/resource.h>
@@ -16,11 +17,12 @@
 
 #include <memory>
 
+#include "crbase/stl_util.h"
 #include "crbase/logging/logging.h"
 #include "crbase/memory/no_destructor.h"
 ///#include "base/threading/scoped_blocking_call.h"
 #include "crbase/threading/thread_id_name_manager.h"
-#include "cr/build_config.h"
+#include "crbuild/build_config.h"
 
 ///#if !defined(OS_APPLE) && !defined(OS_FUCHSIA) && !defined(OS_NACL)
 ///#include "base/posix/can_lower_nice_to.h"
@@ -28,14 +30,19 @@
 
 #if defined(MINI_CHROMIUM_OS_LINUX)
 #include <sys/syscall.h>
+#include <sys/prctl.h>
+#elif defined(MINI_CHROMIUM_OS_BSD)
+#include <pthread_np.h>
 #endif
 
 
 namespace cr {
 
-void InitThreading();
-void TerminateOnThread();
-size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes);
+void InitThreading() {}
+void TerminateOnThread() {}
+size_t GetDefaultThreadStackSize(const pthread_attr_t& attributes) {
+  return 0;
+}
 
 namespace {
 
@@ -127,7 +134,6 @@ bool CreateThread(size_t stack_size,
 }
 
 #if defined(MINI_CHROMIUM_OS_LINUX)
-
 // Store the thread ids in local storage since calling the SWI can be
 // expensive and PlatformThread::CurrentId is used liberally. Clear
 // the stored value after a fork() because forking changes the thread
@@ -139,26 +145,18 @@ bool CreateThread(size_t stack_size,
 // CHECK/DCHECKs.
 thread_local pid_t g_thread_id = -1;
 
+void ClearTidCache() {
+  g_thread_id = -1;
+}
+
 class InitAtFork {
  public:
-  InitAtFork() { pthread_atfork(nullptr, nullptr, internal::ClearTidCache); }
+  InitAtFork() { pthread_atfork(nullptr, nullptr, ClearTidCache); }
 };
 
 #endif  // defined(MINI_CHROMIUM_OS_LINUX)
 
 }  // namespace
-
-#if defined(MINI_CHROMIUM_OS_LINUX)
-
-namespace internal {
-
-void ClearTidCache() {
-  g_thread_id = -1;
-}
-
-}  // namespace internal
-
-#endif  // defined(MINI_CHROMIUM_OS_LINUX)
 
 // static
 PlatformThreadId PlatformThread::CurrentId() {
@@ -214,6 +212,7 @@ void PlatformThread::Sleep(TimeDelta duration) {
 void PlatformThread::SetName(const std::string& name) {
   ThreadIdNameManager::GetInstance()->SetName(name);
 
+#if defined(MINI_CHROMIUM_OS_LINUX)
   // On linux we can get the thread names to show up in the debugger by setting
   // the process name for the LWP.  We don't want to do this for the main
   // thread because that would rename the process, causing tools like killall
@@ -229,7 +228,14 @@ void PlatformThread::SetName(const std::string& name) {
   int err = prctl(PR_SET_NAME, name.c_str());
   // We expect EPERM failures in sandboxed processes, just ignore those.
   if (err < 0 && errno != EPERM)
-    CR_DPLOG(Error) << "prctl(PR_SET_NAME)";
+    CR_DPLOG(Error) << "prctl(PR_SET_NAME):";
+
+#elif defined(MINI_CHROMIUM_OS_BSD)
+  // BSD only
+  int err = pthread_setname_np(pthread_self(), name.c_str());
+  if (err != 0)
+    CR_DLOG(Error) << "pthread_setname_np:" << err;
+#endif
 }
 
 // static
