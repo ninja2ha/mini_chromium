@@ -78,7 +78,7 @@ class OnceCallbackHolder final {
   void Run(Args... args) {
     if (subtle::NoBarrier_AtomicExchange(&has_run_, 1)) {
       CR_CHECK(ignore_extra_runs_) << "Both OnceCallbacks returned by "
-                                      "base::SplitOnceCallback() were run. "
+                                      "cr::SplitOnceCallback() were run. "
                                       "At most one of the pair should be run.";
       return;
     }
@@ -117,7 +117,7 @@ template <typename... Args>
 std::pair<OnceCallback<void(Args...)>, OnceCallback<void(Args...)>>
 SplitOnceCallback(OnceCallback<void(Args...)> callback) {
   using Helper = internal::OnceCallbackHolder<Args...>;
-  auto wrapped_once = base::BindRepeating(
+  auto wrapped_once = cr::BindRepeating(
       &Helper::Run, std::make_unique<Helper>(std::move(callback),
                                              /*ignore_extra_runs=*/false));
   return std::make_pair(wrapped_once, wrapped_once);

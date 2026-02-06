@@ -46,6 +46,7 @@
     <ClInclude Include="..\..\..\src\crbase\containers\queue.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\span.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\stack.h" />
+    <ClInclude Include="..\..\..\src\crbase\containers\stack_container.h" />
     <ClInclude Include="..\..\..\src\crbase\containers\util.h" />
     <ClInclude Include="..\..\..\src\crbase\debug\alias.h" />
     <ClInclude Include="..\..\..\src\crbase\debug\immediate_crash.h" />

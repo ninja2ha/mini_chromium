@@ -35,8 +35,8 @@ namespace {
 ///             base::FEATURE_DISABLED_BY_DEFAULT);
 
 // Caches the state of the "BatchNativeEventsInMessagePumpEpoll".
-std::atomic_bool g_use_batched_version = false;
-std::atomic_bool g_use_poll = false;
+std::atomic_bool g_use_batched_version(false);
+std::atomic_bool g_use_poll(false);
 
 constexpr std::pair<uint32_t, short int> kEpollToPollEvents[] = {
     {EPOLLIN, POLLIN},   {EPOLLOUT, POLLOUT}, {EPOLLRDHUP, POLLRDHUP},
@@ -122,7 +122,7 @@ class MessagePumpEpoll::Interest : public RefCounted<Interest> {
   friend class RefCounted<Interest>;
   ~Interest() = default;
 
-  const FdWatchController* controller_;
+  FdWatchController* controller_;
   const InterestParams params_;
   bool active_ = true;
   bool was_controller_destroyed_ = false;
@@ -149,7 +149,7 @@ MessagePumpEpoll::MessagePumpEpoll() {
   poll_entry.revents = 0;
   pollfds_.push_back(poll_entry);
 
-  next_metrics_time_ = base::TimeTicks::Now() + base::Minutes(1);
+  next_metrics_time_ = cr::TimeTicks::Now() + cr::TimeDelta::FromMinutes(1);
 }
 
 MessagePumpEpoll::~MessagePumpEpoll() = default;
@@ -180,9 +180,11 @@ bool MessagePumpEpoll::WatchFileDescriptor(int fd,
       .one_shot = !persistent,
   };
 
-  auto [it, is_new_fd_entry] = entries_.emplace(fd, fd);
+  auto pair = entries_.emplace(fd, fd);
+  auto it = pair.first;
+  auto is_new_fd_entry = pair.second;
   EpollEventEntry& entry = it->second;
-  scoped_refptr<Interest> existing_interest = controller->interest();
+  RefPtr<Interest> existing_interest = controller->interest();
   if (existing_interest && existing_interest->params().IsEqual(params)) {
     // WatchFileDescriptor() has already been called for this controller at
     // least once before, and as in the most common cases, it is now being
@@ -193,7 +195,7 @@ bool MessagePumpEpoll::WatchFileDescriptor(int fd,
     // non-persistent) Interest.
     existing_interest->set_active(true);
   } else {
-    entry.interests.push_back(controller->AssignInterest(params));
+    entry.interests->push_back(controller->AssignInterest(params));
     if (existing_interest) {
       UnregisterInterest(existing_interest);
     }
@@ -272,8 +274,8 @@ void MessagePumpEpoll::Run(Delegate* delegate) {
       // Ensure we never get a negative timeout from the next_metrics_delay as
       // this will cause epoll to block indefinitely if no fds are signaled,
       // preventing existing non-fd tasks from running.
-      if (timeout < base::Milliseconds(0)) {
-        timeout = base::Milliseconds(0);
+      if (timeout < cr::TimeDelta::FromMilliseconds(0)) {
+        timeout = cr::TimeDelta::FromMilliseconds(0);
       }
     }
     delegate->BeforeWait();
@@ -307,8 +309,7 @@ void MessagePumpEpoll::ScheduleWork() {
   CR_DPCHECK(n == sizeof(value) || errno == EAGAIN);
 }
 
-void MessagePumpEpoll::ScheduleDelayedWork(
-    const Delegate::NextWorkInfo& next_work_info) {
+void MessagePumpEpoll::ScheduleDelayedWork(const TimeTicks& delayed_work_time) {
   // Nothing to do. This can only be called from the same thread as Run(), so
   // the pump must be in between waits. The scheduled work therefore will be
   // seen in time for the next wait.
@@ -416,8 +417,8 @@ void MessagePumpEpoll::UnregisterInterest(
   CR_CHECK(entry_it != entries_.end());
 
   EpollEventEntry& entry = entry_it->second;
-  auto& interests = entry.interests;
-  auto* it = std::find(interests.begin(), interests.end(), interest);
+  auto& interests = entry.interests.container();
+  auto it = std::find(interests.begin(), interests.end(), interest);
   CR_CHECK(it != interests.end());
   interests.erase(it);
 
@@ -458,7 +459,7 @@ bool MessagePumpEpoll::WaitForEpollEvents(TimeDelta timeout) {
     if (!GetEventsPoll(epoll_timeout, &poll_events)) {
       return false;
     }
-    ready_events = Span(poll_events).first(poll_events.size());
+    ready_events = MakeSpan(poll_events).first(poll_events.size());
   } else {
     const int epoll_result = epoll_wait(epoll_.get(), epoll_events,
                                         cr::size(epoll_events), epoll_timeout);
@@ -471,7 +472,7 @@ bool MessagePumpEpoll::WaitForEpollEvents(TimeDelta timeout) {
     }
 
     ready_events =
-        Span(epoll_events).first(cr::checked_cast<size_t>(epoll_result));
+        MakeSpan(epoll_events).first(cr::checked_cast<size_t>(epoll_result));
   }
 
   for (epoll_event& e : ready_events) {
@@ -576,7 +577,7 @@ void MessagePumpEpoll::OnEpollEvent(EpollEventEntry& entry, uint32_t events) {
   // Any of these interests' event handlers may destroy any of the others'
   // controllers. Start all of them watching for destruction before we actually
   // dispatch any events.
-  for (const auto& interest : interests) {
+  for (auto& interest : interests) {
     interest->WatchForControllerDestruction();
   }
 
@@ -627,12 +628,12 @@ void MessagePumpEpoll::HandleEvent(int fd,
                                    bool can_write,
                                    FdWatchController* controller) {
   CR_DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  BeginNativeWorkBatch();
+  ///BeginNativeWorkBatch();
   // Make the MessagePumpDelegate aware of this other form of "DoWork". Skip if
   // HandleNotification() is called outside of Run() (e.g. in unit tests).
-  Delegate::ScopedDoWorkItem scoped_do_work_item;
+  Delegate::ScopedDoNativeWork scoped_do_native_work;
   if (run_state_) {
-    scoped_do_work_item = run_state_->delegate->BeginWorkItem();
+    scoped_do_native_work = run_state_->delegate->BeginNativeWork();
   }
 
   // Trace events must begin after the above BeginWorkItem() so that the
@@ -666,22 +667,22 @@ void MessagePumpEpoll::HandleEvent(int fd,
 
 void MessagePumpEpoll::HandleWakeUp() {
   CR_DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  BeginNativeWorkBatch();
+  ///BeginNativeWorkBatch();
   uint64_t value;
   ssize_t n = HANDLE_EINTR(read(wake_event_.get(), &value, sizeof(value)));
   CR_DPCHECK(n == sizeof(value));
 }
 
-void MessagePumpEpoll::BeginNativeWorkBatch() {
-  CR_DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
-  // Call `BeginNativeWorkBeforeDoWork()` if native work hasn't started.
-  if (!native_work_started_) {
-    if (run_state_) {
-      run_state_->delegate->BeginNativeWorkBeforeDoWork();
-    }
-    native_work_started_ = true;
-  }
-}
+///void MessagePumpEpoll::BeginNativeWorkBatch() {
+///  CR_DCHECK_CALLED_ON_VALID_THREAD(thread_checker_);
+///  // Call `BeginNativeWorkBeforeDoWork()` if native work hasn't started.
+///  if (!native_work_started_) {
+///    if (run_state_) {
+///      run_state_->delegate->BeginNativeWorkBeforeDoWork();
+///    }
+///    native_work_started_ = true;
+///  }
+///}
 
 MessagePumpEpoll::EpollEventEntry::EpollEventEntry(int fd) : fd(fd) {}
 

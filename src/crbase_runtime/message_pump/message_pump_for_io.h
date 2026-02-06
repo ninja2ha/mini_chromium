@@ -14,6 +14,8 @@
 
 #if defined(MINI_CHROMIUM_OS_WIN)
 #include "crbase_runtime/message_pump/message_pump_win.h"
+#elif defined(MINI_CHROMIUM_OS_LINUX)
+#include "crbase_runtime/message_pump/message_pump_epoll.h"
 #endif
 
 namespace cr {
@@ -21,6 +23,8 @@ namespace cr {
 #if defined(MINI_CHROMIUM_OS_WIN)
 // Windows defines it as-is.
 using MessagePumpForIO = MessagePumpForIO;
+#elif defined(MINI_CHROMIUM_OS_LINUX)
+using MessagePumpForIO = MessagePumpEpoll;
 #else
 #error Platform does not define MessagePumpForIO
 #endif

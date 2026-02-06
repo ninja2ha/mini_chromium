@@ -17,6 +17,8 @@
 #include "crbase/files/scoped_file.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/memory/weak_ptr.h"
+#include "crbase/containers/stack_container.h"
+#include "crbase/containers/span.h"
 #include "crbase/time/time.h"
 #include "crbase_runtime/message_pump/message_pump.h"
 #include "crbase_runtime/message_pump/watchable_io_message_pump_posix.h"
@@ -132,8 +134,7 @@ class CRBASE_EXPORT MessagePumpEpoll : public MessagePump,
   void Run(Delegate* delegate) override;
   void Quit() override;
   void ScheduleWork() override;
-  void ScheduleDelayedWork(
-      const Delegate::NextWorkInfo& next_work_info) override;
+  void ScheduleDelayedWork(const TimeTicks& delayed_work_time) override;
 
  private:
   friend class MessagePumpEpollTest;
@@ -176,8 +177,7 @@ class CRBASE_EXPORT MessagePumpEpoll : public MessagePump,
     // all real scenarios, since there's little practical value in having more
     // than two controllers (e.g. one reader and one writer) watch the same
     // descriptor on the same thread.
-    ///absl::InlinedVector<RefPtr<Interest>, 2> interests;
-    std::vector<RefPtr<Interest>> interests;
+    cr::StackVector<RefPtr<Interest>, 2> interests;
 
     // Temporary pointer to an active epoll_event structure which refers to
     // this entry. This is set immediately upon returning from epoll_wait() and
@@ -234,7 +234,7 @@ class CRBASE_EXPORT MessagePumpEpoll : public MessagePump,
                    FdWatchController* controller);
   void HandleWakeUp();
 
-  void BeginNativeWorkBatch();
+  ///void BeginNativeWorkBatch();
   void RecordPeriodicMetrics();
 
   std::vector<struct pollfd>::iterator FindPollEntry(int fd);

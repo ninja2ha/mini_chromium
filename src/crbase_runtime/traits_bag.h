@@ -12,6 +12,7 @@
 
 #include "crbase/containers/optional.h"
 #include "crbase_runtime/parameter_pack.h"
+#include "crbuild/build_config.h"
 
 // A bag of Traits (structs / enums / etc...) can be an elegant alternative to
 // the builder pattern and multiple default arguments for configuring things.
@@ -223,7 +224,11 @@ template <class ValidTraits, class... ArgTypes>
 struct AreValidTraits
     : std::integral_constant<bool,
                              all_of(
-                                 {IsValidTrait<ValidTraits, ArgTypes>()})> {
+#if defined(MINI_CHROMIUM_COMPILER_GCC) || defined(__clang__)
+                                 {IsValidTrait<ValidTraits, ArgTypes>()...})> {
+#elif defined(MINI_CHROMIUM_COMPILER_MSVC)
+                                 {IsValidTrait<ValidTraits, ArgTypes>()}) > {
+#endif
 };
 
 // Helper to make getting an enum from a trait more readable.

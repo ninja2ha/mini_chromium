@@ -56,6 +56,14 @@ set(CRBASE_RT_SRC_FILES ${CRBASE_RT_SRC_FILES}
 )
 endif()
 
+# message_pump - linux
+if (${MINI_CHROMIUM_OS_LINUX})
+set(CRBASE_RT_SRC_FILES ${CRBASE_RT_SRC_FILES}
+	${CRBASE_RT_SRC_DIR}/message_pump/message_pump_epoll.cc
+	${CRBASE_RT_SRC_DIR}/message_pump/message_pump_epoll.h
+)
+endif()
+
 # posix
 set(CRBASE_RT_SRC_FILES ${CRBASE_RT_SRC_FILES}
 	${CRBASE_RT_SRC_DIR}/posix/file_descriptor_watcher_posix.cc

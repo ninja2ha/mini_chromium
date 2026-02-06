@@ -4,55 +4,44 @@
 
 #include "crbase_runtime/posix/file_descriptor_watcher_posix.h"
 
-#include "crbase/logging/logging.h"
+#include <utility>
+
 #include "crbase/functional/bind.h"
+#include "crbase/functional/callback_helpers.h"
 #include "crbase/memory/ptr_util.h"
 #include "crbase/memory/no_destructor.h"
+#include "crbase/synchronization/waitable_event.h"
 #include "crbase/threading/thread_local.h"
-#include "crbase_runtime/message_loop/message_loop_current.h"
-#include "crbase_runtime/message_pump/message_pump_for_io.h"
 #include "crbase_runtime/sequenced_task_runner.h"
 #include "crbase_runtime/single_thread_task_runner.h"
+#include "crbase_runtime/message_pump/message_pump_for_io.h"
+#include "crbase_runtime/task/current_thread.h"
 #include "crbase_runtime/threading/sequenced_task_runner_handle.h"
 #include "crbase_runtime/threading/thread_checker.h"
+///#include "base/threading/thread_restrictions.h"
 
 namespace cr {
 
 namespace {
 
-// MessageLoopForIO used to watch file descriptors for which callbacks are
-// registered from a given thread.
-ThreadLocalPointer<MessageLoopForIO>* TlsMessageLoopForIo() {
-  static cr::NoDestructor<ThreadLocalPointer<MessageLoopForIO>> tls;
-  return tls.get();
+// Per-thread FileDescriptorWatcher registration.
+ThreadLocalPointer<FileDescriptorWatcher>& GetTlsFdWatcher() {
+  static NoDestructor<ThreadLocalPointer<FileDescriptorWatcher>> tls_fd_watcher;
+  return *tls_fd_watcher;
 }
 
 }  // namespace
 
-FileDescriptorWatcher::Controller::~Controller() {
-  CR_DCHECK(sequence_checker_.CalledOnValidSequence());
-
-  // Delete |watcher_| on the MessageLoopForIO.
-  //
-  // If the MessageLoopForIO is deleted before Watcher::StartWatching() runs,
-  // |watcher_| is leaked. If the MessageLoopForIO is deleted after
-  // Watcher::StartWatching() runs but before the DeleteSoon task runs,
-  // |watcher_| is deleted from Watcher::WillDestroyCurrentMessageLoop().
-  message_loop_for_io_task_runner_->DeleteSoon(
-      CR_FROM_HERE, watcher_.release());
-
-  // Since WeakPtrs are invalidated by the destructor, RunCallback() won't be
-  // invoked after this returns.
-}
-
 class FileDescriptorWatcher::Controller::Watcher
     : public MessagePumpForIO::FdWatcher,
-      public MessageLoopCurrent::DestructionObserver {
+      public CurrentThread::DestructionObserver {
  public:
+  Watcher(WeakPtr<Controller> controller,
+          cr::WaitableEvent& on_destroyed,
+          MessagePumpForIO::Mode mode,
+          int fd);
   Watcher(const Watcher&) = delete;
   Watcher& operator=(const Watcher&) = delete;
-
-  Watcher(WeakPtr<Controller> controller, MessagePumpForIO::Mode mode, int fd);
   ~Watcher() override;
 
   void StartWatching();
@@ -64,10 +53,10 @@ class FileDescriptorWatcher::Controller::Watcher
   void OnFileCanReadWithoutBlocking(int fd) override;
   void OnFileCanWriteWithoutBlocking(int fd) override;
 
-  // MessageLoopCurrent::DestructionObserver:
+  // CurrentThread::DestructionObserver:
   void WillDestroyCurrentMessageLoop() override;
 
-  // The MessageLoopForIO's watch handle (stops the watch when destroyed).
+  // The MessagePumpForIO's watch handle (stops the watch when destroyed).
   MessagePumpForIO::FdWatchController fd_watch_controller_;
 
   // Runs tasks on the sequence on which this was instantiated (i.e. the
@@ -75,8 +64,14 @@ class FileDescriptorWatcher::Controller::Watcher
   const RefPtr<SequencedTaskRunner> callback_task_runner_ =
       SequencedTaskRunnerHandle::Get();
 
-  // The Controller that created this Watcher.
+  // The Controller that created this Watcher. This WeakPtr is bound to the
+  // |controller_| thread and can only be used by this Watcher to post back to
+  // |callback_task_runner_|.
   WeakPtr<Controller> controller_;
+
+  // WaitableEvent to signal to ensure that the Watcher is always destroyed
+  // before the Controller.
+  cr::WaitableEvent& on_destroyed_;
 
   // Whether this Watcher is notified when |fd_| becomes readable or writable
   // without blocking.
@@ -86,20 +81,22 @@ class FileDescriptorWatcher::Controller::Watcher
   const int fd_;
 
   // Except for the constructor, every method of this class must run on the same
-  // MessageLoopForIO thread.
+  // MessagePumpForIO thread.
   ThreadChecker thread_checker_;
 
   // Whether this Watcher was registered as a DestructionObserver on the
-  // MessageLoopForIO thread.
+  // MessagePumpForIO thread.
   bool registered_as_destruction_observer_ = false;
 };
 
 FileDescriptorWatcher::Controller::Watcher::Watcher(
     WeakPtr<Controller> controller,
+    cr::WaitableEvent& on_destroyed,
     MessagePumpForIO::Mode mode,
     int fd)
     : fd_watch_controller_(CR_FROM_HERE),
       controller_(controller),
+      on_destroyed_(on_destroyed),
       mode_(mode),
       fd_(fd) {
   CR_DCHECK(callback_task_runner_);
@@ -108,22 +105,23 @@ FileDescriptorWatcher::Controller::Watcher::Watcher(
 
 FileDescriptorWatcher::Controller::Watcher::~Watcher() {
   CR_DCHECK(thread_checker_.CalledOnValidThread());
-  MessageLoopCurrentForIO::Get()->RemoveDestructionObserver(this);
+  CurrentIOThread::Get()->RemoveDestructionObserver(this);
+
+  // Stop watching the descriptor before signalling |on_destroyed_|.
+  CR_CHECK(fd_watch_controller_.StopWatchingFileDescriptor());
+  on_destroyed_.Signal();
 }
 
 void FileDescriptorWatcher::Controller::Watcher::StartWatching() {
   CR_DCHECK(thread_checker_.CalledOnValidThread());
+  CR_DCHECK(CurrentIOThread::IsSet());
 
-  if (!MessageLoopCurrentForIO::Get()->WatchFileDescriptor(
-          fd_, false, mode_, &fd_watch_controller_, this)) {
-    // TODO(wez): Ideally we would [D]CHECK here, or propagate the failure back
-    // to the caller, but there is no guarantee that they haven't already
-    // closed |fd_| on another thread, so the best we can do is Debug-log.
-    CR_DLOG(Error) << "Failed to watch fd=" << fd_;
-  }
+  const bool watch_success = CurrentIOThread::Get()->WatchFileDescriptor(
+      fd_, false, mode_, &fd_watch_controller_, this);
+  CR_DCHECK(watch_success) << "Failed to watch fd=" << fd_;
 
   if (!registered_as_destruction_observer_) {
-    MessageLoopCurrentForIO::Get()->AddDestructionObserver(this);
+    CurrentIOThread::Get()->AddDestructionObserver(this);
     registered_as_destruction_observer_ = true;
   }
 }
@@ -154,35 +152,88 @@ void FileDescriptorWatcher::Controller::Watcher::
     WillDestroyCurrentMessageLoop() {
   CR_DCHECK(thread_checker_.CalledOnValidThread());
 
-  // A Watcher is owned by a Controller. When the Controller is deleted, it
-  // transfers ownership of the Watcher to a delete task posted to the
-  // MessageLoopForIO. If the MessageLoopForIO is deleted before the delete task
-  // runs, the following line takes care of deleting the Watcher.
-  delete this;
+  if (callback_task_runner_->RunsTasksInCurrentSequence()) {
+    // |controller_| can be accessed directly when Watcher runs on the same
+    // thread.
+    Watcher* watcher = controller_->watcher_;
+    controller_->watcher_ = nullptr;
+    delete watcher;
+  } else {
+    // If the Watcher and the Controller live on different threads, delete
+    // |this| synchronously. Pending tasks bound to an unretained Watcher* will
+    // not run since this loop is dead. The associated Controller will not know
+    // whether the Watcher has been destroyed but it never uses it directly and
+    // will ultimately send it to this thread for deletion (and that also  won't
+    // run since the loop being dead).
+    delete this;
+  }
 }
 
 FileDescriptorWatcher::Controller::Controller(MessagePumpForIO::Mode mode,
                                               int fd,
-                                              const Closure& callback)
+                                              const RepeatingClosure& callback)
     : callback_(callback),
-      message_loop_for_io_task_runner_(
-          TlsMessageLoopForIo()->Get()->task_runner()),
-      weak_factory_(this) {
+      io_thread_task_runner_(GetTlsFdWatcher().Get()->io_thread_task_runner()) {
   CR_DCHECK(!callback_.is_null());
-  CR_DCHECK(message_loop_for_io_task_runner_);
-  watcher_ = std::make_unique<Watcher>(weak_factory_.GetWeakPtr(), mode, fd);
+  CR_DCHECK(io_thread_task_runner_);
+  watcher_ =
+      new Watcher(weak_factory_.GetWeakPtr(), on_watcher_destroyed_, mode, fd);
   StartWatching();
+}
+
+FileDescriptorWatcher::Controller::~Controller() {
+  CR_DCHECK(sequence_checker_.CalledOnValidSequence());
+
+  if (io_thread_task_runner_->BelongsToCurrentThread()) {
+    // If the MessagePumpForIO and the Controller live on the same thread.
+    if (watcher_)
+      delete watcher_;
+  } else {
+    // Synchronously wait until |watcher_| is deleted on the MessagePumpForIO
+    // thread. This ensures that the file descriptor is never accessed after
+    // this destructor returns.
+    //
+    // We considered associating "generations" to file descriptors to avoid the
+    // synchronous wait. For example, if the IO thread gets a "cancel" for fd=6,
+    // generation=1 after getting a "start watching" for fd=6, generation=2, it
+    // can ignore the "Cancel". However, "generations" didn't solve this race:
+    //
+    // T1 (client) Start watching fd = 6 with WatchReadable()
+    //             Stop watching fd = 6
+    //             Close fd = 6
+    //             Open a new file, fd = 6 gets reused.
+    // T2 (io)     Watcher::StartWatching()
+    //               Incorrectly starts watching fd = 6 which now refers to a
+    //               different file than when WatchReadable() was called.
+    auto delete_task = BindOnce(
+        [](Watcher* watcher) {
+          // Since |watcher| is a raw pointer, it isn't deleted if this callback
+          // is deleted before it gets to run.
+          delete watcher;
+        },
+        Unretained(watcher_));
+    io_thread_task_runner_->PostTask(CR_FROM_HERE, std::move(delete_task));
+    ///ScopedAllowBaseSyncPrimitivesOutsideBlockingScope allow;
+    on_watcher_destroyed_.Wait();
+  }
+
+  // Since WeakPtrs are invalidated by the destructor, any pending RunCallback()
+  // won't be invoked after this returns.
 }
 
 void FileDescriptorWatcher::Controller::StartWatching() {
   CR_DCHECK(sequence_checker_.CalledOnValidSequence());
-  // It is safe to use Unretained() below because |watcher_| can only be deleted
-  // by a delete task posted to |message_loop_for_io_task_runner_| by this
-  // Controller's destructor. Since this delete task hasn't been posted yet, it
-  // can't run before the task posted below.
-  message_loop_for_io_task_runner_->PostTask(
-      CR_FROM_HERE, 
-      BindOnce(&Watcher::StartWatching, Unretained(watcher_.get())));
+  if (io_thread_task_runner_->BelongsToCurrentThread()) {
+    // If the MessagePumpForIO and the Controller live on the same thread.
+    watcher_->StartWatching();
+  } else {
+    // It is safe to use Unretained() below because |watcher_| can only be
+    // deleted by a delete task posted to |io_thread_task_runner_| by this
+    // Controller's destructor. Since this delete task hasn't been posted yet,
+    // it can't run before the task posted below.
+    io_thread_task_runner_->PostTask(
+        CR_FROM_HERE, BindOnce(&Watcher::StartWatching, Unretained(watcher_)));
+  }
 }
 
 void FileDescriptorWatcher::Controller::RunCallback() {
@@ -190,7 +241,11 @@ void FileDescriptorWatcher::Controller::RunCallback() {
 
   WeakPtr<Controller> weak_this = weak_factory_.GetWeakPtr();
 
-  callback_.Run();
+  // Run a copy of the callback in case this Controller is deleted by the
+  // callback. This would cause the callback itself to be deleted while it is
+  // being run.
+  RepeatingClosure callback_copy = callback_;
+  callback_copy.Run();
 
   // If |this| wasn't deleted, re-enable the watch.
   if (weak_this)
@@ -198,25 +253,31 @@ void FileDescriptorWatcher::Controller::RunCallback() {
 }
 
 FileDescriptorWatcher::FileDescriptorWatcher(
-    MessageLoopForIO* message_loop_for_io) {
-  CR_DCHECK(message_loop_for_io);
-  CR_DCHECK(!TlsMessageLoopForIo()->Get());
-  TlsMessageLoopForIo()->Set(message_loop_for_io);
+    RefPtr<SingleThreadTaskRunner> io_thread_task_runner)
+    : io_thread_task_runner_(std::move(io_thread_task_runner)) {
+  CR_DCHECK(!GetTlsFdWatcher().Get());
+  GetTlsFdWatcher().Set(this);
 }
 
 FileDescriptorWatcher::~FileDescriptorWatcher() {
-  TlsMessageLoopForIo()->Set(nullptr);
+  GetTlsFdWatcher().Set(nullptr);
 }
 
 std::unique_ptr<FileDescriptorWatcher::Controller>
-FileDescriptorWatcher::WatchReadable(int fd, const Closure& callback) {
+FileDescriptorWatcher::WatchReadable(int fd, const RepeatingClosure& callback) {
   return WrapUnique(new Controller(MessagePumpForIO::WATCH_READ, fd, callback));
 }
 
 std::unique_ptr<FileDescriptorWatcher::Controller>
-FileDescriptorWatcher::WatchWritable(int fd, const Closure& callback) {
+FileDescriptorWatcher::WatchWritable(int fd, const RepeatingClosure& callback) {
   return WrapUnique(
       new Controller(MessagePumpForIO::WATCH_WRITE, fd, callback));
 }
+
+#if CR_DCHECK_IS_ON()
+void FileDescriptorWatcher::AssertAllowed() {
+  CR_DCHECK(GetTlsFdWatcher().Get());
+}
+#endif
 
 }  // namespace cr

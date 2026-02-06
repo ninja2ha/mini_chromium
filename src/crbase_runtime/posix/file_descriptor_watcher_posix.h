@@ -2,18 +2,20 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MINI_CHROMIUM_SRC_CRBASE_RT_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
-#define MINI_CHROMIUM_SRC_CRBASE_RT_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
+#ifndef MINI_CHROMIUM_SRC_CRBASE_RT_POSIX_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
+#define MINI_CHROMIUM_SRC_CRBASE_RT_POSIX_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
 
 #include <memory>
 
-#include "crbase/base_export.h"
+#include "crbase/logging/logging.h"
 #include "crbase/functional/callback.h"
 #include "crbase/memory/ref_counted.h"
 #include "crbase/memory/weak_ptr.h"
 #include "crbase/threading/sequence_checker.h"
-#include "crbase_runtime/message_loop/message_loop.h"
+#include "crbase/synchronization/waitable_event.h"
+#include "crbase_runtime/runtime_export.h"
 #include "crbase_runtime/message_pump/message_pump_for_io.h"
+#include "crbase_runtime/single_thread_task_runner.h"
 
 namespace cr {
 
@@ -22,7 +24,7 @@ class SingleThreadTaskRunner;
 // The FileDescriptorWatcher API allows callbacks to be invoked when file
 // descriptors are readable or writable without blocking.
 //
-// To enable this API in unit tests, use a ScopedTaskEnvironment with
+// To enable this API in unit tests, use a TaskEnvironment with
 // MainThreadType::IO.
 //
 // Note: Prefer FileDescriptorWatcher to MessageLoopForIO::WatchFileDescriptor()
@@ -30,7 +32,7 @@ class SingleThreadTaskRunner;
 // MessagePumps but involves going through the task queue after being notified
 // by the OS (a desirablable property for non-critical IO that shouldn't preempt
 // the main queue).
-class CRBASE_EXPORT FileDescriptorWatcher {
+class CRBASE_RT_EXPORT FileDescriptorWatcher {
  public:
   // Instantiated and returned by WatchReadable() or WatchWritable(). The
   // constructor registers a callback to be invoked when a file descriptor is
@@ -39,7 +41,6 @@ class CRBASE_EXPORT FileDescriptorWatcher {
    public:
     Controller(const Controller&) = delete;
     Controller& operator=(const Controller&) = delete;
-
     // Unregisters the callback registered by the constructor.
     ~Controller();
 
@@ -49,7 +50,9 @@ class CRBASE_EXPORT FileDescriptorWatcher {
 
     // Registers |callback| to be invoked when |fd| is readable or writable
     // without blocking (depending on |mode|).
-    Controller(MessagePumpForIO::Mode mode, int fd, const Closure& callback);
+    Controller(MessagePumpForIO::Mode mode,
+               int fd,
+               const RepeatingClosure& callback);
 
     // Starts watching the file descriptor.
     void StartWatching();
@@ -59,48 +62,81 @@ class CRBASE_EXPORT FileDescriptorWatcher {
 
     // The callback to run when the watched file descriptor is readable or
     // writable without blocking.
-    Closure callback_;
+    RepeatingClosure callback_;
 
     // TaskRunner associated with the MessageLoopForIO that watches the file
     // descriptor.
-    const RefPtr<SingleThreadTaskRunner> message_loop_for_io_task_runner_;
+    const RefPtr<SingleThreadTaskRunner> io_thread_task_runner_;
 
     // Notified by the MessageLoopForIO associated with
-    // |message_loop_for_io_task_runner_| when the watched file descriptor is
+    // |io_thread_task_runner_| when the watched file descriptor is
     // readable or writable without blocking. Posts a task to run RunCallback()
     // on the sequence on which the Controller was instantiated. When the
     // Controller is deleted, ownership of |watcher_| is transfered to a delete
     // task posted to the MessageLoopForIO. This ensures that |watcher_| isn't
     // deleted while it is being used by the MessageLoopForIO.
-    std::unique_ptr<Watcher> watcher_;
+    Watcher* watcher_;
+
+    // An event for the watcher to notify controller that it's destroyed.
+    // As the |watcher_| is owned by Controller, always outlives the Watcher.
+    cr::WaitableEvent on_watcher_destroyed_;
 
     // Validates that the Controller is used on the sequence on which it was
     // instantiated.
     SequenceChecker sequence_checker_;
 
-    WeakPtrFactory<Controller> weak_factory_;
+    WeakPtrFactory<Controller> weak_factory_{this};
   };
 
-  // Registers |message_loop_for_io| to watch file descriptors for which
+  // Registers |io_thread_task_runner| to watch file descriptors for which
   // callbacks are registered from the current thread via WatchReadable() or
-  // WatchWritable(). |message_loop_for_io| may run on another thread. The
-  // constructed FileDescriptorWatcher must not outlive |message_loop_for_io|.
-  FileDescriptorWatcher(MessageLoopForIO* message_loop_for_io);
+  // WatchWritable(). |io_thread_task_runner| must post tasks to a thread which
+  // runs a MessagePumpForIO. If it is not the current thread, it must be highly
+  // responsive (i.e. not used to run other expensive tasks such as potentially
+  // blocking I/O) since ~Controller waits for a task posted to it.
+  explicit FileDescriptorWatcher(
+      RefPtr<SingleThreadTaskRunner> io_thread_task_runner);
+  FileDescriptorWatcher(const FileDescriptorWatcher&) = delete;
+  FileDescriptorWatcher& operator=(const FileDescriptorWatcher&) = delete;
   ~FileDescriptorWatcher();
 
   // Registers |callback| to be posted on the current sequence when |fd| is
   // readable or writable without blocking. |callback| is unregistered when the
   // returned Controller is deleted (deletion must happen on the current
-  // sequence). To call these methods, a FileDescriptorWatcher must have been
+  // sequence).
+  // Usage note: To call these methods, a FileDescriptorWatcher must have been
   // instantiated on the current thread and SequencedTaskRunnerHandle::IsSet()
-  // must return true (these conditions are met at least on all TaskScheduler
-  // threads as well as on threads backed by a MessageLoopForIO).
-  static std::unique_ptr<Controller> WatchReadable(int fd,
-                                                   const Closure& callback);
-  static std::unique_ptr<Controller> WatchWritable(int fd,
-                                                   const Closure& callback);
+  // must return true (these conditions are met at least on all ThreadPool
+  // threads as well as on threads backed by a MessageLoopForIO). |fd| must
+  // outlive the returned Controller.
+  // Shutdown note: notifications aren't guaranteed to be emitted once the bound
+  // (current) SequencedTaskRunner enters its shutdown phase (i.e.
+  // ThreadPool::Shutdown() or Thread::Stop()) regardless of the
+  // SequencedTaskRunner's TaskShutdownBehavior.
+  static std::unique_ptr<Controller> WatchReadable(
+      int fd,
+      const RepeatingClosure& callback);
+  static std::unique_ptr<Controller> WatchWritable(
+      int fd,
+      const RepeatingClosure& callback);
+
+  // Asserts that usage of this API is allowed on this thread.
+  static void AssertAllowed()
+#if CR_DCHECK_IS_ON()
+      ;
+#else
+  {
+  }
+#endif
+
+ private:
+  RefPtr<SingleThreadTaskRunner> io_thread_task_runner() const {
+    return io_thread_task_runner_;
+  }
+
+  const RefPtr<SingleThreadTaskRunner> io_thread_task_runner_;
 };
 
-}  // namespace cr
+}  // namespace base
 
-#endif  // MINI_CHROMIUM_SRC_CRBASE_RT_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_
+#endif  // MINI_CHROMIUM_SRC_CRBASE_RT_POSIX_FILES_FILE_DESCRIPTOR_WATCHER_POSIX_H_

@@ -45,6 +45,7 @@ set(CRBASE_SRC_FILES ${CRBASE_SRC_FILES}
 	${CRBASE_SRC_DIR}/containers/linked_list.cc
 	${CRBASE_SRC_DIR}/containers/linked_list.h
 	${CRBASE_SRC_DIR}/containers/optional.h
+	${CRBASE_SRC_DIR}/containers/stack_container.h
 	${CRBASE_SRC_DIR}/containers/span.h
 	${CRBASE_SRC_DIR}/containers/stack.h
 	${CRBASE_SRC_DIR}/containers/queue.h
