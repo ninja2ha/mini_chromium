@@ -60,4 +60,5 @@ add_subdirectory(${MINI_CHROMIUM_SRC_DIR}/crbase_runtime)
 
 if (${BUILD_TESTS})
 	add_subdirectory(${MINI_CHROMIUM_TESTS_DIR}/crbase_tests)
+	add_subdirectory(${MINI_CHROMIUM_TESTS_DIR}/crbase_runtime_tests)
 endif()

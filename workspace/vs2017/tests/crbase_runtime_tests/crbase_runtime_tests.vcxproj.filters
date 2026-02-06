@@ -3,4 +3,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\tests\crbase_runtime_tests\main.cc" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="..\..\..\..\tests\crbase_runtime_tests\CMakeLists.txt" />
+  </ItemGroup>
 </Project>
