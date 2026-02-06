@@ -293,7 +293,7 @@ CRURL_EXPORT const char16_t * RemoveURLWhitespace(
 // On error, returns false. The output in this case is undefined.
 CRURL_EXPORT bool IDNToASCII(const char16_t* src, 
                              int src_len, 
-                             CanonOutputW* output);
+                             CanonOutput* output);
 
 // Piece-by-piece canonicalizers ----------------------------------------------
 //

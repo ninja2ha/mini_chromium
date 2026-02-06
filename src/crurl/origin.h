@@ -91,7 +91,7 @@ class GURL;
 // * Origins are generally constructed from an already-canonicalized GURL:
 //
 //     GURL url("https://example.com/");
-//     url::Origin origin = Origin::Create(url);
+//     crurl::Origin origin = Origin::Create(url);
 //     origin.scheme(); // "https"
 //     origin.host(); // "example.com"
 //     origin.port(); // 443

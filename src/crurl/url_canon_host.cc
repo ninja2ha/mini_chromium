@@ -188,10 +188,10 @@ bool DoIDNHost(const char16_t* src, int src_len, CanonOutput* output) {
     return false;
   }
 
-  StackBufferW wide_output;
+  StackBuffer ascii_output;
   if (!IDNToASCII(url_escaped_host.data(),
                   url_escaped_host.length(),
-                  &wide_output)) {
+                  &ascii_output)) {
     // Some error, give up. This will write some reasonable looking
     // representation of the string to the output.
     AppendInvalidNarrowString(src, 0, src_len, output);
@@ -201,8 +201,8 @@ bool DoIDNHost(const char16_t* src, int src_len, CanonOutput* output) {
   // Now we check the ASCII output like a normal host. It will also handle
   // unescaping. Although we unescaped everything before this function call, if
   // somebody does %00 as fullwidth, ICU will convert this to ASCII.
-  bool success = DoSimpleHost(wide_output.data(),
-                              wide_output.length(),
+  bool success = DoSimpleHost(ascii_output.data(),
+                              ascii_output.length(),
                               output, &has_non_ascii);
   if (has_non_ascii) {
     // ICU generated something that DoSimpleHost didn't think looked like
@@ -220,7 +220,7 @@ bool DoIDNHost(const char16_t* src, int src_len, CanonOutput* output) {
     // ASCII isn't strictly necessary, but DoSimpleHost handles this case
     // anyway so we handle it/
     output->set_length(original_output_len);
-    AppendInvalidNarrowString(wide_output.data(), 0, wide_output.length(),
+    AppendInvalidNarrowString(ascii_output.data(), 0, ascii_output.length(),
                               output);
     return false;
   }
