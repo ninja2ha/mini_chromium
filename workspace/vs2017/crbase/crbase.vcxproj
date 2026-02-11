@@ -174,8 +174,6 @@
     <ClInclude Include="..\..\..\src\crbase\win\windows_version.h" />
     <ClInclude Include="..\..\..\src\crbase\win\win_api_helper.h" />
     <ClInclude Include="..\..\..\src\crbase\win\win_util.h" />
-    <ClInclude Include="..\..\..\src\cr\build_config.h" />
-    <ClInclude Include="..\..\..\src\cr\compiler_specific.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase\at_exit.cc" />

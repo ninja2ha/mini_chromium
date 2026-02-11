@@ -861,7 +861,7 @@ class circular_deque {
   }
 
   void pop_front() {
-    DCHECK(size());
+    CR_DCHECK(size());
     buffer_.DestructRange(&buffer_[begin_], &buffer_[begin_ + 1]);
     begin_++;
     if (begin_ == buffer_.capacity())

@@ -1,9 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="cr">
-      <UniqueIdentifier>{218aa71c-da83-497c-91bd-bf138aca08da}</UniqueIdentifier>
-    </Filter>
     <Filter Include="strings">
       <UniqueIdentifier>{98a7379b-12dd-4df8-a0ab-03391600b34f}</UniqueIdentifier>
     </Filter>
@@ -102,12 +99,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\cr\build_config.h">
-      <Filter>cr</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\cr\compiler_specific.h">
-      <Filter>cr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\crbase\strings\char_traits.h">
       <Filter>strings</Filter>
     </ClInclude>

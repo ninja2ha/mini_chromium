@@ -7,6 +7,8 @@ project(${MINI_CHROMIUM_PROJECT_NAME})
 set(CRBASE_RT_SRC_DIR ${MINI_CHROMIUM_SRC_DIR}/crbase_runtime)
 
 set(CRBASE_RT_SRC_FILES 
+	${CRBASE_RT_SRC_DIR}/io_buffer.cc
+	${CRBASE_RT_SRC_DIR}/io_buffer.h
 	${CRBASE_RT_SRC_DIR}/parameter_pack.h
 	${CRBASE_RT_SRC_DIR}/pending_task.cc
 	${CRBASE_RT_SRC_DIR}/pending_task.h

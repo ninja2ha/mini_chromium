@@ -251,6 +251,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\crbase_runtime\io_buffer.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\runtime_export.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\containers\intrusive_heap.h" />
     <ClInclude Include="..\..\..\src\crbase_runtime\internal\post_task_and_reply_with_result_internal.h" />
@@ -321,6 +322,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase_runtime\containers\intrusive_heap.cc" />
+    <ClCompile Include="..\..\..\src\crbase_runtime\io_buffer.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_default.cc" />
     <ClCompile Include="..\..\..\src\crbase_runtime\message_pump\message_pump_win.cc" />

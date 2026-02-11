@@ -184,6 +184,7 @@
       <Filter>timer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\crbase_runtime\runtime_export.h" />
+    <ClInclude Include="..\..\..\src\crbase_runtime\io_buffer.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\crbase_runtime\sequenced_task_runner.cc" />
@@ -313,6 +314,7 @@
     <ClCompile Include="..\..\..\src\crbase_runtime\timer\timer.cc">
       <Filter>timer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\crbase_runtime\io_buffer.cc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="threading">
