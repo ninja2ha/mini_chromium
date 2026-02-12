@@ -76,6 +76,9 @@ PlatformChannelServerEndpoint NamedPlatformChannel::CreateServerEndpoint(
       5000,                                  // Timeout in milliseconds.
       &security_attributes)));
 
+  if (!handle.is_valid())
+    CR_PLOG(Warning) << "CreateNamedPipeW failed.";
+
   *server_name = name;
   return PlatformChannelServerEndpoint(std::move(handle));
 }
