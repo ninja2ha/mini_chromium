@@ -1,0 +1,75 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\tests\cr_base\at_exit_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\cr_base\environment_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\cr_base\guid_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\cr_base\observer_list_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\cr_base\version_unittest.cc" />
+    <ClCompile Include="..\..\..\..\tests\cr_base\files\file_enumerator_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\files\file_path_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\files\memory_mapped_file_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\files\scoped_temp_dir_unittest.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\functional\bind_unittest.cc">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\strcat_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\string_number_conversions_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\string_piece_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\string_split_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\string_util_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\stringprintf_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\utf_string_conversions_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\time\time_unittest.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\time\time_win_unittest.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\synchronization\lock_unittest.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\synchronization\waitable_event_unittest.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="files">
+      <UniqueIdentifier>{89b539e1-7326-4b75-a627-dfa9c14bbc19}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functional">
+      <UniqueIdentifier>{aee12d81-497b-4f83-97cc-bf5910ea628b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strings">
+      <UniqueIdentifier>{d913fa0d-33c3-486c-bd4d-9598a2e7f434}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{b216c23d-8f3a-4cab-88d5-3cc2fdcf20e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="synchronization">
+      <UniqueIdentifier>{4f9337bd-e079-4ae1-96f3-f024a9da448e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="minhook">
+      <UniqueIdentifier>{fbdc6f5a-7be8-4ea1-878c-57591db820c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="minhook\hde">
+      <UniqueIdentifier>{a72fbb8c-cc78-4172-86b9-9fc0d5de7a0e}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_winnt\third_party\minhook\src\buffer.c">
+      <Filter>minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_winnt\third_party\minhook\src\minhook.c">
+      <Filter>minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_winnt\third_party\minhook\src\trampoline.c">
+      <Filter>minhook</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\hde32.c">
+      <Filter>minhook\hde</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\hde64.c">
+      <Filter>minhook\hde</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_winnt\hook.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\buffer.h">
+      <Filter>minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\minhook.h">
+      <Filter>minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\trampoline.h">
+      <Filter>minhook</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\hde32.h">
+      <Filter>minhook\hde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\hde64.h">
+      <Filter>minhook\hde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\pstdint.h">
+      <Filter>minhook\hde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\table32.h">
+      <Filter>minhook\hde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\third_party\minhook\src\HDE\table64.h">
+      <Filter>minhook\hde</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_winnt\hook.h" />
+    <ClInclude Include="..\..\..\src\cr_winnt\winnt_export.h" />
+  </ItemGroup>
+</Project>

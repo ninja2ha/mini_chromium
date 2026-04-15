@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\tests\common\gtest_lib.cc" />
+    <ClCompile Include="..\..\..\..\tests\common\bind.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\tests\common\bind.h" />
+    <ClInclude Include="..\..\..\..\tests\common\gtest_platform_test.h" />
+    <ClInclude Include="..\..\..\..\tests\common\gtest_util.h" />
+  </ItemGroup>
+</Project>

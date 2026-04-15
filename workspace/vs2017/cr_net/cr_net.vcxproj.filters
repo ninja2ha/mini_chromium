@@ -1,0 +1,184 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_net\net_export.h" />
+    <ClInclude Include="..\..\..\src\cr_net\base\ip_address.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\internal\parse_number.h">
+      <Filter>base\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\address_family.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\sys_addrinfo.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\ip_endpoint.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\sockaddr_storage.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\internal\net_error_list.h">
+      <Filter>base\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\net_errors.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\win\winsock_init.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\socket.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\completion_once_callback.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\completion_repeating_callback.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\socket_descriptor.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\socket_options.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\socket_performance_watcher.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\connection_attempts.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\tcp_socket.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\tcp_socket_win.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\stream_socket.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\transport_server_socket.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\transport_client_socket.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\socket_tag.h">
+      <Filter>socket</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\address_list.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\win\winsock_util.h">
+      <Filter>base\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\tcp_server_socket.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\tcp\tcp_client_socket.h">
+      <Filter>socket\tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_server.h">
+      <Filter>tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_connection.h">
+      <Filter>tcp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_client.h">
+      <Filter>tcp</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="base">
+      <UniqueIdentifier>{e4f689d5-a22d-411e-880b-4910ae560085}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\internal">
+      <UniqueIdentifier>{ef9883c1-58e5-4a6d-8613-f36476b382dc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base\win">
+      <UniqueIdentifier>{c620483b-ec81-41a9-96d3-1ee188f3a9bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="socket">
+      <UniqueIdentifier>{5d3a48d6-83a8-40db-8ece-373f3d9c5ffb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="socket\tcp">
+      <UniqueIdentifier>{1788146e-5386-41bd-85d2-c5405b36bac8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tcp">
+      <UniqueIdentifier>{b3f845fa-2c41-4ed9-9700-ed66aa5f0848}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_net\base\ip_address.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\internal\parse_number.cc">
+      <Filter>base\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\address_family.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\ip_endpoint.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\sockaddr_storage.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\net_errors.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\win\net_errors_win.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\win\winsock_init.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\socket.cc">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\socket_descriptor.cc">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\socket_options.cc">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\tcp\tcp_socket_win.cc">
+      <Filter>socket\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\tcp\stream_socket.cc">
+      <Filter>socket\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\tcp\transport_server_socket.cc">
+      <Filter>socket\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\tcp\transport_client_socket.cc">
+      <Filter>socket\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\socket_tag.cc">
+      <Filter>socket</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\address_list.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\win\winsock_util.cc">
+      <Filter>base\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\tcp\tcp_server_socket.cc">
+      <Filter>socket\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\tcp\tcp_client_socket.cc">
+      <Filter>socket\tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_server.cc">
+      <Filter>tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_client.cc">
+      <Filter>tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_connection.cc">
+      <Filter>tcp</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>
