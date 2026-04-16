@@ -50,6 +50,14 @@ AddressList AddressList::CreateFromIPAddress(const IPAddress& address,
 }
 
 // static
+AddressList AddressList::CreateFromIPLiteral(const cr::StringPiece& address,
+                                             uint16_t port) {
+  IPAddress ip_address;
+  ip_address.AssignFromIPLiteral(address);
+  return AddressList(IPEndPoint(ip_address, port));
+}
+
+// static
 AddressList AddressList::CreateFromIPAddressList(
     const IPAddressList& addresses,
     std::vector<std::string> aliases) {

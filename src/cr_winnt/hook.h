@@ -90,8 +90,6 @@ class CRWINNT_EXPORT Hooker {
 
   Hooker();
   ~Hooker();
-
-  unsigned long tls_bypass_hook_;
 };
 
 }  // namespace winnt

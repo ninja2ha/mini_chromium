@@ -128,7 +128,7 @@ int TCPClient::HandleReadResult(int rv) {
 
   // Handles stream data.
   while (!read_buf->readable_bytes().empty()) {
-    int handled = delegate_->OnTranslateData(
+    int handled = delegate_->OnReceiveData(
       reinterpret_cast<const char*>(read_buf->readable_bytes().data()),
       static_cast<int>(read_buf->readable_bytes().size()));
     if (handled == 0) {

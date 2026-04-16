@@ -6,6 +6,8 @@
 
 #include "cr_base/logging/logging.h"
 #include "cr_base/memory/singleton.h"
+#include "cr_base/memory/no_destructor.h"
+#include "cr_base/threading/thread_local.h"
 
 #include "cr_winnt/third_party/minhook/src/minhook.h"
 
@@ -17,17 +19,15 @@ Hooker* Hooker::GetInstance() {
   return Singleton<Hooker>::get();
 }
 
-Hooker::Hooker() : tls_bypass_hook_(::TlsAlloc()) {
+Hooker::Hooker() {
   MH_STATUS status = MH_Initialize();
 
   CR_DLOG_IF(Error, status != MH_OK) 
       << "nhook initialize with an error:" << status;
-  CR_CHECK(tls_bypass_hook_ != TLS_OUT_OF_INDEXES);
 }
 
 Hooker::~Hooker() {
   MH_STATUS status = MH_Uninitialize();
-  ::TlsFree(tls_bypass_hook_);
 
   CR_DLOG_IF(Error, status != MH_OK) 
       << "nhook uninitialize with an error:" << status;
@@ -121,17 +121,27 @@ bool Hooker::CreateContextHook(void* target, ContextCallback callback) {
   return status == MH_OK;
 }
 
+////////////////////////////////////////////////////////////////////////////////
+
+namespace {
+
+cr::ThreadLocalBoolean* GetAvoidRecursionTls() {
+  static cr::NoDestructor<cr::ThreadLocalBoolean> tls;
+  return tls.get();
+}
+
+}  // namespace
+
 Hooker::ScopedAvoidRecursionFlag::ScopedAvoidRecursionFlag() {
-  flag_ = !!::TlsGetValue(
-      Hooker::GetInstance()->tls_bypass_hook_);
+  flag_ = GetAvoidRecursionTls()->Get();
   if (!flag_) {
-    ::TlsSetValue(Hooker::GetInstance()->tls_bypass_hook_, LongToPtr(1));
+    GetAvoidRecursionTls()->Set(true);
   }
 }
 
 Hooker::ScopedAvoidRecursionFlag::~ScopedAvoidRecursionFlag() {
   if (!flag_) {
-    ::TlsSetValue(Hooker::GetInstance()->tls_bypass_hook_, NULL);
+    GetAvoidRecursionTls()->Set(false);
   }
 }
 

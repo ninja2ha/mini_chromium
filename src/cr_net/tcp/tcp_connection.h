@@ -26,9 +26,9 @@ class TCPClient;
 class TCPConnection {
  public:
 #if defined(MINI_CHROMIUM_ARCH_CPU_64_BITS)
-  using ID = uint64_t;
+  using Id = uint64_t;
 #else
-  using ID = uint32_t;
+  using Id = uint32_t;
 #endif
 
   // IOBuffer for data read.  It's a wrapper around GrowableIOBuffer, with more
@@ -120,10 +120,10 @@ class TCPConnection {
     int max_buffer_size_;
   };
 
-  TCPConnection(TCPConnection::ID id, std::unique_ptr<StreamSocket> socket);
+  TCPConnection(TCPConnection::Id id, std::unique_ptr<StreamSocket> socket);
   ~TCPConnection();
 
-  ID id() const { return id_; }
+  Id id() const { return id_; }
   StreamSocket* socket() const { return socket_.get(); }
 
  private:
@@ -134,7 +134,7 @@ class TCPConnection {
   QueuedWriteIOBuffer* write_buf() const { return write_buf_.get(); }
 
  private:
-  const ID id_;
+  const Id id_;
   const std::unique_ptr<StreamSocket> socket_;
   const cr::RefPtr<ReadIOBuffer> read_buf_;
   const cr::RefPtr<QueuedWriteIOBuffer> write_buf_;

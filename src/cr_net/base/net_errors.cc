@@ -10,7 +10,7 @@
 namespace crnet {
 
 std::string ErrorToString(int error) {
-  return "net::" + ErrorToShortString(error);
+  return "crnet::" + ErrorToShortString(error);
 }
 
 std::string ErrorToShortString(int error) {

@@ -31,7 +31,7 @@ class TCPServer {
     virtual ~Delegate() {}
 
     virtual void OnAccept(TCPConnection* connection) = 0;
-    virtual int OnTranslateData(
+    virtual int OnReceiveData(
         TCPConnection* connection, const char* data, int data_len) = 0;
     virtual void OnClose(TCPConnection* connection) = 0;
   };
@@ -48,14 +48,14 @@ class TCPServer {
   ~TCPServer();
 
   // Sends the provided data directly to the given connection.
-  void SendData(TCPConnection::ID connection_id, const std::string& data);
+  void SendData(TCPConnection::Id connection_id, const std::string& data);
   // Sends the provided data directly to all connections.
   void SendDataToAll(const std::string& data);
 
-  void Close(TCPConnection::ID connection_id);
+  void Close(TCPConnection::Id connection_id);
 
-  void SetReceiveBufferSize(TCPConnection::ID connection_id, int32_t size);
-  void SetSendBufferSize(TCPConnection::ID connection_id, int32_t size);
+  void SetReceiveBufferSize(TCPConnection::Id connection_id, int32_t size);
+  void SetSendBufferSize(TCPConnection::Id connection_id, int32_t size);
 
   // Copies the local address to |address|. Returns a network error code.
   int GetLocalAddress(IPEndPoint* address);
@@ -66,15 +66,15 @@ class TCPServer {
   int HandleAcceptResult(int rv);
 
   void DoReadLoop(TCPConnection* connection);
-  void OnReadCompleted(TCPConnection::ID connection_id, int rv);
+  void OnReadCompleted(TCPConnection::Id connection_id, int rv);
   int HandleReadResult(TCPConnection* connection, int rv);
 
   void DoWriteLoop(TCPConnection* connection);
-  void OnWriteCompleted(TCPConnection::ID connection_id,
+  void OnWriteCompleted(TCPConnection::Id connection_id,
                         int rv);
   int HandleWriteResult(TCPConnection* connection, int rv);
 
-  TCPConnection* FindConnection(TCPConnection::ID connection_id);
+  TCPConnection* FindConnection(TCPConnection::Id connection_id);
 
   // Whether or not Close() has been called during delegate callback processing.
   bool HasClosedConnection(TCPConnection* connection);
@@ -85,8 +85,8 @@ class TCPServer {
   std::unique_ptr<StreamSocket> accepted_socket_;
   TCPServer::Delegate* const delegate_ = nullptr;
 
-  TCPConnection::ID last_id_ = 0;
-  std::map<TCPConnection::ID, std::unique_ptr<TCPConnection>> id_to_connection_;
+  TCPConnection::Id last_id_ = 0;
+  std::map<TCPConnection::Id  , std::unique_ptr<TCPConnection>> id_to_connection_;
 
   // Vector of connections whose destruction is pending. Connections may have
   // WebSockets with raw pointers to `this`, so should not out live this, but

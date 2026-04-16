@@ -30,6 +30,7 @@ TCPServer::TCPServer(std::unique_ptr<TransportServerSocket> server_socket,
                      TCPServer::Delegate* delegate)
     : server_socket_(std::move(server_socket)), delegate_(delegate) {
   CR_DCHECK(server_socket_);
+  CR_DCHECK(delegate);
   // Start accepting connections in next run loop in case when delegate is not
   // ready to get callbacks.
   cr::ThreadTaskRunnerHandle::Get()->PostTask(
@@ -39,7 +40,7 @@ TCPServer::TCPServer(std::unique_ptr<TransportServerSocket> server_socket,
 
 TCPServer::~TCPServer() = default;
 
-void TCPServer::SendData(TCPConnection::ID connection_id,
+void TCPServer::SendData(TCPConnection::Id connection_id,
                          const std::string& data) {
   TCPConnection* connection = FindConnection(connection_id);
   if (connection == nullptr)
@@ -65,7 +66,7 @@ void TCPServer::SendDataToAll(const std::string& data) {
   }
 }
 
-void TCPServer::Close(TCPConnection::ID connection_id) {
+void TCPServer::Close(TCPConnection::Id connection_id) {
   auto it = id_to_connection_.find(connection_id);
   if (it == id_to_connection_.end())
     return;
@@ -91,14 +92,14 @@ int TCPServer::GetLocalAddress(IPEndPoint* address) {
   return server_socket_->GetLocalAddress(address);
 }
 
-void TCPServer::SetReceiveBufferSize(TCPConnection::ID connection_id, 
+void TCPServer::SetReceiveBufferSize(TCPConnection::Id connection_id, 
                                      int32_t size) {
   TCPConnection* connection = FindConnection(connection_id);
   if (connection)
     connection->read_buf()->set_max_buffer_size(size);
 }
 
-void TCPServer::SetSendBufferSize(TCPConnection::ID connection_id, 
+void TCPServer::SetSendBufferSize(TCPConnection::Id connection_id, 
                                   int32_t size) {
   TCPConnection* connection = FindConnection(connection_id);
   if (connection)
@@ -158,7 +159,7 @@ void TCPServer::DoReadLoop(TCPConnection* connection) {
   } while (rv == OK);
 }
 
-void TCPServer::OnReadCompleted(TCPConnection::ID connection_id, int rv) {
+void TCPServer::OnReadCompleted(TCPConnection::Id connection_id, int rv) {
   TCPConnection* connection = FindConnection(connection_id);
   if (!connection)  // It might be closed right before by write error.
     return;
@@ -178,7 +179,7 @@ int TCPServer::HandleReadResult(TCPConnection* connection, int rv) {
 
   // Handles stream data.
   while (!read_buf->readable_bytes().empty()) {
-    int handled = delegate_->OnTranslateData(
+    int handled = delegate_->OnReceiveData(
       connection,
       reinterpret_cast<const char*>(read_buf->readable_bytes().data()),
       static_cast<int>(read_buf->readable_bytes().size()));
@@ -213,9 +214,8 @@ void TCPServer::DoWriteLoop(TCPConnection* connection) {
   }
 }
 
-void TCPServer::OnWriteCompleted(
-    TCPConnection::ID connection_id,
-    int rv) {
+void TCPServer::OnWriteCompleted(TCPConnection::Id connection_id,
+                                 int rv) {
   TCPConnection* connection = FindConnection(connection_id);
   if (!connection)  // It might be closed right before by read error.
     return;
@@ -234,7 +234,7 @@ int TCPServer::HandleWriteResult(TCPConnection* connection, int rv) {
   return OK;
 }
 
-TCPConnection* TCPServer::FindConnection(TCPConnection::ID connection_id) {
+TCPConnection* TCPServer::FindConnection(TCPConnection::Id connection_id) {
   auto it = id_to_connection_.find(connection_id);
   if (it == id_to_connection_.end())
     return nullptr;

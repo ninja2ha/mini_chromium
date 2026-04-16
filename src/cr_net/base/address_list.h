@@ -10,6 +10,8 @@
 #include <string>
 #include <vector>
 
+#include "cr_base/strings/string_piece.h"
+
 #include "cr_net/net_export.h"
 #include "cr_net/base/ip_endpoint.h"
 #include "cr_build/compiler_specific.h"
@@ -40,6 +42,9 @@ class CRNET_EXPORT AddressList {
   AddressList(const IPEndPoint& endpoint, std::vector<std::string> aliases);
 
   static AddressList CreateFromIPAddress(const IPAddress& address,
+                                         uint16_t port);
+
+  static AddressList CreateFromIPLiteral(const cr::StringPiece& address,
                                          uint16_t port);
 
   static AddressList CreateFromIPAddressList(const IPAddressList& addresses,

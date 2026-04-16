@@ -158,7 +158,7 @@ int TCPConnection::QueuedWriteIOBuffer::GetSizeToWrite() const {
   return size();
 }
 
-TCPConnection::TCPConnection(TCPConnection::ID id, 
+TCPConnection::TCPConnection(TCPConnection::Id id, 
                              std::unique_ptr<StreamSocket> socket)
     : id_(id),
       socket_(std::move(socket)),

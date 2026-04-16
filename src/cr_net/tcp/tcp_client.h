@@ -23,7 +23,7 @@ class TCPClient {
 
     // |rv| is an net error code.
     virtual void OnConnect(int rv) = 0;
-    virtual int OnTranslateData(const char* data, int data_len) = 0;
+    virtual int OnReceiveData(const char* data, int data_len) = 0;
     virtual void OnClose() = 0;
   };
 
