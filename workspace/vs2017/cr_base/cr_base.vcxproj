@@ -72,6 +72,7 @@
     <ClInclude Include="..\..\..\src\cr_base\helper\scoped_clear_last_error.h" />
     <ClInclude Include="..\..\..\src\cr_base\helper\scoped_generic.h" />
     <ClInclude Include="..\..\..\src\cr_base\internal\gtest_prod_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\internal\lazy_instance.h" />
     <ClInclude Include="..\..\..\src\cr_base\internal\lazy_instance_helpers.h" />
     <ClInclude Include="..\..\..\src\cr_base\internal\observer_list_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\internal\raw_ref_ptr_mismatch_checker.h" />

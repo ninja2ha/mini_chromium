@@ -18,11 +18,11 @@
 #include "cr_net/base/address_list.h"
 #include "cr_net/base/ip_endpoint.h"
 #include "cr_net/base/net_errors.h"
-///#include "cr_net/base/network_activity_monitor.h"
-///#include "cr_net/base/network_change_notifier.h"
 #include "cr_net/base/sockaddr_storage.h"
 #include "cr_net/base/win/winsock_init.h"
 #include "cr_net/base/win/winsock_util.h"
+#include "cr_net/network/network_activity_monitor.h"
+#include "cr_net/network/network_change_notifier.h"
 ///#include "cr_net/log/net_log.h"
 ///#include "cr_net/log/net_log_event_type.h"
 ///#include "cr_net/log/net_log_source.h"
@@ -75,10 +75,10 @@ int MapConnectError(int os_error) {
         return ERR_CONNECTION_FAILED;  // More specific than ERR_FAILED.
 
       // Give a more specific error when the user is offline.
-      ///if (net_error == ERR_ADDRESS_UNREACHABLE &&
-      ///    NetworkChangeNotifier::IsOffline()) {
-      ///  return ERR_INTERNET_DISCONNECTED;
-      ///}
+      if (net_error == ERR_ADDRESS_UNREACHABLE &&
+          NetworkChangeNotifier::IsOffline()) {
+        return ERR_INTERNET_DISCONNECTED;
+      }
 
       return net_error;
     }
@@ -526,7 +526,7 @@ int TCPSocketWin::ReadIfReady(cr::IOBuffer* buf,
   } else {
     ///net_log_.AddByteTransferEvent(NetLogEventType::SOCKET_BYTES_RECEIVED, rv,
     ///                              buf->data());
-    ///NetworkActivityMonitor::GetInstance()->IncrementBytesReceived(rv);
+    NetworkActivityMonitor::GetInstance()->IncrementBytesReceived(rv);
     return rv;
   }
 

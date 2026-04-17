@@ -42,7 +42,7 @@ bool Hooker::CreateHook(void* target, void* detour, void** original) {
 
 bool Hooker::CreateContextHook(void* target, ContextCallback callback) {
 #if defined(MINI_CHROMIUM_ARCH_CPU_X86)
-  static_assert(offsetof(ConnextRegister, esp) == 7 * 4, 
+  static_assert(offsetof(ContextRegister, esp) == 7 * 4, 
                 "dont motify the structure!");
 
   unsigned char shell_code[] = {
@@ -70,7 +70,7 @@ bool Hooker::CreateContextHook(void* target, ContextCallback callback) {
 
   *(uintptr_t*)(shell_code + 0x0A + 0x1) = (uintptr_t)callback;
 #elif defined(MINI_CHROMIUM_ARCH_CPU_X86_64)
-  static_assert(offsetof(ConnextRegister, rsp) == 15 * 8, 
+  static_assert(offsetof(ContextRegister, rsp) == 15 * 8, 
                 "dont motify the structure!");
 
   unsigned char shell_code[] = {

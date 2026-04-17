@@ -269,6 +269,7 @@
     <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_win.h" />
     <ClInclude Include="..\..\..\src\cr_event\message_pump\timer_slack.h" />
     <ClInclude Include="..\..\..\src\cr_event\message_pump\work_id_provider.h" />
+    <ClInclude Include="..\..\..\src\cr_event\observer_list_threadsafe.h" />
     <ClInclude Include="..\..\..\src\cr_event\parameter_pack.h" />
     <ClInclude Include="..\..\..\src\cr_event\pending_task.h" />
     <ClInclude Include="..\..\..\src\cr_event\event_export.h" />
@@ -313,6 +314,7 @@
     <ClInclude Include="..\..\..\src\cr_event\task\task_traits.h" />
     <ClInclude Include="..\..\..\src\cr_event\task\task_traits_extension.h" />
     <ClInclude Include="..\..\..\src\cr_event\task_runner.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task_runner_util.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\post_task_and_reply_impl.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\sequenced_task_runner_handle.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.h" />
@@ -333,6 +335,7 @@
     <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump_default.cc" />
     <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump_win.cc" />
     <ClCompile Include="..\..\..\src\cr_event\message_pump\work_id_provider.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\observer_list_threadsafe.cc" />
     <ClCompile Include="..\..\..\src\cr_event\pending_task.cc" />
     <ClCompile Include="..\..\..\src\cr_event\run_loop.cc" />
     <ClCompile Include="..\..\..\src\cr_event\sequenced_task_runner.cc" />

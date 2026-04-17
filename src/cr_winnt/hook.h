@@ -31,7 +31,7 @@ class CRWINNT_EXPORT Hooker {
   bool CreateHook(void* target, void* detour, void** original);
 
   // Warning: don not motify this structure!!
-  struct CRWINNT_EXPORT ConnextRegister {
+  struct CRWINNT_EXPORT ContextRegister {
 #if defined(MINI_CHROMIUM_ARCH_CPU_X86)
     uintptr_t eax;
     uintptr_t ebx;
@@ -61,7 +61,7 @@ class CRWINNT_EXPORT Hooker {
 #endif
   };
 
-  typedef void (* ContextCallback)(ConnextRegister*);
+  typedef void (* ContextCallback)(ContextRegister*);
   bool CreateContextHook(void* target, ContextCallback callback);
 
   // A checker for avoid hook handler recursive calling.

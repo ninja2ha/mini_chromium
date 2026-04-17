@@ -182,6 +182,8 @@
       <Filter>containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_event\event_export.h" />
+    <ClInclude Include="..\..\..\src\cr_event\observer_list_threadsafe.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task_runner_util.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_event\io_buffer.cc" />
@@ -309,6 +311,7 @@
     <ClCompile Include="..\..\..\src\cr_event\containers\intrusive_heap.cc">
       <Filter>containers</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\observer_list_threadsafe.cc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="threading">

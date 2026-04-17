@@ -500,6 +500,9 @@
     <ClInclude Include="..\..\..\src\cr_base\stl_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\sys_byteorder.h" />
     <ClInclude Include="..\..\..\src\cr_base\version.h" />
+    <ClInclude Include="..\..\..\src\cr_base\internal\lazy_instance.h">
+      <Filter>internal</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_base\containers\linked_list.cc">

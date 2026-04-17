@@ -89,6 +89,39 @@
     <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_client.h">
       <Filter>tcp</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\datagram_socket.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\diff_serv_code_point.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\datagram_server_socket.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\datagram_client_socket.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\datagram_buffer.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_activity_monitor.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_interfaces.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\win\network_interfaces_win.h">
+      <Filter>network\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.h">
+      <Filter>network\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier_factory.h">
+      <Filter>network</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="base">
@@ -108,6 +141,15 @@
     </Filter>
     <Filter Include="tcp">
       <UniqueIdentifier>{b3f845fa-2c41-4ed9-9700-ed66aa5f0848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="socket\udp">
+      <UniqueIdentifier>{9ade288a-a817-4b9b-8c1d-fc39d0cc79ac}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network">
+      <UniqueIdentifier>{6d030074-7dc6-4d89-91bc-dcfd7996dc3a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network\win">
+      <UniqueIdentifier>{dd205d66-d2ca-4845-8bdf-502054798965}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -179,6 +221,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_connection.cc">
       <Filter>tcp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\datagram_buffer.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\network_activity_monitor.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\network_change_notifier.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\network_interfaces.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\win\network_interfaces_win.cc">
+      <Filter>network\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.cc">
+      <Filter>network\win</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
