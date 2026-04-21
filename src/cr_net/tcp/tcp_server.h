@@ -15,6 +15,8 @@
 
 #include "cr_base/memory/weak_ptr.h"
 #include "cr_base/strings/string_piece.h"
+
+#include "cr_net/net_export.h"
 #include "cr_net/base/ip_endpoint.h"
 #include "cr_net/socket/tcp/stream_socket.h"
 #include "cr_net/socket/tcp/transport_server_socket.h"
@@ -22,7 +24,7 @@
 
 namespace crnet {
 
-class TCPServer {
+class CRNET_EXPORT TCPServer {
  public:
   // Delegate to handle tcp events. Beware that it is not safe to destroy the 
   // TCPServer in any of these callbacks.

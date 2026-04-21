@@ -37,6 +37,9 @@
     <ClInclude Include="..\..\..\src\cr_base\base_export.h" />
     <ClInclude Include="..\..\..\src\cr_base\bits.h" />
     <ClInclude Include="..\..\..\src\cr_base\bit_cast.h" />
+    <ClInclude Include="..\..\..\src\cr_base\buffer\buffer.h" />
+    <ClInclude Include="..\..\..\src\cr_base\buffer\byte_buffer.h" />
+    <ClInclude Include="..\..\..\src\cr_base\buffer\pickle.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\circular_deque.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\checked_iterators.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\contiguous_iterator.h" />
@@ -50,6 +53,8 @@
     <ClInclude Include="..\..\..\src\cr_base\containers\util.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\alias.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\immediate_crash.h" />
+    <ClInclude Include="..\..\..\src\cr_base\digest\md5.h" />
+    <ClInclude Include="..\..\..\src\cr_base\digest\sha1.h" />
     <ClInclude Include="..\..\..\src\cr_base\environment.h" />
     <ClInclude Include="..\..\..\src\cr_base\files\file.h" />
     <ClInclude Include="..\..\..\src\cr_base\files\file_enumerator.h" />
@@ -87,6 +92,7 @@
     <ClInclude Include="..\..\..\src\cr_base\memory\ref_ptr.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\singleton.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\weak_ptr.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\zero_memory.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\checked_math.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\checked_math_impl.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\clamped_math.h" />
@@ -176,9 +182,13 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_base\at_exit.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\buffer\byte_buffer.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\buffer\pickle.cc" />
     <ClCompile Include="..\..\..\src\cr_base\containers\linked_list.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\alias.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\immediate_crash.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\digest\md5.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\digest\sha1.cc" />
     <ClCompile Include="..\..\..\src\cr_base\environment.cc" />
     <ClCompile Include="..\..\..\src\cr_base\files\file.cc" />
     <ClCompile Include="..\..\..\src\cr_base\files\file_enumerator.cc" />
@@ -205,6 +215,7 @@
     <ClCompile Include="..\..\..\src\cr_base\main.cc" />
     <ClCompile Include="..\..\..\src\cr_base\memory\ref_counted.cc" />
     <ClCompile Include="..\..\..\src\cr_base\memory\weak_ptr.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\memory\zero_memory.cc" />
     <ClCompile Include="..\..\..\src\cr_base\observer_list_types.cc" />
     <ClCompile Include="..\..\..\src\cr_base\rand_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc" />

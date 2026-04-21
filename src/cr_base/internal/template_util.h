@@ -342,7 +342,25 @@ struct has_contains<
     internal::void_t<decltype(std::declval<const Container&>().contains(
         std::declval<const Element&>()))>> : std::true_type {};
 
+// Determines if the given class has zero-argument .data() and .size() methods
+// whose return values are convertible to T* and size_t, respectively.
+template <typename DS, typename T>
+class has_data_and_size {
+ private:
+  template <
+      typename C,
+      typename std::enable_if<
+          std::is_convertible<decltype(std::declval<C>().data()), T*>::value &&
+          std::is_convertible<decltype(std::declval<C>().size()),
+                              std::size_t>::value>::type* = nullptr>
+  static int Test(int);
 
+  template <typename>
+  static char Test(...);
+
+ public:
+  static constexpr bool value = std::is_same<decltype(Test<DS>(0)), int>::value;
+};
 
 }  // namespace internal
 }  // namespace cr

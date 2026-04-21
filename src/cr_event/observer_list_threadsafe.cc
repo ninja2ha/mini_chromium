@@ -4,13 +4,17 @@
 
 #include "cr_event/observer_list_threadsafe.h"
 
+#include "cr_base/memory/no_destructor.h"
+
 namespace cr {
 namespace internal {
 
-LazyInstance<ThreadLocalPointer<
-    const ObserverListThreadSafeBase::NotificationDataBase>>::Leaky
-    ObserverListThreadSafeBase::tls_current_notification_ =
-        CR_LAZY_INSTANCE_INITIALIZER;
+// static 
+ThreadLocalPointer<const ObserverListThreadSafeBase::NotificationDataBase>*
+ObserverListThreadSafeBase::tls_current_notification() {
+  static cr::NoDestructor<ThreadLocalPointer<const NotificationDataBase>> tls;
+  return tls.get();
+}
 
 }  // namespace internal
 }  // namespace cr

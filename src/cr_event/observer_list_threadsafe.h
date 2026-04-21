@@ -54,7 +54,7 @@
 namespace cr {
 namespace internal {
 
-class CRBASE_EXPORT ObserverListThreadSafeBase
+class CREVENT_EXPORT ObserverListThreadSafeBase
     : public RefCountedThreadSafe<ObserverListThreadSafeBase> {
  public:
   ObserverListThreadSafeBase() = default;
@@ -85,8 +85,8 @@ class CRBASE_EXPORT ObserverListThreadSafeBase
 
   virtual ~ObserverListThreadSafeBase() = default;
 
-  static LazyInstance<ThreadLocalPointer<const NotificationDataBase>>::Leaky
-      tls_current_notification_;
+  static ThreadLocalPointer<const NotificationDataBase>*
+    tls_current_notification();
 
  private:
   friend class RefCountedThreadSafe<ObserverListThreadSafeBase>;
@@ -133,7 +133,7 @@ class ObserverListThreadSafe : public internal::ObserverListThreadSafeBase {
     // |lock_|).
     if (policy_ == ObserverListPolicy::ALL) {
       const NotificationDataBase* current_notification =
-          tls_current_notification_.Get().Get();
+          tls_current_notification()->Get();
       if (current_notification && current_notification->observer_list == this) {
         const NotificationData* notification_data =
             static_cast<const NotificationData*>(current_notification);
@@ -269,17 +269,16 @@ class ObserverListThreadSafe : public internal::ObserverListThreadSafeBase {
     // Note: |tls_current_notification_| may not be nullptr if this runs in a
     // nested loop started by a notification callback. In that case, it is
     // important to save the previous value to restore it later.
-    auto& tls_current_notification = tls_current_notification_.Get();
     const NotificationDataBase* const previous_notification =
-        tls_current_notification.Get();
-    tls_current_notification.Set(&notification);
+        tls_current_notification()->Get();
+    tls_current_notification()->Set(&notification);
 
     // Invoke the callback.
     notification.method.Run(observer);
 
     // Reset the notification being dispatched on the current thread to its
     // previous value.
-    tls_current_notification.Set(previous_notification);
+    tls_current_notification()->Set(previous_notification);
   }
 
   const ObserverListPolicy policy_ = ObserverListPolicy::ALL;

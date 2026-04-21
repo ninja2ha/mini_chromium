@@ -8,12 +8,14 @@
 #include <memory>
 
 #include "cr_base/memory/weak_ptr.h"
+
+#include "cr_net/net_export.h"
 #include "cr_net/socket/tcp/transport_client_socket.h"
 #include "cr_net/tcp/tcp_connection.h"
 
 namespace crnet {
 
-class TCPClient {
+class CRNET_EXPORT TCPClient {
  public:
   // Delegate to handle tcp events. Beware that it is not safe to destroy the 
   // TCPClient in any of these callbacks.

@@ -13,6 +13,7 @@
 #include "cr_base/memory/ref_counted.h"
 #include "cr_base/memory/weak_ptr.h"
 #include "cr_event/io_buffer.h"
+#include "cr_net/net_export.h"
 #include "cr_build/build_config.h"
 
 namespace crnet {
@@ -23,7 +24,7 @@ class TCPClient;
 
 // A container which has all information of an Tcp connection. It includes
 // id, underlying socket, and pending read/write data.
-class TCPConnection {
+class CRNET_EXPORT TCPConnection {
  public:
 #if defined(MINI_CHROMIUM_ARCH_CPU_64_BITS)
   using Id = uint64_t;
@@ -34,7 +35,7 @@ class TCPConnection {
   // IOBuffer for data read.  It's a wrapper around GrowableIOBuffer, with more
   // functions for buffer management.  It moves unconsumed data to the start of
   // buffer.
-  class ReadIOBuffer : public cr::IOBuffer {
+  class CRNET_EXPORT ReadIOBuffer : public cr::IOBuffer {
    public:
     static const int kInitialBufSize = 1024;
     static const int kMinimumBufSize = 128;
@@ -77,7 +78,7 @@ class TCPConnection {
   // IOBuffer of pending data to write which has a queue of pending data. Each
   // pending data is stored in std::string.  data() is the data of first
   // std::string stored.
-  class QueuedWriteIOBuffer : public cr::IOBuffer {
+  class CRNET_EXPORT QueuedWriteIOBuffer : public cr::IOBuffer {
    public:
     static const int kDefaultMaxBufferSize = 1 * 1024 * 1024;  // 1 Mbytes.
 

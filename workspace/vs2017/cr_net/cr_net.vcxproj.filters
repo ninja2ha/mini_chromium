@@ -122,6 +122,24 @@
     <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier_factory.h">
       <Filter>network</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_socket_win.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_socket_global_limits.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_socket.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_client_socket.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_server_socket.h">
+      <Filter>socket\udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\stun\stun.h">
+      <Filter>stun</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="base">
@@ -150,6 +168,9 @@
     </Filter>
     <Filter Include="network\win">
       <UniqueIdentifier>{dd205d66-d2ca-4845-8bdf-502054798965}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stun">
+      <UniqueIdentifier>{f82ae23f-6fbc-4047-80f1-17d6a14e8fb8}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -239,6 +260,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.cc">
       <Filter>network\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_socket_win.cc">
+      <Filter>socket\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_socket_global_limits.cc">
+      <Filter>socket\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_client_socket.cc">
+      <Filter>socket\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_server_socket.cc">
+      <Filter>socket\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\stun\stun.cc">
+      <Filter>stun</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

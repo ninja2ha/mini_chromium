@@ -15,27 +15,27 @@
 #include "cr_base/memory/singleton.h"
 #include "cr_base/win/windows_types.h"
 
-#pragma comment(lib, "winmm")
-
-int add(int a, int b) {
-  return a + b;
-}
-
-int main(int argc, char*  argv[]) {
-  cr::AtExitManager at_exit_manager;
-
-  constexpr cr::StringPiece hello = "hello world!!";
-  constexpr char font_char = hello.front();
-  
-  int a = 500;
-  int b = 500;
-  auto sum = cr::CheckAdd(a, b);
-  auto sum2 = sum.ValueOrDie();
-
-  cr::Time now = cr::Time::Now();
-  std::string now_str = cr::TimeToISO8601(now);
-  printf("now_str:%s\n", now_str.c_str());
-
-  system("pause");
-  return 0;
-}
+//#pragma comment(lib, "winmm")
+//
+//int add(int a, int b) {
+//  return a + b;
+//}
+//
+//int main(int argc, char*  argv[]) {
+//  cr::AtExitManager at_exit_manager;
+//
+//  constexpr cr::StringPiece hello = "hello world!!";
+//  constexpr char font_char = hello.front();
+//  
+//  int a = 500;
+//  int b = 500;
+//  auto sum = cr::CheckAdd(a, b);
+//  auto sum2 = sum.ValueOrDie();
+//
+//  cr::Time now = cr::Time::Now();
+//  std::string now_str = cr::TimeToISO8601(now);
+//  printf("now_str:%s\n", now_str.c_str());
+//
+//  system("pause");
+//  return 0;
+//}

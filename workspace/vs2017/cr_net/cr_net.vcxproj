@@ -333,6 +333,12 @@
     <ClInclude Include="..\..\..\src\cr_net\socket\udp\datagram_server_socket.h" />
     <ClInclude Include="..\..\..\src\cr_net\socket\udp\datagram_socket.h" />
     <ClInclude Include="..\..\..\src\cr_net\socket\udp\diff_serv_code_point.h" />
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_client_socket.h" />
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_server_socket.h" />
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_socket.h" />
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_socket_global_limits.h" />
+    <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_socket_win.h" />
+    <ClInclude Include="..\..\..\src\cr_net\stun\stun.h" />
     <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_client.h" />
     <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_connection.h" />
     <ClInclude Include="..\..\..\src\cr_net\tcp\tcp_server.h" />
@@ -390,6 +396,11 @@
     <ClCompile Include="..\..\..\src\cr_net\socket\tcp\tcp_socket_win.cc" />
     <ClCompile Include="..\..\..\src\cr_net\socket\tcp\transport_client_socket.cc" />
     <ClCompile Include="..\..\..\src\cr_net\socket\tcp\transport_server_socket.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_client_socket.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_server_socket.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_socket_global_limits.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_socket_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\stun\stun.cc" />
     <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_client.cc" />
     <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_connection.cc" />
     <ClCompile Include="..\..\..\src\cr_net\tcp\tcp_server.cc" />

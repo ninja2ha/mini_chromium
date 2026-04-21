@@ -139,6 +139,54 @@ inline uint64_t HostToNet64(uint64_t x) {
 #endif
 }
 
+inline void SetBE16(void* memory, uint16_t v) {
+  *static_cast<uint16_t*>(memory) = HostToNet16(v);
+}
+
+inline void SetBE32(void* memory, uint32_t v) {
+  *static_cast<uint32_t*>(memory) = HostToNet32(v);
+}
+
+inline void SetBE64(void* memory, uint64_t v) {
+  *static_cast<uint64_t*>(memory) = HostToNet64(v);
+}
+
+inline uint16_t GetBE16(const void* memory) {
+  return NetToHost16(*static_cast<const uint16_t*>(memory));
+}
+
+inline uint32_t GetBE32(const void* memory) {
+  return NetToHost32(*static_cast<const uint32_t*>(memory));
+}
+
+inline uint64_t GetBE64(const void* memory) {
+  return NetToHost64(*static_cast<const uint64_t*>(memory));
+}
+
+inline void SetLE16(void* memory, uint16_t v) {
+  *static_cast<uint16_t*>(memory) = ByteSwapToLE16(v);
+}
+
+inline void SetLE32(void* memory, uint32_t v) {
+  *static_cast<uint32_t*>(memory) = ByteSwapToLE32(v);
+}
+
+inline void SetLE64(void* memory, uint64_t v) {
+  *static_cast<uint64_t*>(memory) = ByteSwapToLE64(v);
+}
+
+inline uint16_t GetLE16(const void* memory) {
+  return ByteSwapToLE32(*static_cast<const uint16_t*>(memory));
+}
+
+inline uint32_t GetLE32(const void* memory) {
+  return ByteSwapToLE32(*static_cast<const uint32_t*>(memory));
+}
+
+inline uint64_t GetLE64(const void* memory) {
+  return ByteSwapToLE32(*static_cast<const uint64_t*>(memory));
+}
+
 }  // namespace cr
 
 #endif  // MINI_CHROMIUM_SRC_CRBASE_SYS_BYTEORDER_H_

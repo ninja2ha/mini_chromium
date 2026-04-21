@@ -91,6 +91,12 @@
     <Filter Include="token">
       <UniqueIdentifier>{0c3627df-3ff8-4ef0-93c8-4312c6ee5690}</UniqueIdentifier>
     </Filter>
+    <Filter Include="buffer">
+      <UniqueIdentifier>{6d60904d-b64a-47e6-a148-2690f7273eaf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="digest">
+      <UniqueIdentifier>{3101be16-c105-432d-b657-c2b42d30d108}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_base\atomic\atomic_ref_count.h">
@@ -503,6 +509,24 @@
     <ClInclude Include="..\..\..\src\cr_base\internal\lazy_instance.h">
       <Filter>internal</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\buffer\pickle.h">
+      <Filter>buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\buffer\buffer.h">
+      <Filter>buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\memory\zero_memory.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\buffer\byte_buffer.h">
+      <Filter>buffer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\digest\sha1.h">
+      <Filter>digest</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\digest\md5.h">
+      <Filter>digest</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_base\containers\linked_list.cc">
@@ -741,6 +765,21 @@
     <ClCompile Include="..\..\..\src\cr_base\observer_list_types.cc" />
     <ClCompile Include="..\..\..\src\cr_base\rand_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\version.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\buffer\pickle.cc">
+      <Filter>buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\memory\zero_memory.cc">
+      <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\buffer\byte_buffer.cc">
+      <Filter>buffer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\digest\sha1.cc">
+      <Filter>digest</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\digest\md5.cc">
+      <Filter>digest</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\src\cr_base\CMakeLists.txt" />
