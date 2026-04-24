@@ -53,6 +53,7 @@
     <ClInclude Include="..\..\..\src\cr_base\containers\util.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\alias.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\immediate_crash.h" />
+    <ClInclude Include="..\..\..\src\cr_base\digest\crc32.h" />
     <ClInclude Include="..\..\..\src\cr_base\digest\md5.h" />
     <ClInclude Include="..\..\..\src\cr_base\digest\sha1.h" />
     <ClInclude Include="..\..\..\src\cr_base\environment.h" />
@@ -117,6 +118,7 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\string_number_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_number_conversions_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_piece.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_piece_forward.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_split.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_split_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_util.h" />
@@ -187,6 +189,7 @@
     <ClCompile Include="..\..\..\src\cr_base\containers\linked_list.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\alias.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\immediate_crash.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\digest\crc32.cc" />
     <ClCompile Include="..\..\..\src\cr_base\digest\md5.cc" />
     <ClCompile Include="..\..\..\src\cr_base\digest\sha1.cc" />
     <ClCompile Include="..\..\..\src\cr_base\environment.cc" />

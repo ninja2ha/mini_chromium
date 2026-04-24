@@ -176,7 +176,7 @@ inline void SetLE64(void* memory, uint64_t v) {
 }
 
 inline uint16_t GetLE16(const void* memory) {
-  return ByteSwapToLE32(*static_cast<const uint16_t*>(memory));
+  return ByteSwapToLE16(*static_cast<const uint16_t*>(memory));
 }
 
 inline uint32_t GetLE32(const void* memory) {
@@ -184,7 +184,7 @@ inline uint32_t GetLE32(const void* memory) {
 }
 
 inline uint64_t GetLE64(const void* memory) {
-  return ByteSwapToLE32(*static_cast<const uint64_t*>(memory));
+  return ByteSwapToLE64(*static_cast<const uint64_t*>(memory));
 }
 
 }  // namespace cr

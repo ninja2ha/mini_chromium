@@ -4,6 +4,8 @@
 
 #include "cr_net/socket/tcp/transport_server_socket.h"
 
+#include "cr_base/strings/string_piece.h"
+
 #include "cr_net/base/ip_address.h"
 #include "cr_net/base/ip_endpoint.h"
 #include "cr_net/base/net_errors.h"
@@ -15,7 +17,7 @@ TransportServerSocket::TransportServerSocket() = default;
 TransportServerSocket::~TransportServerSocket() = default;
 
 int TransportServerSocket::ListenWithAddressAndPort(
-    const std::string& address_string,
+    const cr::StringPiece& address_string,
     uint16_t port,
     int backlog) {
   IPAddress ip_address;

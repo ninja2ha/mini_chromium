@@ -41,7 +41,7 @@ class CRNET_EXPORT TCPClient {
   void Close();
 
   void SetReceiveBufferSize(int32_t size);
-  void SetSendBufferSize(int32_t size);
+  void SetSendBufferSize(int32_t size); 
 
   TCPConnection* connection() const {
     return connection_.get();

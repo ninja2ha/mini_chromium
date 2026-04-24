@@ -137,8 +137,11 @@
     <ClInclude Include="..\..\..\src\cr_net\socket\udp\udp_server_socket.h">
       <Filter>socket\udp</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\cr_net\stun\stun.h">
-      <Filter>stun</Filter>
+    <ClInclude Include="..\..\..\src\cr_net\udp\udp_server.h">
+      <Filter>udp</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\p2p\stun.h">
+      <Filter>p2p</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -169,8 +172,11 @@
     <Filter Include="network\win">
       <UniqueIdentifier>{dd205d66-d2ca-4845-8bdf-502054798965}</UniqueIdentifier>
     </Filter>
-    <Filter Include="stun">
-      <UniqueIdentifier>{f82ae23f-6fbc-4047-80f1-17d6a14e8fb8}</UniqueIdentifier>
+    <Filter Include="udp">
+      <UniqueIdentifier>{44ee4626-9f49-4734-b301-11b391aa4072}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="p2p">
+      <UniqueIdentifier>{f3eeed5f-8f2f-465c-beb7-df41cd638844}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -273,8 +279,14 @@
     <ClCompile Include="..\..\..\src\cr_net\socket\udp\udp_server_socket.cc">
       <Filter>socket\udp</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\cr_net\stun\stun.cc">
-      <Filter>stun</Filter>
+    <ClCompile Include="..\..\..\src\cr_net\udp\udp_server.cc">
+      <Filter>udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\p2p\stun.cc">
+      <Filter>p2p</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\datagram_server_socket.cc">
+      <Filter>socket\udp</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include "cr_base/strings/string_piece_forward.h"
+
 #include "cr_net/net_export.h"
 #include "cr_net/base/completion_once_callback.h"
 #include "cr_net/socket/udp/datagram_socket.h"
@@ -29,6 +31,11 @@ class CRNET_EXPORT DatagramServerSocket : public DatagramSocket {
   // Initialize this socket as a server socket listening at |address|.
   // Returns a network error code.
   virtual int Listen(const IPEndPoint& address) = 0;
+
+  // Binds the socket with address and port, and starts listening. It expects
+  // a valid IPv4 or IPv6 address. Otherwise, it returns ERR_ADDRESS_INVALID.
+  virtual int ListenWithAddressAndPort(const cr::StringPiece& address_string,
+                                       uint16_t port);
 
   // Read from a socket and receive sender address information.
   // |buf| is the buffer to read data into.

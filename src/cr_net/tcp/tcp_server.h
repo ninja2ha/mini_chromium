@@ -88,7 +88,7 @@ class CRNET_EXPORT TCPServer {
   TCPServer::Delegate* const delegate_ = nullptr;
 
   TCPConnection::Id last_id_ = 0;
-  std::map<TCPConnection::Id  , std::unique_ptr<TCPConnection>> id_to_connection_;
+  std::map<TCPConnection::Id, std::unique_ptr<TCPConnection>> id_to_connection_;
 
   // Vector of connections whose destruction is pending. Connections may have
   // WebSockets with raw pointers to `this`, so should not out live this, but

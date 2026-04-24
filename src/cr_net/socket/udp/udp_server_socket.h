@@ -7,6 +7,8 @@
 
 #include <stdint.h>
 
+#include "cr_base/strings/string_piece.h"
+
 #include "cr_net/net_export.h"
 #include "cr_net/base/completion_once_callback.h"
 #include "cr_net/socket/udp/datagram_server_socket.h"

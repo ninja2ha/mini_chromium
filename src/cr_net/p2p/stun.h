@@ -1,4 +1,3 @@
-//
 // Copyright 2004 The WebRTC Project Authors. All rights reserved.
 //
 // Use of this source code is governed by a BSD-style license
@@ -6,10 +5,9 @@
 // tree. An additional intellectual property rights grant can be found
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
-//
 
-#ifndef MINI_CHROMIUM_SRC_CRNET_STUN_H_
-#define MINI_CHROMIUM_SRC_CRNET_STUN_H_
+#ifndef MINI_CHROMIUM_SRC_CRNET_P2P_STUN_H_
+#define MINI_CHROMIUM_SRC_CRNET_P2P_STUN_H_
 
 // This file contains classes for dealing with the STUN protocol, as specified
 // in RFC 5389, and its descendants.
@@ -291,7 +289,6 @@ class StunAddressAttribute : public StunAttribute {
     return STUN_ADDRESS_UNDEF;
   }
 
-  ///const cr::SocketAddress& GetAddress() const { return address_; }
   const crnet::IPAddress& ipaddr() const { return end_point_.address(); }
   uint16_t port() const { return end_point_.port(); }
 
@@ -299,11 +296,6 @@ class StunAddressAttribute : public StunAttribute {
     end_point_ = end_point;
     EnsureAddressLength();
   }
-  ///void SetIP(const IPAddress& ip) {
-  ///  end_point_;
-  ///  EnsureAddressLength();
-  ///}
-  ///void SetPort(uint16_t port) { address_.SetPort(port); }
 
   bool Read(cr::NetByteBufferReader* buf) override;
   bool Write(cr::NetByteBufferWriter* buf) const override;
@@ -618,4 +610,4 @@ class IceMessage : public StunMessage {
 
 }  // namespace cr
 
-#endif  // MINI_CHROMIUM_SRC_CRNET_STUN_H_
+#endif  // MINI_CHROMIUM_SRC_CRNET_P2P_STUN_H_

@@ -10,6 +10,8 @@
 #include <memory>
 #include <string>
 
+#include "cr_base/strings/string_piece_forward.h"
+
 #include "cr_net/net_export.h"
 #include "cr_net/base/completion_once_callback.h"
 
@@ -32,7 +34,7 @@ class CRNET_EXPORT TransportServerSocket {
 
   // Binds the socket with address and port, and starts listening. It expects
   // a valid IPv4 or IPv6 address. Otherwise, it returns ERR_ADDRESS_INVALID.
-  virtual int ListenWithAddressAndPort(const std::string& address_string,
+  virtual int ListenWithAddressAndPort(const cr::StringPiece& address_string,
                                        uint16_t port,
                                        int backlog);
 

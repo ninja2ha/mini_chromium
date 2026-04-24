@@ -142,7 +142,7 @@ int TCPServer::HandleAcceptResult(int rv) {
 void TCPServer::DoReadLoop(TCPConnection* connection) {
   int rv;
   do {
-    TCPConnection::ReadIOBuffer* read_buf = connection->read_buf();
+    cr::ReadIOBuffer* read_buf = connection->read_buf();
     // Increases read buffer size if necessary.
     if (read_buf->RemainingCapacity() == 0 && !read_buf->IncreaseCapacity()) {
       Close(connection->id());
@@ -174,7 +174,7 @@ int TCPServer::HandleReadResult(TCPConnection* connection, int rv) {
     return rv == 0 ? ERR_CONNECTION_CLOSED : rv;
   }
 
-  TCPConnection::ReadIOBuffer* read_buf = connection->read_buf();
+  cr::ReadIOBuffer* read_buf = connection->read_buf();
   read_buf->DidRead(rv);
 
   // Handles stream data.
@@ -202,7 +202,7 @@ int TCPServer::HandleReadResult(TCPConnection* connection, int rv) {
 
 void TCPServer::DoWriteLoop(TCPConnection* connection) {
   int rv = OK;
-  TCPConnection::QueuedWriteIOBuffer* write_buf = connection->write_buf();
+  cr::QueuedWriteIOBuffer* write_buf = connection->write_buf();
   while (rv == OK && write_buf->GetSizeToWrite() > 0) {
     rv = connection->socket()->Write(
         write_buf, write_buf->GetSizeToWrite(),

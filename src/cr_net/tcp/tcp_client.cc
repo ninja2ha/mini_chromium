@@ -91,7 +91,7 @@ void TCPClient::HandleConnectResult(int rv) {
 void TCPClient::DoReadLoop() {
   int rv;
   do {
-    TCPConnection::ReadIOBuffer* read_buf = connection_->read_buf();
+    cr::ReadIOBuffer* read_buf = connection_->read_buf();
 
     // Increases read buffer size if necessary.
     if (read_buf->RemainingCapacity() == 0 && !read_buf->IncreaseCapacity()) {
@@ -123,7 +123,7 @@ int TCPClient::HandleReadResult(int rv) {
     return rv == 0 ? ERR_CONNECTION_CLOSED : rv;
   }
 
-  TCPConnection::ReadIOBuffer* read_buf = connection_->read_buf();
+  cr::ReadIOBuffer* read_buf = connection_->read_buf();
   read_buf->DidRead(rv);
 
   // Handles stream data.
@@ -151,7 +151,7 @@ int TCPClient::HandleReadResult(int rv) {
 
 void TCPClient::DoWriteLoop() {
   int rv = OK;
-  TCPConnection::QueuedWriteIOBuffer* write_buf = connection_->write_buf();
+  cr::QueuedWriteIOBuffer* write_buf = connection_->write_buf();
   while (rv == OK && write_buf->GetSizeToWrite() > 0) {
     rv = connection_->socket()->Write(
         write_buf, write_buf->GetSizeToWrite(),

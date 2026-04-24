@@ -8,7 +8,7 @@
 // be found in the AUTHORS file in the root of the source tree.
 //
 
-#include "cr_net/stun/stun.h"
+#include "cr_net/p2p/stun.h"
 
 #include <string.h>
 
@@ -20,12 +20,8 @@
 #include "cr_base/sys_byteorder.h"
 #include "cr_base/digest/sha1.h"
 #include "cr_base/digest/md5.h"
+#include "cr_base/digest/crc32.h"
 #include "cr_base/buffer/byte_buffer.h"
-///#include "rtc_base/byte_order.h"
-///#include "rtc_base/checks.h"
-///#include "rtc_base/crc32.h"
-///#include "rtc_base/logging.h"
-///#include "rtc_base/message_digest.h"
 
 namespace {
 
@@ -316,7 +312,7 @@ bool StunMessage::ValidateFingerprint(const char* data, size_t size) {
   uint32_t fingerprint =
       cr::GetBE32(fingerprint_attr_data + kStunAttributeHeaderSize);
   return ((fingerprint ^ STUN_FINGERPRINT_XOR_VALUE) ==
-          rtc::ComputeCrc32(data, size - fingerprint_attr_size));
+          cr::ComputeCrc32(data, size - fingerprint_attr_size));
 }
 
 bool StunMessage::AddFingerprint() {
@@ -334,7 +330,7 @@ bool StunMessage::AddFingerprint() {
 
   int msg_len_for_crc32 = static_cast<int>(
       buf.Length() - kStunAttributeHeaderSize - fingerprint_attr->length());
-  uint32_t c = rtc::ComputeCrc32(buf.Data(), msg_len_for_crc32);
+  uint32_t c = cr::ComputeCrc32(buf.Data(), msg_len_for_crc32);
 
   // Insert the correct CRC-32, XORed with a constant, into the attribute.
   fingerprint_attr->SetValue(c ^ STUN_FINGERPRINT_XOR_VALUE);
@@ -635,21 +631,13 @@ bool StunAddressAttribute::Write(cr::NetByteBufferWriter* buf) const {
     CR_LOG(Error) << "Error writing address attribute: unknown family.";
     return false;
   }
+
   buf->WriteUInt8(0);
   buf->WriteUInt8(address_family);
   buf->WriteUInt16(end_point_.port());
-  switch (end_point_.GetFamily()) {
-    case ADDRESS_FAMILY_IPV4: {
-      const IPAddress& v4addr = end_point_.address();
-      buf->WriteBytes(v4addr.bytes, sizeof(v4addr));
-      break;
-    }
-    case ADDRESS_FAMILY_IPV6: {
-      in6_addr v6addr = address_.ipaddr().ipv6_address();
-      buf->WriteBytes(reinterpret_cast<char*>(&v6addr), sizeof(v6addr));
-      break;
-    }
-  }
+
+  const IPAddressBytes& bytes = end_point_.address().bytes();
+  buf->WriteBytes(reinterpret_cast<const char*>(bytes.data()), bytes.size());
   return true;
 }
 
@@ -673,31 +661,36 @@ void StunXorAddressAttribute::SetOwner(StunMessage* owner) {
 IPAddress StunXorAddressAttribute::GetXoredIP() const {
   if (owner_) {
     IPAddress ip = ipaddr();
-    switch (ip.family()) {
-      case AF_INET: {
-        in_addr v4addr = ip.ipv4_address();
-        v4addr.s_addr =
-            (v4addr.s_addr ^ rtc::HostToNetwork32(kStunMagicCookie));
-        return rtc::IPAddress(v4addr);
-      }
-      case AF_INET6: {
-        in6_addr v6addr = ip.ipv6_address();
-        const std::string& transaction_id = owner_->transaction_id();
-        if (transaction_id.length() == kStunTransactionIdLength) {
-          uint32_t transactionid_as_ints[3];
-          memcpy(&transactionid_as_ints[0], transaction_id.c_str(),
-                 transaction_id.length());
-          uint32_t* ip_as_ints = reinterpret_cast<uint32_t*>(&v6addr.s6_addr);
-          // Transaction ID is in network byte order, but magic cookie
-          // is stored in host byte order.
-          ip_as_ints[0] =
-              (ip_as_ints[0] ^ cr::HostToNet(kStunMagicCookie));
-          ip_as_ints[1] = (ip_as_ints[1] ^ transactionid_as_ints[0]);
-          ip_as_ints[2] = (ip_as_ints[2] ^ transactionid_as_ints[1]);
-          ip_as_ints[3] = (ip_as_ints[3] ^ transactionid_as_ints[2]);
-          return IPAddress(v6addr);
-        }
-        break;
+
+    if (ip.IsIPv4()) {
+      in_addr v4_addr;
+      CR_DCHECK(sizeof(v4_addr) == ip.bytes().size());
+      memcpy(&v4_addr, ip.bytes().data(), ip.bytes().size());
+      v4_addr.s_addr = 
+          (v4_addr.s_addr ^ cr::HostToNet32(kStunMagicCookie));
+      return IPAddress(v4_addr.S_un.S_un_b.s_b1, v4_addr.S_un.S_un_b.s_b2,
+                       v4_addr.S_un.S_un_b.s_b3, v4_addr.S_un.S_un_b.s_b4);
+    }
+
+    if (ip.IsIPv6()) {
+      in6_addr v6_addr;
+      CR_DCHECK(sizeof(v6_addr) == ip.bytes().size());
+      memcpy(&v6_addr, ip.bytes().data(), ip.bytes().size());
+
+      const std::string& transaction_id = owner_->transaction_id();
+      if (transaction_id.length() == kStunTransactionIdLength) {
+        uint32_t transactionid_as_ints[3];
+        memcpy(&transactionid_as_ints[0], transaction_id.c_str(),
+               transaction_id.length());
+        uint32_t* ip_as_ints = reinterpret_cast<uint32_t*>(&v6_addr.s6_addr);
+        // Transaction ID is in network byte order, but magic cookie
+        // is stored in host byte order.
+        ip_as_ints[0] =
+            (ip_as_ints[0] ^ cr::HostToNet32(kStunMagicCookie));
+        ip_as_ints[1] = (ip_as_ints[1] ^ transactionid_as_ints[0]);
+        ip_as_ints[2] = (ip_as_ints[2] ^ transactionid_as_ints[1]);
+        ip_as_ints[3] = (ip_as_ints[3] ^ transactionid_as_ints[2]);
+        return IPAddress(v6_addr.u.Byte);
       }
     }
   }
@@ -723,24 +716,16 @@ bool StunXorAddressAttribute::Write(cr::NetByteBufferWriter* buf) const {
   }
   IPAddress xored_ip = GetXoredIP();
   if (!xored_ip.IsValid()) {
-  ///if (xored_ip.IsValid() == AF_UNSPEC) {
     return false;
   }
   buf->WriteUInt8(0);
   buf->WriteUInt8(family());
   buf->WriteUInt16(port() ^ (kStunMagicCookie >> 16));
-  switch (xored_ip.family()) {
-    case AF_INET: {
-      in_addr v4addr = xored_ip.ipv4_address();
-      buf->WriteBytes(reinterpret_cast<const char*>(&v4addr), sizeof(v4addr));
-      break;
-    }
-    case AF_INET6: {
-      in6_addr v6addr = xored_ip.ipv6_address();
-      buf->WriteBytes(reinterpret_cast<const char*>(&v6addr), sizeof(v6addr));
-      break;
-    }
-  }
+
+  const IPAddressBytes& bytes = xored_ip.bytes();
+  CR_DCHECK(bytes.size() == sizeof(in_addr) || 
+            bytes.size() == sizeof(in6_addr));
+  buf->WriteBytes(reinterpret_cast<const char*>(bytes.data()), bytes.size());
   return true;
 }
 

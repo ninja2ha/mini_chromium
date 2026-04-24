@@ -10,6 +10,9 @@
 #include "cr_net/tcp/tcp_server.h"
 #include "cr_net/socket/tcp/tcp_server_socket.h"
 
+#include "cr_net/udp/udp_server.h"
+#include "cr_net/socket/udp/udp_server_socket.h"
+
 #include "cr_net/tcp/tcp_client.h"
 #include "cr_net/socket/tcp/tcp_client_socket.h"
 
@@ -17,10 +20,11 @@
 
 namespace {
 
+// --- TCP Server --------------------------------------------------------------
+
 class TCPServerHandle : public crnet::TCPServer::Delegate {
  public:
   // -- crnet::TCPServer::Delegate  --
-
   void OnAccept(crnet::TCPConnection* connection) override;
   int OnReceiveData(crnet::TCPConnection* connection, 
                     const char* data, 
@@ -30,7 +34,8 @@ class TCPServerHandle : public crnet::TCPServer::Delegate {
 
 //
 void TCPServerHandle::OnAccept(crnet::TCPConnection* connection) {
-  CR_LOG(Info) << "[SERVER] Got connection, id:" << connection->id();
+  CR_LOG(Info) << "[TCP SERVER] Got connection, id:" 
+               << connection->id();
 }
 
 //
@@ -42,10 +47,11 @@ int TCPServerHandle::OnReceiveData(crnet::TCPConnection* connection,
 
 //
 void TCPServerHandle::OnClose(crnet::TCPConnection* connection) {
-  CR_LOG(Info) << "[SERVER] Connection was closing, id:" << connection->id();
+  CR_LOG(Info) << "[TCP SERVER] Connection was closing, id:" 
+               << connection->id();
 }
 
-// --
+// --- TCP Client --------------------------------------------------------------
 
 class TCPClientHandle : public crnet::TCPClient::Delegate {
  public:
@@ -56,7 +62,8 @@ class TCPClientHandle : public crnet::TCPClient::Delegate {
 
 
 void TCPClientHandle::OnConnect(int rv) {
-  CR_LOG(Info) << "[CLIENT] Result of connection: " << crnet::ErrorToString(rv);
+  CR_LOG(Info) << "[TCP CLIENT] Result of connection: " 
+               << crnet::ErrorToString(rv);
 }
 
 int TCPClientHandle::OnReceiveData(const char* data, int data_len) {
@@ -64,7 +71,23 @@ int TCPClientHandle::OnReceiveData(const char* data, int data_len) {
 }
 
 void TCPClientHandle::OnClose() {
-  CR_LOG(Info) << "[CLIENT] Disconnect with server.";
+  CR_LOG(Info) << "[TCP CLIENT] Disconnect with server.";
+}
+
+// --- UDP Server --------------------------------------------------------------
+
+class UDPServerHandle : public crnet::UDPServer::Delegate {
+ public:
+  void OnRecvData(const crnet::IPEndPoint& end_point,
+                  const char* data,
+                  int data_len) override;
+};
+
+void UDPServerHandle::OnRecvData(const crnet::IPEndPoint& end_point,
+                                 const char* data,
+                                 int data_len) {
+  CR_LOG(Info) << "[UDP SERVER]: Got message from[" << end_point.ToString()
+               << "], msg=>" << cr::StringPiece(data, data_len);
 }
 
 }  // namespace
@@ -79,28 +102,52 @@ int main(int argc, char* argv[]) {
 
   int net_error = 0;
 
-  // - server
-  auto server_handle = cr::WrapUnique(new TCPServerHandle());
-  auto socket = cr::WrapUnique(new crnet::TCPServerSocket());
+  // --- tcp server ------------------------------------------------------------
 
-  net_error = socket->ListenWithAddressAndPort("::1", 3838, SOMAXCONN);
-  CR_LOG(Info) << "[SERVER] Listen with address and port, Result: " 
+  auto tcp_server_handle = cr::WrapUnique(new TCPServerHandle());
+  auto tcp_server_socket = cr::WrapUnique(new crnet::TCPServerSocket());
+
+  net_error = 
+      tcp_server_socket->ListenWithAddressAndPort("::1", 3838, SOMAXCONN);
+  CR_LOG(Info) << "[TCP SERVER] Listen with address and port, Result: " 
                << crnet::ErrorToString(net_error);
   
-  crnet::IPEndPoint bind_addr;
-  if (socket->GetLocalAddress(&bind_addr) == crnet::OK) {
-    CR_LOG(Info) << "[SERVER] Listening on the address: " 
-                 << bind_addr.ToString();
+  crnet::IPEndPoint tcp_bind_addr;
+  if (tcp_server_socket->GetLocalAddress(&tcp_bind_addr) == crnet::OK) {
+    CR_LOG(Info) << "[TCP SERVER] Listening on the address: " 
+                 << tcp_bind_addr.ToString();
   }
 
-  crnet::TCPServer server(std::move(socket), server_handle.get());
+  crnet::TCPServer server(std::move(tcp_server_socket), 
+                          tcp_server_handle.get());
 
-  // - client
-  auto client_handle = cr::WrapUnique(new TCPClientHandle());
+  // --- tcp client ------------------------------------------------------------
 
-  auto client_socket = cr::WrapUnique(new crnet::TCPClientSocket(
+  auto tcp_client_handle = cr::WrapUnique(new TCPClientHandle());
+
+  auto tcp_client_socket = cr::WrapUnique(new crnet::TCPClientSocket(
       crnet::AddressList::CreateFromIPLiteral("::1", 3838), nullptr));
-  crnet::TCPClient client(std::move(client_socket), client_handle.get());
+  crnet::TCPClient client(std::move(tcp_client_socket), 
+                                    tcp_client_handle.get());
+
+  // -- udp server -------------------------------------------------------------
+
+  auto udp_server_handle = cr::WrapUnique(new UDPServerHandle);
+  auto udp_server_socket = cr::WrapUnique(new crnet::UDPServerSocket());
+  net_error = udp_server_socket->ListenWithAddressAndPort("127.0.0.1", 3000);
+  CR_LOG(Info) << "[UDP SERVER] Listen with address and port, Result: " 
+               << crnet::ErrorToString(net_error);
+  
+  crnet::IPEndPoint udp_bind_addr;
+  if (udp_server_socket->GetLocalAddress(&udp_bind_addr) == crnet::OK) {
+    CR_LOG(Info) << "[UDP SERVER] Listening on the address: " 
+                 << udp_bind_addr.ToString();
+  }
+
+  crnet::UDPServer udp_server(std::move(udp_server_socket), 
+                              udp_server_handle.get());
+
+  // -- run loop ---------------------------------------------------------------
 
   cr::RunLoop run_loop;
   run_loop.Run(CR_FROM_HERE);
