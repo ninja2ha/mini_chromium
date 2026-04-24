@@ -44,7 +44,12 @@ class CRNET_EXPORT UDPServer {
 
   void SendData(const IPEndPoint& end_point, cr::Span<const char> data);
 
+  // set the max receive buffer size for per-recv-from data.
+  // the default size are 1024 bytes.
+  // call it behand the Constructor.
   void SetReceiveBufferSize(int32_t size);
+
+  // set the max send data size. the default value are 1024 * 1024 bytes
   void SetSendBufferSize(int32_t size);
 
  private:

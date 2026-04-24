@@ -64,6 +64,11 @@ StringIOBuffer::StringIOBuffer(std::unique_ptr<std::string> s) {
   SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
 }
 
+StringIOBuffer::StringIOBuffer(size_t s) {
+  string_data_.resize(s);
+  SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
+}
+
 StringIOBuffer::~StringIOBuffer() {
   ClearSpan();
 }

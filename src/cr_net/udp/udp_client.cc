@@ -48,6 +48,7 @@ void UDPClient::SendData(cr::Span<const char> data) {
 }
 
 void UDPClient::SetReceiveBufferSize(int32_t size) {
+  read_buf_->SetCapacity(size);
   read_buf_->set_max_buffer_size(size);
 }
 

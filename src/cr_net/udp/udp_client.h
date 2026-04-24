@@ -41,7 +41,10 @@ class CRNET_EXPORT UDPClient {
 
   void SendData(cr::Span<const char> data);
 
+  // set the max receive buffer size for read data.
+  // the default size are 1024 bytes. call it behand the Constructor.
   void SetReceiveBufferSize(int32_t size);
+
   void SetSendBufferSize(int32_t size);
 
  private:

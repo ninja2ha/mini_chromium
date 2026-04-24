@@ -50,6 +50,7 @@ void UDPServer::SendData(const IPEndPoint& end_point,
 }
 
 void UDPServer::SetReceiveBufferSize(int32_t size) {
+  read_buf_->SetCapacity(size);
   read_buf_->set_max_buffer_size(size);
 }
 
