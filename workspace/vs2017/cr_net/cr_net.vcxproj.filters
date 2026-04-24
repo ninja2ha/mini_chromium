@@ -143,6 +143,9 @@
     <ClInclude Include="..\..\..\src\cr_net\p2p\stun.h">
       <Filter>p2p</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\udp\udp_client.h">
+      <Filter>udp</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="base">
@@ -286,6 +289,12 @@
       <Filter>p2p</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_net\socket\udp\datagram_server_socket.cc">
+      <Filter>socket\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\udp\udp_client.cc">
+      <Filter>udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\socket\udp\datagram_client_socket.cc">
       <Filter>socket\udp</Filter>
     </ClCompile>
   </ItemGroup>

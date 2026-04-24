@@ -5,6 +5,8 @@
 #ifndef MINI_CHROMIUM_SRC_CRNET_SOCKET_UDP_DATAGRAM_CLIENT_SOCKET_H_
 #define MINI_CHROMIUM_SRC_CRNET_SOCKET_UDP_DATAGRAM_CLIENT_SOCKET_H_
 
+#include "cr_base/strings/string_piece_forward.h"
+
 #include "cr_net/net_export.h"
 #include "cr_net/base/datagram_buffer.h"
 #include "cr_net/socket/socket.h"
@@ -24,6 +26,11 @@ class CRNET_EXPORT DatagramClientSocket : public DatagramSocket,
   // Initialize this socket as a client socket to server at |address|.
   // Returns a network error code.
   virtual int Connect(const IPEndPoint& address) = 0;
+
+  // |address_string| expects a valid IPv4 or IPv6 address. Otherwise, 
+  // it returns ERR_ADDRESS_INVALID.
+  virtual int ConnectWithAddressAndPort(const cr::StringPiece& address_string,
+                                        uint16_t port);
 
   // Binds this socket to |network| and initializes socket as a client socket
   // to server at |address|. All data traffic on the socket will be sent and

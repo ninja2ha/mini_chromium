@@ -12,7 +12,9 @@
 #include "cr_net/socket/tcp/tcp_server_socket.h"
 
 #include "cr_net/udp/udp_server.h"
+#include "cr_net/udp/udp_client.h"
 #include "cr_net/socket/udp/udp_server_socket.h"
+#include "cr_net/socket/udp/udp_client_socket.h"
 
 #include "cr_net/tcp/tcp_client.h"
 #include "cr_net/socket/tcp/tcp_client_socket.h"
@@ -79,9 +81,9 @@ void TCPClientHandle::OnClose() {
 
 class UDPServerHandle : public crnet::UDPServer::Delegate {
  public:
-  void OnRecvData(const crnet::IPEndPoint& end_point,
-                  const char* data,
-                  int data_len) override;
+  void OnReceiveData(const crnet::IPEndPoint& end_point,
+                     const char* data,
+                     int data_len) override;
 
   void SetServer(crnet::UDPServer* server) {
     server_ = server;
@@ -91,9 +93,9 @@ class UDPServerHandle : public crnet::UDPServer::Delegate {
   crnet::UDPServer* server_ = nullptr;
 };
 
-void UDPServerHandle::OnRecvData(const crnet::IPEndPoint& end_point,
-                                 const char* data,
-                                 int data_len) {
+void UDPServerHandle::OnReceiveData(const crnet::IPEndPoint& end_point,
+                                    const char* data,
+                                    int data_len) {
   CR_LOG(Info) << "[UDP SERVER]: Got message from[" << end_point.ToString()
                << "], msg=>" << cr::StringPiece(data, data_len);
   if (server_) {
@@ -103,6 +105,19 @@ void UDPServerHandle::OnRecvData(const crnet::IPEndPoint& end_point,
   }
 }
 
+// --- UDP Client --------------------------------------------------------------
+
+class UDPClientHandle : public crnet::UDPClient::Delegate {
+ public:
+  void OnReceiveData(const char* data,
+                     int data_len) override;
+};
+
+void UDPClientHandle::OnReceiveData(const char* data,
+                                    int data_len) {
+  CR_LOG(Info) << "[UDP CLIENT]: Got message=>" 
+               << cr::StringPiece(data, data_len);
+}
 }  // namespace
 
 ////////////////////////////////////////////////////////////////////////////////
@@ -131,8 +146,8 @@ int main(int argc, char* argv[]) {
                  << tcp_bind_addr.ToString();
   }
 
-  crnet::TCPServer server(std::move(tcp_server_socket), 
-                          tcp_server_handle.get());
+  crnet::TCPServer tcp_server(std::move(tcp_server_socket), 
+                              tcp_server_handle.get());
 
   // --- tcp client ------------------------------------------------------------
 
@@ -140,8 +155,8 @@ int main(int argc, char* argv[]) {
 
   auto tcp_client_socket = cr::WrapUnique(new crnet::TCPClientSocket(
       crnet::AddressList::CreateFromIPLiteral("::1", 3838), nullptr));
-  crnet::TCPClient client(std::move(tcp_client_socket), 
-                                    tcp_client_handle.get());
+  crnet::TCPClient tcp_client(std::move(tcp_client_socket), 
+                              tcp_client_handle.get());
 
   // -- udp server -------------------------------------------------------------
 
@@ -160,6 +175,16 @@ int main(int argc, char* argv[]) {
   crnet::UDPServer udp_server(std::move(udp_server_socket), 
                               udp_server_handle.get());
   udp_server_handle->SetServer(&udp_server);
+
+  // -- udp client -------------------------------------------------------------
+
+  auto udp_client_handle = cr::WrapUnique(new UDPClientHandle);
+  auto udp_client_socket = cr::WrapUnique(
+      new crnet::UDPClientSocket(crnet::UDPClientSocket::RANDOM_BIND));
+  net_error = udp_client_socket->ConnectWithAddressAndPort("127.0.0.1", 3000);
+  crnet::UDPClient udp_client(std::move(udp_client_socket),
+                              udp_client_handle.get());
+  udp_client.SendData(cr::Span<const char>("hello udp server!"));
 
   // -- run loop ---------------------------------------------------------------
 

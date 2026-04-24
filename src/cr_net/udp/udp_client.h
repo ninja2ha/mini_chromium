@@ -6,8 +6,8 @@
 // in the file PATENTS.  All contributing project authors may
 // be found in the AUTHORS file in the root of the source tree.
 
-#ifndef MINI_CHROMIUM_SRC_CRNET_UDP_UDP_SERVER_H_
-#define MINI_CHROMIUM_SRC_CRNET_UDP_UDP_SERVER_H_
+#ifndef MINI_CHROMIUM_SRC_CRNET_UDP_UDP_CLIENT_H_
+#define MINI_CHROMIUM_SRC_CRNET_UDP_UDP_CLIENT_H_
 
 #include <stddef.h>
 #include <stdint.h>
@@ -21,37 +21,34 @@
 
 #include "cr_net/net_export.h"
 #include "cr_net/base/ip_endpoint.h"
-#include "cr_net/socket/udp/datagram_server_socket.h"
+#include "cr_net/socket/udp/datagram_client_socket.h"
 
 namespace crnet {
 
-class CRNET_EXPORT UDPServer {
+class CRNET_EXPORT UDPClient {
  public:
   struct Delegate {
     virtual ~Delegate() {};
-
-    virtual void OnReceiveData(const IPEndPoint& end_point,
-                               const char* data, 
-                               int data_len) = 0;
+    virtual void OnReceiveData(const char* data, int data_len) = 0;
   };
 
-  UDPServer(const UDPServer&) = delete;
-  UDPServer& operator=(const UDPServer&) = delete;
+  UDPClient(const UDPClient&) = delete;
+  UDPClient& operator=(const UDPClient&) = delete;
 
-  UDPServer(std::unique_ptr<DatagramServerSocket> socket,
+  UDPClient(std::unique_ptr<DatagramClientSocket> socket,
             Delegate* delegate);
-  ~UDPServer();
+  ~UDPClient();
 
-  void SendData(const IPEndPoint& end_point, cr::Span<const char> data);
+  void SendData(cr::Span<const char> data);
 
   void SetReceiveBufferSize(int32_t size);
   void SetSendBufferSize(int32_t size);
 
  private:
    // -- read --
-  void DoRecvFromLoop();
-  void OnRecvFromCompleted(int rv);
-  int HandleRecvFromResult(int rv);
+  void DoReadLoop();
+  void OnReadCompleted(int rv);
+  int HandleReadResult(int rv);
 
   // -- write --
   void DoWriteLoop();
@@ -59,26 +56,22 @@ class CRNET_EXPORT UDPServer {
   int HandleWriteResult(int rv);
 
   // -- handle --
-  void HandleReadedData(const IPEndPoint& end_point, 
-                        const char* data, 
-                        int size);
+  void HandleReadedData(const char* data, int size);
 
  private:
   Delegate* delegate_;
 
-  IPEndPoint end_point_;
-  std::unique_ptr<DatagramServerSocket> socket_;
+  std::unique_ptr<DatagramClientSocket> socket_;
 
   // -- write --
   cr::RefPtr<cr::QueuedWriteIOBuffer> write_queue_;
-  cr::Queue<IPEndPoint> write_queue_ep_;
 
   // -- read --
   cr::RefPtr<cr::ReadIOBuffer> read_buf_;
 
-  cr::WeakPtrFactory<UDPServer> weak_ptr_factory_{ this };
+  cr::WeakPtrFactory<UDPClient> weak_ptr_factory_{ this };
 };
 
 }  // namespace crnet
 
-#endif  // MINI_CHROMIUM_SRC_CRNET_UDP_UDP_SERVER_H_
+#endif  // MINI_CHROMIUM_SRC_CRNET_UDP_UDP_CLIENT_H_
