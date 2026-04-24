@@ -1,6 +1,7 @@
 #include "cr_base/logging/logging.h"
 #include "cr_base/at_exit.h"
 #include "cr_base/memory/ptr_util.h"
+#include "cr_base/containers/span.h"
 
 #include "cr_event/run_loop.h"
 #include "cr_event/single_thread_task_runner.h"
@@ -81,6 +82,13 @@ class UDPServerHandle : public crnet::UDPServer::Delegate {
   void OnRecvData(const crnet::IPEndPoint& end_point,
                   const char* data,
                   int data_len) override;
+
+  void SetServer(crnet::UDPServer* server) {
+    server_ = server;
+  }
+
+ private:
+  crnet::UDPServer* server_ = nullptr;
 };
 
 void UDPServerHandle::OnRecvData(const crnet::IPEndPoint& end_point,
@@ -88,6 +96,11 @@ void UDPServerHandle::OnRecvData(const crnet::IPEndPoint& end_point,
                                  int data_len) {
   CR_LOG(Info) << "[UDP SERVER]: Got message from[" << end_point.ToString()
                << "], msg=>" << cr::StringPiece(data, data_len);
+  if (server_) {
+    std::string msg(data, data_len);
+    msg.append(", got it.");
+    server_->SendData(end_point, cr::Span<const char>(msg));
+  }
 }
 
 }  // namespace
@@ -146,6 +159,7 @@ int main(int argc, char* argv[]) {
 
   crnet::UDPServer udp_server(std::move(udp_server_socket), 
                               udp_server_handle.get());
+  udp_server_handle->SetServer(&udp_server);
 
   // -- run loop ---------------------------------------------------------------
 

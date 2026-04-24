@@ -99,7 +99,7 @@ void UDPServer::DoWriteLoop() {
 
   int rv = OK;
   cr::QueuedWriteIOBuffer* write_buf = write_queue_.get();
-  while (rv == OK) {
+  while (rv == OK && write_buf->GetSizeToWrite() > 0) {
     rv = socket_->SendTo(
         write_buf, 
         write_buf->GetSizeToWrite(), 
