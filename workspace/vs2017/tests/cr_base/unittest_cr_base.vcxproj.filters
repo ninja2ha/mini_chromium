@@ -54,6 +54,9 @@
     <ClCompile Include="..\..\..\..\tests\cr_base\synchronization\waitable_event_unittest.cc">
       <Filter>synchronization</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\tests\cr_base\strings\string_tokenizer_unittest.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="files">

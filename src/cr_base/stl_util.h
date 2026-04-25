@@ -221,6 +221,8 @@ void IterateAndEraseIf(Container& container, Predicate pred) {
 
 }  // namespace internal
 
+// --- Erase --
+
 // Erase/EraseIf are based on library fundamentals ts v2 erase/erase_if
 // http://en.cppreference.com/w/cpp/experimental/lib_extensions_2
 // They provide a generic way to erase elements from a container.

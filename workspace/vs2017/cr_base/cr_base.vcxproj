@@ -40,6 +40,7 @@
     <ClInclude Include="..\..\..\src\cr_base\buffer\buffer.h" />
     <ClInclude Include="..\..\..\src\cr_base\buffer\byte_buffer.h" />
     <ClInclude Include="..\..\..\src\cr_base\buffer\pickle.h" />
+    <ClInclude Include="..\..\..\src\cr_base\command_line.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\circular_deque.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\checked_iterators.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\contiguous_iterator.h" />
@@ -121,6 +122,7 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\string_piece_forward.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_split.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_split_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_tokenizer.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_util_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\sys_string_conversions.h" />
@@ -186,6 +188,7 @@
     <ClCompile Include="..\..\..\src\cr_base\at_exit.cc" />
     <ClCompile Include="..\..\..\src\cr_base\buffer\byte_buffer.cc" />
     <ClCompile Include="..\..\..\src\cr_base\buffer\pickle.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\command_line.cc" />
     <ClCompile Include="..\..\..\src\cr_base\containers\linked_list.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\alias.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\immediate_crash.cc" />
