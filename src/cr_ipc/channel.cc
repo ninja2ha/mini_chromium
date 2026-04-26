@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cripc/channel.h"
+#include "cr_ipc/channel.h"
 
 #include <stddef.h>
 #include <string.h>
@@ -12,18 +12,17 @@
 #include <limits>
 #include <utility>
 
-#include "crbase/logging/logging.h"
-#include "crbase/memory/ptr_util.h"
-#include "crbase/numerics/safe_math.h"
-#include "crbase/bits.h"
-#include "crbuild/build_config.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/memory/ptr_util.h"
+#include "cr_base/numerics/safe_math.h"
+#include "cr_base/bits.h"
+#include "cr_build/build_config.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
-#include "crbase/win/win_util.h"
+#include "cr_base/win/win_util.h"
 #endif
 
-namespace mojo {
-namespace core {
+namespace cripc {
 
 namespace {
 
@@ -164,7 +163,7 @@ class Channel::ReadBuffer {
 
 Channel::Channel(Delegate* delegate)
     : delegate_(delegate),
-      read_buffer_(nullptr) {}
+      read_buffer_(new ReadBuffer) {}
 
 Channel::~Channel() = default;
 
@@ -205,8 +204,6 @@ bool Channel::OnReadComplete(size_t bytes_read, size_t* next_read_size_hint) {
       *next_read_size_hint = 0;
     } else if (result == DispatchResult::kNotEnoughData) {
       return true;
-    } else if (result == DispatchResult::kMissingHandles) {
-      break;
     } else if (result == DispatchResult::kError) {
       return false;
     }
@@ -217,6 +214,9 @@ bool Channel::OnReadComplete(size_t bytes_read, size_t* next_read_size_hint) {
 Channel::DispatchResult Channel::TryDispatchMessage(
     cr::Span<const char> buffer,
     size_t* size_hint) {
+  if (delegate_)
+    return delegate_->OnChannelMessage(buffer.data(), buffer.size(), size_hint);
+  
   *size_hint = buffer.size();
   return DispatchResult::kOK;
 }
@@ -226,5 +226,4 @@ void Channel::OnError(Error error) {
     delegate_->OnChannelError(error);
 }
 
-}  // namespace core
-}  // namespace mojo
+}  // namespace cripc

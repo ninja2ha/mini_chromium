@@ -30,7 +30,7 @@ class CRNET_EXPORT UDPServer {
   struct Delegate {
     virtual ~Delegate() {};
 
-    virtual void OnReceiveData(const IPEndPoint& end_point,
+    virtual void OnReceiveData(const IPEndPoint& endpoint,
                                const char* data, 
                                int data_len) = 0;
   };
@@ -42,7 +42,7 @@ class CRNET_EXPORT UDPServer {
             Delegate* delegate);
   ~UDPServer();
 
-  void SendData(const IPEndPoint& end_point, cr::Span<const char> data);
+  void SendData(const IPEndPoint& endpoint, cr::Span<const char> data);
 
   // set the max receive buffer size for per-recv-from data.
   // the default size are 1024 bytes.
@@ -64,14 +64,14 @@ class CRNET_EXPORT UDPServer {
   int HandleWriteResult(int rv);
 
   // -- handle --
-  void HandleReadedData(const IPEndPoint& end_point, 
+  void HandleReadedData(const IPEndPoint& endpoint, 
                         const char* data, 
                         int size);
 
  private:
   Delegate* delegate_;
 
-  IPEndPoint end_point_;
+  IPEndPoint endpoint_;
   std::unique_ptr<DatagramServerSocket> socket_;
 
   // -- write --

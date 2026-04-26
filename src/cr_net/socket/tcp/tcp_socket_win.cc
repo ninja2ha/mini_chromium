@@ -783,8 +783,8 @@ int TCPSocketWin::AcceptInternal(std::unique_ptr<TCPSocketWin>* socket,
     return net_error;
   }
 
-  IPEndPoint ip_end_point;
-  if (!ip_end_point.FromSockAddr(storage.addr, storage.addr_len)) {
+  IPEndPoint ip_endpoint;
+  if (!ip_endpoint.FromSockAddr(storage.addr, storage.addr_len)) {
     CR_NOTREACHED();
     if (closesocket(new_socket) < 0)
       CR_PLOG(Error) << "closesocket";
@@ -794,16 +794,16 @@ int TCPSocketWin::AcceptInternal(std::unique_ptr<TCPSocketWin>* socket,
   }
   std::unique_ptr<TCPSocketWin> tcp_socket(
       new TCPSocketWin(nullptr/*, net_log_.net_log(), net_log_.source()*/));
-  int adopt_result = tcp_socket->AdoptConnectedSocket(new_socket, ip_end_point);
+  int adopt_result = tcp_socket->AdoptConnectedSocket(new_socket, ip_endpoint);
   if (adopt_result != OK) {
     ///net_log_.EndEventWithNetErrorCode(NetLogEventType::TCP_ACCEPT,
     ///                                  adopt_result);
     return adopt_result;
   }
   *socket = std::move(tcp_socket);
-  *address = ip_end_point;
+  *address = ip_endpoint;
   ///net_log_.EndEvent(NetLogEventType::TCP_ACCEPT, [&] {
-  ///  return CreateNetLogIPEndPointParams(&ip_end_point);
+  ///  return CreateNetLogIPEndPointParams(&ip_endpoint);
   ///});
   return OK;
 }

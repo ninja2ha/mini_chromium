@@ -2,28 +2,28 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cripc/named_channel.h"
+#include "cr_ipc/named_channel.h"
 
-#include "crbase/logging/logging.h"
-#include "crbase/strings/utf_string_conversions.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/strings/utf_string_conversions.h"
 
-namespace mojo {
+namespace cripc {
 
-NamedPlatformChannel::NamedPlatformChannel(const Options& options) {
-  server_endpoint_ = PlatformChannelServerEndpoint(
+NamedChannel::NamedChannel(const Options& options) {
+  server_endpoint_ = ChannelServerEndpoint(
       CreateServerEndpoint(options, &server_name_));
 }
 
-NamedPlatformChannel::NamedPlatformChannel(NamedPlatformChannel&& other) =
+NamedChannel::NamedChannel(NamedChannel&& other) =
     default;
 
-NamedPlatformChannel::~NamedPlatformChannel() = default;
+NamedChannel::~NamedChannel() = default;
 
-NamedPlatformChannel& NamedPlatformChannel::operator=(
-    NamedPlatformChannel&& other) = default;
+NamedChannel& NamedChannel::operator=(
+    NamedChannel&& other) = default;
 
 // static
-NamedPlatformChannel::ServerName NamedPlatformChannel::ServerNameFromUTF8(
+NamedChannel::ServerName NamedChannel::ServerNameFromUTF8(
     cr::StringPiece name) {
 #if defined(MINI_CHROMIUM_OS_WIN)
   return cr::UTF8ToWide(name);
@@ -33,10 +33,9 @@ NamedPlatformChannel::ServerName NamedPlatformChannel::ServerNameFromUTF8(
 }
 
 // static
-PlatformChannelEndpoint NamedPlatformChannel::ConnectToServer(
-    const ServerName& server_name) {
+ChannelEndpoint NamedChannel::ConnectToServer(const ServerName& server_name) {
   CR_DCHECK(!server_name.empty());
   return CreateClientEndpoint(server_name);
 }
 
-}  // namespace mojo
+}  // namespace cripc

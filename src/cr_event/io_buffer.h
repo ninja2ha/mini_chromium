@@ -127,8 +127,8 @@ class CREVENT_EXPORT IOBuffer : public cr::RefCountedThreadSafe<IOBuffer> {
 class CREVENT_EXPORT StringIOBuffer : public IOBuffer {
  public:
   explicit StringIOBuffer(std::string s);
-  explicit StringIOBuffer(Span<const char> s);
   explicit StringIOBuffer(std::unique_ptr<std::string> s);
+  explicit StringIOBuffer(Span<const char> s);
   explicit StringIOBuffer(size_t s);
 
   int size() const { return static_cast<int>(string_data_.size()); }

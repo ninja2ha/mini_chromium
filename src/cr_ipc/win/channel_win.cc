@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cripc/channel.h"
+#include "cr_ipc/channel.h"
 
 #include <stdint.h>
 
@@ -10,20 +10,19 @@
 #include <limits>
 #include <memory>
 
-#include "crbase/logging/logging.h"
-#include "crbase/functional/bind.h"
-#include "crbase/containers/queue.h"
-#include "crbase/location.h"
-#include "crbase/synchronization/lock.h"
-#include "crbase/memory/ref_counted.h"
-#include "crbase/win/scoped_handle.h"
-#include "crbase/win/win_util.h"
-#include "crevent/message_pump/message_pump_for_io.h"
-#include "crevent/task/current_thread.h"
-#include "crevent/task_runner.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/functional/bind.h"
+#include "cr_base/containers/queue.h"
+#include "cr_base/location.h"
+#include "cr_base/synchronization/lock.h"
+#include "cr_base/memory/ref_counted.h"
+#include "cr_base/win/scoped_handle.h"
+#include "cr_base/win/win_util.h"
+#include "cr_event/message_pump/message_pump_for_io.h"
+#include "cr_event/task/current_thread.h"
+#include "cr_event/task_runner.h"
 
-namespace mojo {
-namespace core {
+namespace cripc {
 
 namespace {
 
@@ -341,5 +340,4 @@ cr::RefPtr<Channel> Channel::Create(
   return new ChannelWin(delegate, std::move(connection_params), io_task_runner);
 }
 
-}  // namespace core
-}  // namespace mojo
+}  // namespace cripc

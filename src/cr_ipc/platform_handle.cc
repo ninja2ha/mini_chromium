@@ -2,24 +2,24 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cripc/platform_handle.h"
+#include "cr_ipc/platform_handle.h"
 
-#include "crbase/logging/logging.h"
-#include "crbase/stl_util.h"
-#include "crbuild/build_config.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/stl_util.h"
+#include "cr_build/build_config.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
-#include "crbase/win/windows_types.h"
-#include "crbase/win/scoped_handle.h"
+#include "cr_base/win/windows_types.h"
+#include "cr_base/win/scoped_handle.h"
 #endif
 
 #if defined(MINI_CHROMIUM_OS_POSIX)
 #include <unistd.h>
 
-#include "crbase/files/scoped_file.h"
+#include "cr_base/files/scoped_file.h"
 #endif
 
-namespace mojo {
+namespace cripc {
 
 namespace {
 
@@ -113,4 +113,4 @@ PlatformHandle PlatformHandle::Clone() const {
 #endif
 }
 
-}  // namespace mojo
+}  // namespace cripc

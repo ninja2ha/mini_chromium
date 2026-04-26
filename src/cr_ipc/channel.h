@@ -2,20 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_CORE_CHANNEL_H_
-#define MOJO_CORE_CHANNEL_H_
+#ifndef MINI_CHROMIUM_SRC_CRIPC_CHANNEL_H_
+#define MINI_CHROMIUM_SRC_CRIPC_CHANNEL_H_
 
 #include <vector>
 
-#include "crbase/containers/span.h"
-#include "crbase/memory/ref_counted.h"
-#include "crevent/single_thread_task_runner.h"
-#include "crevent/io_buffer.h"
-#include "cripc/connection_params.h"
-#include "crbuild/build_config.h"
+#include "cr_base/containers/span.h"
+#include "cr_base/memory/ref_counted.h"
 
-namespace mojo {
-namespace core {
+#include "cr_event/single_thread_task_runner.h"
+#include "cr_event/io_buffer.h"
+
+#include "cr_ipc/ipc_export.h"
+#include "cr_ipc/connection_params.h"
+
+#include "cr_build/build_config.h"
+
+namespace cripc {
 
 const size_t kChannelMessageAlignment = 8;
 
@@ -49,6 +52,23 @@ class CRIPC_EXPORT Channel
   Channel(const Channel&) = delete;
   Channel& operator=(const Channel&) = delete;
 
+
+  // Called by the implementation to deserialize a message stored in |buffer|.
+  // If the channel was created with DispatchBufferPolicy::kUnmanaged, the
+  // implementation should call this directly. If it was created with kManaged,
+  // OnReadComplete() will call this. |*size_hint| will be set to a recommended
+  // size for the next read done by the implementation.
+  enum class DispatchResult {
+    // The message was dispatched and consumed. |size_hint| contains the size
+    // of the message.
+    kOK,
+    // The message could not be deserialized because |buffer| does not contain
+    // enough data. |size_hint| contains the amount of data missing.
+    kNotEnoughData,
+    // An error occurred during processing.
+    kError,
+  };
+
   // Delegate methods are called from the I/O task runner with which the Channel
   // was created (see Channel::Create).
   class Delegate {
@@ -56,9 +76,11 @@ class CRIPC_EXPORT Channel
     virtual ~Delegate() = default;
 
     // Notify of a received message. |payload| is not owned and must not be
-    // retained; it will be null if |payload_size| is 0.
-    virtual void OnChannelMessage(const void* payload,
-                                  size_t payload_size) = 0;
+    // retained; it will be null if |payload_size| is 0. returns DispatchResult.
+    // |size_hint| are value of you handled size.
+    virtual DispatchResult OnChannelMessage(const void* payload,
+                                            size_t payload_size,
+                                            size_t* size_hint) = 0;
 
     // Notify that an error has occured and the Channel will cease operation.
     virtual void OnChannelError(Error error) = 0;
@@ -126,24 +148,6 @@ class CRIPC_EXPORT Channel
   // DispatchBufferPolicy::kManaged.
   bool OnReadComplete(size_t bytes_read, size_t* next_read_size_hint);
 
-  // Called by the implementation to deserialize a message stored in |buffer|.
-  // If the channel was created with DispatchBufferPolicy::kUnmanaged, the
-  // implementation should call this directly. If it was created with kManaged,
-  // OnReadComplete() will call this. |*size_hint| will be set to a recommended
-  // size for the next read done by the implementation.
-  enum class DispatchResult {
-    // The message was dispatched and consumed. |size_hint| contains the size
-    // of the message.
-    kOK,
-    // The message could not be deserialized because |buffer| does not contain
-    // enough data. |size_hint| contains the amount of data missing.
-    kNotEnoughData,
-    // The message has associated handles that were not transferred in this
-    // message.
-    kMissingHandles,
-    // An error occurred during processing.
-    kError,
-  };
   DispatchResult TryDispatchMessage(cr::Span<const char> buffer,
                                     size_t* size_hint);
 
@@ -160,7 +164,6 @@ class CRIPC_EXPORT Channel
   const std::unique_ptr<ReadBuffer> read_buffer_;
 };
 
-}  // namespace core
-}  // namespace mojo
+}  // namespace cripc
 
-#endif  // MOJO_CORE_CHANNEL_H_
+#endif  // MINI_CHROMIUM_SRC_CRIPC_CHANNEL_H_

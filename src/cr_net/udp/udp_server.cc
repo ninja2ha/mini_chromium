@@ -38,12 +38,12 @@ UDPServer::UDPServer(std::unique_ptr<DatagramServerSocket> socket,
 UDPServer::~UDPServer() {
 }
 
-void UDPServer::SendData(const IPEndPoint& end_point, 
+void UDPServer::SendData(const IPEndPoint& endpoint, 
                          cr::Span<const char> data) {
   bool writing_in_progress = !write_queue_->IsEmpty();
   if (!write_queue_->Append(data))
     return ;
-  write_queue_ep_.push(end_point);
+  write_queue_ep_.push(endpoint);
 
   if (!writing_in_progress)
     DoWriteLoop();
@@ -67,7 +67,7 @@ void UDPServer::DoRecvFromLoop() {
     rv = socket_->RecvFrom(
         read_buf_.get(), 
         read_buf_->RemainingCapacity(), 
-        &end_point_,
+        &endpoint_,
         cr::BindOnce(&UDPServer::OnRecvFromCompleted,
                      weak_ptr_factory_.GetWeakPtr()));
     if (rv == ERR_IO_PENDING) {
@@ -89,7 +89,7 @@ int UDPServer::HandleRecvFromResult(int rv) {
     return rv;
   }
 
-  HandleReadedData(end_point_, read_buf_->data(), rv);
+  HandleReadedData(endpoint_, read_buf_->data(), rv);
   return OK;
 }
 
@@ -132,11 +132,11 @@ int UDPServer::HandleWriteResult(int rv) {
   return OK;
 }
 
-void UDPServer::HandleReadedData(const IPEndPoint& end_point,
+void UDPServer::HandleReadedData(const IPEndPoint& endpoint,
                                  const char* data,
                                  int size) {
   if (delegate_)
-    delegate_->OnReceiveData(end_point, data, size);
+    delegate_->OnReceiveData(endpoint, data, size);
 }
 
 }  // namespace crnet

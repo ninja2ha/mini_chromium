@@ -570,9 +570,9 @@ StunAttribute::CreateUnknownAttributes() {
 }
 
 StunAddressAttribute::StunAddressAttribute(uint16_t type,
-                                           const IPEndPoint& end_point)
+                                           const IPEndPoint& endpoint)
     : StunAttribute(type, 0) {
-  SetEndPoint(end_point);
+  SetEndPoint(endpoint);
 }
 
 StunAddressAttribute::StunAddressAttribute(uint16_t type, uint16_t length)
@@ -632,9 +632,9 @@ bool StunAddressAttribute::Write(cr::NetByteBufferWriter* buf) const {
 
   buf->WriteUInt8(0);
   buf->WriteUInt8(address_family);
-  buf->WriteUInt16(end_point_.port());
+  buf->WriteUInt16(endpoint_.port());
 
-  const IPAddressBytes& bytes = end_point_.address().bytes();
+  const IPAddressBytes& bytes = endpoint_.address().bytes();
   buf->WriteBytes(reinterpret_cast<const char*>(bytes.data()), bytes.size());
   return true;
 }

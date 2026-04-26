@@ -2,23 +2,23 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_HANDLE_H_
-#define MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_HANDLE_H_
+#ifndef MINI_CHROMIUM_SRC_CRIPC_PLATFORM_HANDLE_
+#define MINI_CHROMIUM_SRC_CRIPC_PLATFORM_HANDLE_
 
-#include "crbase/logging/logging.h"
-#include "crbase/files/platform_file.h"
-#include "cripc/ipc_export.h"
-#include "crbuild/build_config.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/files/platform_file.h"
+#include "cr_ipc/ipc_export.h"
+#include "cr_build/build_config.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
-#include "crbase/win/scoped_handle.h"
+#include "cr_base/win/scoped_handle.h"
 #endif
 
 #if defined(MINI_CHROMIUM_OS_POSIX)
-#include "crbase/files/scoped_file.h"
+#include "cr_base/files/scoped_file.h"
 #endif
 
-namespace mojo {
+namespace cripc {
 
 // A PlatformHandle is a generic wrapper around a platform-specific system
 // handle type, e.g. a POSIX file descriptor, Windows HANDLE, or macOS Mach
@@ -153,6 +153,6 @@ class CRIPC_EXPORT PlatformHandle {
 #endif
 };
 
-}  // namespace mojo
+}  // namespace cripc
 
-#endif  // MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_HANDLE_H_
+#endif  // MINI_CHROMIUM_SRC_CRIPC_PLATFORM_HANDLE_

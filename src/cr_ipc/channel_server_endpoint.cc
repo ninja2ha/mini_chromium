@@ -2,30 +2,30 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cripc/channel_server_endpoint.h"
+#include "cr_ipc/channel_server_endpoint.h"
 
-namespace mojo {
+namespace cripc {
 
-PlatformChannelServerEndpoint::PlatformChannelServerEndpoint() = default;
+ChannelServerEndpoint::ChannelServerEndpoint() = default;
 
-PlatformChannelServerEndpoint::PlatformChannelServerEndpoint(
-    PlatformChannelServerEndpoint&& other) = default;
+ChannelServerEndpoint::ChannelServerEndpoint(
+    ChannelServerEndpoint&& other) = default;
 
-PlatformChannelServerEndpoint::PlatformChannelServerEndpoint(
+ChannelServerEndpoint::ChannelServerEndpoint(
     PlatformHandle handle)
     : handle_(std::move(handle)) {}
 
-PlatformChannelServerEndpoint::~PlatformChannelServerEndpoint() = default;
+ChannelServerEndpoint::~ChannelServerEndpoint() = default;
 
-PlatformChannelServerEndpoint& PlatformChannelServerEndpoint::operator=(
-    PlatformChannelServerEndpoint&& other) = default;
+ChannelServerEndpoint& ChannelServerEndpoint::operator=(
+    ChannelServerEndpoint&& other) = default;
 
-void PlatformChannelServerEndpoint::reset() {
+void ChannelServerEndpoint::reset() {
   handle_.reset();
 }
 
-PlatformChannelServerEndpoint PlatformChannelServerEndpoint::Clone() const {
-  return PlatformChannelServerEndpoint(handle_.Clone());
+ChannelServerEndpoint ChannelServerEndpoint::Clone() const {
+  return ChannelServerEndpoint(handle_.Clone());
 }
 
 }  // namespace mojo

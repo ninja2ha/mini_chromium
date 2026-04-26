@@ -274,13 +274,13 @@ class StunAddressAttribute : public StunAttribute {
   static const uint16_t SIZE_UNDEF = 0;
   static const uint16_t SIZE_IP4 = 8;
   static const uint16_t SIZE_IP6 = 20;
-  StunAddressAttribute(uint16_t type, const IPEndPoint& end_point);
+  StunAddressAttribute(uint16_t type, const IPEndPoint& endpoint);
   StunAddressAttribute(uint16_t type, uint16_t length);
 
   StunAttributeValueType value_type() const override;
 
   StunAddressFamily family() const {
-    switch (end_point_.GetFamily()) {
+    switch (endpoint_.GetFamily()) {
       case ADDRESS_FAMILY_IPV4:
         return STUN_ADDRESS_IPV4;
       case ADDRESS_FAMILY_IPV6:
@@ -289,11 +289,11 @@ class StunAddressAttribute : public StunAttribute {
     return STUN_ADDRESS_UNDEF;
   }
 
-  const crnet::IPAddress& ipaddr() const { return end_point_.address(); }
-  uint16_t port() const { return end_point_.port(); }
+  const crnet::IPAddress& ipaddr() const { return endpoint_.address(); }
+  uint16_t port() const { return endpoint_.port(); }
 
-  void SetEndPoint(const IPEndPoint& end_point) {
-    end_point_ = end_point;
+  void SetEndPoint(const IPEndPoint& endpoint) {
+    endpoint_ = endpoint;
     EnsureAddressLength();
   }
 
@@ -317,7 +317,7 @@ class StunAddressAttribute : public StunAttribute {
       }
     }
   }
-  IPEndPoint end_point_;
+  IPEndPoint endpoint_;
 };
 
 // Implements STUN attributes that record an Internet address. When encoded
@@ -325,7 +325,7 @@ class StunAddressAttribute : public StunAttribute {
 // transaction ID of the message.
 class StunXorAddressAttribute : public StunAddressAttribute {
  public:
-  StunXorAddressAttribute(uint16_t type, const IPEndPoint& end_point);
+  StunXorAddressAttribute(uint16_t type, const IPEndPoint& endpoint);
   StunXorAddressAttribute(uint16_t type, uint16_t length, StunMessage* owner);
 
   StunAttributeValueType value_type() const override;

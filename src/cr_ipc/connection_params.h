@@ -2,17 +2,15 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_CORE_CONNECTION_PARAMS_H_
-#define MOJO_CORE_CONNECTION_PARAMS_H_
+#ifndef MINI_CHROMIUM_SRC_CRIPC_CONNECTION_PARAMS_H_
+#define MINI_CHROMIUM_SRC_CRIPC_CONNECTION_PARAMS_H_
 
-///#include "mojo/core/system_impl_export.h"
-#include "cripc/channel_endpoint.h"
-#include "cripc/channel_server_endpoint.h"
-#include "cripc/ipc_export.h"
-#include "crbuild/build_config.h"
+#include "cr_ipc/channel_endpoint.h"
+#include "cr_ipc/channel_server_endpoint.h"
+#include "cr_ipc/ipc_export.h"
+#include "cr_build/build_config.h"
 
-namespace mojo {
-namespace core {
+namespace cripc {
 
 // A set of parameters used when establishing a connection to another process.
 class CRIPC_EXPORT ConnectionParams {
@@ -21,21 +19,21 @@ class CRIPC_EXPORT ConnectionParams {
   ConnectionParams& operator=(const ConnectionParams&) = delete;
 
   ConnectionParams();
-  explicit ConnectionParams(PlatformChannelEndpoint endpoint);
-  explicit ConnectionParams(PlatformChannelServerEndpoint server_endpoint);
+  explicit ConnectionParams(ChannelEndpoint endpoint);
+  explicit ConnectionParams(ChannelServerEndpoint server_endpoint);
   ConnectionParams(ConnectionParams&&);
   ~ConnectionParams();
 
   ConnectionParams& operator=(ConnectionParams&&);
 
-  const PlatformChannelEndpoint& endpoint() const { return endpoint_; }
-  const PlatformChannelServerEndpoint& server_endpoint() const {
+  const ChannelEndpoint& endpoint() const { return endpoint_; }
+  const ChannelServerEndpoint& server_endpoint() const {
     return server_endpoint_;
   }
 
-  PlatformChannelEndpoint TakeEndpoint() { return std::move(endpoint_); }
+  ChannelEndpoint TakeEndpoint() { return std::move(endpoint_); }
 
-  PlatformChannelServerEndpoint TakeServerEndpoint() {
+  ChannelServerEndpoint TakeServerEndpoint() {
     return std::move(server_endpoint_);
   }
 
@@ -48,11 +46,10 @@ class CRIPC_EXPORT ConnectionParams {
  private:
   bool is_async_ = false;
   bool leak_endpoint_ = false;
-  PlatformChannelEndpoint endpoint_;
-  PlatformChannelServerEndpoint server_endpoint_;
+  ChannelEndpoint endpoint_;
+  ChannelServerEndpoint server_endpoint_;
 };
 
-}  // namespace core
-}  // namespace mojo
+}  // namespace cripc
 
-#endif  // MOJO_CORE_CONNECTION_PARAMS_H_
+#endif  // MINI_CHROMIUM_SRC_CRIPC_CONNECTION_PARAMS_H_

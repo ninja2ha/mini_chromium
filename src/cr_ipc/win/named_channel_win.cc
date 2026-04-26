@@ -2,22 +2,22 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cripc/named_channel.h"
+#include "cr_ipc/named_channel.h"
 
 #include <memory>
 
-#include "crbase/logging/logging.h"
-#include "crbase/rand_util.h"
-#include "crbase/strings/stringprintf.h"
-#include "crbase/strings/utf_string_conversions.h"
-#include "crbase/win/windows_types.h"
-#include "crbase/win/scoped_handle.h"
-#include "crbase/win/windows_version.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/rand_util.h"
+#include "cr_base/strings/stringprintf.h"
+#include "cr_base/strings/utf_string_conversions.h"
+#include "cr_base/win/windows_types.h"
+#include "cr_base/win/scoped_handle.h"
+#include "cr_base/win/windows_version.h"
 
 // NOTE: This needs to be included *after* windows.h.
 #include <sddl.h>
 
-namespace mojo {
+namespace cripc {
 
 namespace {
 
@@ -30,20 +30,20 @@ namespace {
 constexpr wchar_t kDefaultSecurityDescriptor[] =
     L"D:(A;;GA;;;SY)(A;;GA;;;BA)(A;;GA;;;OW)";
 
-NamedPlatformChannel::ServerName GenerateRandomServerName() {
+NamedChannel::ServerName GenerateRandomServerName() {
   return cr::StringPrintf(L"%lu.%lu.%I64u", ::GetCurrentProcessId(),
                           ::GetCurrentThreadId(), cr::RandUint64());
 }
 
 std::wstring GetPipeNameFromServerName(
-    const NamedPlatformChannel::ServerName& server_name) {
+    const NamedChannel::ServerName& server_name) {
   return L"\\\\.\\pipe\\mojo." + server_name;
 }
 
 }  // namespace
 
 // static
-PlatformChannelServerEndpoint NamedPlatformChannel::CreateServerEndpoint(
+ChannelServerEndpoint NamedChannel::CreateServerEndpoint(
     const Options& options,
     ServerName* server_name) {
   ServerName name = options.server_name;
@@ -80,17 +80,17 @@ PlatformChannelServerEndpoint NamedPlatformChannel::CreateServerEndpoint(
     CR_PLOG(Warning) << "CreateNamedPipeW failed.";
 
   *server_name = name;
-  return PlatformChannelServerEndpoint(std::move(handle));
+  return ChannelServerEndpoint(std::move(handle));
 }
 
 // static
-PlatformChannelEndpoint NamedPlatformChannel::CreateClientEndpoint(
+ChannelEndpoint NamedChannel::CreateClientEndpoint(
     const ServerName& server_name) {
   std::wstring pipe_name = GetPipeNameFromServerName(server_name);
 
   // Note: This may block.
   if (!::WaitNamedPipeW(pipe_name.c_str(), NMPWAIT_USE_DEFAULT_WAIT))
-    return PlatformChannelEndpoint();
+    return ChannelEndpoint();
 
   const DWORD kDesiredAccess = GENERIC_READ | GENERIC_WRITE;
   // The SECURITY_ANONYMOUS flag means that the server side cannot impersonate
@@ -107,7 +107,7 @@ PlatformChannelEndpoint NamedPlatformChannel::CreateClientEndpoint(
   CR_DPLOG_IF(Error, !handle.is_valid())
       << "Named pipe " << cr::WideToUTF8(pipe_name)
       << " could not be opened after WaitNamedPipe succeeded";
-  return PlatformChannelEndpoint(std::move(handle));
+  return ChannelEndpoint(std::move(handle));
 }
 
-}  // namespace mojo
+}  // namespace cripc

@@ -2,34 +2,35 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_CHANNEL_ENDPOINT_H_
-#define MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_CHANNEL_ENDPOINT_H_
+#ifndef MINI_CHROMIUM_SRC_CRIPC_CHANNEL_END_POINT_H_
+#define MINI_CHROMIUM_SRC_CRIPC_CHANNEL_END_POINT_H_
 
-#include "cripc/ipc_export.h"
-#include "cripc/platform_handle.h"
+#include "cr_ipc/ipc_export.h"
+#include "cr_ipc/platform_handle.h"
 
-namespace mojo {
+#include "cr_build/compiler_specific.h"
+
+namespace cripc {
 
 // A PlatformHandle with a little extra type information to convey that it's
 // a channel endpoint, i.e. a handle that can be used to send or receive
 // invitations as |MOJO_INVITATION_TRANSPORT_TYPE_CHANNEL| to a remote
 // PlatformChannelEndpoint.
-class CRIPC_EXPORT PlatformChannelEndpoint {
+class CRIPC_EXPORT ChannelEndpoint {
  public:
-  PlatformChannelEndpoint(const PlatformChannelEndpoint&) = delete;
-  PlatformChannelEndpoint& operator=(const PlatformChannelEndpoint&) 
-      = delete;
+  ChannelEndpoint(const ChannelEndpoint&) = delete;
+  ChannelEndpoint& operator=(const ChannelEndpoint&) = delete;
 
-  PlatformChannelEndpoint();
-  PlatformChannelEndpoint(PlatformChannelEndpoint&& other);
-  explicit PlatformChannelEndpoint(PlatformHandle handle);
-  ~PlatformChannelEndpoint();
+  ChannelEndpoint();
+  ChannelEndpoint(ChannelEndpoint&& other);
+  explicit ChannelEndpoint(PlatformHandle handle);
+  ~ChannelEndpoint();
 
-  PlatformChannelEndpoint& operator=(PlatformChannelEndpoint&& other);
+  ChannelEndpoint& operator=(ChannelEndpoint&& other);
 
   bool is_valid() const { return handle_.is_valid(); }
   void reset();
-  PlatformChannelEndpoint Clone() const;
+  ChannelEndpoint Clone() const;
 
   const PlatformHandle& platform_handle() const { return handle_; }
 
@@ -41,6 +42,6 @@ class CRIPC_EXPORT PlatformChannelEndpoint {
   PlatformHandle handle_;
 };
 
-}  // namespace mojo
+}  // namespace cripc
 
-#endif  // MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_CHANNEL_ENDPOINT_H_
+#endif  // MINI_CHROMIUM_SRC_CRIPC_CHANNEL_END_POINT_H_

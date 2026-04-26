@@ -2,23 +2,25 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_PUBLIC_CPP_PLATFORM_NAMED_PLATFORM_CHANNEL_H_
-#define MOJO_PUBLIC_CPP_PLATFORM_NAMED_PLATFORM_CHANNEL_H_
+#ifndef MINI_CHROMIUM_SRC_CRIPC_NAMED_CHANNEL_
+#define MINI_CHROMIUM_SRC_CRIPC_NAMED_CHANNEL_
 
 #include <string>
 
-///#include "base/command_line.h"
-#include "crbase/strings/string_piece.h"
-#include "cripc/ipc_export.h"
-#include "cripc/channel_endpoint.h"
-#include "cripc/channel_server_endpoint.h"
-#include "crbuild/build_config.h"
+#include "cr_base/command_line.h"
+#include "cr_base/strings/string_piece.h"
+
+#include "cr_ipc/ipc_export.h"
+#include "cr_ipc/channel_endpoint.h"
+#include "cr_ipc/channel_server_endpoint.h"
+
+#include "cr_build/build_config.h"
 
 #if defined(MINI_CHROMIUM_OS_POSIX)
-#include "crbase/files/file_path.h"
+#include "cr_base/files/file_path.h"
 #endif
 
-namespace mojo {
+namespace cripc {
 
 // NamedPlatformChannel encapsulates a Mojo invitation transport channel which
 // can listen for inbound connections established by clients connecting to
@@ -29,7 +31,7 @@ namespace mojo {
 // This can be especially useful when the local process has no way to transfer
 // handles to the remote process, e.g. it does not control process launch or
 // have any pre-existing communication channel to the process.
-class CRIPC_EXPORT NamedPlatformChannel {
+class CRIPC_EXPORT NamedChannel {
  public:
   static const char kNamedHandleSwitch[];
 
@@ -63,16 +65,16 @@ class CRIPC_EXPORT NamedPlatformChannel {
 #endif
   };
 
-  NamedPlatformChannel(const NamedPlatformChannel&) = delete;
-  NamedPlatformChannel& operator=(const NamedPlatformChannel&) = delete;
+  NamedChannel(const NamedChannel&) = delete;
+  NamedChannel& operator=(const NamedChannel&) = delete;
 
-  NamedPlatformChannel(const Options& options);
-  NamedPlatformChannel(NamedPlatformChannel&& other);
-  ~NamedPlatformChannel();
+  NamedChannel(const Options& options);
+  NamedChannel(NamedChannel&& other);
+  ~NamedChannel();
 
-  NamedPlatformChannel& operator=(NamedPlatformChannel&& other);
+  NamedChannel& operator=(NamedChannel&& other);
 
-  const PlatformChannelServerEndpoint& server_endpoint() const {
+  const ChannelServerEndpoint& server_endpoint() const {
     return server_endpoint_;
   }
 
@@ -85,7 +87,7 @@ class CRIPC_EXPORT NamedPlatformChannel {
   //
   // Use the handle to send or receive an invitation, with the endpoint type as
   // |MOJO_INVITATION_TRANSPORT_TYPE_CHANNEL_SERVER|.
-  PlatformChannelServerEndpoint TakeServerEndpoint() CR_WARN_UNUSED_RESULT {
+  ChannelServerEndpoint TakeServerEndpoint() CR_WARN_UNUSED_RESULT {
     return std::move(server_endpoint_);
   }
 
@@ -95,20 +97,20 @@ class CRIPC_EXPORT NamedPlatformChannel {
 
   // Recovers a functioning client endpoint handle by creating a new endpoint
   // and connecting it to |server_name| if possible.
-  static PlatformChannelEndpoint ConnectToServer(const ServerName& server_name)
+  static ChannelEndpoint ConnectToServer(const ServerName& server_name)
       CR_WARN_UNUSED_RESULT;
 
  private:
-  static PlatformChannelServerEndpoint CreateServerEndpoint(
+  static ChannelServerEndpoint CreateServerEndpoint(
       const Options& options,
       ServerName* server_name);
-  static PlatformChannelEndpoint CreateClientEndpoint(
+  static ChannelEndpoint CreateClientEndpoint(
       const ServerName& server_name);
 
   ServerName server_name_;
-  PlatformChannelServerEndpoint server_endpoint_;
+  ChannelServerEndpoint server_endpoint_;
 };
 
-}  // namespace mojo
+}  // namespace cripc
 
-#endif  // MOJO_PUBLIC_CPP_PLATFORM_NAMED_PLATFORM_CHANNEL_H_
+#endif  // MINI_CHROMIUM_SRC_CRIPC_NAMED_CHANNEL_

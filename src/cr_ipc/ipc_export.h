@@ -5,7 +5,7 @@
 #ifndef MINI_CHROMIUM_SRC_CRIPC_IPC_EXPORT_H_
 #define MINI_CHROMIUM_SRC_CRIPC_IPC_EXPORT_H_
 
-#include "crbuild/build_config.h"
+#include "cr_build/build_config.h"
 
 #if defined(MINI_CHROMIUM_COMPONENT_BUILD)
 #if defined(MINI_CHROMIUM_COMPILER_MSVC)

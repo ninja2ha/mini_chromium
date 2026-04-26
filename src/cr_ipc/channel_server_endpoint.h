@@ -2,32 +2,31 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_CHANNEL_SERVER_ENDPOINT_H_
-#define MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_CHANNEL_SERVER_ENDPOINT_H_
+#ifndef MINI_CHROMIUM_SRC_CRIPC_CHANNEL_SERVER_ENDPOINT_H_
+#define MINI_CHROMIUM_SRC_CRIPC_CHANNEL_SERVER_ENDPOINT_H_
 
-#include "cripc/ipc_export.h"
-#include "cripc/platform_handle.h"
-#include "crbuild/compiler_specific.h"
+#include "cr_ipc/ipc_export.h"
+#include "cr_ipc/platform_handle.h"
+#include "cr_build/compiler_specific.h"
 
-namespace mojo {
+namespace cripc {
 
 // A PlatformHandle with a little extra type information to convey that it's
 // a channel server endpoint, i.e. a handle that can be used to send invitations
 // as |MOJO_INVITATION_TRANSPORT_TYPE_CHANNEL_SERVER| to a remote
 // PlatformChannelEndpoint.
-class CRIPC_EXPORT PlatformChannelServerEndpoint {
+class CRIPC_EXPORT ChannelServerEndpoint {
  public:
-  PlatformChannelServerEndpoint();
-  PlatformChannelServerEndpoint(PlatformChannelServerEndpoint&& other);
-  explicit PlatformChannelServerEndpoint(PlatformHandle handle);
-  ~PlatformChannelServerEndpoint();
+  ChannelServerEndpoint();
+  ChannelServerEndpoint(ChannelServerEndpoint&& other);
+  explicit ChannelServerEndpoint(PlatformHandle handle);
+  ~ChannelServerEndpoint();
 
-  PlatformChannelServerEndpoint& operator=(
-      PlatformChannelServerEndpoint&& other);
+  ChannelServerEndpoint& operator=(ChannelServerEndpoint&& other);
 
   bool is_valid() const { return handle_.is_valid(); }
   void reset();
-  PlatformChannelServerEndpoint Clone() const;
+  ChannelServerEndpoint Clone() const;
 
   const PlatformHandle& platform_handle() const { return handle_; }
 
@@ -39,6 +38,6 @@ class CRIPC_EXPORT PlatformChannelServerEndpoint {
   PlatformHandle handle_;
 };
 
-}  // namespace mojo
+}  // namespace cripc
 
-#endif  // MOJO_PUBLIC_CPP_PLATFORM_PLATFORM_CHANNEL_SERVER_ENDPOINT_H_
+#endif  // MINI_CHROMIUM_SRC_CRIPC_CHANNEL_SERVER_ENDPOINT_H_
