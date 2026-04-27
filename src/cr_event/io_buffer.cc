@@ -44,23 +44,10 @@ void IOBuffer::ClearSpan() {
 
 // ---
 
-StringIOBuffer::StringIOBuffer(std::string s) : string_data_(std::move(s)) {
-  // Can't pass `s.data()` directly to IOBuffer constructor since moving
-  // from `s` may invalidate it. This is especially true for libc++ short
-  // string optimization where the data may be held in the string variable
-  // itself, instead of in a movable backing store.
-  SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
-}
-
-StringIOBuffer::StringIOBuffer(Span<const char> s) {
+StringIOBuffer::StringIOBuffer(StringPiece s) {
   AssertValidBufferSize(s.size());
 
   string_data_.assign(s.data(), s.size());
-  SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
-}
-
-StringIOBuffer::StringIOBuffer(std::unique_ptr<std::string> s) {
-  string_data_.swap(*s.get());
   SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
 }
 

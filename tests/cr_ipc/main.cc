@@ -64,8 +64,8 @@ int main(int argc, char* argv[]) {
       cripc::Channel::Create(srv_handle.get(), 
                              std::move(srv_connection_params),
                              task_executeor.task_runner());
-  auto srv_msg_ptr = cr::WrapUnique(new cripc::Channel::Message);
-  srv_msg_ptr->WriteString("hello i am server");
+  auto srv_msg_ptr 
+      = cr::MakeRefCounted<cr::StringIOBuffer>("hello i am server");
   srv_channel->Write(std::move(srv_msg_ptr));
   srv_channel->Start();
 
@@ -79,9 +79,9 @@ int main(int argc, char* argv[]) {
                              std::move(client_connection_params),
                              task_executeor.task_runner());
   client_channel->Start();
-  auto clt_msg_ptr = cr::WrapUnique(new cripc::Channel::Message);
-  clt_msg_ptr->WriteString("hello i am client");
-  client_channel->Write(std::move(clt_msg_ptr));
+  auto client_msg_ptr 
+      = cr::MakeRefCounted<cr::StringIOBuffer>("hello i am client");
+  client_channel->Write(std::move(client_msg_ptr));
 
   // -- run loop ---------------------------------------------------------------
   cr::RunLoop run_loop;

@@ -84,7 +84,7 @@ class ChannelWin : public Channel,
         CR_FROM_HERE, cr::BindOnce(&ChannelWin::ShutDownOnIOThread, this));
   }
 
-  void Write(std::unique_ptr<cr::HostByteBufferWriter> message) override {
+  void Write(MessagePtr message) override {
     bool write_error = false;
     {
       cr::AutoLock lock(write_lock_);
@@ -243,7 +243,7 @@ class ChannelWin : public Channel,
       MessagePtr message = outgoing_messages_.TakeFirst();
 
       // Overlapped WriteFile() to a pipe should always fully complete.
-      if (message->Length() != bytes_written)
+      if (message->size() != bytes_written)
         reject_writes_ = write_error = true;
       else if (!WriteNextNoLock())
         reject_writes_ = write_error = true;
@@ -271,8 +271,8 @@ class ChannelWin : public Channel,
   }
 
   bool WriteNoLock(Message* message) {
-    BOOL ok = WriteFile(handle_.Get(), message->Data(),
-                        static_cast<DWORD>(message->Length()), NULL,
+    BOOL ok = WriteFile(handle_.Get(), message->data(),
+                        static_cast<DWORD>(message->size()), NULL,
                         &write_context_.overlapped);
     if (ok || GetLastError() == ERROR_IO_PENDING) {
       is_write_pending_ = true;

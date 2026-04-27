@@ -9,9 +9,9 @@
 
 #include "cr_base/containers/span.h"
 #include "cr_base/memory/ptr_util.h"
-#include "cr_base/buffer/byte_buffer.h"
 
 #include "cr_event/single_thread_task_runner.h"
+#include "cr_event/io_buffer.h"
 
 #include "cr_ipc/ipc_export.h"
 #include "cr_ipc/connection_params.h"
@@ -48,8 +48,8 @@ class CRIPC_EXPORT Channel
   };
 
   using AlignedBuffer = std::unique_ptr<char, cr::FreeDeleter>;
-  using Message = cr::HostByteBufferWriter;
-  using MessagePtr = std::unique_ptr<Message>;
+  using Message = cr::IOBuffer;
+  using MessagePtr = cr::RefPtr<cr::IOBuffer>;
 
   Channel(const Channel&) = delete;
   Channel& operator=(const Channel&) = delete;
