@@ -31,14 +31,14 @@ class ChannelWinMessageQueue {
   explicit ChannelWinMessageQueue() {}
   ~ChannelWinMessageQueue() {}
 
-  void Append(cr::RefPtr<cr::IOBuffer> message) {
+  void Append(Channel::MessagePtr message) {
     queue_.emplace_back(std::move(message));
   }
 
-  cr::RefPtr<cr::IOBuffer> GetFirst() const { return queue_.front(); }
+  Channel::Message* GetFirst() const { return queue_.front().get(); }
 
-  cr::RefPtr<cr::IOBuffer> TakeFirst() {
-    cr::RefPtr<cr::IOBuffer> message = std::move(queue_.front());
+  Channel::MessagePtr TakeFirst() {
+    Channel::MessagePtr message = std::move(queue_.front());
     queue_.pop_front();
     return message;
   }
@@ -46,7 +46,7 @@ class ChannelWinMessageQueue {
   bool IsEmpty() const { return queue_.empty(); }
 
  private:
-  cr::circular_deque<cr::RefPtr<cr::IOBuffer>> queue_;
+  cr::circular_deque<Channel::MessagePtr> queue_;
 };
 
 class ChannelWin : public Channel,
@@ -84,7 +84,7 @@ class ChannelWin : public Channel,
         CR_FROM_HERE, cr::BindOnce(&ChannelWin::ShutDownOnIOThread, this));
   }
 
-  void Write(cr::RefPtr<cr::IOBuffer> message) override {
+  void Write(std::unique_ptr<cr::HostByteBufferWriter> message) override {
     bool write_error = false;
     {
       cr::AutoLock lock(write_lock_);
@@ -240,10 +240,10 @@ class ChannelWin : public Channel,
       is_write_pending_ = false;
       CR_DCHECK(!outgoing_messages_.IsEmpty());
 
-      cr::RefPtr<cr::IOBuffer> message = outgoing_messages_.TakeFirst();
+      MessagePtr message = outgoing_messages_.TakeFirst();
 
       // Overlapped WriteFile() to a pipe should always fully complete.
-      if (message->size() != bytes_written)
+      if (message->Length() != bytes_written)
         reject_writes_ = write_error = true;
       else if (!WriteNextNoLock())
         reject_writes_ = write_error = true;
@@ -270,9 +270,9 @@ class ChannelWin : public Channel,
     }
   }
 
-  bool WriteNoLock(cr::RefPtr<cr::IOBuffer> message) {
-    BOOL ok = WriteFile(handle_.Get(), message->data(),
-                        static_cast<DWORD>(message->size()), NULL,
+  bool WriteNoLock(Message* message) {
+    BOOL ok = WriteFile(handle_.Get(), message->Data(),
+                        static_cast<DWORD>(message->Length()), NULL,
                         &write_context_.overlapped);
     if (ok || GetLastError() == ERROR_IO_PENDING) {
       is_write_pending_ = true;

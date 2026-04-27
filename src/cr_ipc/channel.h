@@ -8,10 +8,10 @@
 #include <vector>
 
 #include "cr_base/containers/span.h"
-#include "cr_base/memory/ref_counted.h"
+#include "cr_base/memory/ptr_util.h"
+#include "cr_base/buffer/byte_buffer.h"
 
 #include "cr_event/single_thread_task_runner.h"
-#include "cr_event/io_buffer.h"
 
 #include "cr_ipc/ipc_export.h"
 #include "cr_ipc/connection_params.h"
@@ -48,6 +48,8 @@ class CRIPC_EXPORT Channel
   };
 
   using AlignedBuffer = std::unique_ptr<char, cr::FreeDeleter>;
+  using Message = cr::HostByteBufferWriter;
+  using MessagePtr = std::unique_ptr<Message>;
 
   Channel(const Channel&) = delete;
   Channel& operator=(const Channel&) = delete;
@@ -117,7 +119,7 @@ class CRIPC_EXPORT Channel
   // Queues an outgoing message on the Channel. This message will either
   // eventually be written or will fail to write and trigger
   // Delegate::OnChannelError.
-  virtual void Write(cr::RefPtr<cr::IOBuffer> message) = 0;
+  virtual void Write(MessagePtr message) = 0;
 
   // Causes the platform handle to leak when this channel is shut down instead
   // of closing it.

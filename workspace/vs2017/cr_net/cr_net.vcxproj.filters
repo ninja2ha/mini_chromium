@@ -146,6 +146,24 @@
     <ClInclude Include="..\..\..\src\cr_net\udp\udp_client.h">
       <Filter>udp</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_status_code_list.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_status_code.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_request_headers.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_byte_range.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_version.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_util.h">
+      <Filter>http</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="base">
@@ -180,6 +198,9 @@
     </Filter>
     <Filter Include="p2p">
       <UniqueIdentifier>{f3eeed5f-8f2f-465c-beb7-df41cd638844}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="http">
+      <UniqueIdentifier>{37627de6-3a7e-4d49-a732-bcb2e302ed5b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -296,6 +317,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_net\socket\udp\datagram_client_socket.cc">
       <Filter>socket\udp</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\http\http_status_code.cc">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\http\http_request_headers.cc">
+      <Filter>http</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\http\http_byte_range.cc">
+      <Filter>http</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -14,7 +14,9 @@ class IPCServerHandle : public cripc::Channel::Delegate {
  public:
   cripc::Channel::DispatchResult OnChannelMessage(
       const void* payload, size_t payload_size, size_t* size_hint) override {
-    CR_LOG(Info) << "[IPC SERVER]: Got message, msg:" << (const char*)payload;
+    CR_LOG(Info) << "[IPC SERVER]: Got message, msg:" 
+                 << cr::StringPiece(reinterpret_cast<const char*>(payload), 
+                                    payload_size);
     *size_hint = payload_size;
     return cripc::Channel::DispatchResult::kOK;
   }
@@ -28,7 +30,9 @@ class IPCClientHandle : public cripc::Channel::Delegate {
  public:
    cripc::Channel::DispatchResult OnChannelMessage(
       const void* payload, size_t payload_size, size_t* size_hint) override {
-    CR_LOG(Info) << "[IPC CLIENT]: Got message, msg:" << (const char*)payload;
+    CR_LOG(Info) << "[IPC CLIENT]: Got message, msg:" 
+                 << cr::StringPiece(reinterpret_cast<const char*>(payload), 
+                                    payload_size);
     *size_hint = payload_size;
     return cripc::Channel::DispatchResult::kOK;
    }
@@ -60,9 +64,9 @@ int main(int argc, char* argv[]) {
       cripc::Channel::Create(srv_handle.get(), 
                              std::move(srv_connection_params),
                              task_executeor.task_runner());
-  srv_channel->Write(
-      cr::MakeRefCounted<cr::StringIOBuffer>(
-          cr::Span<const char>("hello i am server.")));
+  auto srv_msg_ptr = cr::WrapUnique(new cripc::Channel::Message);
+  srv_msg_ptr->WriteString("hello i am server");
+  srv_channel->Write(std::move(srv_msg_ptr));
   srv_channel->Start();
 
   // -- ipc client -------------------------------------------------------------
@@ -75,9 +79,9 @@ int main(int argc, char* argv[]) {
                              std::move(client_connection_params),
                              task_executeor.task_runner());
   client_channel->Start();
-  client_channel->Write(
-      cr::MakeRefCounted<cr::StringIOBuffer>(
-          cr::Span<const char>("hello i am client.")));
+  auto clt_msg_ptr = cr::WrapUnique(new cripc::Channel::Message);
+  clt_msg_ptr->WriteString("hello i am client");
+  client_channel->Write(std::move(clt_msg_ptr));
 
   // -- run loop ---------------------------------------------------------------
   cr::RunLoop run_loop;

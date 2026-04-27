@@ -23,9 +23,12 @@ class CRNET_EXPORT TCPClient {
    public:
     virtual ~Delegate() {}
 
-    // |rv| is an net error code.
+    // |rv|: a net error code.
     virtual void OnConnect(int rv) = 0;
+
+    // returns length of hints. or a net error code. which value is less than 0.
     virtual int OnReceiveData(const char* data, int data_len) = 0;
+
     virtual void OnClose() = 0;
   };
 

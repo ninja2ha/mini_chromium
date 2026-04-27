@@ -150,6 +150,7 @@
       </EnforceTypeConversionRules>
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -173,6 +174,7 @@
       </EnforceTypeConversionRules>
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -195,6 +197,7 @@
       </EnforceTypeConversionRules>
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -214,6 +217,7 @@
       </EnforceTypeConversionRules>
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -236,6 +240,7 @@
       </EnforceTypeConversionRules>
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -259,6 +264,7 @@
       </EnforceTypeConversionRules>
       <RuntimeTypeInfo>
       </RuntimeTypeInfo>
+      <AdditionalOptions>/utf-8 %(AdditionalOptions)</AdditionalOptions>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -283,6 +289,12 @@
     <ClInclude Include="..\..\..\src\cr_net\base\sys_addrinfo.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\win\winsock_init.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\win\winsock_util.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_byte_range.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_request_headers.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_status_code.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_status_code_list.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_util.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_version.h" />
     <ClInclude Include="..\..\..\src\cr_net\network\network_activity_monitor.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>
@@ -357,6 +369,9 @@
     <ClCompile Include="..\..\..\src\cr_net\base\win\net_errors_win.cc" />
     <ClCompile Include="..\..\..\src\cr_net\base\win\winsock_init.cc" />
     <ClCompile Include="..\..\..\src\cr_net\base\win\winsock_util.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\http\http_byte_range.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\http\http_request_headers.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\http\http_status_code.cc" />
     <ClCompile Include="..\..\..\src\cr_net\network\network_activity_monitor.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>

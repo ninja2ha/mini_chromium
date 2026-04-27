@@ -18,6 +18,7 @@
 #include "cr_base/base_export.h"
 #include "cr_base/buffer/buffer.h"
 #include "cr_base/sys_byteorder.h"
+#include "cr_base/strings/string_piece.h"
 
 namespace cr {
 
@@ -98,8 +99,8 @@ class CRBASE_EXPORT ByteBufferWriter : public ByteBuffer {
     WriteBytes(&last_byte, 1);
   }
 
-  void WriteString(const std::string& val) {
-    WriteBytes(val.c_str(), val.size());
+  void WriteString(const StringPiece& val) {
+    WriteBytes(val.data(), val.size());
   }
 
   void WriteBytes(const char* val, size_t len) { buffer_.AppendData(val, len); }

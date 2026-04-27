@@ -33,8 +33,11 @@ class CRNET_EXPORT TCPServer {
     virtual ~Delegate() {}
 
     virtual void OnAccept(TCPConnection* connection) = 0;
+
+    // returns length of hints. or a net error code. which value is less than 0.
     virtual int OnReceiveData(
         TCPConnection* connection, const char* data, int data_len) = 0;
+
     virtual void OnClose(TCPConnection* connection) = 0;
   };
 
