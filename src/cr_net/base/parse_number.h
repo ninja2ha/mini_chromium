@@ -29,7 +29,6 @@
 //   //net code. For more details see crbug.com/596523.
 
 namespace crnet {
-namespace internal {
 
 // Format to use when parsing integers.
 enum class ParseIntFormat {
@@ -110,7 +109,6 @@ CRNET_EXPORT bool ParseUint64(const cr::StringPiece& input,
                               ParseIntError* optional_error = nullptr)
     CR_WARN_UNUSED_RESULT;
 
-}  // namespace internal
 }  // namespace crnet
 
 #endif  // MINI_CHROMIUM_SRC_CRNET_BASE_PARSE_NUMBER_H_

@@ -19,7 +19,7 @@
 #include "cr_base/strings/string_util.h"
 #include "cr_base/strings/stringprintf.h"
 #include "cr_base/time/time.h"
-#include "cr_net/base/internal/parse_number.h"
+#include "cr_net/base/parse_number.h"
 #include "cr_url/gurl_util.h"
 
 namespace crnet {
@@ -369,7 +369,7 @@ bool HttpUtil::ParseRetryAfterHeader(const std::string& retry_after_string,
   cr::Time time;
   cr::TimeDelta interval;
 
-  if (crnet::internal::ParseUint32(retry_after_string, &seconds)) {
+  if (crnet::ParseUint32(retry_after_string, &seconds)) {
     interval = cr::TimeDelta::FromSeconds(seconds);
   } else if (cr::Time::FromUTCString(retry_after_string.c_str(), &time)) {
     interval = time - now;

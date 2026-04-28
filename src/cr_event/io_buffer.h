@@ -7,6 +7,7 @@
 #define MINI_CHROMIUM_SRC_CREVENT_IO_BUFFER_H_
 
 #include <memory>
+#include <vector>
 
 #include "cr_base/containers/span.h"
 #include "cr_base/containers/queue.h"
@@ -121,6 +122,20 @@ class CREVENT_EXPORT IOBuffer : public cr::RefCountedThreadSafe<IOBuffer> {
   cr::Span<uint8_t> span_;
 };
 
+
+// Class which owns its buffer and manages its destruction.
+class CREVENT_EXPORT VectorIOBuffer : public IOBuffer {
+ public:
+  explicit VectorIOBuffer(size_t s);
+  explicit VectorIOBuffer(std::vector<uint8_t> vector);
+  explicit VectorIOBuffer(cr::Span<const uint8_t> span);
+
+ protected:
+  ~VectorIOBuffer() override;
+
+  std::vector<uint8_t> vector_;
+};
+
 // --- StringIOBuffer --
 // This is a read only IOBuffer.  The data is stored in a string and
 // the IOBuffer interface does not provide a proper way to modify it.
@@ -135,6 +150,54 @@ private:
   ~StringIOBuffer() override;
 
   std::string string_data_;
+};
+
+
+// This version wraps an existing IOBuffer and provides convenient functions
+// to progressively read all the data. The values returned by size() and bytes()
+// are updated as bytes are consumed from the buffer.
+//
+// DrainableIOBuffer is useful when you have an IOBuffer that contains data
+// to be written progressively, and Write() function takes an IOBuffer rather
+// than char*. DrainableIOBuffer can be used as follows:
+//
+// // payload is the IOBuffer containing the data to be written.
+// buf = base::MakeRefCounted<DrainableIOBuffer>(payload, payload_size);
+//
+// while (buf->BytesRemaining() > 0) {
+//   // Write() takes an IOBuffer. If it takes char*, we could
+//   // simply use the regular IOBuffer like payload->data() + offset.
+//   int bytes_written = Write(buf, buf->BytesRemaining());
+//   buf->DidConsume(bytes_written);
+// }
+//
+class CREVENT_EXPORT DrainableIOBuffer : public IOBuffer {
+ public:
+  // `base` should be treated as exclusively owned by the DrainableIOBuffer as
+  // long as the latter exists. Specifically, the span pointed to by `base`,
+  // including its size, must not change, as the `DrainableIOBuffer` maintains a
+  // copy of them internally.
+  DrainableIOBuffer(cr::RefPtr<IOBuffer> base, size_t size);
+
+  // DidConsume() changes the |data_| pointer so that |data_| always points
+  // to the first unconsumed byte.
+  void DidConsume(int bytes);
+
+  // Returns the number of unconsumed bytes.
+  int BytesRemaining() const;
+
+  // Returns the number of consumed bytes.
+  int BytesConsumed() const;
+
+  // Seeks to an arbitrary point in the buffer. The notion of bytes consumed
+  // and remaining are updated appropriately.
+  void SetOffset(int bytes);
+
+ private:
+  ~DrainableIOBuffer() override;
+
+  cr::RefPtr<IOBuffer> base_;
+  int used_ = 0;
 };
 
 // --- GrowableIOBuffer  ---

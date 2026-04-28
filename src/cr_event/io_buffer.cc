@@ -42,6 +42,26 @@ void IOBuffer::ClearSpan() {
   span_ = cr::Span<uint8_t>();
 }
 
+// --
+
+VectorIOBuffer::VectorIOBuffer(size_t s)
+    : vector_(s) {
+  SetSpan(vector_);
+}
+
+VectorIOBuffer::VectorIOBuffer(std::vector<uint8_t> vector)
+    : vector_(std::move(vector)) {
+  SetSpan(vector_);
+}
+
+VectorIOBuffer::VectorIOBuffer(cr::Span<const uint8_t> span)
+    : VectorIOBuffer(std::vector<uint8_t>(span.begin(), span.end())) {}
+
+VectorIOBuffer::~VectorIOBuffer() {
+  // Clear pointer before this destructor makes it dangle.
+  ClearSpan();
+}
+
 // ---
 
 StringIOBuffer::StringIOBuffer(StringPiece s) {
@@ -57,6 +77,42 @@ StringIOBuffer::StringIOBuffer(size_t s) {
 }
 
 StringIOBuffer::~StringIOBuffer() {
+  ClearSpan();
+}
+
+// --
+
+
+DrainableIOBuffer::DrainableIOBuffer(cr::RefPtr<IOBuffer> base, size_t size)
+    : IOBuffer(base->first(size)), base_(std::move(base)) {}
+
+void DrainableIOBuffer::DidConsume(int bytes) {
+  SetOffset(used_ + bytes);
+}
+
+int DrainableIOBuffer::BytesRemaining() const {
+  return size();
+}
+
+// Returns the number of consumed bytes.
+int DrainableIOBuffer::BytesConsumed() const {
+  return used_;
+}
+
+void DrainableIOBuffer::SetOffset(int bytes) {
+  CR_CHECK(bytes >= 0);
+  // Length from the start of `base_` to the end of the buffer passed in to the
+  // constructor isn't stored anywhere, so need to calculate it.
+  int length = size() + used_;
+  CR_CHECK(bytes <= length);
+  used_ = bytes;
+  SetSpan(base_->span().subspan(cr::checked_cast<size_t>(used_),
+                                cr::checked_cast<size_t>(length - bytes)));
+}
+
+DrainableIOBuffer::~DrainableIOBuffer() {
+  // Clear ptr before this destructor destroys the |base_| instance,
+  // making it dangle.
   ClearSpan();
 }
 

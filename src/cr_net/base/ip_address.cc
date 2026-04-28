@@ -17,7 +17,7 @@
 #include "cr_url/gurl.h"
 #include "cr_url/url_canon_ip.h"
 
-#include "cr_net/base/internal/parse_number.h"
+#include "cr_net/base/parse_number.h"
 
 namespace crnet {
 namespace {
@@ -459,7 +459,7 @@ bool ParseCIDRBlock(const std::string& cidr_literal,
 
   // Parse the prefix length.
   uint32_t number_of_bits;
-  if (!internal::ParseUint32(parts[1], &number_of_bits))
+  if (!ParseUint32(parts[1], &number_of_bits))
     return false;
 
   // Make sure the prefix length is in a valid range.

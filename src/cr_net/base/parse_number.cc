@@ -2,13 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "cr_net/base/internal/parse_number.h"
+#include "cr_net/base/parse_number.h"
 
 #include "cr_base/strings/string_number_conversions.h"
 #include "cr_base/strings/string_util.h"
 
 namespace crnet {
-namespace internal {
 
 namespace {
 
@@ -124,5 +123,4 @@ bool ParseUint64(const cr::StringPiece& input,
                         optional_error);
 }
 
-}  // namespace internal
 }  // namespace crnet
