@@ -16,7 +16,7 @@ WeakReference::Flag::Flag() {
   // Flags only become bound when checked for validity, or invalidated,
   // so that we can check that later validity/invalidation operations on
   // the same Flag take place on the same sequenced thread.
-  ///DETACH_FROM_SEQUENCE(sequence_checker_);
+  CR_DETACH_FROM_SEQUENCE(sequence_checker_);
 }
 
 void WeakReference::Flag::Invalidate() {

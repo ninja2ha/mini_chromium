@@ -445,7 +445,7 @@ constexpr size_t Span<T, Extent>::extent;
 // [span.objectrep], views of object representation
 template <typename T, size_t X>
 Span<const uint8_t, (X == dynamic_extent ? dynamic_extent : sizeof(T) * X)>
-AsBytes(Span<T, X> s) noexcept {
+as_bytes(Span<T, X> s) noexcept {
   return {reinterpret_cast<const uint8_t*>(s.data()), s.size_bytes()};
 }
 
@@ -453,7 +453,7 @@ template <typename T,
           size_t X,
           typename = std::enable_if_t<!std::is_const<T>::value>>
 Span<uint8_t, (X == dynamic_extent ? dynamic_extent : sizeof(T) * X)>
-AsWritableBytes(Span<T, X> s) noexcept {
+as_writable_bytes(Span<T, X> s) noexcept {
   return {reinterpret_cast<uint8_t*>(s.data()), s.size_bytes()};
 }
 

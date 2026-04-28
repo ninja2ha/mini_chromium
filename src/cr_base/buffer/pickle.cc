@@ -205,7 +205,7 @@ bool PickleIterator::ReadData(Span<const uint8_t>* data) {
   if (!ReadData(&ptr, &length))
     return false;
 
-  *data = cr::AsBytes(MakeSpan(ptr, length));
+  *data = cr::as_bytes(MakeSpan(ptr, length));
   return true;
 }
 

@@ -24,7 +24,7 @@ void IOBuffer::AssertValidBufferSize(size_t size) {
 IOBuffer::IOBuffer() = default;
 
 IOBuffer::IOBuffer(cr::Span<char> span) : 
-  IOBuffer(cr::AsWritableBytes(span)){
+  IOBuffer(cr::as_writable_bytes(span)){
 }
 
 IOBuffer::IOBuffer(cr::Span<uint8_t> span) : span_(span){
@@ -48,12 +48,12 @@ StringIOBuffer::StringIOBuffer(StringPiece s) {
   AssertValidBufferSize(s.size());
 
   string_data_.assign(s.data(), s.size());
-  SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
+  SetSpan(cr::as_writable_bytes(cr::Span<char>(string_data_)));
 }
 
 StringIOBuffer::StringIOBuffer(size_t s) {
   string_data_.resize(s);
-  SetSpan(cr::AsWritableBytes(cr::Span<char>(string_data_)));
+  SetSpan(cr::as_writable_bytes(cr::Span<char>(string_data_)));
 }
 
 StringIOBuffer::~StringIOBuffer() {
@@ -245,7 +245,7 @@ bool QueuedWriteIOBuffer::Append(Span<const char>  data) {
 
   // If new data is the first pending data, updates data_.
   if (pending_data_.size() == 1) {
-    SetSpan(cr::AsWritableBytes(cr::Span<char>(*pending_data_.front())));
+    SetSpan(cr::as_writable_bytes(cr::Span<char>(*pending_data_.front())));
   }
   return true;
 }
@@ -263,7 +263,7 @@ void QueuedWriteIOBuffer::DidConsume(int size) {
     ClearSpan();
     pending_data_.pop();
     if (!IsEmpty()) {
-      SetSpan(cr::AsWritableBytes(cr::Span<char>(*pending_data_.front())));
+      SetSpan(cr::as_writable_bytes(cr::Span<char>(*pending_data_.front())));
     }
   }
   total_size_ -= size;
