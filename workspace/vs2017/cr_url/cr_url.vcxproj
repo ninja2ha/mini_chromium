@@ -28,6 +28,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_url\gurl.cc" />
+    <ClCompile Include="..\..\..\src\cr_url\gurl_util.cc" />
     <ClCompile Include="..\..\..\src\cr_url\origin.cc" />
     <ClCompile Include="..\..\..\src\cr_url\scheme_host_port.cc" />
     <ClCompile Include="..\..\..\src\cr_url\third_party\mozilla\url_parse.cc" />
@@ -52,6 +53,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_url\gurl.h" />
+    <ClInclude Include="..\..\..\src\cr_url\gurl_util.h" />
     <ClInclude Include="..\..\..\src\cr_url\origin.h" />
     <ClInclude Include="..\..\..\src\cr_url\scheme_host_port.h" />
     <ClInclude Include="..\..\..\src\cr_url\third_party\mozilla\url_parse.h" />

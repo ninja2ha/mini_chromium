@@ -13,8 +13,8 @@ namespace cr {
 // ReadUnicodeCharacter --------------------------------------------------------
 
 bool ReadUnicodeCharacter(const char* src,
-                          int32_t src_len,
-                          int32_t* char_index,
+                          size_t src_len,
+                          size_t* char_index,
                           uint32_t* code_point_out) {
   // U8_NEXT expects to be able to use -1 to signal an error, so we must
   // use a signed type for code_point.  But this function returns false
@@ -32,8 +32,8 @@ bool ReadUnicodeCharacter(const char* src,
 }
 
 bool ReadUnicodeCharacter(const char16_t* src,
-                          int32_t src_len,
-                          int32_t* char_index,
+                          size_t src_len,
+                          size_t* char_index,
                           uint32_t* code_point) {
   if (CBU16_IS_SURROGATE(src[*char_index])) {
     if (!CBU16_IS_SURROGATE_LEAD(src[*char_index]) ||
@@ -56,8 +56,8 @@ bool ReadUnicodeCharacter(const char16_t* src,
 }
 
 bool ReadUnicodeCharacter(const char32_t* src,
-                          int32_t src_len,
-                          int32_t* char_index,
+                          size_t src_len,
+                          size_t* char_index,
                           uint32_t* code_point) {
   // Conversion is easy since the source is 32-bit.
   *code_point = src[*char_index];
@@ -67,8 +67,8 @@ bool ReadUnicodeCharacter(const char32_t* src,
 }
 
 bool ReadUnicodeCharacter(const wchar_t* src,
-                          int32_t src_len,
-                          int32_t* char_index,
+                          size_t src_len,
+                          size_t* char_index,
                           uint32_t* code_point) {
 #if defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)
   return ReadUnicodeCharacter(

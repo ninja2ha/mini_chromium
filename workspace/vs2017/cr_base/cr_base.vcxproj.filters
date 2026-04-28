@@ -537,6 +537,12 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\string_tokenizer.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\escape.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\utf_offset_string_conversions.h">
+      <Filter>strings</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_base\containers\linked_list.cc">
@@ -794,6 +800,12 @@
       <Filter>digest</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\command_line.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\escape.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\utf_offset_string_conversions.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Text Include="..\..\..\src\cr_base\CMakeLists.txt" />

@@ -327,5 +327,8 @@
     <ClCompile Include="..\..\..\src\cr_net\http\http_byte_range.cc">
       <Filter>http</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\http\http_util.cc">
+      <Filter>http</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

@@ -112,6 +112,7 @@
     <ClInclude Include="..\..\..\src\cr_base\rand_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\stl_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\char_traits.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\escape.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\format_macros.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\strcat.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\strcat_internal.h" />
@@ -126,6 +127,7 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\string_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_util_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\sys_string_conversions.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\utf_offset_string_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\win\string_util_win.h" />
@@ -224,6 +226,7 @@
     <ClCompile Include="..\..\..\src\cr_base\memory\zero_memory.cc" />
     <ClCompile Include="..\..\..\src\cr_base\observer_list_types.cc" />
     <ClCompile Include="..\..\..\src\cr_base\rand_util.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\escape.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\stringprintf.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_number_conversions.cc" />
@@ -231,6 +234,7 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\string_split.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_util_constants.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\utf_offset_string_conversions.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversions.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\win\sys_string_conversions_win.cc" />

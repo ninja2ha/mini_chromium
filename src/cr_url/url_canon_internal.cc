@@ -250,14 +250,22 @@ void AppendStringOfType(const char16_t* source,
 
 bool ReadUTFChar(const char* str, int* begin, int length,
                  unsigned* code_point_out) {
+  CR_CHECK(*begin >= 0);
+  CR_CHECK(length >= 0);
+
+  size_t s_begin = static_cast<size_t>(*begin);
+  size_t s_len = static_cast<size_t>(length);
+
   // This depends on ints and int32s being the same thing. If they're not, it
   // will fail to compile.
   // TODO(mmenke): This should probably be fixed.
-  if (!cr::ReadUnicodeCharacter(str, length, begin, code_point_out) ||
+  if (!cr::ReadUnicodeCharacter(str, s_len, &s_begin, code_point_out) ||
       !cr::IsValidCharacter(*code_point_out)) {
     *code_point_out = kUnicodeReplacementCharacter;
+    *begin = static_cast<int>(s_begin);
     return false;
   }
+  *begin = static_cast<int>(s_begin);
   return true;
 }
 
@@ -265,14 +273,22 @@ bool ReadUTFChar(const char16_t* str,
                  int* begin,
                  int length,
                  unsigned* code_point_out) {
+  CR_CHECK(*begin >= 0);
+  CR_CHECK(length >= 0);
+
+  size_t s_begin = static_cast<size_t>(*begin);
+  size_t s_len = static_cast<size_t>(length);
+
   // This depends on ints and int32s being the same thing. If they're not, it
   // will fail to compile.
   // TODO(mmenke): This should probably be fixed.
-  if (!cr::ReadUnicodeCharacter(str, length, begin, code_point_out) ||
+  if (!cr::ReadUnicodeCharacter(str, s_len, &s_begin, code_point_out) ||
       !cr::IsValidCharacter(*code_point_out)) {
     *code_point_out = kUnicodeReplacementCharacter;
+    *begin = static_cast<int>(s_begin);
     return false;
   }
+  *begin = static_cast<int>(s_begin);
   return true;
 }
 

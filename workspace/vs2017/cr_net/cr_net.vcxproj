@@ -372,6 +372,7 @@
     <ClCompile Include="..\..\..\src\cr_net\http\http_byte_range.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_request_headers.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_status_code.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\http\http_util.cc" />
     <ClCompile Include="..\..\..\src\cr_net\network\network_activity_monitor.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
       </ExcludedFromBuild>

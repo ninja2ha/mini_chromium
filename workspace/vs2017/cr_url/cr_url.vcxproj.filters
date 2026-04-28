@@ -25,6 +25,7 @@
     <ClCompile Include="..\..\..\src\cr_url\url_constants.cc" />
     <ClCompile Include="..\..\..\src\cr_url\url_parse_file.cc" />
     <ClCompile Include="..\..\..\src\cr_url\url_util.cc" />
+    <ClCompile Include="..\..\..\src\cr_url\gurl_util.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_url\third_party\mozilla\url_parse.h">
@@ -44,6 +45,7 @@
     <ClInclude Include="..\..\..\src\cr_url\url_parse_internal.h" />
     <ClInclude Include="..\..\..\src\cr_url\url_util.h" />
     <ClInclude Include="..\..\..\src\cr_url\url_util_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_url\gurl_util.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="third_party">

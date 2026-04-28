@@ -47,25 +47,25 @@ inline bool IsValidCharacter(uint32_t code_point) {
 //
 // Returns true on success. On false, |*code_point| will be invalid.
 CRBASE_EXPORT bool ReadUnicodeCharacter(const char* src,
-                                        int32_t src_len,
-                                        int32_t* char_index,
+                                        size_t src_len,
+                                        size_t* char_index,
                                         uint32_t* code_point_out);
 
 // Reads a UTF-16 character. The usage is the same as the 8-bit version above.
 CRBASE_EXPORT bool ReadUnicodeCharacter(const char16_t* src,
-                                        int32_t src_len,
-                                        int32_t* char_index,
+                                        size_t src_len,
+                                        size_t* char_index,
                                         uint32_t* code_point);
 
 // Reads UTF-32 character. The usage is the same as the 8-bit version above.
 CRBASE_EXPORT bool ReadUnicodeCharacter(const char32_t* src,
-                                        int32_t src_len,
-                                        int32_t* char_index,
+                                        size_t src_len,
+                                        size_t* char_index,
                                         uint32_t* code_point);
 
 CRBASE_EXPORT bool ReadUnicodeCharacter(const wchar_t* src,
-                                        int32_t src_len,
-                                        int32_t* char_index,
+                                        size_t src_len,
+                                        size_t* char_index,
                                         uint32_t* code_point);
 
 // WriteUnicodeCharacter -------------------------------------------------------
