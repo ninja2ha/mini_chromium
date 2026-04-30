@@ -13,6 +13,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cr_event", "cr_event\cr_eve
 	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cr_url", "cr_url\cr_url.vcxproj", "{BAFE0177-9C92-4879-91BF-F499F072907B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{20F40B60-978B-4F3E-BDBA-D2756B463185} = {20F40B60-978B-4F3E-BDBA-D2756B463185}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "unittest_cr_base", "tests\cr_base\unittest_cr_base.vcxproj", "{27D3CB37-78E6-4A87-A8A5-CCD3CE75D7D9}"
 	ProjectSection(ProjectDependencies) = postProject

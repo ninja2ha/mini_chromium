@@ -191,6 +191,21 @@
     <ClInclude Include="..\..\..\src\cr_net\base\privacy_mode.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_transaction.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\http\http_raw_request_headers.h">
+      <Filter>http</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\load_states.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\internal\load_states_list.h">
+      <Filter>base\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\net_error_details.h">
+      <Filter>base</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="base">
@@ -377,6 +392,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_net\base\privacy_mode.cc">
       <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\http\http_raw_request_headers.cc">
+      <Filter>http</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

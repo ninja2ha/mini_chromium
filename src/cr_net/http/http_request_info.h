@@ -44,7 +44,7 @@ struct CRNET_EXPORT HttpRequestInfo {
   // Any upload data.
   UploadDataStream* upload_data_stream;
 
-  // Any load flags (see load_flags.h).
+  // Any load flags (see load_flags.h). 
   int load_flags;
 
   // If enabled, then request must be sent over connection that cannot be

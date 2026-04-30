@@ -281,10 +281,13 @@
     <ClInclude Include="..\..\..\src\cr_net\base\completion_repeating_callback.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\datagram_buffer.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\idempotency.h" />
+    <ClInclude Include="..\..\..\src\cr_net\base\internal\load_states_list.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\internal\net_error_list.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\ip_address.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\ip_endpoint.h" />
+    <ClInclude Include="..\..\..\src\cr_net\base\load_states.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\net_errors.h" />
+    <ClInclude Include="..\..\..\src\cr_net\base\net_error_details.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\parse_number.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\privacy_mode.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\sockaddr_storage.h" />
@@ -295,6 +298,7 @@
     <ClInclude Include="..\..\..\src\cr_net\base\win\winsock_util.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_byte_range.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_chunked_decoder.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_raw_request_headers.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_request_headers.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_request_info.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_response_headers.h" />
@@ -302,6 +306,7 @@
     <ClInclude Include="..\..\..\src\cr_net\http\http_status_code.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_status_code_list.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_stream_parser.h" />
+    <ClInclude Include="..\..\..\src\cr_net\http\http_transaction.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_util.h" />
     <ClInclude Include="..\..\..\src\cr_net\http\http_version.h" />
     <ClInclude Include="..\..\..\src\cr_net\network\network_activity_monitor.h">
@@ -382,6 +387,7 @@
     <ClCompile Include="..\..\..\src\cr_net\base\win\winsock_util.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_byte_range.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_chunked_decoder.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\http\http_raw_request_headers.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_request_headers.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_request_info.cc" />
     <ClCompile Include="..\..\..\src\cr_net\http\http_response_headers.cc" />
