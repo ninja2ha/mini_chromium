@@ -17,23 +17,17 @@ namespace cr {
 
 class AtomicRefCount {
  public:
-#if defined(MINI_CHROMIUM_ARCH_CPU_64_BITS)
-  using IntType = uint64_t;
-#else
-  using IntType = uint32_t;
-#endif
-
   constexpr AtomicRefCount() : ref_count_(0) {}
-  explicit constexpr AtomicRefCount(IntType initial_value)
+  explicit constexpr AtomicRefCount(int initial_value)
       : ref_count_(initial_value) {}
 
   // Increment a reference count.
   // Returns the previous value of the count.
-  IntType Increment() { return Increment(1); }
+  int Increment() { return Increment(1); }
 
   // Increment a reference count by "increment", which must exceed 0.
   // Returns the previous value of the count.
-  IntType Increment(IntType increment) {
+  int Increment(int increment) {
     return ref_count_.fetch_add(increment, std::memory_order_relaxed);
   }
 
@@ -65,12 +59,12 @@ class AtomicRefCount {
 
   // Returns the current reference count (with no barriers). This is subtle, and
   // should be used only for debugging.
-  IntType SubtleRefCountForDebug() const {
+  int SubtleRefCountForDebug() const {
     return ref_count_.load(std::memory_order_relaxed);
   }
 
  private:
-  std::atomic<IntType> ref_count_;
+  std::atomic<int> ref_count_;
 };
 
 }  // namespace cr

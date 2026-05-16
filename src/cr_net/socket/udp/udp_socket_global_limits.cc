@@ -34,11 +34,11 @@ class GlobalUDPSocketCounts {
     return true;
   }
 
-  cr::AtomicRefCount::IntType GetMax() {
+  int GetMax() {
     ///if (base::FeatureList::IsEnabled(features::kLimitOpenUDPSockets))
     ///  return features::kLimitOpenUDPSocketsMax.Get();
 
-    return std::numeric_limits<cr::AtomicRefCount::IntType>::max();
+    return std::numeric_limits<int>::max();
   }
 
   void ReleaseSocket() { count_.Increment(-1); }
