@@ -1,24 +1,19 @@
 # 容器
 #### 类
 ###### [cr::circular_deque]()
->头文件: `"cr_base/conatiners/circular_deque.h"`
->环形双端队列类。避免普通双端队列的假溢出导致内存空间利用不足问题。
+>头文件: `"cr_base/conatiners/circular_deque.h"`</br>环形双端队列类。避免普通双端队列的假溢出导致内存空间利用不足问题。
 
 ###### [cr::queue]()
->头文件: `"cr_base/conatiners/queue.h"`
->队列容器类，使用环形双端队列实现的std::queue。
+>头文件: `"cr_base/conatiners/queue.h"`</br>队列容器类，使用环形双端队列实现的std::queue。
 
 ###### [cr::stack]()
->头文件: `"cr_base/conatiners/stack.h"`
->栈容器类，使用环形双端列实现的std::stack。
+>头文件: `"cr_base/conatiners/stack.h"`</br>栈容器类，使用环形双端列实现的std::stack。
 
 ###### [cr::optional]()
->头文件: `"cr_base/conatiners/optional.h"`
->可选值类。
+>头文件: `"cr_base/conatiners/optional.h"`</br>可选值类。
 
 ###### [cr::span]()
->头文件: `"cr_base/conatiners/span.h"`
->数组视图类。
+>头文件: `"cr_base/conatiners/span.h"`</br>数组视图类。
 
 
 #### 函数
