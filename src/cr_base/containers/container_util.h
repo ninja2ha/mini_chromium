@@ -211,7 +211,7 @@ void IterateAndEraseIf(Container& container, Predicate pred) {
 
 // --- Erasing -----------------------------------------------------------------
 
-// Erase/EraseIf are based on library fundamentals ts v2 erase/erase_if
+// erase/erase_if are based on library fundamentals ts v2 erase/erase_if
 // http://en.cppreference.com/w/cpp/experimental/lib_extensions_2
 // They provide a generic way to erase elements from a container.
 // The functions here implement these for the standard containers until those
