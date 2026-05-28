@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_base\main.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="containers">
+      <UniqueIdentifier>{bc9d2401-7129-4117-be3a-96c24fc2c1e7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="containers\internal">
+      <UniqueIdentifier>{66c36a91-b94a-4353-b1af-5fee429d83c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="memory">
+      <UniqueIdentifier>{0b00fc20-db87-4bd0-8aa0-75a47332f73a}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
+    <ClInclude Include="..\..\..\src\cr_base\compiler_specific.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\template_util.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\container_util.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\byte_order.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\no_destructor.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
