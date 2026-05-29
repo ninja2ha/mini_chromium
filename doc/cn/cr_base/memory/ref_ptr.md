@@ -2,7 +2,11 @@
 
 #### 类
 ###### [cr::RefPtr\<T\>]()
->头文件: `"cr_base/memory/ref_counted.h"`</br>对象实例引用计数管理类。
+```c++
+// 头文件
+#include "cr_base/memory/ref_counted.h"
+```
+引用计数对象实例管理类。
 
 * 模板参数
 
@@ -40,8 +44,8 @@
 
 |||
 |:--|:--|
-|[cr::MakeRefCounted]()|生产一个引用计数对象|
-|[cr::WrapRefCounted]()|封装已有的引用技术对象裸指针|
+|[cr::MakeRefCounted]()|生产一个引用计数对象实例并封装管理|
+|[cr::WrapRefCounted]()|封装管理已有的引用计数对象实例|
 
 ___
 ###### [cr::RefCounted\<T\>]()
