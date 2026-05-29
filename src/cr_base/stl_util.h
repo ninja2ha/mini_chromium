@@ -3,8 +3,8 @@
 // found in the LICENSE file.
 // * VERSION: 91.0.4472.169
 
-#ifndef MINI_CHROMIUM_SRC_CRBASE_CONTAINERS_CONTAINER_UTIL_H_
-#define MINI_CHROMIUM_SRC_CRBASE_CONTAINERS_CONTAINER_UTIL_H_
+#ifndef MINI_CHROMIUM_SRC_CRBASE_STL_UTIL_H_
+#define MINI_CHROMIUM_SRC_CRBASE_STL_UTIL_H_
 
 #include <memory>
 
@@ -352,4 +352,4 @@ void erase_if(std::unordered_multiset<Key, Hash, KeyEqual, Allocator>& container
 
 }  // namespace cr
 
-#endif  // MINI_CHROMIUM_SRC_CRBASE_CONTAINERS_CONTAINER_UTIL_H_
+#endif  // MINI_CHROMIUM_SRC_CRBASE_STL_UTIL_H_

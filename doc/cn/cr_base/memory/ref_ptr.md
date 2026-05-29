@@ -1,9 +1,8 @@
-# 内存 - 智能指针
+# 内存 - 引用计数对象
 
 #### 类
 ###### [cr::RefPtr\<T\>]()
->头文件: `"cr_base/memory/ref_counted.h"`
->引用计数指针。
+>头文件: `"cr_base/memory/ref_counted.h"`</br>对象实例引用计数管理类。
 
 * 模板参数
 
@@ -46,6 +45,41 @@
 
 ___
 ###### [cr::RefCounted\<T\>]()
+>引用计数对象基类(非线程安全)
 
+* 例子
+```c++
+#include "cr_base/memory/ref_counted.h"
+
+class Foo : public cr::RefCounted<Foo> {
+ public:
+  Foo() = default;
+  ~Foo() = default;
+}
+
+int main() {
+  cr::RefPtr<Foo> foo = cr::MakeRefCounted<Foo>();
+  return 0;  
+}
+
+```
 ___
 ###### [cr::RefCountedThreadSafe\<T\>]()
+>引用计数对象基类(线程安全)
+
+* 例子
+```c++
+#include "cr_base/memory/ref_counted.h"
+
+class Foo : public cr::RefCountedThreadSafe<Foo> {
+ public:
+  Foo() = default;
+  ~Foo() = default;
+}
+
+int main() {
+  cr::RefPtr<Foo> foo = cr::MakeRefCounted<Foo>();
+  return 0;  
+}
+
+```
