@@ -1,4 +1,4 @@
-## *cr::* BasicStringPiece
+# *cr::* BasicStringPiece
 
 >字符串视图类  
 头文件：["cr_base/strings/string_piece.h"]()
@@ -9,13 +9,13 @@ template <typename CharT>
 class BasicStringPiece;
 ```
 
-#### 模板参数
+## 模板参数
 
 |||
 |:---|:---|
 |`CharT`|字符类型|
 
-##### 嵌套类型
+## 嵌套类型
 |类型|定义|
 |:---|:---|
 |`size_type`|`size_t`|
@@ -28,19 +28,19 @@ class BasicStringPiece;
 |`const_iterator`|`const CharT*`|
 |`const_reverse_iterator`|`std::reverse_iterator<const_iterator>`|
 
-##### 常量成员
+## 常量成员
 |类型|成员|值|说明|
 |:---|:---|:---|:---|
 |`static size_type`|`npos`|`size_type(-1)`|无效位置|
 
-##### 数据成员
+## 数据成员
 |类型|成员|说明|
 |:---|:---|:---|
 |`const CharT*` |`ptr_`|字符串指针|
 |`size_type` |`length_`|字符串长度|
 
 
-##### 函数成员
+## 函数成员
 |成员|说明|
 |:---|:---|
 |[(constructor)]()|构造一个`BasicStringPiece`|
