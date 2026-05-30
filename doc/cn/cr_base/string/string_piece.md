@@ -62,10 +62,10 @@ class BasicStringPiece;
 |[capacity]()|获取字符串的容量，实际返回的是数据成员`length_`|
 |[copy]()|拷贝当前字符串到给定的地址|
 |[substr]()|获取子字符串视图|
-|[compare]()|比较两个字符串视图|
+|[compare]()|比较两个字符串|
 |[find]()|查找字符串|
 |[rfind]()|反向查找字符串|
-|[find_first_of]()|查找字符首个出现的位置|
-|[find_last_of]()|查找字符的最后一次出现的位置|
-|[find_first_not_of]()|查找字符首个缺席的位置|
-|[find_last_not_of]()|查找字符的最后一次缺席的位置|
+|[find_first_of]()|在给定的字符串中，查找其子字符出现的首个位置|
+|[find_last_of]()|在给定的字符串中，查找其子字符出现的最后位置|
+|[find_first_not_of]()|在给定的字符串中，查找其子字符缺席的首个位置|
+|[find_last_not_of]()|在给定的字符串中，查找其子字符缺席的最后位置|
