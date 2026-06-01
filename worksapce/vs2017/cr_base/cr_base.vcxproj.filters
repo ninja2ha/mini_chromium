@@ -2,30 +2,77 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_base\main.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\debug\immediate_crash.cc">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\debug\alias.cc">
+      <Filter>debug</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\logging\logging.cc">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_win.cc">
+      <Filter>logging</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_posix.cc">
+      <Filter>logging</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
       <UniqueIdentifier>{bc9d2401-7129-4117-be3a-96c24fc2c1e7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="containers\internal">
-      <UniqueIdentifier>{66c36a91-b94a-4353-b1af-5fee429d83c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="memory">
       <UniqueIdentifier>{0b00fc20-db87-4bd0-8aa0-75a47332f73a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="debug">
+      <UniqueIdentifier>{dc0afdf5-ee26-442e-b790-618e0880b848}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="memory\internal">
+      <UniqueIdentifier>{0680eb60-0cb1-49b3-b1a1-34aa772f9bbc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{30a2c566-1630-44ca-a3b9-7aa659d5ffd1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="logging">
+      <UniqueIdentifier>{fe3ae969-d1c0-4353-b0f1-7d524ae44f43}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{1b15426b-d930-4d68-92ea-15cd2a276c72}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_specific.h" />
-    <ClInclude Include="..\..\..\src\cr_base\containers\internal\template_util.h">
-      <Filter>containers\internal</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\cr_base\containers\container_util.h">
-      <Filter>containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\byte_order.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\no_destructor.h">
       <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\stl_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\debug\immediate_crash.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\debug\alias.h">
+      <Filter>debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\base_export.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\internal\atomic_ref_count.h">
+      <Filter>memory\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\internal\template_util.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\logging\logging_types.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\logging\logging.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\logging\logging_strerror.h">
+      <Filter>logging</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\window_types.h">
+      <Filter>win</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

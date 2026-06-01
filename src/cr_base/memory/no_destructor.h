@@ -40,7 +40,6 @@ namespace cr {
 // initialization is thread-safe and so is this pattern. Code should prefer to
 // use NoDestructor<T> over:
 // - A function scoped static T* or T& that is dynamically initialized.
-// - A global cr::LazyInstance<T>.
 //
 // Note that since the destructor is never run, this *will* leak memory if used
 // as a stack or member variable. Furthermore, a NoDestructor<T> should never

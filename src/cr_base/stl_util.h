@@ -24,7 +24,7 @@
 #include <unordered_map>
 #include <unordered_set>
 
-#include "cr_base/containers/internal/template_util.h"
+#include "cr_base/internal/template_util.h"
 
 namespace cr {
 

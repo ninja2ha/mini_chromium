@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -165,15 +165,33 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_base\debug\alias.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\debug\immediate_crash.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\logging\logging.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\main.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_base\base_export.h" />
     <ClInclude Include="..\..\..\src\cr_base\byte_order.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_specific.h" />
-    <ClInclude Include="..\..\..\src\cr_base\containers\container_util.h" />
-    <ClInclude Include="..\..\..\src\cr_base\containers\internal\template_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\debug\alias.h" />
+    <ClInclude Include="..\..\..\src\cr_base\debug\immediate_crash.h" />
+    <ClInclude Include="..\..\..\src\cr_base\internal\template_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\logging\logging.h" />
+    <ClInclude Include="..\..\..\src\cr_base\logging\logging_strerror.h" />
+    <ClInclude Include="..\..\..\src\cr_base\logging\logging_types.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\internal\atomic_ref_count.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\no_destructor.h" />
+    <ClInclude Include="..\..\..\src\cr_base\stl_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\window_types.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

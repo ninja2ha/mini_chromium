@@ -53,18 +53,18 @@ class BasicStringPiece;
 |[back]()|获取末尾字符|
 |[remove_prefix]()|根据给定的长度，移除前缀字符串|
 |[remove_suffix]()|根据给定的长度，移除末尾字符串|
-|[operator std::basic_string]()|隐式转换`std::basic_string`到`BasicStringPiece`|
-|[begin]()|返回指向开头的迭代器|
-|[end]()|返回指向结尾的迭代器|
-|[rbegin]()|返回指向开头的反向迭代器|
-|[rend]()|返回指向结尾的反向迭代器|
+|[operator std::basic_string]()|隐式转换`BasicStringPiece`到`std::basic_string`|
+|[begin]()|返回指向头部的迭代器|
+|[end]()|返回指向尾部的迭代器|
+|[rbegin]()|返回指向头部的反向迭代器|
+|[rend]()|返回指向尾部的反向迭代器|
 |[max_size]()|获取字符串最大长度，实际返回的是数据成员`length_`|
 |[capacity]()|获取字符串的容量，实际返回的是数据成员`length_`|
 |[copy]()|拷贝当前字符串到给定的地址|
 |[substr]()|获取子字符串视图|
 |[compare]()|比较两个字符串|
-|[find]()|查找字符串|
-|[rfind]()|反向查找字符串|
+|[find]()|查找子字符串位置|
+|[rfind]()|查找子字符串最后出现的位置|
 |[find_first_of]()|在给定的字符串中，查找其子字符(Ascii)出现的首个位置|
 |[find_last_of]()|在给定的字符串中，查找其子字符(Ascii)出现的最后位置|
 |[find_first_not_of]()|在给定的字符串中，查找其子字符(Ascii)缺席的首个位置|
