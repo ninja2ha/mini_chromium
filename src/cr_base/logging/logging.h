@@ -77,31 +77,14 @@
 //   CR_ASSERT(assertion);
 //   CR_DASSERT(assertion);
 //
-// which is syntactic sugar for {,D}CRLOG_IF(FATAL, assert fails) << assertion;
+// which is syntactic sugar for {,D}CR_LOG_IF(FATAL, assert fails) << assertion;
 //
 // There are "verbose level" logging macros.  They look like
 //
-//   CR_VLOG(1) << "I'm printed when you run the program with --v=1 or more";
-//   CR_VLOG(2) << "I'm printed when you run the program with --v=2 or more";
-//
-// These always log at the INFO log level (when they log at all).
-// The verbose logging can also be turned on module-by-module.  For instance,
-//    --vmodule=profile=2,icon_loader=1,browser_*=3,*/chromeos/*=4 --v=0
-// will cause:
-//   a. CR_VLOG(2) and lower messages to be printed from profile.{h,cc}
-//   b. CR_VLOG(1) and lower messages to be printed from icon_loader.{h,cc}
-//   c. CR_VLOG(3) and lower messages to be printed from files prefixed with
-//      "browser"
-//   d. CR_VLOG(4) and lower messages to be printed from files under a
-//     "chromeos" directory.
-//   e. CR_VLOG(0) and lower messages to be printed from elsewhere
-//
-// The wildcarding functionality shown by (c) supports both '*' (match
-// 0 or more characters) and '?' (match any single character)
-// wildcards.  Any pattern containing a forward or backward slash will
-// be tested against the whole pathname and not just the module.
-// E.g., "*/foo/bar/*=2" would change the logging level for all code
-// in source files under a "foo/bar" directory.
+//   CR_VLOG(1) << "I'm printed when you set the verbose_lowest_level "
+//                 "with 1 or lower";
+//   CR_VLOG(1) << "I'm printed when you set the verbose_lowest_level "
+//                 "with 2 or lower";
 //
 // There's also CR_VLOG_IS_ON(n) "verbose level" condition macro. To be used as
 //
@@ -115,8 +98,8 @@
 // needed.
 //
 //   CR_VLOG_IF(1, (size > 1024))
-//      << "I'm printed when size is more than 1024 and when you run the "
-//         "program with --v=1 or more";
+//      << "I'm printed when size is more than 1024 and when you set the "
+//         "verbose_lowest_level with 1 or lower";
 //
 // We also override the standard 'assert' to use 'CR_DASSERT'.
 //
@@ -192,7 +175,7 @@ struct CRBASE_EXPORT LoggingConfig {
   // [in]
   LogSeverity min_severity = kLogInfo;
 
-  // [in & out]
+  // [in]
   // The lowest CR_VLOG level. The value must be equal or bigger than 0.
   int verbose_lowest_level = 999;
 
