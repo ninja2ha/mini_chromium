@@ -17,6 +17,12 @@
     <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_posix.cc">
       <Filter>logging</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\util\scoped_clear_last_error.cc">
+      <Filter>util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_piece.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -39,6 +45,12 @@
     </Filter>
     <Filter Include="win">
       <UniqueIdentifier>{1b15426b-d930-4d68-92ea-15cd2a276c72}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="util">
+      <UniqueIdentifier>{f1efeeb7-2a97-4948-aa64-853367a3cf9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strings">
+      <UniqueIdentifier>{adb92f2f-3c9b-4da2-9487-b4d79bf524be}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -73,6 +85,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\win\window_types.h">
       <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\util\scoped_clear_last_error.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\char_traits.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_piece.h">
+      <Filter>strings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

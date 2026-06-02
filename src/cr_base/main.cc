@@ -1,5 +1,5 @@
-typedef struct IUnknown IUnknown;
-#include <windows.h>
+///typedef struct IUnknown IUnknown;
+///#include <windows.h>
 
 #include <iostream>
 #include <string>
@@ -11,11 +11,14 @@ typedef struct IUnknown IUnknown;
 #include "cr_base/logging/logging.h"
 #include "cr_base/logging/logging_strerror.h"
 
+#include "cr_base/util/scoped_clear_last_error.h"
+
 int main() {
- ///std::wstring str = cr::logging::StrErrorW(ERROR_ABANDON_HIBERFILE);
-  CR_DEFAULT_LOGGING_CONFIG.logging_dest = cr::logging::LOG_TO_STDERR; 
-  CR_DEFAULT_LOGGING_CONFIG.verbose_lowest_level = 999;
-  cr::logging::InitializeConfig(CR_DEFAULT_LOGGING_CONFIG);
+  auto& config = CR_DEFAULT_LOGGING_CONFIG;
+  config.logging_dest = cr::logging::LOG_TO_STDERR;
+  config.verbose_lowest_level = 999;
+  config.prefix = "MyApp";
+  cr::logging::InitializeConfig(config);
 
   CR_VLOG(1) << "1234561111";
   CR_VLOG(998) << "123456";

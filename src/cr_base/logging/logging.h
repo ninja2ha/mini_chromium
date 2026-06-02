@@ -21,6 +21,7 @@
 #include "cr_base/base_export.h"
 #include "cr_base/logging/logging_types.h"
 #include "cr_base/debug/immediate_crash.h"
+#include "cr_base/util/scoped_clear_last_error.h"
 
 //
 // Optional message capabilities
@@ -268,7 +269,7 @@ class CRBASE_EXPORT LogMessage {
   // This is useful since the LogMessage class uses a lot of Win32 calls
   // that will lose the value of GLE and the code that called the log function
   // will have lost the thread error value when the log call returns.
-  ///cr::ScopedClearLastError last_error_;
+  cr::ScopedClearLastError last_error_;
 };
 
 // This class is used to explicitly ignore values in the conditional
@@ -391,7 +392,13 @@ CRBASE_EXPORT extern std::ostream* g_swallow_stream;
 #if defined(__FILE_NAME__)
 #define __CR_FILE__ __FILE_NAME__
 #else
+
+#if defined(NDEBUG)
 #define __CR_FILE__ ""
+#else
+#define __CR_FILE__ __FILE__
+#endif
+
 #endif
 
 //  -- cr logging: start -------------------------------------------------------
