@@ -4,7 +4,6 @@
 头文件：["cr_base/strings/string_piece.h"]()
 
 ``` c++
-// defines
 template <typename CharT>
 class BasicStringPiece;
 ```
@@ -69,3 +68,12 @@ class BasicStringPiece;
 |[find_last_of]()|在给定的字符串中，查找其子字符(Ascii)出现的最后位置|
 |[find_first_not_of]()|在给定的字符串中，查找其子字符(Ascii)缺席的首个位置|
 |[find_last_not_of]()|在给定的字符串中，查找其子字符(Ascii)缺席的最后位置|
+
+#### 非成员函数
+
+|函数|说明|
+|:--|:--|
+|[cr::MakeStringPiece]()|构造对象`cr::StringPiece`|
+|[cr::MakeStringPiece16]()|构造对象`cr::StringPiece16`|
+|[cr::MakeStringPiece32]()|构造对象`cr::StringPiece32`|
+|[cr::MakeWStringPiece]()|构造对象`cr::WStringPiece`|

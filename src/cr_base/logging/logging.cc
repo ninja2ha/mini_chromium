@@ -108,10 +108,10 @@ std::wstring GetDefaultLogFile() {
   SYSTEMTIME st;
   GetLocalTime(&st);
 
-  // 20251212-020202.log
+  // 2025-12-12_02-02-02.log
   wchar_t file_name[48] = {0};
   _snwprintf(file_name, cr::size(file_name),
-             L"%04d%02d%02d_%02d%02d%02d.log",
+             L"%04d-%02d-%02d_%02d-%02d-%02d.log",
              st.wYear,
              st.wMonth,
              st.wDay,
@@ -133,7 +133,7 @@ std::string GetDefaultLogFile() {
   // 20251212_020202.log
   char file_name[48];
   snprintf(file_name, cr::size(file_name),
-           "%04d%02d%02d_%02d%02d%02d.log",
+           "%04d-%02d-%02d_%02d-%02d-%02d.log",
             tm_time->tm_year + 1900,
             1 + tm_time->tm_mon,
             tm_time->tm_mday,

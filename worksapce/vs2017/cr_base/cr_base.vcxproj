@@ -29,26 +29,26 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141_xp</PlatformToolset>
+    <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -72,23 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
-    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
-    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
-    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformName)\</OutDir>
-    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformName)\$(ProjectName)\</IntDir>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -176,7 +176,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\main.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_piece.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_split.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_util.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_util_constants.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.cc" />
     <ClCompile Include="..\..\..\src\cr_base\util\scoped_clear_last_error.cc" />
   </ItemGroup>
   <ItemGroup>
@@ -184,6 +189,9 @@
     <ClInclude Include="..\..\..\src\cr_base\byte_order.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_specific.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\checked_iterators.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\contiguous_iterator.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\span.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\alias.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\immediate_crash.h" />
     <ClInclude Include="..\..\..\src\cr_base\internal\template_util.h" />
@@ -192,9 +200,30 @@
     <ClInclude Include="..\..\..\src\cr_base\logging\logging_types.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\internal\atomic_ref_count.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\no_destructor.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\ptr_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\checked_math.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\clamped_math.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\checked_math_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\clamped_math_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_conversions_arm_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_conversions_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_arm_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_clang_gcc_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_shared_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\ranges.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\safe_conversions.h" />
+    <ClInclude Include="..\..\..\src\cr_base\numerics\safe_math.h" />
     <ClInclude Include="..\..\..\src\cr_base\stl_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\char_traits.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\strcat_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_split_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_util_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\strcat.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_piece.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_split.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.h" />
+    <ClInclude Include="..\..\..\src\cr_base\third_party\icu\icu_utf.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_clear_last_error.h" />
     <ClInclude Include="..\..\..\src\cr_base\win\window_types.h" />
   </ItemGroup>

@@ -23,6 +23,21 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\string_piece.cc">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_util.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_util_constants.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_split.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -51,6 +66,24 @@
     </Filter>
     <Filter Include="strings">
       <UniqueIdentifier>{adb92f2f-3c9b-4da2-9487-b4d79bf524be}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="containers\internal">
+      <UniqueIdentifier>{3b58e17d-e64d-4674-be31-1d4537d8bcd4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{226b6781-e031-4a66-be86-20e4a31c7d18}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\icu">
+      <UniqueIdentifier>{fe67bad4-04d1-4a2c-a6d7-07b2a7d53333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="strings\internal">
+      <UniqueIdentifier>{359621d5-88b2-4bb5-b17f-cb75120f72f7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="numeric">
+      <UniqueIdentifier>{088a3997-80f8-4e3e-9366-451329e64fdc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="numeric\internal">
+      <UniqueIdentifier>{b1980482-452c-409c-be48-06cfe1fc986e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -94,6 +127,78 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\strings\string_piece.h">
       <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_util.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\memory\ptr_util.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\checked_iterators.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\contiguous_iterator.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\span.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\icu\icu_utf.h">
+      <Filter>third_party\icu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_util_internal.h">
+      <Filter>strings\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\strcat_internal.h">
+      <Filter>strings\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\strcat.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_split_internal.h">
+      <Filter>strings\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_split.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\checked_math.h">
+      <Filter>numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\clamped_math.h">
+      <Filter>numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\ranges.h">
+      <Filter>numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\safe_conversions.h">
+      <Filter>numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\safe_math.h">
+      <Filter>numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\checked_math_impl.h">
+      <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\clamped_math_impl.h">
+      <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_conversions_arm_impl.h">
+      <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_conversions_impl.h">
+      <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_arm_impl.h">
+      <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_clang_gcc_impl.h">
+      <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_shared_impl.h">
+      <Filter>numeric\internal</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -62,18 +62,26 @@ namespace internal {
 CRBASE_EXPORT size_t find(StringPiece self, StringPiece s, size_t pos);
 CRBASE_EXPORT size_t find(StringPiece16 self, StringPiece16 s, size_t pos);
 CRBASE_EXPORT size_t find(StringPiece32 self, StringPiece32 s, size_t pos);
+CRBASE_EXPORT size_t find(WStringPiece self, WStringPiece s, size_t pos);
 
 CRBASE_EXPORT size_t rfind(StringPiece self, StringPiece s, size_t pos);
 CRBASE_EXPORT size_t rfind(StringPiece16 self, StringPiece16 s, size_t pos);
 CRBASE_EXPORT size_t rfind(StringPiece32 self, StringPiece32 s, size_t pos);
+CRBASE_EXPORT size_t rfind(WStringPiece self, WStringPiece s, size_t pos);
 
-CRBASE_EXPORT size_t find_first_of(StringPiece self, StringPiece s, size_t pos);
+CRBASE_EXPORT size_t find_first_of(StringPiece self, 
+                                   StringPiece s, 
+                                   size_t pos);
 CRBASE_EXPORT size_t find_first_of(StringPiece16 self,
                                    StringPiece16 s,
                                    size_t pos);
 CRBASE_EXPORT size_t find_first_of(StringPiece32 self,
                                    StringPiece32 s,
                                    size_t pos);
+CRBASE_EXPORT size_t find_first_of(WStringPiece self, 
+                                   WStringPiece s, 
+                                   size_t pos);
+
 
 CRBASE_EXPORT size_t find_first_not_of(StringPiece self,
                                        StringPiece s,
@@ -84,13 +92,21 @@ CRBASE_EXPORT size_t find_first_not_of(StringPiece16 self,
 CRBASE_EXPORT size_t find_first_not_of(StringPiece32 self,
                                        StringPiece32 s,
                                        size_t pos);
+CRBASE_EXPORT size_t find_first_not_of(WStringPiece self,
+                                       WStringPiece s,
+                                       size_t pos);
 
-CRBASE_EXPORT size_t find_last_of(StringPiece self, StringPiece s, size_t pos);
+CRBASE_EXPORT size_t find_last_of(StringPiece self, 
+                                  StringPiece s, 
+                                  size_t pos);
 CRBASE_EXPORT size_t find_last_of(StringPiece16 self,
                                   StringPiece16 s,
                                   size_t pos);
 CRBASE_EXPORT size_t find_last_of(StringPiece32 self,
                                   StringPiece32 s,
+                                  size_t pos);
+CRBASE_EXPORT size_t find_last_of(WStringPiece self, 
+                                  WStringPiece s, 
                                   size_t pos);
 
 CRBASE_EXPORT size_t find_last_not_of(StringPiece self,
@@ -102,14 +118,6 @@ CRBASE_EXPORT size_t find_last_not_of(StringPiece16 self,
 CRBASE_EXPORT size_t find_last_not_of(StringPiece32 self,
                                       StringPiece32 s,
                                       size_t pos);
-
-CRBASE_EXPORT size_t find(WStringPiece self, WStringPiece s, size_t pos);
-CRBASE_EXPORT size_t rfind(WStringPiece self, WStringPiece s, size_t pos);
-CRBASE_EXPORT size_t find_first_of(WStringPiece self, WStringPiece s, size_t pos);
-CRBASE_EXPORT size_t find_first_not_of(WStringPiece self,
-                                       WStringPiece s,
-                                       size_t pos);
-CRBASE_EXPORT size_t find_last_of(WStringPiece self, WStringPiece s, size_t pos);
 CRBASE_EXPORT size_t find_last_not_of(WStringPiece self,
                                       WStringPiece s,
                                       size_t pos);
@@ -575,10 +583,59 @@ CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, StringPiece16 piece);
 CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, StringPiece32 piece);
 CRBASE_EXPORT std::ostream& operator<<(std::ostream& o, WStringPiece piece);
 
+// Maker -----------------------------------------------------------------------
+
+// Simplified implementation of C++20's std::basic_string_view(It, End).
+// Reference: https://wg21.link/string.view.cons
+template <typename CharT, typename Iter>
+constexpr BasicStringPiece<CharT> MakeBasicStringPiece(Iter begin, Iter end) {
+  CR_DCHECK((end - begin) >= 0);
+  return BasicStringPiece<CharT>(
+      cr::to_address(begin), static_cast<size_t>(end - begin));
+}
+
+// Explicit instantiations of MakeBasicStringPiece for the BasicStringPiece
+// aliases defined in base/strings/string_piece_forward.h
+template <typename Iter>
+constexpr StringPiece MakeStringPiece(Iter begin, Iter end) {
+  return MakeBasicStringPiece<char>(begin, end);
+}
+
+template <typename Iter>
+constexpr StringPiece16 MakeStringPiece16(Iter begin, Iter end) {
+  return MakeBasicStringPiece<char16_t>(begin, end);
+}
+
+template <typename Iter>
+constexpr StringPiece32 MakeStringPiece32(Iter begin, Iter end) {
+  return MakeBasicStringPiece<char32_t>(begin, end);
+}
+
+template <typename Iter>
+constexpr WStringPiece MakeWStringPiece(Iter begin, Iter end) {
+  return MakeBasicStringPiece<wchar_t>(begin, end);
+}
+
 // Hashing ---------------------------------------------------------------------
 
 // We provide appropriate hash functions so StringPiece and StringPiece16 can
 // be used as keys in hash sets and maps.
+// Usage:
+//   std::unordered_map<
+//       cr::StringPiece, 
+//       cr::StringPiece, 
+//       StringPieceHasher> m1;
+//   std::unordered_multimap<
+//       cr::StringPiece, 
+//       cr::StringPiece, 
+//       StringPieceHasher> m2;
+//   std::unordered_set<
+//       cr::StringPiece, 
+//       StringPieceHasher> s1;
+//   std::unordered_multiset<
+//       cr::StringPiece, 
+//       StringPieceHasher> s2;
+//
 
 // This is a custom hash function. We don't use the ones already defined for
 // string and std::u16string directly because it would require the string
@@ -594,10 +651,10 @@ struct StringPieceHashImpl {
   }
 };
 
-using StringPieceHash = StringPieceHashImpl<StringPiece>;
-using StringPiece16Hash = StringPieceHashImpl<StringPiece16>;
-using StringPiece32Hash = StringPieceHashImpl<StringPiece32>;
-using WStringPieceHash = StringPieceHashImpl<WStringPiece>;
+using StringPieceHasher = StringPieceHashImpl<StringPiece>;
+using StringPiece16Hasher = StringPieceHashImpl<StringPiece16>;
+using StringPiece32Hasher = StringPieceHashImpl<StringPiece32>;
+using WStringPieceHasher = StringPieceHashImpl<WStringPiece>;
 
 }  // namespace cr
 

@@ -8,40 +8,39 @@
 >环形双端队列类，避免普通双端队列的假溢出导致内存空间利用不足问题。
 
 ###### [cr::queue]()
+>队列容器类，使用环形双端队列实现的std::queue。
 ```c++
 // 头文件 
 // #include "cr_base/conatiners/queue.h"
 ```
->队列容器类，使用环形双端队列实现的std::queue。
 
 ###### [cr::stack]()
+>栈容器类，使用环形双端列实现的std::stack。
 ```c++
 // 头文件 
 // #include "cr_base/conatiners/stack.h"
 ```
->栈容器类，使用环形双端列实现的std::stack。
 
 ###### [cr::optional]()
+>可选值类，用于解决值可能存在也可能不存在的问题。
 ```c++
 // 头文件 
 // #include "cr_base/conatiners/optional.h"
 ```
->可选值类，用于解决值可能存在也可能不存在的问题。
 
-###### [cr::span]()
+###### [cr::Span]()
+>连续内存访问视图类，用于快速访问连续内存。
 ``` c++
 // 头文件
 #include "cr_base/conatiners/span.h"
 ```
->连续内存访问视图类，用于快速访问连续内存。
-
 
 #### 相关函数
 ``` c++
 // 头文件
 #include "cr_base/stl_util.h"
 ```
-|||
+|函数|描述|
 |:---|:---|
 |[cr::size]()|获取数组、容器的元素个数|
 |[cr::empty]()|检查数组、容器是否含有元素|
