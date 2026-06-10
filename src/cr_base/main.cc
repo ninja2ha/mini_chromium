@@ -9,8 +9,7 @@ int main() {
 
   ///cr::CheckedNumeric<int> num = cr::CheckMax(10, 1, std::numeric_limits<uint32_t>::max());
   
-  cr::ClampedNumeric<unsigned long long> a = cr::ClampSub(-1, 1u, 0u);
-  cr::ClampedNumeric<unsigned int> b = cr::ClampAdd(a, 1);
-  CR_LOG(Info) << "num = " << b;
+  cr::ClampedNumeric<unsigned> a = cr::ClampSub(0u, 1);
+  CR_LOG(Info) << "num = " << a;
   return 0;
 }
