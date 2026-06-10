@@ -474,7 +474,7 @@ bool EndsWith(WStringPiece str,
 }
 
 char HexDigitToInt(wchar_t c) {
-  CR_DCHECK(IsHexDigit(c));
+  CR_DCHECK(IsAsciiHexDigit(c));
   if (c >= '0' && c <= '9')
     return static_cast<char>(c - '0');
   if (c >= 'A' && c <= 'F')
