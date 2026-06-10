@@ -3,12 +3,29 @@
 ### 值校验
 
 ###### [cr::CheckedNumeric\<T\>]()
->数值模板类，用于检查算数结果越过是否目标类型值边界的问题。  
+>数值模板类，用于检查算数结果是否越过目标类型值边界。  
 **NOTE**: 该对象支持运算符操作，以及不同数值类型之间的转换。
 
 ```c++
 /* 头文件 */
 #include "cr_base/numeric/checked_math.h"
+
+/* 
+** [样例]
+**   unsigned类型的值边界: 0-4294967295
+**
+**   sub右侧表达式(0u-1)的值越过了unsigned类型值最小边界，
+**   因此sub的值是无效的，sub.IsValid() = false。
+**
+**   sum右侧表达式(4294967295u+1)的值越过了unsigned类型值最大边界。
+**   因此sum的值是无效的，sum.IsValid() = false。
+**
+**   div右侧表达式(5u/1)的值在unsigned类型值边界范围里。
+**   因此div的值是有效的，div.IsValid() = true。
+*/
+cr::CheckedNumeric<unsigned> sub = cr::CheckedSub(0u, 1); // Invalid value;
+cr::CheckedNumeric<unsigned> sum = cr::CheckedSum(4294967295u, 1); // Invalid value;
+cr::CheckedNumeric<unsigned> div = cr::CheckedDiv(5u, 1); // Valid value;
 ```
 
 * 相关函数
@@ -35,7 +52,7 @@
 
 ### 值收缩
 ##### [cr::ClampedNumeric\<T\>]()
->数值模板类，用于在算数结果越出类型`T`能表达的数值边界时，使用该类型的最大值或最小值来赋值。  
+>数值模板类，用于在算数结果越过类型`T`能表达的数值边界时，使用该类型的最大或最小边界值来赋值。  
 **NOTE**: 该对象支持运算符重载操作，不支持不同数值类型之间的转换。
 
 ```c++
@@ -43,7 +60,7 @@
 #include "cr_base/numeric/clamped_math.h"
 
 /* 
-** [样例1]
+** [样例]
 **   unsigned类型的值边界: 0-4294967295
 **
 **   sub右侧表达式(0u-1)的值越过了unsigned类型值最小边界，

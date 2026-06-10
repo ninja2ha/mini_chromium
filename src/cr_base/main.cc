@@ -7,9 +7,10 @@ int main() {
   config.verbose_lowest_level = 999;
   cr::logging::InitializeConfig(config);
 
-  ///cr::CheckedNumeric<int> num = cr::CheckMax(10, 1, std::numeric_limits<uint32_t>::max());
-  
-  cr::ClampedNumeric<unsigned> a = cr::ClampSub(0u, 1);
+  cr::CheckedNumeric<int> num = cr::CheckMax(10, 1, std::numeric_limits<uint32_t>::max());
+  num.IsValid
+
+  cr::ClampedNumeric<unsigned> a = cr::ClampSub(0, 1u);
   CR_LOG(Info) << "num = " << a;
   return 0;
 }
