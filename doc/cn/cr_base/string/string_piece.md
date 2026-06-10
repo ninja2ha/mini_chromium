@@ -1,9 +1,10 @@
 ## *cr::* BasicStringPiece
 
 >字符串视图类  
-头文件：["cr_base/strings/string_piece.h"]()
+[#include "cr_base/strings/string_piece.h"]()
 
-``` c++
+```c++
+/* 定义 */
 template <typename CharT>
 class BasicStringPiece;
 ```

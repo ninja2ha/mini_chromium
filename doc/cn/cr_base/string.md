@@ -146,8 +146,8 @@ ___
 |函数|描述|
 |:--|:--|
 |[cr::SplitString]()|使用字符表分割字符串，返回`std::vector<std::basic_string>`|
-|[cr::SplitStringPiece]()|使用字符表分割字符串，返回`std::vector<cr::BasicStringPiece>`，减少内存Allocate|
+|[cr::SplitStringPiece]()|使用字符表分割字符串视图，返回`std::vector<cr::BasicStringPiece>`，减少内存Allocate|
 |[cr::SplitStringIntoKeyValuePairs]()|使用字符分割字符串，并根据键值的分隔符分离出键与值|
 |[cr::SplitStringIntoKeyValuePairsUsingSubstr]()|使用字符串分割字符串，并根据键值的分隔符分离出键与值|
 |[cr::SplitStringUsingSubstr]()|使用字符串分割字符串，返回`std::vector<std::basic_string>`|
-|[cr::SplitStringPieceUsingSubstr]()|使用字符串分割字符串，返回`std::vector<std::BasicStringPiece>`，减少内存Allocate|
+|[cr::SplitStringPieceUsingSubstr]()|使用字符串分割字符串视图，返回`std::vector<std::BasicStringPiece>`，减少内存Allocate|
