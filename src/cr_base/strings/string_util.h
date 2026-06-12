@@ -766,7 +766,7 @@ inline const wchar_t* AsConstWide(StringPiece32 str) {
   return reinterpret_cast<const wchar_t*>(str.data());
 }
 
-// Utility functions to access the underlying string buffer as a char16_t
+// Utility functions to access the underlying string buffer as a char32_t
 // pointer.
 inline char32_t* AsUnicode32(wchar_t* str) {
   return reinterpret_cast<char32_t*>(str);

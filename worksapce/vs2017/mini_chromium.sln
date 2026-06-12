@@ -12,6 +12,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cr_base", "cr_base", "{9B07
 		..\..\doc\cn\cr_base\byte_order.md = ..\..\doc\cn\cr_base\byte_order.md
 		..\..\doc\cn\cr_base\containers.md = ..\..\doc\cn\cr_base\containers.md
 		..\..\doc\cn\cr_base\memory.md = ..\..\doc\cn\cr_base\memory.md
+		..\..\doc\cn\cr_base\numeric.md = ..\..\doc\cn\cr_base\numeric.md
 		..\..\doc\cn\cr_base\string.md = ..\..\doc\cn\cr_base\string.md
 	EndProjectSection
 EndProject
@@ -20,18 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "memory", "memory", "{F34317
 		..\..\doc\cn\cr_base\memory\ref_ptr.md = ..\..\doc\cn\cr_base\memory\ref_ptr.md
 	EndProjectSection
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "string", "string", "{D23184D9-33D2-48F0-9DFD-348EADCE7421}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\doc\cn\cr_base\string\string.md = ..\..\doc\cn\cr_base\string\string.md
-		..\..\doc\cn\cr_base\string\string_piece.md = ..\..\doc\cn\cr_base\string\string_piece.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cn", "cn", "{7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "numeric", "numeric", "{99260D14-2D22-45B0-94EE-DC4B830843C5}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\doc\cn\cr_base\numeric\numeric.md = ..\..\doc\cn\cr_base\numeric\numeric.md
-	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -56,9 +46,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{9B073E92-3494-4276-9855-5A316F93D2D0} = {7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE}
 		{F3431748-7863-4205-9566-B1AA66FD1B21} = {9B073E92-3494-4276-9855-5A316F93D2D0}
-		{D23184D9-33D2-48F0-9DFD-348EADCE7421} = {9B073E92-3494-4276-9855-5A316F93D2D0}
 		{7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE} = {5B28F1C7-8601-4DC2-84D2-22753F94EF69}
-		{99260D14-2D22-45B0-94EE-DC4B830843C5} = {9B073E92-3494-4276-9855-5A316F93D2D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D25FFA18-ACEE-4691-9DE1-35F97A5255C8}

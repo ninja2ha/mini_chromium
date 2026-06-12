@@ -671,16 +671,16 @@ struct IsStrictOp {
       !(UnderlyingType<L>::is_clamped || UnderlyingType<R>::is_clamped);
 };
 
-// as_signed<> returns the supplied integral value (or integral castable
+// AsSigned<> returns the supplied integral value (or integral castable
 // Numeric template) cast as a signed integral of equivalent precision.
 // I.e. it's mostly an alias for: static_cast<std::make_signed<T>::type>(t)
 template <typename Src>
 constexpr typename std::make_signed<
     typename cr::internal::UnderlyingType<Src>::type>::type
-as_signed(const Src value) {
-  static_assert(std::is_integral<decltype(as_signed(value))>::value,
+AsSigned(const Src value) {
+  static_assert(std::is_integral<decltype(AsSigned(value))>::value,
                 "Argument must be a signed or unsigned integer type.");
-  return static_cast<decltype(as_signed(value))>(value);
+  return static_cast<decltype(AsSigned(value))>(value);
 }
 
 // as_unsigned<> returns the supplied integral value (or integral castable
@@ -689,10 +689,10 @@ as_signed(const Src value) {
 template <typename Src>
 constexpr typename std::make_unsigned<
     typename cr::internal::UnderlyingType<Src>::type>::type
-as_unsigned(const Src value) {
-  static_assert(std::is_integral<decltype(as_unsigned(value))>::value,
+AsUnsigned(const Src value) {
+  static_assert(std::is_integral<decltype(AsUnsigned(value))>::value,
                 "Argument must be a signed or unsigned integer type.");
-  return static_cast<decltype(as_unsigned(value))>(value);
+  return static_cast<decltype(AsUnsigned(value))>(value);
 }
 
 template <typename L, typename R>

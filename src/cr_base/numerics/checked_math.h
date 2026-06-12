@@ -100,7 +100,7 @@ class CheckedNumeric {
   constexpr StrictNumeric<Dst> ValueOrDefault(const Src default_value) const {
     return BASE_NUMERICS_LIKELY(IsValid<Dst>())
                ? static_cast<Dst>(state_.value())
-               : checked_cast<Dst>(default_value);
+               : CheckedCast<Dst>(default_value);
   }
 
   // Returns a checked numeric of the specified type, cast from the current

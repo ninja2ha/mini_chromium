@@ -38,6 +38,33 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\string_split.cc">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\string_number_conversions.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum-dtoa.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\cached-powers.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\double-to-string.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\fast-dtoa.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\fixed-dtoa.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\string-to-double.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\strtod.cc">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -84,6 +111,12 @@
     </Filter>
     <Filter Include="numeric\internal">
       <UniqueIdentifier>{b1980482-452c-409c-be48-06cfe1fc986e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\double_conversion">
+      <UniqueIdentifier>{d99d5456-aac6-4b17-9800-b96c29c94c03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\double_conversion\double-conversion">
+      <UniqueIdentifier>{8968f81e-3357-4870-9315-dfb21636b6e6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -199,6 +232,51 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\numerics\internal\safe_math_shared_impl.h">
       <Filter>numeric\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\string_number_conversions.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_number_conversions_internal.h">
+      <Filter>strings\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\optional.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum-dtoa.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\cached-powers.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\diy-fp.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\double-conversion.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\double-to-string.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\fast-dtoa.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\fixed-dtoa.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\ieee.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\string-to-double.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\strtod.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\utils.h">
+      <Filter>third_party\double_conversion\double-conversion</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

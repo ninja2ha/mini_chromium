@@ -29,7 +29,7 @@ class ClampedNumeric {
   // Copy constructor.
   template <typename Src>
   constexpr ClampedNumeric(const ClampedNumeric<Src>& rhs)
-      : value_(saturated_cast<T>(rhs.value_)) {}
+      : value_(SaturatedCast<T>(rhs.value_)) {}
 
   template <typename Src>
   friend class ClampedNumeric;
@@ -38,7 +38,7 @@ class ClampedNumeric {
   // numerics to ClampedNumerics to make them easier to use.
   template <typename Src>
   constexpr ClampedNumeric(Src value)  // NOLINT(runtime/explicit)
-      : value_(saturated_cast<T>(value)) {
+      : value_(SaturatedCast<T>(value)) {
     static_assert(std::is_arithmetic<Src>::value, "Argument must be numeric.");
   }
 
@@ -47,7 +47,7 @@ class ClampedNumeric {
   template <typename Src>
   constexpr ClampedNumeric(
       StrictNumeric<Src> value)  // NOLINT(runtime/explicit)
-      : value_(saturated_cast<T>(static_cast<Src>(value))) {}
+      : value_(SaturatedCast<T>(static_cast<Src>(value))) {}
 
   // Returns a ClampedNumeric of the specified type, cast from the current
   // ClampedNumeric, and saturated to the destination type.
@@ -163,7 +163,7 @@ class ClampedNumeric {
 
   template <typename Dst>
   constexpr operator Dst() const {
-    return saturated_cast<typename ArithmeticOrUnderlyingEnum<Dst>::type>(
+    return SaturatedCast<typename ArithmeticOrUnderlyingEnum<Dst>::type>(
         value_);
   }
 

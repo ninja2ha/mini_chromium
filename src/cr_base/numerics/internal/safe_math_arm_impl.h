@@ -57,16 +57,16 @@ struct ClampedAddFastAsmOp {
     // This will get promoted to an int, so let the compiler do whatever is
     // clever and rely on the saturated cast to bounds check.
     if (IsIntegerArithmeticSafe<int, T, U>::value)
-      return saturated_cast<V>(x + y);
+      return SaturatedCast<V>(x + y);
 
     int32_t result;
-    int32_t x_i32 = checked_cast<int32_t>(x);
-    int32_t y_i32 = checked_cast<int32_t>(y);
+    int32_t x_i32 = CheckedCast<int32_t>(x);
+    int32_t y_i32 = CheckedCast<int32_t>(y);
 
     asm("qadd %[result], %[first], %[second]"
         : [result] "=r"(result)
         : [first] "r"(x_i32), [second] "r"(y_i32));
-    return saturated_cast<V>(result);
+    return SaturatedCast<V>(result);
   }
 };
 
@@ -83,16 +83,16 @@ struct ClampedSubFastAsmOp {
     // This will get promoted to an int, so let the compiler do whatever is
     // clever and rely on the saturated cast to bounds check.
     if (IsIntegerArithmeticSafe<int, T, U>::value)
-      return saturated_cast<V>(x - y);
+      return SaturatedCast<V>(x - y);
 
     int32_t result;
-    int32_t x_i32 = checked_cast<int32_t>(x);
-    int32_t y_i32 = checked_cast<int32_t>(y);
+    int32_t x_i32 = CheckedCast<int32_t>(x);
+    int32_t y_i32 = CheckedCast<int32_t>(y);
 
     asm("qsub %[result], %[first], %[second]"
         : [result] "=r"(result)
         : [first] "r"(x_i32), [second] "r"(y_i32));
-    return saturated_cast<V>(result);
+    return SaturatedCast<V>(result);
   }
 };
 
@@ -114,7 +114,7 @@ struct ClampedMulFastAsmOp {
 
     assert((FastIntegerArithmeticPromotion<T, U>::is_contained));
     using Promotion = typename FastIntegerArithmeticPromotion<T, U>::type;
-    return saturated_cast<V>(static_cast<Promotion>(x) *
+    return SaturatedCast<V>(static_cast<Promotion>(x) *
                              static_cast<Promotion>(y));
   }
 };

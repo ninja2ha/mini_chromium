@@ -225,7 +225,7 @@ struct ClampedRshOp<T,
     // Signed right shift is odd, because it saturates to -1 or 0.
     const V saturated = as_unsigned(V(0)) - IsValueNegative(x);
     return BASE_NUMERICS_LIKELY(shift < IntegerBitsPlusSign<T>::value)
-               ? saturated_cast<V>(x >> shift)
+               ? SaturatedCast<V>(x >> shift)
                : saturated;
   }
 };
@@ -292,8 +292,8 @@ struct ClampedMaxOp<
   using result_type = typename MaxExponentPromotion<T, U>::type;
   template <typename V = result_type>
   static constexpr V Do(T x, U y) {
-    return IsGreater<T, U>::Test(x, y) ? saturated_cast<V>(x)
-                                       : saturated_cast<V>(y);
+    return IsGreater<T, U>::Test(x, y) ? SaturatedCast<V>(x)
+                                       : SaturatedCast<V>(y);
   }
 };
 
@@ -309,8 +309,8 @@ struct ClampedMinOp<
   using result_type = typename LowestValuePromotion<T, U>::type;
   template <typename V = result_type>
   static constexpr V Do(T x, U y) {
-    return IsLess<T, U>::Test(x, y) ? saturated_cast<V>(x)
-                                    : saturated_cast<V>(y);
+    return IsLess<T, U>::Test(x, y) ? SaturatedCast<V>(x)
+                                    : SaturatedCast<V>(y);
   }
 };
 
@@ -325,7 +325,7 @@ struct ClampedMinOp<
     using result_type = typename MaxExponentPromotion<T, U>::type;       \
     template <typename V = result_type>                                  \
     static constexpr V Do(T x, U y) {                                    \
-      return saturated_cast<V>(x OP y);                                  \
+      return SaturatedCast<V>(x OP y);                                   \
     }                                                                    \
   };
 
