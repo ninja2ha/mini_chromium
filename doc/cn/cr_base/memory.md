@@ -42,14 +42,14 @@ ___
 #### 单例类
 
 ###### [cr::NoDestructor\<T\>](./memory/no_destructor.md)
->辅助生产无析构单例类，用于在栈空间上创建对象单例，其析构函数不会被调用, 适用于不动态分配内存的单例。
+>生产无析构对象单例类，用于在栈空间上创建对象单例，其析构函数不会被调用, 适用于不动态分配内存的单例。
 * [头文件]()
 ```c++
 #include "cr_base/memory/no_destructor.h"
 ```
 
 ###### [cr::Singleton\<T\>]()
->辅助生产单例类，在程序退出过程中通过[cr::AtExitManager]()自动释放单例。
+>生产对象单例类，在程序退出过程中通过[cr::AtExitManager]()自动释放单例。
 * [头文件]()
 ```c++
 #include "cr_base/memory/singleton.h"

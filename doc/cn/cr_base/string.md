@@ -89,11 +89,11 @@
 |[cr::MakeWStringPiece]()|构造对象`cr::WStringPiece`|
 
 
-* 样例
+* 用例
 ```c++
 std::string str = "foo";
 
-cr::StringPiece str_view = str;        // 构造期间得到缓冲区地址，以及长度
+cr::StringPiece str_view(str);         // 构造期间得到缓冲区地址，以及长度
 const char* str_ptr = str_view.data(); // 获取str数据缓冲区
 size_t str_len = str_view.length();    // 获取str数据长度
 
@@ -259,6 +259,19 @@ ___
 |[cr::SplitStringUsingSubstr]()|使用字符串分割字符串，返回`std::vector<std::basic_string>`|
 |[cr::SplitStringPieceUsingSubstr]()|使用字符串分割字符串视图，返回`std::vector<std::BasicStringPiece>`，减少内存Allocate|
 
+##### 字符串格式化
+* [头文件]()
+```c++
+#include "cr_base/strings/stringprintf.h"
+```
+
+* 函数
+
+|函数|描述|
+|:--|:--|
+|[cr::StringPrintf]()|C++风格字符串格式化，返回格式化后的字符串|
+|[cr::SStringPrintf]()|C++风格字符串格式化，格式化字符串到指定的对象，避免重复拷贝，返回对象引用。|
+
 ##### 字符串数值转换
 * [头文件]()
 ```c++
@@ -274,18 +287,18 @@ ___
 |[cr::NumberToString32]()|数字转成字符串`std::u32string`|
 |[cr::NumberToWString]()|数字转成字符串`std::wstring`|
 |||
-|[cr::StringToInt]()|数字字符串转`int`|
-|[cr::StringToUint]()|数字字符串转`unsigned int`|
-|[cr::StringToInt64]()|数字字符串转`int64_t`|
-|[cr::StringToUint64]()|数字字符串转`unsigned int64_t`|
-|[cr::StringToSizeT]()|数字字符串转`size_t`|
-|[cr::StringToDouble]()|数字字符串转`double`|
+|[cr::StringToInt]()|数字字符串转`int`，要求值在目标值域里|
+|[cr::StringToUint]()|数字字符串转`unsigned int`，要求值在目标值域里|
+|[cr::StringToInt64]()|数字字符串转`int64_t`，要求值在目标值域里|
+|[cr::StringToUint64]()|数字字符串转`unsigned int64_t`，要求值在目标值域里|
+|[cr::StringToSizeT]()|数字字符串转`size_t`，要求值在目标值域里|
+|[cr::StringToDouble]()|数字字符串转`double`，要求值在目标值域里|
 |||
-|[cr::HexEncode]()|将字节组转成HEX字符串|
-|[cr::HexStringToInt]()|将HEX字符串(-0x80000000-0x7FFFFFFF)转成`int`|
-|[cr::HexStringToUInt]()|将HEX字符串(0x00000000-0xFFFFFFFF)转成`unsigned int`|
-|[cr::HexStringToInt64]()|将HEX字符串(-0x8000000000000000 - 0x7FFFFFFFFFFFFFFF)转成`int64_t`|
-|[cr::HexStringToUInt64]()|将HEX字符串(0x0000000000000000 - 0xFFFFFFFFFFFFFFFF)转成`uint64_t`|
-|[cr::HexStringToBytes]()|将HEX字符串转成字节组，储存到`std::vector<uint8_t>`|
-|[cr::HexStringToString]()|将HEX字符串转成字节组，储存到`std::string`|
-|[cr::HexStringToSpan]()|将HEX字符串转成字节组，储存到已经固定尺寸的字节组缓冲区|
+|[cr::HexEncode]()|将字节组转成HEX字符串, 例:`{0x90,0x91,0x92} => "909192"`|
+|[cr::HexStringToInt]()|将HEX字符串(-0x80000000 ~ 0x7FFFFFFF)转成`int`，前缀`0x`可选|
+|[cr::HexStringToUInt]()|将HEX字符串(0x00000000 ~ 0xFFFFFFFF)转成`unsigned int`，前缀`0x`可选|
+|[cr::HexStringToInt64]()|将HEX字符串(-0x8000000000000000 ~ 0x7FFFFFFFFFFFFFFF)转成`int64_t`，前缀`0x`可选|
+|[cr::HexStringToUInt64]()|将HEX字符串(0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF)转成`uint64_t`，前缀`0x`可选|
+|[cr::HexStringToBytes]()|将HEX字符串转成字节组，储存到`std::vector<uint8_t>`，例:`"909192" => {0x90,0x91,0x92}`|
+|[cr::HexStringToString]()|将HEX字符串转成字节组，储存到`std::string`，例:`"909192" => {0x90,0x91,0x92}`|
+|[cr::HexStringToSpan]()|将HEX字符串转成字节组，储存到已经固定尺寸的字节组缓冲区，例:`"909192" => {0x90,0x91,0x92}`|

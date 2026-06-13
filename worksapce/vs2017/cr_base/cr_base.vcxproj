@@ -177,6 +177,7 @@
     <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\main.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\stringprintf.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_number_conversions.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_piece.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_split.cc" />
@@ -230,6 +231,7 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_split_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\internal\string_util_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\strcat.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\stringprintf.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_number_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_piece.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_split.h" />

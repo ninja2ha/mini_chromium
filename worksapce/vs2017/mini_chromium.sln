@@ -9,7 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{5B28F1C7-860
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cr_base", "cr_base", "{9B073E92-3494-4276-9855-5A316F93D2D0}"
 	ProjectSection(SolutionItems) = preProject
-		..\..\doc\cn\cr_base\byte_order.md = ..\..\doc\cn\cr_base\byte_order.md
 		..\..\doc\cn\cr_base\containers.md = ..\..\doc\cn\cr_base\containers.md
 		..\..\doc\cn\cr_base\memory.md = ..\..\doc\cn\cr_base\memory.md
 		..\..\doc\cn\cr_base\numeric.md = ..\..\doc\cn\cr_base\numeric.md

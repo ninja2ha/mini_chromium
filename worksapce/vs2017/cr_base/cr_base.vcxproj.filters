@@ -65,6 +65,9 @@
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\strtod.cc">
       <Filter>third_party\double_conversion\double-conversion</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\stringprintf.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -277,6 +280,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\utils.h">
       <Filter>third_party\double_conversion\double-conversion</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\stringprintf.h">
+      <Filter>strings</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
