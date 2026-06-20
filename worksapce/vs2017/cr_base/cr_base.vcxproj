@@ -27,26 +27,26 @@
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
     <PlatformToolset>v141</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
@@ -165,8 +165,11 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_base\at_exit.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\alias.cc" />
     <ClCompile Include="..\..\..\src\cr_base\debug\immediate_crash.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\functional\callback_helpers.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\functional\callback_internal.cc" />
     <ClCompile Include="..\..\..\src\cr_base\logging\logging.cc" />
     <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_posix.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -176,6 +179,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\logging\logging_strerror_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\main.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\memory\internal\lazy_instance_helpers.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\memory\ref_counted.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\memory\weak_ptr.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\stringprintf.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_number_conversions.cc" />
@@ -183,7 +189,19 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\string_split.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\string_util_constants.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\sys_string_conversions.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversions.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\atomic_flag.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\lock.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\lock_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\win\lock_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\system\cpu_info.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum-dtoa.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\cached-powers.cc" />
@@ -192,10 +210,44 @@
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\fixed-dtoa.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\string-to-double.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\strtod.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\third_party\nspr\prtime.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\platform_thread.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\platform_thread_ref.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\posix\platform_thread_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\posix\thread_local_storage_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\sequence\sequence_checker_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\sequence\sequence_token.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\thread_local_storage.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\win\platform_thread_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_local_storage_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\time\posix\time_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\time\time.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\time\win\time_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\util\scoped_clear_last_error.cc" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops.h" />
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops_internals_atomicword_compat.h" />
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops_internals_portable.h" />
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomic_sequence_num.h" />
+    <ClInclude Include="..\..\..\src\cr_base\at_exit.h" />
     <ClInclude Include="..\..\..\src\cr_base\base_export.h" />
+    <ClInclude Include="..\..\..\src\cr_base\bit_cast.h" />
     <ClInclude Include="..\..\..\src\cr_base\byte_order.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_specific.h" />
@@ -205,13 +257,25 @@
     <ClInclude Include="..\..\..\src\cr_base\containers\span.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\alias.h" />
     <ClInclude Include="..\..\..\src\cr_base\debug\immediate_crash.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\bind.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\bind_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback_forward.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback_helpers.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\functional\cancelable_callback.h" />
     <ClInclude Include="..\..\..\src\cr_base\internal\template_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\logging\logging.h" />
     <ClInclude Include="..\..\..\src\cr_base\logging\logging_strerror.h" />
     <ClInclude Include="..\..\..\src\cr_base\logging\logging_types.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\internal\atomic_ref_count.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\internal\lazy_instance_helpers.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\no_destructor.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\ptr_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\ref_counted.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\ref_ptr.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\singleton.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\weak_ptr.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\checked_math.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\clamped_math.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\internal\checked_math_impl.h" />
@@ -236,7 +300,12 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\string_piece.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_split.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\string_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\sys_string_conversions.h" />
+    <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.h" />
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\atomic_flag.h" />
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\lock.h" />
+    <ClInclude Include="..\..\..\src\cr_base\system\cpu_info.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum-dtoa.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\cached-powers.h" />
@@ -250,6 +319,16 @@
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\strtod.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\utils.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\icu\icu_utf.h" />
+    <ClInclude Include="..\..\..\src\cr_base\third_party\nspr\prtime.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\platform_thread.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\platform_thread_ref.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\sequence\sequence_checker.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\sequence\sequence_checker_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\sequence\sequence_token.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_local.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_storage.h" />
+    <ClInclude Include="..\..\..\src\cr_base\time\time.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_clear_last_error.h" />
     <ClInclude Include="..\..\..\src\cr_base\win\window_types.h" />
   </ItemGroup>

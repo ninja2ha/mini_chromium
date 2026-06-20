@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\app\ca\ca_debug\dll_main.cc" />
+    <ClCompile Include="..\..\..\..\app\ca\ca_debug\ver_cn_300.cc" />
+    <ClCompile Include="..\..\..\..\app\ca\ca_debug\ver_tw_300.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\..\app\ca\ca_debug\ca_debug.def" />
+    <None Include="..\..\..\..\app\ca\ca_debug\ver_tw_300\login.md">
+      <Filter>ver_tw_300</Filter>
+    </None>
+    <None Include="..\..\..\..\app\ca\ca_debug\ver_cn_300\login.md">
+      <Filter>ver_cn_300</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="ver_cn_300">
+      <UniqueIdentifier>{15da6618-bdb7-421d-8baf-3674c998fe3b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ver_tw_300">
+      <UniqueIdentifier>{59b685e0-90c4-4b29-ab1b-cd37dc98fa3c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

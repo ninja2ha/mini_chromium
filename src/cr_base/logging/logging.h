@@ -181,6 +181,9 @@ struct CRBASE_EXPORT LoggingConfig {
   int verbose_lowest_level = 999;
 
   // [in]
+  bool enable_timedate = true;
+
+  // [in]
   bool enable_tickcount = false;
 
   // [in]

@@ -15,7 +15,6 @@
 
 #include "cr_base/logging/logging.h"
 
-
 #include "cr_base/compiler_config.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
@@ -351,6 +350,7 @@ void DefaultLogMessageInit(const LoggingConfig& config,
   if (config.prefix != nullptr)
     oss << config.prefix << ":";
 
+  if (config.enable_timedate) {
 #if defined(MINI_CHROMIUM_OS_WIN)
   SYSTEMTIME local_time;
   GetLocalTime(&local_time);
@@ -380,6 +380,7 @@ void DefaultLogMessageInit(const LoggingConfig& config,
 #else
 #error Unsupported platform
 #endif  // defined(MINI_CHROMIUM_OS_WIN)
+  }
 
   if (config.enable_tickcount)
     oss << TickCount() << ':';

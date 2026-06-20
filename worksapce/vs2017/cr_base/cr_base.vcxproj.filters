@@ -68,6 +68,82 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\stringprintf.cc">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversions.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\platform_thread_ref.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\lock.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\win\lock_win.cc">
+      <Filter>synchronization\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\lock_posix.cc">
+      <Filter>synchronization\posxi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\thread_local_storage.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_local_storage_win.cc">
+      <Filter>threading\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\posix\thread_local_storage_posix.cc">
+      <Filter>threading\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\sequence\sequence_checker_impl.cc">
+      <Filter>threading\sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\sequence\sequence_token.cc">
+      <Filter>threading\sequence</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\memory\ref_counted.cc">
+      <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\functional\callback_helpers.cc">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\functional\callback_internal.cc">
+      <Filter>functional</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\memory\weak_ptr.cc">
+      <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\atomic_flag.cc">
+      <Filter>synchronization</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\at_exit.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\memory\internal\lazy_instance_helpers.cc">
+      <Filter>memory\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\system\cpu_info.cc">
+      <Filter>system</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\time\time.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\time\win\time_win.cc">
+      <Filter>time\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\third_party\nspr\prtime.cc">
+      <Filter>third_party\nspr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\time\posix\time_posix.cc">
+      <Filter>time\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\platform_thread.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\win\platform_thread_win.cc">
+      <Filter>threading\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\posix\platform_thread_posix.cc">
+      <Filter>threading\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\strings\sys_string_conversions.cc">
+      <Filter>strings</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -120,6 +196,48 @@
     </Filter>
     <Filter Include="third_party\double_conversion\double-conversion">
       <UniqueIdentifier>{8968f81e-3357-4870-9315-dfb21636b6e6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="threading">
+      <UniqueIdentifier>{21a813cf-deb7-49de-b504-b307410de130}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="synchronization">
+      <UniqueIdentifier>{959504dd-50aa-4e66-ab80-e54a42effd55}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="synchronization\win">
+      <UniqueIdentifier>{3f52b570-e50c-4da1-bf4b-51000ead7c60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="synchronization\posxi">
+      <UniqueIdentifier>{bd00defd-ab2a-4940-885c-b1b6be36e43f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="threading\win">
+      <UniqueIdentifier>{c8dc8c40-a68a-4c09-9848-30d420f29f92}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="threading\posix">
+      <UniqueIdentifier>{c1c6c184-b67b-405d-98d8-c264fe87f570}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="threading\sequence">
+      <UniqueIdentifier>{738744e4-e16f-400b-b787-3a05d41e3b94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="atomic">
+      <UniqueIdentifier>{89d8e6fb-84e9-432e-8a05-d736a4f15469}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="functional">
+      <UniqueIdentifier>{8577623d-163e-43ae-9c8e-3b09fce64f13}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="system">
+      <UniqueIdentifier>{f302ee2a-711b-47d5-a386-6cb3bf8e0007}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{942ccac1-1eac-46c7-9ca7-0803bc836f61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time\win">
+      <UniqueIdentifier>{83f8e492-e832-4309-b408-4e651b34d24f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\nspr">
+      <UniqueIdentifier>{48892ef7-1a90-4a34-8ae3-43d9c73d4e02}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time\posix">
+      <UniqueIdentifier>{dba14740-0315-4b1c-9bb3-b5dbd7f7420b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -282,6 +400,101 @@
       <Filter>third_party\double_conversion\double-conversion</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\strings\stringprintf.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversions.h">
+      <Filter>strings</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\platform_thread_ref.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\lock.h">
+      <Filter>synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_storage.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_local.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_internal.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\sequence\sequence_checker.h">
+      <Filter>threading\sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\sequence\sequence_checker_impl.h">
+      <Filter>threading\sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\sequence\sequence_token.h">
+      <Filter>threading\sequence</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomic_sequence_num.h">
+      <Filter>atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\memory\ref_counted.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\memory\ref_ptr.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops.h">
+      <Filter>atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops_internals_atomicword_compat.h">
+      <Filter>atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops_internals_portable.h">
+      <Filter>atomic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\bind.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\bind_internal.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback_forward.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback_helpers.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\callback_internal.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\functional\cancelable_callback.h">
+      <Filter>functional</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\memory\weak_ptr.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\atomic_flag.h">
+      <Filter>synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\at_exit.h" />
+    <ClInclude Include="..\..\..\src\cr_base\memory\internal\lazy_instance_helpers.h">
+      <Filter>memory\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\memory\singleton.h">
+      <Filter>memory</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\system\cpu_info.h">
+      <Filter>system</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\time\time.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\bit_cast.h" />
+    <ClInclude Include="..\..\..\src\cr_base\third_party\nspr\prtime.h">
+      <Filter>third_party\nspr</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\platform_thread.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\strings\sys_string_conversions.h">
       <Filter>strings</Filter>
     </ClInclude>
   </ItemGroup>

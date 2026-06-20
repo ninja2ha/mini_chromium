@@ -14,7 +14,7 @@
 #include <ostream>
 
 #include "cr_base/compiler_specific.h"
-///#include "cr_base/strings/utf_string_conversions.h"
+#include "cr_base/strings/utf_string_conversions.h"
 
 namespace cr {
 namespace {
@@ -49,18 +49,18 @@ std::ostream& operator<<(std::ostream& o, StringPiece piece) {
   o.write(piece.data(), static_cast<std::streamsize>(piece.size()));
   return o;
 }
-//
-//std::ostream& operator<<(std::ostream& o, StringPiece16 piece) {
-//  return o << UTF16ToUTF8(piece);
-//}
-//
-//std::ostream& operator<<(std::ostream& o, StringPiece32 piece) {
-//  return o << UTF32ToUTF8(piece);
-//}
-//
-//std::ostream& operator<<(std::ostream& o, WStringPiece piece) {
-//  return o << WideToUTF8(piece);
-//}
+
+std::ostream& operator<<(std::ostream& o, StringPiece16 piece) {
+  return o << UTF16ToUTF8(piece);
+}
+
+std::ostream& operator<<(std::ostream& o, StringPiece32 piece) {
+  return o << UTF32ToUTF8(piece);
+}
+
+std::ostream& operator<<(std::ostream& o, WStringPiece piece) {
+  return o << WideToUTF8(piece);
+}
 
 namespace internal {
 
