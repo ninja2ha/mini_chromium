@@ -10,13 +10,13 @@
 
 #include "cr_base/compiler_config.h"
 
+#include "cr_base/base_export.h"
+
 #if defined(MINI_CHROMIUM_OS_POSIX)
 #include <pthread.h>
 #elif defined(MINI_CHROMIUM_OS_WIN)
-#include "cr_base/win/window_types.h"
+#include "cr_base/win/windows_types.h"
 #endif
-
-#include "cr_base/base_export.h"
 
 namespace cr {
 

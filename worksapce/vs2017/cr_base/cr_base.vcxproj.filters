@@ -144,6 +144,70 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\sys_string_conversions.cc">
       <Filter>strings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\file_path.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\file_path_constants.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\i18n\case_conversion.cc">
+      <Filter>i18n</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\file.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\scoped_handle.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\location.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\files\scoped_file.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\win\file_win.cc">
+      <Filter>files\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\posix\file_posix.cc">
+      <Filter>files\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\file_enumerator.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\win\file_enumerator_win.cc">
+      <Filter>files\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\posix\file_enumerator_posix.cc">
+      <Filter>files\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\checksum\crc32.cc">
+      <Filter>checksum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\checksum\md5.cc">
+      <Filter>checksum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\checksum\sha1.cc">
+      <Filter>checksum</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\data_stream\pickle.cc">
+      <Filter>data_stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\data_stream\byte_buffer.cc">
+      <Filter>data_stream</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\memory\ptr_util.cc">
+      <Filter>memory</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\version.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\byte_size.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\files\win\file_util_win.cc">
+      <Filter>files\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\files\file_util.cc">
+      <Filter>files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\guid.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\rand_util.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\command_line.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\environment.cc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -239,6 +303,30 @@
     <Filter Include="time\posix">
       <UniqueIdentifier>{dba14740-0315-4b1c-9bb3-b5dbd7f7420b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="files">
+      <UniqueIdentifier>{6e2ea8f4-b17b-487f-86e9-d0a7cea13022}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="i18n">
+      <UniqueIdentifier>{d9afceae-87ab-4d24-81e8-c3654e641730}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files\win">
+      <UniqueIdentifier>{94ebd647-225f-4323-b1e1-63b9c1b80b71}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="files\posix">
+      <UniqueIdentifier>{11e26fe3-f9dc-42b9-91da-7eb0de8b9427}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="checksum">
+      <UniqueIdentifier>{72cb480d-6152-43d1-b186-64d83785be2a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data_stream">
+      <UniqueIdentifier>{c3135532-7714-4723-a236-496225a130d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data_stream\internal">
+      <UniqueIdentifier>{7d2ddb39-6520-43c7-9ffd-0985154ce00b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net">
+      <UniqueIdentifier>{ffa9214b-a9a9-4291-a55d-dcba21d6d61f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
@@ -269,9 +357,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\logging\logging_strerror.h">
       <Filter>logging</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\cr_base\win\window_types.h">
-      <Filter>win</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_clear_last_error.h">
       <Filter>util</Filter>
@@ -497,5 +582,78 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\sys_string_conversions.h">
       <Filter>strings</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\files\file_path.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\i18n\case_conversion.h">
+      <Filter>i18n</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\vector_buffer.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\circular_deque.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\queue.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\stack.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\files\file.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\scoped_handle.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\location.h" />
+    <ClInclude Include="..\..\..\src\cr_base\files\platform_file.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\files\scoped_file.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\util\scoped_generic.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\util\eintr_wrapper.h">
+      <Filter>util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\files\file_enumerator.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\windows_types.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\checksum\crc32.h">
+      <Filter>checksum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\checksum\md5.h">
+      <Filter>checksum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\checksum\sha1.h">
+      <Filter>checksum</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\data_stream\pickle.h">
+      <Filter>data_stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\numerics\bits.h">
+      <Filter>numeric</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\data_stream\byte_buffer.h">
+      <Filter>data_stream</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\data_stream\internal\buffer.h">
+      <Filter>data_stream\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\version.h" />
+    <ClInclude Include="..\..\..\src\cr_base\byte_size.h" />
+    <ClInclude Include="..\..\..\src\cr_base\files\file_util.h">
+      <Filter>files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\guid.h" />
+    <ClInclude Include="..\..\..\src\cr_base\rand_util.h" />
+    <ClInclude Include="..\..\..\src\cr_base\environment.h" />
+    <ClInclude Include="..\..\..\src\cr_base\command_line.h" />
   </ItemGroup>
 </Project>

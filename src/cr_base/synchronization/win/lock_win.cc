@@ -16,27 +16,27 @@ namespace internal {
 
 LockImpl::LockImpl() {
   ::InitializeCriticalSectionAndSpinCount(
-      cr::win::AsCriticalSestion(&native_handle_), 2000);
+      cr::win::ToWinType(&native_handle_), 2000);
 }
 
 LockImpl::~LockImpl() {
   ::DeleteCriticalSection(
-      cr::win::AsCriticalSestion(&native_handle_));
+      cr::win::ToWinType(&native_handle_));
 }
 
 bool LockImpl::Try() {
   return !!::TryEnterCriticalSection(
-      cr::win::AsCriticalSestion(&native_handle_));
+      cr::win::ToWinType(&native_handle_));
 }
 
 void LockImpl::Lock() {
   ::EnterCriticalSection(
-      cr::win::AsCriticalSestion(&native_handle_));
+      cr::win::ToWinType(&native_handle_));
 }
 
 void LockImpl::Unlock() {
   ::LeaveCriticalSection(
-      cr::win::AsCriticalSestion(&native_handle_));
+      cr::win::ToWinType(&native_handle_));
 }
 
 }  // namespace internal

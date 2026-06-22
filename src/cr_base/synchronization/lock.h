@@ -12,7 +12,7 @@
 #include <errno.h>
 #include <pthread.h>
 #elif defined(MINI_CHROMIUM_OS_WIN)
-#include "cr_base/win/window_types.h"
+#include "cr_base/win/windows_types.h"
 #endif
 
 #include "cr_base/base_export.h"

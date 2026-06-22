@@ -9,6 +9,8 @@
 #include <memory>
 #include <utility>
 
+#include "cr_base/base_export.h"
+
 namespace cr {
 
 // Helper to transfer ownership of a raw pointer to a std::unique_ptr<T>.
@@ -36,6 +38,10 @@ template <typename T>
 inline uintptr_t AsUIntPtr(const T* t) {
   return reinterpret_cast<uintptr_t>(t);
 }
+
+// Fill memory with zeros in a way that the compiler doesn't optimize it away
+// even if the pointer is not used afterwards.
+CRBASE_EXPORT void ExplicitZeroMemory(void* ptr, size_t len);
 
 }  // namespace cr
 

@@ -12,17 +12,21 @@
 
 #include <stddef.h>
 
-#include "cr_base/base_export.h"
-#include "cr_base/time/time.h"
+#include "cr_base/compiler_config.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
-#include "cr_base/win/window_types.h"
+#include "cr_base/win/windows_types.h"
 #elif defined(MINI_CHROMIUM_OS_POSIX)
 #include <pthread.h>
 #include <unistd.h>
 #endif
 
+#include "cr_base/base_export.h"
+#include "cr_base/time/time.h"
+
 namespace cr {
+
+// -- PlatformThreadId ---------------------------------------------------------
 
 // Used for logging. Always an integer value.
 #if defined(MINI_CHROMIUM_OS_WIN)
@@ -32,6 +36,8 @@ typedef pid_t PlatformThreadId;
 #endif
 
 const PlatformThreadId kInvalidThreadId(0);
+
+// -- PlatformThreadHandle -----------------------------------------------------
 
 // Used to operate on threads.
 class PlatformThreadHandle {

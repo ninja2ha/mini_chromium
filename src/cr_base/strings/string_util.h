@@ -730,6 +730,16 @@ inline const wchar_t* AsConstWide(StringPiece16 str) {
   return reinterpret_cast<const wchar_t*>(str.data());
 }
 
+inline WStringPiece AsWStringPiece(StringPiece16 str) {
+  return WStringPiece(AsConstWide(str.data()), str.length());
+}
+
+inline std::wstring AsWString(StringPiece16 str) {
+  if (str.empty())
+    return std::wstring();
+  return std::wstring(AsConstWide(str.data()), str.length());
+}
+
 // Utility functions to access the underlying string buffer as a char16_t
 // pointer.
 inline char16_t* AsUnicode16(wchar_t* str) {
@@ -746,6 +756,16 @@ inline const char16_t* AsConstUnicode16(const wchar_t* str) {
 
 inline const char16_t* AsConstUnicode16(WStringPiece str) {
   return reinterpret_cast<const char16_t*>(str.data());
+}
+
+inline StringPiece16 AsStringPiece16(WStringPiece str) {
+  return StringPiece16(AsConstUnicode16(str.data()), str.length());
+}
+
+inline std::u16string AsString16(WStringPiece str) {
+  if (str.empty())
+    return std::u16string();
+  return std::u16string(AsConstUnicode16(str.data()), str.length());
 }
 
 #elif defined(MINI_CHROMIUM_WCHAR_T_IS_UTF32)
@@ -766,6 +786,16 @@ inline const wchar_t* AsConstWide(StringPiece32 str) {
   return reinterpret_cast<const wchar_t*>(str.data());
 }
 
+inline WStringPiece AsWStringPiece(StringPiece32 str) {
+  return WStringPiece(AsConstWide(str.data()), str.length());
+}
+
+inline std::wstring AsWString(StringPiece32 str) {
+  if (str.empty())
+    return std::wstring();
+  return std::wstring(AsConstWide(str.data()), str.length());
+}
+
 // Utility functions to access the underlying string buffer as a char32_t
 // pointer.
 inline char32_t* AsUnicode32(wchar_t* str) {
@@ -782,6 +812,16 @@ inline const char32_t* AsConstUnicode32(const wchar_t* str) {
 
 inline const char32_t* AsConstUnicode32(WStringPiece str) {
   return reinterpret_cast<const char32_t*>(str.data());
+}
+
+inline StringPiece32 AsStringPiece32(WStringPiece str) {
+  return StringPiece32(AsConstUnicode32(str.data()), str.length());
+}
+
+inline std::u32string AsString32(WStringPiece str) {
+  if (str.empty())
+    return std::u32string();
+  return std::u32string(AsConstUnicode32(str.data()), str.length());
 }
 
 #endif // defined(MINI_CHROMIUM_WCHAR_T_IS_UTF16)

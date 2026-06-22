@@ -85,7 +85,7 @@
 
 #if defined(MINI_CHROMIUM_OS_WIN)
 ///#include "cr_base/internal/gtest_prod_util.h"
-#include "cr_base/win/window_types.h"
+#include "cr_base/win/windows_types.h"
 #endif
 
 namespace cr {

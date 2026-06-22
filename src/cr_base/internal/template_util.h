@@ -8,6 +8,28 @@
 
 #include <type_traits>
 
+// Some versions of libstdc++ have partial support for type_traits, but misses
+// a smaller subset while removing some of the older non-standard stuff. Assume
+// that all versions below 5.0 fall in this category, along with one 5.0
+// experimental release. Test for this by consulting compiler major version,
+// the only reliable option available, so theoretically this could fail should
+// you attempt to mix an earlier version of libstdc++ with >= GCC5. But
+// that's unlikely to work out, especially as GCC5 changed ABI.
+#define CR_GLIBCXX_5_0_0 20150123
+#if (defined(__GNUC__) && __GNUC__ < 5) || \
+    (defined(__GLIBCXX__) && __GLIBCXX__ == CR_GLIBCXX_5_0_0)
+#define CR_USE_FALLBACKS_FOR_OLD_EXPERIMENTAL_GLIBCXX
+#endif
+
+// This hacks around using gcc with libc++ which has some incompatibilies.
+// - is_trivially_* doesn't work: https://llvm.org/bugs/show_bug.cgi?id=27538
+// TODO(danakj): Remove this when android builders are all using a newer version
+// of gcc, or the android ndk is updated to a newer libc++ that works with older
+// gcc versions.
+#if !defined(__clang__) && defined(_LIBCPP_VERSION)
+#define CR_USE_FALLBACKS_FOR_GCC_WITH_LIBCXX
+#endif
+
 namespace cr {
 namespace internal {
 
@@ -67,6 +89,32 @@ struct has_contains<
     Element,
     ::cr::internal::void_t<decltype(std::declval<const Container&>().contains(
         std::declval<const Element&>()))>> : std::true_type {};
+
+////////////////////////////////////////////////////////////////////////////////
+//
+// Used in below files: 
+//   1. cr_base/data_stream/byte_buffer.h
+//
+// Determines if the given class has zero-argument .data() and .size() methods
+// whose return values are convertible to T* and size_t, respectively.
+template <typename DS, typename T>
+class has_data_and_size {
+ private:
+  template <
+      typename C,
+      typename std::enable_if<
+          std::is_convertible<decltype(std::declval<C>().data()), T*>::value &&
+          std::is_convertible<decltype(std::declval<C>().size()),
+                              std::size_t>::value>::type* = nullptr>
+  static int Test(int) {}
+
+  template <typename>
+  static char Test(...) {}
+
+ public:
+  static constexpr bool value = std::is_same<decltype(Test<DS>(0)), int>::value;
+};
+
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -243,6 +291,71 @@ template <typename... Ts>
 struct is_in_place_type_t<in_place_type_t<Ts...>> {
   static constexpr bool value = true;
 };
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Used in below files: 
+//   1. cr_base/containers/internal/vector_buffer.h
+//
+// is_trivially_copyable is especially hard to get right.
+// - Older versions of libstdc++ will fail to have it like they do for other
+//   type traits. This has become a subset of the second point, but used to be
+//   handled independently.
+// - An experimental release of gcc includes most of type_traits but misses
+//   is_trivially_copyable, so we still have to avoid using libstdc++ in this
+//   case, which is covered by CR_USE_FALLBACKS_FOR_OLD_EXPERIMENTAL_GLIBCXX.
+// - When compiling libc++ from before r239653, with a gcc compiler, the
+//   std::is_trivially_copyable can fail. So we need to work around that by not
+//   using the one in libc++ in this case. This is covered by the
+//   CR_USE_FALLBACKS_FOR_GCC_WITH_LIBCXX define, and is discussed in
+//   https://llvm.org/bugs/show_bug.cgi?id=27538#c1 where they point out that
+//   in libc++'s commit r239653 this is fixed by libc++ checking for gcc 5.1.
+// - In both of the above cases we are using the gcc compiler. When defining
+//   this ourselves on compiler intrinsics, the __is_trivially_copyable()
+//   intrinsic is not available on gcc before version 5.1 (see the discussion in
+//   https://llvm.org/bugs/show_bug.cgi?id=27538#c1 again), so we must check for
+//   that version.
+// - When __is_trivially_copyable() is not available because we are on gcc older
+//   than 5.1, we need to fall back to something, so we use __has_trivial_copy()
+//   instead based on what was done one-off in bit_cast() previously.
+
+// TODO(crbug.com/554293): Remove this when all platforms have this in the std
+// namespace and it works with gcc as needed.
+#if defined(CR_USE_FALLBACKS_FOR_OLD_EXPERIMENTAL_GLIBCXX) || \
+    defined(CR_USE_FALLBACKS_FOR_GCC_WITH_LIBCXX)
+template <typename T>
+struct is_trivially_copyable {
+// TODO(danakj): Remove this when android builders are all using a newer version
+// of gcc, or the android ndk is updated to a newer libc++ that does this for
+// us.
+#if _GNUC_VER >= 501
+  static constexpr bool value = __is_trivially_copyable(T);
+#else
+  static constexpr bool value =
+      __has_trivial_copy(T) && __has_trivial_destructor(T);
+#endif
+};
+#else
+template <class T>
+using is_trivially_copyable = std::is_trivially_copyable<T>;
+#endif
+
+
+////////////////////////////////////////////////////////////////////////////////
+// Used in below files: 
+//   1. cr_base/containers/circular_deque.h
+//
+// Used to detech whether the given type is an iterator.  This is normally used
+// with std::enable_if to provide disambiguation for functions that take
+// templatzed iterators as input.
+template <typename T, typename = void>
+struct is_iterator : std::false_type {};
+
+template <typename T>
+struct is_iterator<T,
+                   internal::void_t<
+                       typename std::iterator_traits<T>::iterator_category>>
+    : std::true_type {};
 
 
 }  // namesapce internal

@@ -6,12 +6,10 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_AT_EXIT_H_
 #define MINI_CHROMIUM_SRC_CRBASE_AT_EXIT_H_
 
-#include <stack>
-
 #include "cr_base/base_export.h"
 #include "cr_base/logging/logging.h"
 #include "cr_base/functional/callback.h"
-///#include "cr_base/containers/stack.h"
+#include "cr_base/containers/stack.h"
 #include "cr_base/synchronization/lock.h"
 
 namespace cr {
@@ -67,7 +65,7 @@ class CRBASE_EXPORT AtExitManager {
  private:
   cr::Lock lock_;
 
-  std::stack<cr::OnceClosure> stack_; // GUARDED_BY(lock_)
+  cr::Stack<cr::OnceClosure> stack_; // GUARDED_BY(lock_)
 
 #if CR_DCHECK_IS_ON()
   bool processing_callbacks_ = false; // GUARDED_BY(lock_)

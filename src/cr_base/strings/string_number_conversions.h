@@ -73,6 +73,15 @@ CRBASE_EXPORT std::u16string NumberToString16(double value);
 CRBASE_EXPORT std::u32string NumberToString32(double value);
 CRBASE_EXPORT std::wstring NumberToWString(double value);
 
+CRBASE_EXPORT std::string NumberToStringWithFixedPrecision(
+    double value, int digits);
+CRBASE_EXPORT std::u16string NumberToString16WithFixedPrecision(
+    double value, int digits);
+CRBASE_EXPORT std::u32string NumberToString32WithFixedPrecision(
+    double value, int digits);
+CRBASE_EXPORT std::wstring NumberToWStringWithFixedPrecision(
+    double value, int digits);
+
 // String -> number conversions ------------------------------------------------
 
 // Perform a best-effort conversion of the input string to a numeric type,

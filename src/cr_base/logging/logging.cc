@@ -11,11 +11,24 @@
 #if !defined(_CRT_SECURE_NO_WARNINGS)
 #define _CRT_SECURE_NO_WARNINGS
 #endif
-#endif
 
-#include "cr_base/logging/logging.h"
+#endif  // _MSC_VER
+
+#include <algorithm>
+#include <cstring>
+#include <ctime>
+#include <iomanip>
+#include <ostream>
+#include <string>
+#include <utility>
 
 #include "cr_base/compiler_config.h"
+
+#include "cr_base/logging/logging.h"
+#include "cr_base/stl_util.h"
+#include "cr_base/debug/alias.h"
+#include "cr_base/memory/no_destructor.h"
+#include "cr_base/logging/logging_strerror.h"
 
 #if defined(MINI_CHROMIUM_OS_WIN)
 // Fix error with vs2017_xp
@@ -35,19 +48,6 @@ typedef struct IUnknown IUnknown;
 #include <sys/stat.h>
 #include <sys/time.h>
 #endif
-
-#include <algorithm>
-#include <cstring>
-#include <ctime>
-#include <iomanip>
-#include <ostream>
-#include <string>
-#include <utility>
-
-#include "cr_base/stl_util.h"
-#include "cr_base/debug/alias.h"
-#include "cr_base/memory/no_destructor.h"
-#include "cr_base/logging/logging_strerror.h"
 
 namespace cr {
 namespace logging {

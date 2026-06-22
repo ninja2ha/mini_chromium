@@ -110,6 +110,8 @@ std::wstring NumberToWString(unsigned long long value) {
   return internal::IntToStringT<std::wstring>(value);
 }
 
+// -- double 
+
 std::string NumberToString(double value) {
   return internal::DoubleToStringT<std::string>(value);
 }
@@ -126,9 +128,25 @@ std::wstring NumberToWString(double value) {
   return internal::DoubleToStringT<std::wstring>(value);
 }
 
-std::wstring NumberTowString(unsigned long long value) {
-  return internal::IntToStringT<std::wstring>(value);
+// -- double fixed
+
+std::string NumberToStringWithFixedPrecision(double value, int digits) {
+  return internal::DoubleToStringFixedT<std::string>(value, digits);
 }
+
+std::u16string NumberToString16WithFixedPrecision(double value, int digits) {
+  return internal::DoubleToStringFixedT<std::u16string>(value, digits);
+}
+
+std::u32string NumberToString32WithFixedPrecision(double value, int digits) {
+  return internal::DoubleToStringFixedT<std::u32string>(value, digits);
+}
+
+std::wstring NumberToWStringWithFixedPrecision(double value, int digits) {
+  return internal::DoubleToStringFixedT<std::wstring>(value, digits);
+}
+
+// -- 
 
 bool StringToInt(StringPiece input, int* output) {
   return internal::StringToIntImpl(input, *output);

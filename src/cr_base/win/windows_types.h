@@ -3,10 +3,11 @@
 // found in the LICENSE file.
 // * VERSION: 91.0.4472.169
 
-#ifndef MINI_CHROMIUM_SRC_CRBASE_WIN_WINDOW_TYPES_H_
-#define MINI_CHROMIUM_SRC_CRBASE_WIN_WINDOW_TYPES_H_
+#ifndef MINI_CHROMIUM_SRC_CRBASE_WIN_WINDOWS_TYPES_H_
+#define MINI_CHROMIUM_SRC_CRBASE_WIN_WINDOWS_TYPES_H_
 
 #include "cr_base/compiler_config.h"
+#include "cr_base/compiler_specific.h"
 
 #if defined(__cplusplus)
 extern "C" {
@@ -21,15 +22,22 @@ typedef void *HANDLE;
 typedef void *PVOID;
 
 #if defined(MINI_CHROMIUM_ARCH_CPU_32_BITS)
+typedef long LONG_PTR, *PLONG_PTR;
 typedef unsigned long ULONG_PTR, *PULONG_PTR;
 #else
+typedef long long LONG_PTR, *PLONG_PTR;
 typedef unsigned long long ULONG_PTR, *PULONG_PTR;
 #endif
 
 // -- structure ----------------------------------------------------------------
 
-#pragma pack(push, 8)
-typedef struct _CR_CRITICAL_SECTION {
+// _WIN32_FIND_DATAW is 592 bytes and the largest built-in type in it is a
+// DWORD. The buffer declaration guarantees the correct size and alignment.
+struct CR_WIN32_FIND_DATAW {
+  DWORD buffer[592 / sizeof(DWORD)];
+};
+
+struct CR_ALIGNAS(8) CR_CRITICAL_SECTION {
   PVOID DebugInfo;  // PRTL_CRITICAL_SECTION_DEBUG 
 
   //
@@ -42,21 +50,24 @@ typedef struct _CR_CRITICAL_SECTION {
   HANDLE OwningThread;        // from the thread's ClientId->UniqueThread
   HANDLE LockSemaphore;
   ULONG_PTR SpinCount;        // force size on 64-bit systems when packed
-} CR_CRITICAL_SECTION, *PCR_CRITICAL_SECTION;
-#pragma pack(pop)
-typedef struct _RTL_CRITICAL_SECTION* PRTL_CRITICAL_SECTION;
+};
 
-///typedef struct _FILETIME {
-///  DWORD dwLowDateTime;
-///  DWORD dwHighDateTime;
-///} FILETIME, *PFILETIME, *LPFILETIME;
-
+// Use WIN32_FIND_DATAW when you just need a forward declaration. Use
+// CR_WIN32_FIND_DATA when you need a concrete declaration to reserve
+// space.
+typedef struct _WIN32_FIND_DATAW WIN32_FIND_DATAW;
+typedef struct _RTL_CRITICAL_SECTION RTL_CRITICAL_SECTION;
 typedef struct _FILETIME FILETIME;
 
 // -- mascros ------------------------------------------------------------------
 
 #ifndef TLS_OUT_OF_INDEXES
 #define TLS_OUT_OF_INDEXES ((DWORD)0xFFFFFFFF)
+#endif
+
+// copied from system.
+#ifndef CR_INVALID_HANDLE_VALUE
+#define CR_INVALID_HANDLE_VALUE ((HANDLE)(LONG_PTR)-1)
 #endif
 
 #if defined(__cplusplus)
@@ -68,11 +79,19 @@ typedef struct _FILETIME FILETIME;
 namespace cr {
 namespace win {
 
-inline PRTL_CRITICAL_SECTION AsCriticalSestion(PCR_CRITICAL_SECTION ptr) {
-  return reinterpret_cast<PRTL_CRITICAL_SECTION>(ptr);
+inline RTL_CRITICAL_SECTION* ToWinType(CR_CRITICAL_SECTION* ptr) {
+  return reinterpret_cast<RTL_CRITICAL_SECTION*>(ptr);
+}
+
+inline WIN32_FIND_DATAW* ToWinType(CR_WIN32_FIND_DATAW* ptr) {
+  return reinterpret_cast<WIN32_FIND_DATAW*>(ptr);
+}
+
+inline const WIN32_FIND_DATAW* ToWinType(const CR_WIN32_FIND_DATAW* ptr) {
+  return reinterpret_cast<const WIN32_FIND_DATAW*>(ptr);
 }
 
 }  // namespace win
 }  // namespace cr
 
-#endif  // MINI_CHROMIUM_SRC_CRBASE_WIN_WINDOW_TYPES_H_
+#endif  // MINI_CHROMIUM_SRC_CRBASE_WIN_WINDOWS_TYPES_H_

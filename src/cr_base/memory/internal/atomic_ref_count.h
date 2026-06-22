@@ -24,11 +24,11 @@ class AtomicRefCount {
 
   // Increment a reference count.
   // Returns the previous value of the count.
-  int Increment() { return Increment(1); }
+  intptr_t Increment() { return Increment(1); }
 
   // Increment a reference count by "increment", which must exceed 0.
   // Returns the previous value of the count.
-  int Increment(int increment) {
+  intptr_t Increment(int increment) {
     return ref_count_.fetch_add(increment, std::memory_order_relaxed);
   }
 
@@ -60,7 +60,7 @@ class AtomicRefCount {
 
   // Returns the current reference count (with no barriers). This is subtle, and
   // should be used only for debugging.
-  int SubtleRefCountForDebug() const {
+  intptr_t SubtleRefCountForDebug() const {
     return ref_count_.load(std::memory_order_relaxed);
   }
 

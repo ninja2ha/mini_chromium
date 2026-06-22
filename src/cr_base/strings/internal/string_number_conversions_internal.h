@@ -273,6 +273,14 @@ StringT DoubleToStringT(double value) {
   return ToString<StringT>(buffer, builder.position());
 }
 
+template <typename StringT>
+StringT DoubleToStringFixedT(double value, int digits) {
+  char buffer[32];
+  double_conversion::StringBuilder builder(buffer, sizeof(buffer));
+  GetDoubleToStringConverter()->ToFixed(value, digits, &builder);
+  return ToString<StringT>(buffer, builder.position());
+}
+
 template <typename STRING, typename CHAR>
 bool StringToDoubleImpl(STRING input, const CHAR* data, double& output) {
   static NoDestructor<double_conversion::StringToDoubleConverter> converter(
