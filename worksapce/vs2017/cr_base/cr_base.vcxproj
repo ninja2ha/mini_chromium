@@ -215,6 +215,22 @@
     <ClCompile Include="..\..\..\src\cr_base\memory\ptr_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\memory\ref_counted.cc" />
     <ClCompile Include="..\..\..\src\cr_base\memory\weak_ptr.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\kill.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\posix\process_handle_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\process.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\process_handle.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\process_iterator.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\win\kill_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\win\launch.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\win\launch_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\win\process_handle_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\win\process_iterator_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\process\win\process_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\rand_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\strcat.cc" />
     <ClCompile Include="..\..\..\src\cr_base\strings\stringprintf.cc" />
@@ -264,6 +280,7 @@
     <ClCompile Include="..\..\..\src\cr_base\threading\thread_local_storage.cc" />
     <ClCompile Include="..\..\..\src\cr_base\threading\win\platform_thread_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_local_storage_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\time\elapsed_timer.cc" />
     <ClCompile Include="..\..\..\src\cr_base\time\posix\time_posix.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
@@ -272,9 +289,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\time\time.cc" />
     <ClCompile Include="..\..\..\src\cr_base\time\win\time_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\token\token.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\token\unguessable_token.cc" />
     <ClCompile Include="..\..\..\src\cr_base\util\scoped_clear_last_error.cc" />
     <ClCompile Include="..\..\..\src\cr_base\version.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\internal\scoped_process_information.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\internal\startup_information.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\pe_file_version_info.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\registry.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\resource_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\win\scoped_handle.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\windows_version.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\win_util.cc" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops.h" />
@@ -282,6 +308,7 @@
     <ClInclude Include="..\..\..\src\cr_base\atomic\atomicops_internals_portable.h" />
     <ClInclude Include="..\..\..\src\cr_base\atomic\atomic_sequence_num.h" />
     <ClInclude Include="..\..\..\src\cr_base\at_exit.h" />
+    <ClInclude Include="..\..\..\src\cr_base\auto_reset.h" />
     <ClInclude Include="..\..\..\src\cr_base\base_export.h" />
     <ClInclude Include="..\..\..\src\cr_base\bit_cast.h" />
     <ClInclude Include="..\..\..\src\cr_base\byte_order.h" />
@@ -347,6 +374,11 @@
     <ClInclude Include="..\..\..\src\cr_base\numerics\ranges.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\safe_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\safe_math.h" />
+    <ClInclude Include="..\..\..\src\cr_base\process\kill.h" />
+    <ClInclude Include="..\..\..\src\cr_base\process\launch.h" />
+    <ClInclude Include="..\..\..\src\cr_base\process\process.h" />
+    <ClInclude Include="..\..\..\src\cr_base\process\process_handle.h" />
+    <ClInclude Include="..\..\..\src\cr_base\process\process_iterator.h" />
     <ClInclude Include="..\..\..\src\cr_base\rand_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\stl_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\char_traits.h" />
@@ -388,13 +420,23 @@
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_local.h" />
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_storage.h" />
+    <ClInclude Include="..\..\..\src\cr_base\time\elapsed_timer.h" />
     <ClInclude Include="..\..\..\src\cr_base\time\time.h" />
+    <ClInclude Include="..\..\..\src\cr_base\token\token.h" />
+    <ClInclude Include="..\..\..\src\cr_base\token\unguessable_token.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\eintr_wrapper.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_clear_last_error.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_generic.h" />
     <ClInclude Include="..\..\..\src\cr_base\version.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\internal\scoped_process_information.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\internal\startup_information.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\pe_file_version_info.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\registry.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\resource_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\win\scoped_handle.h" />
     <ClInclude Include="..\..\..\src\cr_base\win\windows_types.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\windows_version.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\win_util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

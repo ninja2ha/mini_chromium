@@ -14,15 +14,15 @@
 
 #include "cr_base/compiler_config.h"
 
+#include "cr_base/base_export.h"
+#include "cr_base/time/time.h"
+
 #if defined(MINI_CHROMIUM_OS_WIN)
 #include "cr_base/win/windows_types.h"
 #elif defined(MINI_CHROMIUM_OS_POSIX)
 #include <pthread.h>
 #include <unistd.h>
 #endif
-
-#include "cr_base/base_export.h"
-#include "cr_base/time/time.h"
 
 namespace cr {
 

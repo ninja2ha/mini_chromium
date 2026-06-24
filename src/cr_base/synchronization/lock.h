@@ -8,16 +8,16 @@
 
 #include "cr_base/compiler_config.h"
 
+#include "cr_base/base_export.h"
+#include "cr_base/logging/logging.h"
+#include "cr_base/threading/platform_thread_ref.h"  // for 
+
 #if defined(MINI_CHROMIUM_OS_POSIX)
 #include <errno.h>
 #include <pthread.h>
 #elif defined(MINI_CHROMIUM_OS_WIN)
 #include "cr_base/win/windows_types.h"
 #endif
-
-#include "cr_base/base_export.h"
-#include "cr_base/logging/logging.h"
-#include "cr_base/threading/platform_thread_ref.h"  // for 
 
 namespace cr {
 

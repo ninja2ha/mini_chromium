@@ -4,7 +4,9 @@
 ///typedef struct IUnknown IUnknown;
 ///#include <windows.h>
 #pragma comment(lib, "winmm")
+#pragma comment(lib, "version")
 #pragma comment(lib, "shlwapi")
+#pragma comment(lib, "userenv")
 
 #include "cr_base/logging/logging.h"
 #include "cr_base/debug/alias.h"
@@ -15,6 +17,7 @@
 #include "cr_base/i18n/case_conversion.h"
 #include "cr_base/time/time.h"
 #include "cr_base/byte_size.h"
+#include "cr_base/process/process_iterator.h"
 
 #include "cr_base/files/file_util.h"
 
@@ -29,13 +32,12 @@ int main() {
   CR_LOG(Info) << kBufferSize.InBytes();
   CR_LOG(Info) << kBufferSize2.InBytes();
 
-  cr::FilePath cur_dir;
-  cr::GetCurrentDirectory(&cur_dir);
-  cur_dir = cur_dir.Append(L"loglog.txt");
-
-  cr::FilePath tmp_dir = cr::GetUniquePath(cur_dir);
-  cr::WriteFile(tmp_dir, "123456");
-  CR_LOG(Info) << tmp_dir;
+  cr::ProcessIterator proc_iter(nullptr);
+  const auto* proc_entry = proc_iter.NextProcessEntry();
+  while (proc_entry) {
+    CR_LOG(Info) << proc_entry->pid() << " " << cr::WideToUTF8(proc_entry->exe_file());
+    proc_entry = proc_iter.NextProcessEntry();
+  }
 
   system("pause");
   return 0;

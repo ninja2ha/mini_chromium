@@ -34,6 +34,7 @@ class CRBASE_EXPORT Version {
   // Each component is limited to a uint32_t. Call IsValid() to learn
   // the outcome.
   explicit Version(StringPiece version_str);
+  explicit Version(StringPiece16 version_str);
 
   // Initializes from a vector of components, like {1, 2, 3, 4}. Call IsValid()
   // to learn the outcome.

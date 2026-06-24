@@ -14,6 +14,7 @@
 #include "cr_base/strings/string_number_conversions.h"
 #include "cr_base/strings/string_split.h"
 #include "cr_base/strings/string_util.h"
+#include "cr_base/strings/utf_string_conversions.h"
 
 namespace cr {
 
@@ -98,6 +99,17 @@ Version::~Version() = default;
 Version::Version(StringPiece version_str) {
   std::vector<uint32_t> parsed;
   if (!ParseVersionNumbers(version_str, &parsed)) {
+    return;
+  }
+
+  components_.swap(parsed);
+}
+
+Version::Version(StringPiece16 version_str) {
+  std::string ver = cr::UTF16ToASCII(version_str);
+
+  std::vector<uint32_t> parsed;
+  if (!ParseVersionNumbers(ver, &parsed)) {
     return;
   }
 

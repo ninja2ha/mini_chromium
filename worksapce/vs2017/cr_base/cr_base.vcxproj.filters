@@ -208,6 +208,69 @@
     <ClCompile Include="..\..\..\src\cr_base\rand_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\command_line.cc" />
     <ClCompile Include="..\..\..\src\cr_base\environment.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\win\registry.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\pe_file_version_info.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\resource_util.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\windows_version.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\win_util.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\token\token.cc">
+      <Filter>token</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\token\unguessable_token.cc">
+      <Filter>token</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\process_handle.cc">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\win\process_handle_win.cc">
+      <Filter>process\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\posix\process_handle_posix.cc">
+      <Filter>process\posix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\process.cc">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\win\process_win.cc">
+      <Filter>process\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\win\launch.cc">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\win\launch_win.cc">
+      <Filter>process\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\internal\scoped_process_information.cc">
+      <Filter>win\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\internal\startup_information.cc">
+      <Filter>win\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\kill.cc">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\time\elapsed_timer.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\process_iterator.cc">
+      <Filter>process</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\win\process_iterator_win.cc">
+      <Filter>process\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\process\win\kill_win.cc">
+      <Filter>process\win</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -326,6 +389,21 @@
     </Filter>
     <Filter Include="net">
       <UniqueIdentifier>{ffa9214b-a9a9-4291-a55d-dcba21d6d61f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="token">
+      <UniqueIdentifier>{8033d30b-a022-44cc-9508-4722f2b9c74e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="process">
+      <UniqueIdentifier>{4124a1b4-4782-4d7c-a883-ec130f85838c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="process\win">
+      <UniqueIdentifier>{befb1dad-9b3a-429d-922b-03636501f113}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="process\posix">
+      <UniqueIdentifier>{22e67216-7a04-4b70-8da5-11f856986f01}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\internal">
+      <UniqueIdentifier>{c2dfa334-bd42-4073-ae80-2c28e5634ccf}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -655,5 +733,51 @@
     <ClInclude Include="..\..\..\src\cr_base\rand_util.h" />
     <ClInclude Include="..\..\..\src\cr_base\environment.h" />
     <ClInclude Include="..\..\..\src\cr_base\command_line.h" />
+    <ClInclude Include="..\..\..\src\cr_base\win\registry.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\pe_file_version_info.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\resource_util.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\windows_version.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\win_util.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\auto_reset.h" />
+    <ClInclude Include="..\..\..\src\cr_base\token\token.h">
+      <Filter>token</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\token\unguessable_token.h">
+      <Filter>token</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\process\process_handle.h">
+      <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\process\launch.h">
+      <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\process\process.h">
+      <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\internal\scoped_process_information.h">
+      <Filter>win\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\internal\startup_information.h">
+      <Filter>win\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\process\kill.h">
+      <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\time\elapsed_timer.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\process\process_iterator.h">
+      <Filter>process</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
