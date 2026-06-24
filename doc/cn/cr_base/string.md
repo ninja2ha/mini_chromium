@@ -3,9 +3,9 @@
 #### 字符串视图类
 
 ##### [cr::BasicStringPiece\<CharT\>]() *(constexpr)*
->用于快速访问字符串，避免在传递过程中Allocate内存，计算长度。  
-**NOTE**:  
-在异步任务中用作参数传递，可能会导致访问野指针，因此勿将该类型作为异步任务的元类型
+>字符串视图，避免字符串在传递过程，重复申请/释放内存，以及计算长度。  
+*NOTE*:  
+在异步任务中作参数传递时，容易导致访问野指针，因此勿将该类型作为异步任务的参数。
 
 * [头文件]()
 ```c++
@@ -70,7 +70,7 @@
 |[max_size]()|获取字符串最大长度，实际返回的是数据成员`length_`|
 |[capacity]()|获取字符串的容量，实际返回的是数据成员`length_`|
 |[copy]()|拷贝当前字符串到给定的地址|
-|[substr]()|获取子字符串视图|
+|[substr]()|截取子字符串视图|
 |[compare]()|比较两个字符串|
 |[find]()|查找子字符串位置|
 |[rfind]()|查找子字符串最后出现的位置|
@@ -158,8 +158,8 @@ ___
 
 |函数|描述|
 |:--|:--|
-|[cr::RemoveChars]()|移除指定的子字符串|
-|[cr::ReplaceChars]()|替换指定子字符串|
+|[cr::RemoveChars]()|移除指定字符串|
+|[cr::ReplaceChars]()|替换指定字符串|
 |[cr::TrimString]()|根据字符表，裁剪字符串首尾|
 |[cr::TrimWhitespaceASCII]()|裁剪字符串的首尾ASCII空白字符|
 |[cr::TrimWhitespace]()|裁剪字符串首尾空白字符|
@@ -269,8 +269,8 @@ ___
 
 |函数|描述|
 |:--|:--|
-|[cr::StringPrintf]()|C++风格字符串格式化，返回格式化后的字符串|
-|[cr::SStringPrintf]()|C++风格字符串格式化，格式化字符串到指定的对象，避免重复拷贝，返回对象引用。|
+|[cr::StringPrintf]()|字符串格式化输出，返回格式化后的字符串|
+|[cr::SStringPrintf]()|字符串格式化输出，赋值到指定的`std::basic_string`对象，避免重复拷贝，返回对象引用。|
 
 ##### 字符串数值转换
 * [头文件]()
@@ -282,23 +282,23 @@ ___
 
 |函数|描述|
 |:--|:--|
-|[cr::NumberToString]()|数字转成字符串`std::string`|
-|[cr::NumberToString16]()|数字转成字符串`std::u16string`|
-|[cr::NumberToString32]()|数字转成字符串`std::u32string`|
-|[cr::NumberToWString]()|数字转成字符串`std::wstring`|
+|[cr::NumberToString]()|数值转字符串`std::string`|
+|[cr::NumberToString16]()|数值转字符串`std::u16string`|
+|[cr::NumberToString32]()|数值转字符串`std::u32string`|
+|[cr::NumberToWString]()|数值转字符串`std::wstring`|
 |||
-|[cr::StringToInt]()|数字字符串转`int`，要求值在目标值域里|
-|[cr::StringToUint]()|数字字符串转`unsigned int`，要求值在目标值域里|
-|[cr::StringToInt64]()|数字字符串转`int64_t`，要求值在目标值域里|
-|[cr::StringToUint64]()|数字字符串转`unsigned int64_t`，要求值在目标值域里|
-|[cr::StringToSizeT]()|数字字符串转`size_t`，要求值在目标值域里|
-|[cr::StringToDouble]()|数字字符串转`double`，要求值在目标值域里|
+|[cr::StringToInt]()|字符串转`int`，要求值在`int`值域里|
+|[cr::StringToUint]()|字符串转`unsigned int`，要求值在`unsigned int`值域里|
+|[cr::StringToInt64]()|字符串转`int64_t`，要求值在`int64_t`值域里|
+|[cr::StringToUint64]()|字符串转`uint64_t`，要求值在`uint64_t`值域里|
+|[cr::StringToSizeT]()|字符串转`size_t`，要求值在`size_t`值域里|
+|[cr::StringToDouble]()|字符串转`double`，要求值在`double`值域里|
 |||
-|[cr::HexEncode]()|将字节组转成HEX字符串, 例:`{0x90,0x91,0x92} => "909192"`|
-|[cr::HexStringToInt]()|将HEX字符串(-0x80000000 ~ 0x7FFFFFFF)转成`int`，前缀`0x`可选|
-|[cr::HexStringToUInt]()|将HEX字符串(0x00000000 ~ 0xFFFFFFFF)转成`unsigned int`，前缀`0x`可选|
-|[cr::HexStringToInt64]()|将HEX字符串(-0x8000000000000000 ~ 0x7FFFFFFFFFFFFFFF)转成`int64_t`，前缀`0x`可选|
-|[cr::HexStringToUInt64]()|将HEX字符串(0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF)转成`uint64_t`，前缀`0x`可选|
-|[cr::HexStringToBytes]()|将HEX字符串转成字节组，储存到`std::vector<uint8_t>`，例:`"909192" => {0x90,0x91,0x92}`|
-|[cr::HexStringToString]()|将HEX字符串转成字节组，储存到`std::string`，例:`"909192" => {0x90,0x91,0x92}`|
-|[cr::HexStringToSpan]()|将HEX字符串转成字节组，储存到已经固定尺寸的字节组缓冲区，例:`"909192" => {0x90,0x91,0x92}`|
+|[cr::HexEncode]()|字节组转HEX字符串, 例:`{0x90,0x91,0x92} => "909192"`|
+|[cr::HexStringToInt]()|HEX字符串(-0x80000000 ~ 0x7FFFFFFF)转`int`，前缀`0x`可选|
+|[cr::HexStringToUInt]()|HEX字符串(0x00000000 ~ 0xFFFFFFFF)转`unsigned int`，前缀`0x`可选|
+|[cr::HexStringToInt64]()|HEX字符串(-0x8000000000000000 ~ 0x7FFFFFFFFFFFFFFF)转`int64_t`，前缀`0x`可选|
+|[cr::HexStringToUInt64]()|HEX字符串(0x0000000000000000 ~ 0xFFFFFFFFFFFFFFFF)转`uint64_t`，前缀`0x`可选|
+|[cr::HexStringToBytes]()|HEX字符串转字节组，储存到`std::vector<uint8_t>`，例:`"909192" => {0x90,0x91,0x92}`|
+|[cr::HexStringToString]()|HEX字符串转字节组，储存到`std::string`，例:`"909192" => {0x90,0x91,0x92}`|
+|[cr::HexStringToSpan]()|HEX字符串转字节组，储存到已经固定尺寸的字节组缓冲区，例:`"909192" => {0x90,0x91,0x92}`|
