@@ -7,20 +7,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cr_base", "cr_base\cr_base.
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "doc", "doc", "{5B28F1C7-8601-4DC2-84D2-22753F94EF69}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cr_base", "cr_base", "{9B073E92-3494-4276-9855-5A316F93D2D0}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\doc\cn\cr_base\containers.md = ..\..\doc\cn\cr_base\containers.md
-		..\..\doc\cn\cr_base\memory.md = ..\..\doc\cn\cr_base\memory.md
-		..\..\doc\cn\cr_base\numeric.md = ..\..\doc\cn\cr_base\numeric.md
-		..\..\doc\cn\cr_base\string.md = ..\..\doc\cn\cr_base\string.md
-	EndProjectSection
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "memory", "memory", "{F3431748-7863-4205-9566-B1AA66FD1B21}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\doc\cn\cr_base\memory\ref_ptr.md = ..\..\doc\cn\cr_base\memory\ref_ptr.md
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cn", "cn", "{7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\doc\cn\containers.md = ..\..\doc\cn\containers.md
+		..\..\doc\cn\memory.md = ..\..\doc\cn\memory.md
+		..\..\doc\cn\numeric.md = ..\..\doc\cn\numeric.md
+		..\..\doc\cn\string.md = ..\..\doc\cn\string.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "app", "app", "{5426F47B-B55C-4DB4-B04A-2FF1191B1694}"
 EndProject
@@ -29,6 +22,23 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca_debug", "app\ca_debug\ca_debug.vcxproj", "{AEE1F2DD-4E91-4A2A-9F22-E17122DFE11C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{7D78506E-5010-4D58-ADD8-C1B6DB9C5284} = {7D78506E-5010-4D58-ADD8-C1B6DB9C5284}
+		{464A90F1-842B-4E78-9B34-AD1C2406C6FF} = {464A90F1-842B-4E78-9B34-AD1C2406C6FF}
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "cr_event", "cr_event\cr_event.vcxproj", "{359E74D3-A59A-4763-AE1F-126AE390444B}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D78506E-5010-4D58-ADD8-C1B6DB9C5284} = {7D78506E-5010-4D58-ADD8-C1B6DB9C5284}
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "memory", "memory", "{38EB28C8-123D-4E2E-971C-4D0DA7975E31}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\doc\cn\memory\ref_ptr.md = ..\..\doc\cn\memory\ref_ptr.md
+	EndProjectSection
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "ca", "app\ca\ca.vcxproj", "{325C8658-F076-4A64-BCBA-47E862C2A903}"
+	ProjectSection(ProjectDependencies) = postProject
+		{7D78506E-5010-4D58-ADD8-C1B6DB9C5284} = {7D78506E-5010-4D58-ADD8-C1B6DB9C5284}
+		{359E74D3-A59A-4763-AE1F-126AE390444B} = {359E74D3-A59A-4763-AE1F-126AE390444B}
 		{464A90F1-842B-4E78-9B34-AD1C2406C6FF} = {464A90F1-842B-4E78-9B34-AD1C2406C6FF}
 	EndProjectSection
 EndProject
@@ -64,15 +74,31 @@ Global
 		{AEE1F2DD-4E91-4A2A-9F22-E17122DFE11C}.Release|x64.Build.0 = Release|x64
 		{AEE1F2DD-4E91-4A2A-9F22-E17122DFE11C}.Release|x86.ActiveCfg = Release|Win32
 		{AEE1F2DD-4E91-4A2A-9F22-E17122DFE11C}.Release|x86.Build.0 = Release|Win32
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Debug|x64.ActiveCfg = Debug|x64
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Debug|x64.Build.0 = Debug|x64
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Debug|x86.ActiveCfg = Debug|Win32
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Debug|x86.Build.0 = Debug|Win32
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Release|x64.ActiveCfg = Release|x64
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Release|x64.Build.0 = Release|x64
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Release|x86.ActiveCfg = Release|Win32
+		{359E74D3-A59A-4763-AE1F-126AE390444B}.Release|x86.Build.0 = Release|Win32
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Debug|x64.ActiveCfg = Debug|x64
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Debug|x64.Build.0 = Debug|x64
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Debug|x86.ActiveCfg = Debug|Win32
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Debug|x86.Build.0 = Debug|Win32
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Release|x64.ActiveCfg = Release|x64
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Release|x64.Build.0 = Release|x64
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Release|x86.ActiveCfg = Release|Win32
+		{325C8658-F076-4A64-BCBA-47E862C2A903}.Release|x86.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9B073E92-3494-4276-9855-5A316F93D2D0} = {7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE}
-		{F3431748-7863-4205-9566-B1AA66FD1B21} = {9B073E92-3494-4276-9855-5A316F93D2D0}
 		{7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE} = {5B28F1C7-8601-4DC2-84D2-22753F94EF69}
 		{AEE1F2DD-4E91-4A2A-9F22-E17122DFE11C} = {5426F47B-B55C-4DB4-B04A-2FF1191B1694}
+		{38EB28C8-123D-4E2E-971C-4D0DA7975E31} = {7E6DB241-A0EF-42C3-8288-9B7A3DAAF6CE}
+		{325C8658-F076-4A64-BCBA-47E862C2A903} = {5426F47B-B55C-4DB4-B04A-2FF1191B1694}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {D25FFA18-ACEE-4691-9DE1-35F97A5255C8}

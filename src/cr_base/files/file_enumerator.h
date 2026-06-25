@@ -189,7 +189,7 @@ class CRBASE_EXPORT FileEnumerator {
   // True when find_data_ is valid.
   bool has_find_data_ = false;
   CR_WIN32_FIND_DATAW find_data_;
-  HANDLE find_handle_ = CR_INVALID_HANDLE_VALUE;
+  HANDLE find_handle_ = INVALID_HANDLE_VALUE;
 #elif defined(MINI_CHROMIUM_OS_POSIX)
   // The files in the current directory
   std::vector<FileInfo> directory_entries_;

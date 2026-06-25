@@ -8,9 +8,20 @@ typedef struct IUnknown IUnknown;
 #include <windows.h>
 
 #include "cr_base/memory/no_destructor.h"
+#include "cr_base/memory/ptr_util.h"
 
 namespace cr {
 namespace win {
+
+HMODULE CurrentModule() {
+  static cr::NoDestructor<HMODULE> ntdll([] {
+    MEMORY_BASIC_INFORMATION mbi;
+    ExplicitZeroMemory(&mbi, sizeof(mbi));
+    VirtualQuery(CurrentModule, &mbi, sizeof(mbi));
+    return reinterpret_cast<HMODULE>(mbi.AllocationBase);
+  }());
+  return *ntdll;
+}
 
 HMODULE GetNtDllModule() {
   static cr::NoDestructor<HMODULE> ntdll([] {

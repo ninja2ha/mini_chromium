@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <VCProjectVersion>15.0</VCProjectVersion>
+    <ProjectGuid>{359E74D3-A59A-4763-AE1F-126AE390444B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>crevent</RootNamespace>
+    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v141_xp</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)build.out\exec\$(Configuration)_$(PlatformShortName)\</OutDir>
+    <IntDir>$(SolutionDir)build.out\objects\$(Configuration)_$(PlatformShortName)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <SDLCheck>true</SDLCheck>
+      <PreprocessorDefinitions>NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpp14</LanguageStandard>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <AdditionalIncludeDirectories>$(ProjectDir)..\..\..\src\</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_event\containers\intrusive_heap.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\containers\linked_list.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump_default.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\posix\message_pump_epoll.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\posix\watchable_io_message_pump_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\win\message_pump_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\work_id_provider.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\observer_list_threadsafe.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\observer_list_types.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\run_loop.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\common\checked_lock_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\common\operations_controller.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\common\scoped_defer_task_posting.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\current_thread.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\internal\post_task_and_reply_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\pending_task.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequenced_task_runner.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequenced_task_runner_handle.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\associated_thread_id.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\atomic_flag_set.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\enqueue_order_generator.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\lazy_now.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\real_time_domain.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\tasks.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\task_queue.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_selector.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_power_monitor.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_with_message_pump_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\time_domain.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\work_deduplicator.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\work_queue.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\work_queue_sets.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\simple_task_executor.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\single_thread_task_executor.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\task_executor.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\task_runner.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\task\task_traits.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\sequence_local_storage_slot.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread_checker_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread_task_runner_handle.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\timer\timer.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\time\clock.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\time\tick_clock.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\win\message_window.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\win\object_watcher.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_event\containers\intrusive_heap.h" />
+    <ClInclude Include="..\..\..\src\cr_event\containers\linked_list.h" />
+    <ClInclude Include="..\..\..\src\cr_event\event_export.h" />
+    <ClInclude Include="..\..\..\src\cr_event\internal\observer_list_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_event\internal\parameter_pack.h" />
+    <ClInclude Include="..\..\..\src\cr_event\internal\traits_bag.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_default.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_for_io.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_for_ui.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_type.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\posix\message_pump_epoll.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\posix\watchable_io_message_pump_posix.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\timer_slack.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\win\message_pump_win.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\work_id_provider.h" />
+    <ClInclude Include="..\..\..\src\cr_event\observer_list.h" />
+    <ClInclude Include="..\..\..\src\cr_event\observer_list_threadsafe.h" />
+    <ClInclude Include="..\..\..\src\cr_event\observer_list_types.h" />
+    <ClInclude Include="..\..\..\src\cr_event\run_loop.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\common\checked_lock.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\common\checked_lock_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\common\intrusive_heap.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\common\operations_controller.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\common\scoped_defer_task_posting.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\current_thread.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\internal\post_task_and_reply_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\internal\post_task_and_reply_with_result_internal.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\pending_task.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequenced_task_runner.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequenced_task_runner_handle.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequenced_task_runner_helpers.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\associated_thread_id.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\atomic_flag_set.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\enqueue_order.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\enqueue_order_generator.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\lazily_deallocated_deque.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\lazy_now.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\real_time_domain.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\sequenced_task_source.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\tasks.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_selector.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_selector_logic.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_time_observer.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_power_monitor.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_with_message_pump_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\time_domain.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\work_deduplicator.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\work_queue.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\work_queue_sets.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\simple_task_executor.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\single_thread_task_executor.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\single_thread_task_runner.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\single_thread_task_runner_thread_mode.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\task_executor.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\task_observer.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\task_runner.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\task_traits.h" />
+    <ClInclude Include="..\..\..\src\cr_event\task\task_traits_extension.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_slot.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_checker.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_checker_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_task_runner_handle.h" />
+    <ClInclude Include="..\..\..\src\cr_event\timer\timer.h" />
+    <ClInclude Include="..\..\..\src\cr_event\time\clock.h" />
+    <ClInclude Include="..\..\..\src\cr_event\time\tick_clock.h" />
+    <ClInclude Include="..\..\..\src\cr_event\win\message_window.h" />
+    <ClInclude Include="..\..\..\src\cr_event\win\object_watcher.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

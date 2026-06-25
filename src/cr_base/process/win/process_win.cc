@@ -4,11 +4,14 @@
 
 #include "cr_base/process/process.h"
 
+#ifndef NOMINMAX
+#define NOMINMAX
+#endif
+typedef struct IUnknown IUnknown;
 #include <windows.h>
 
 #include "cr_base/logging/logging.h"
 #include "cr_base/numerics/safe_conversions.h"
-///#include "cr_base/process/kill.h"
 #include "cr_base/win/win_util.h"
 #include "cr_base/win/windows_version.h"
 

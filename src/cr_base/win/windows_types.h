@@ -15,21 +15,26 @@ extern "C" {
 
 // -- mascros ------------------------------------------------------------------
 
+#define CALLBACK __stdcall
+
 #ifndef TLS_OUT_OF_INDEXES
 #define TLS_OUT_OF_INDEXES ((DWORD)0xFFFFFFFF)
 #endif
 
 // copied from system.
-#ifndef CR_INVALID_HANDLE_VALUE
-#define CR_INVALID_HANDLE_VALUE ((HANDLE)(LONG_PTR)-1)
-#endif
-
-// path length
-#define CR_MAX_PATH (260)
+#define INVALID_HANDLE_VALUE ((HANDLE)(LONG_PTR)-1)
+#define MAX_PATH 260
+#define MAKEINTATOM_W(i)  (LPWSTR)((ULONG_PTR)((WORD)(i)))
 
 // -- ints ---------------------------------------------------------------------
 
+typedef char CHAR;
+typedef unsigned char BYTE;
+typedef BYTE BOOLEAN;
+typedef short SHORT;
 typedef wchar_t WCHAR;
+typedef int INT;
+typedef unsigned int UINT;
 typedef unsigned short WORD;
 typedef unsigned long DWORD;
 typedef long LONG;
@@ -56,17 +61,27 @@ typedef unsigned __int64 ULONG_PTR, *PULONG_PTR;
 typedef DWORD ACCESS_MASK;
 typedef ACCESS_MASK REGSAM;
 
+typedef UINT_PTR WPARAM;
+typedef LONG_PTR LPARAM;
+typedef LONG_PTR LRESULT;
+typedef long HRESULT;
+
 // Forward declare Windows compatible handles.
 #define CHROME_DECLARE_HANDLE(name) \
   struct name##__;                  \
   typedef struct name##__* name
 CHROME_DECLARE_HANDLE(HINSTANCE);
 CHROME_DECLARE_HANDLE(HKEY);
+CHROME_DECLARE_HANDLE(HWND);
+CHROME_DECLARE_HANDLE(HICON);
 #undef CHROME_DECLARE_HANDLE
 
 typedef HINSTANCE HMODULE;
+typedef HICON HCURSOR;
 
 // -- structure ----------------------------------------------------------------
+
+// Forward declare some Windows struct/typedef sets.
 
 // _WIN32_FIND_DATAW is 592 bytes and the largest built-in type in it is a
 // DWORD. The buffer declaration guarantees the correct size and alignment.
@@ -99,9 +114,23 @@ struct CR_PROCESSENTRY {
   DWORD   th32ParentProcessID;    // this process's parent process
   LONG    pcPriClassBase;         // Base priority of process's threads
   DWORD   dwFlags;
-  WCHAR   szExeFile[CR_MAX_PATH];    // Path
+  WCHAR   szExeFile[MAX_PATH];    // Path
 };
 typedef struct tagPROCESSENTRY32W PROCESSENTRY32W;
+
+struct CR_OVERLAPPED {
+  ULONG_PTR Internal;
+  ULONG_PTR InternalHigh;
+  union {
+    struct {
+      DWORD Offset;
+      DWORD OffsetHigh;
+    };
+    PVOID Pointer;
+  };
+  HANDLE  hEvent;
+};
+typedef struct _OVERLAPPED OVERLAPPED;
 
 // Use WIN32_FIND_DATAW when you just need a forward declaration. Use
 // CR_WIN32_FIND_DATA when you need a concrete declaration to reserve
@@ -109,6 +138,8 @@ typedef struct tagPROCESSENTRY32W PROCESSENTRY32W;
 typedef struct _WIN32_FIND_DATAW WIN32_FIND_DATAW;
 typedef struct _RTL_CRITICAL_SECTION RTL_CRITICAL_SECTION;
 typedef struct _FILETIME FILETIME;
+
+typedef struct tagMSG MSG, *PMSG, *NPMSG, *LPMSG;
 
 #if defined(__cplusplus)
 }
@@ -133,6 +164,10 @@ inline const WIN32_FIND_DATAW* ToWinType(const CR_WIN32_FIND_DATAW* ptr) {
 
 inline PROCESSENTRY32W* ToWinType(CR_PROCESSENTRY* ptr) {
   return reinterpret_cast<PROCESSENTRY32W*>(ptr);
+}
+
+inline OVERLAPPED* ToWinType(CR_OVERLAPPED* ptr) {
+  return reinterpret_cast<OVERLAPPED*>(ptr);
 }
 
 }  // namespace win

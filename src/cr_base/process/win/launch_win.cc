@@ -43,6 +43,10 @@ typedef struct IUnknown IUnknown;
 #include "cr_base/win/internal/startup_information.h"
 #include "cr_base/win/windows_version.h"
 
+#ifndef PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_ALWAYS_OFF
+#define PROCESS_CREATION_MITIGATION_POLICY2_CET_USER_SHADOW_STACKS_ALWAYS_OFF (0x00000002ui64 << 28)
+#endif
+
 namespace cr {
 
 namespace {

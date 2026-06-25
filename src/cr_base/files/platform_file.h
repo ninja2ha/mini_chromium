@@ -28,7 +28,7 @@ using ScopedPlatformFile = ::cr::win::ScopedHandle;
 // It would be nice to make this constexpr but INVALID_HANDLE_VALUE is a
 // ((void*)(-1)) which Clang rejects since reinterpret_cast is technically
 // disallowed in constexpr. Visual Studio accepts this, however.
-const PlatformFile kInvalidPlatformFile = CR_INVALID_HANDLE_VALUE;
+const PlatformFile kInvalidPlatformFile = INVALID_HANDLE_VALUE;
 
 #elif defined(MINI_CHROMIUM_OS_POSIX)
 

@@ -11,6 +11,7 @@
 namespace cr {
 namespace win {
 
+CRBASE_EXPORT HMODULE CurrentModule();
 CRBASE_EXPORT HMODULE GetNtDllModule();
 CRBASE_EXPORT HMODULE GetKernel32Module();
 CRBASE_EXPORT HMODULE GetKernelBaseModule();

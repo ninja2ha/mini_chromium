@@ -3,7 +3,7 @@
 #### 数值校验
 
 ##### [cr::CheckedNumeric\<Dst\>]() (*constexpr*)
->数值模板类，可检查算数结果是否越过目标(Dst)类型值域，常用于一些需要精确计算的场景，如缓冲区长度计算等。   
+>数值模板类，用于检查算数结果是否越过目标(Dst)类型值域，常用于一些需要精确计算的场景，如缓冲区长度计算等。   
 *NOTE*:  
 此类支持运算符操作，以及不同数值类型之间的转换。
 * [头文件]()
@@ -15,11 +15,11 @@
 
 |函数|描述|
 |:--|:--|
-|[cr::IsValidForType<Dst>]()|检查值是否符合目标(Dst)类型值域|
-|[cr::ValueOrDieForType]()|获取算数值，并检查值是否符合目标类型的值域，否则创建一个崩溃点|
-|[cr::ValueOrDefaultForType]()|获取算数值，并检查值是否符合目标类型的值域，否则返回一个默认值|
-|[cr::MakeCheckedNum]()|创建一个`cr::CheckedNumeric<T>`对象|
-||*以下函数返回一个`cr::CheckedNumeric<T>`对象，函数支持多元，`T`从元组里获取，优先级按照double，float，ui64，i64，ui32，i32...*|
+|[cr::IsValidForType\<Dst\>]()|检查`值`是否在`R(Dst)`中|
+|[cr::ValueOrDieForType\<Dst\>]()|检查`值`是否在`R(Dst)`中，是则返回该`值`，否则产生一个软中断|
+|[cr::ValueOrDefaultForType\<Dst\>]()|检查`值`是否在`R(Dst)`中，是则返回该`值`，否则返回一个`默认值`|
+|[cr::MakeCheckedNum]()|创建一个`cr::CheckedNumeric<>`对象|
+||*以下函数返回`cr::CheckedNumeric<T>`，函数支持多元，`T`从元组里获取，优先级按照double，float，ui64，i64，ui32，i32...*|
 |[cr::CheckMax]()|取最大值|
 |[cr::CheckMin]()|取最小值|
 |[cr::CheckAdd]()|从左到右，依次求和|
@@ -35,27 +35,26 @@
 
 * 样例
 ```c++
-// unsigned值域:{0 ~ 4294967295}
+// R(unsigned) = {0 ~ 4294967295}
 
-// div右侧表达式(5u/1)的结果在unsigned值域里，
-// 因此div的值是有效的。
+// div: 右侧表达式(5u/1)=5，属于R(unsigned)，因此div的值是有效的。
 cr::CheckedNumeric<unsigned> div = cr::CheckedDiv(5u, 1); // Valid value;
 div++; // cr::CheckedNumeric 支持使用运算符操作
 
-// sub右侧表达式(0u-1)的结果越过了unsigned值域最小值，
-// 因此sub的值是无效的。
+// sub: 右侧表达式(0u-1)=-1，不属于R(unsigned)，因此sub的值是无效的。
 cr::CheckedNumeric<unsigned> sub = cr::CheckedSub(0u, 1); // Invalid value;
 sub--; // sub在运算之前值已经失效了，因此该运算值还是无效的。
 
-// 在计算sum右侧表达式(4294967295u+1-1)过程中越过了unsigned值域最大值， 
-// 因此sub的值是无效的。
+// sum: 右侧表达式(4294967295u+1-1), 在(4294967295u+1)后已经越过Max(R(unsigned))， 
+//      因此sub的值是无效的。
 cr::CheckedNumeric<unsigned> sum = cr::CheckedAdd(4294967295u, 1, -1); // Invalid value;
 ```
 
 ___
 #### 数值收缩
 ##### [cr::ClampedNumeric\<Dst\>]() (*constexpr*)
->数值模板类，用于在算数结果越过目标(Dst)类型的值域时，使用目标(Dst)类型值域的最大或最小边界值来赋值，常用于坐标计算。  
+>数值模板类，用于在算数结果越过`R(Dst)`时，使用`R(Dst)`的极限值(`Min(R(Dst))`或  
+`Max(R(Dst))`)来赋值，常用于坐标计算。  
 *NOTE*:  
 该对象支持运算符重载操作，不支持不同数值类型之间的转换。
 * [头文件]()
@@ -68,7 +67,7 @@ ___
 |函数|描述|
 |:--|:--|
 |[cr::MakeClampedNum]()|创建一个`cr::MakeClampedNum`对象|
-||*以下函数返回一个`cr::ClampedNumeric<T>`对象，函数支持多元，`T`从元组里获取，优先级按照double，float，ui64，i64，ui32，i32...*|
+||*以下函数返回`cr::ClampedNumeric<T>`，函数支持多元，`T`从元组里获取，优先级按照double，float，ui64，i64，ui32，i32...*|
 |[cr::ClampMax]()|取最大值|
 |[cr::ClampMin]()|取最小值|
 |[cr::ClampAdd]()|从左到右，依次求和|
@@ -84,19 +83,20 @@ ___
 
 * 样例
 ```c++
-// unsigned值域:{0 ~ 4294967295}
+// R(unsigned) = {0 ~ 4294967295}
 
-// div右侧表达式(5u/1)的值在unsigned值域里。
-// 因此div取的是运算出来的值5。
+// div: 右侧表达式(5u/1)=5‌，5∈ R(unsigned), 因此div=5
 cr::ClampedNumeric<unsigned> div = cr::ClampDiv(5u, 1); // div = 5;
 
-// sub右侧表达式(0u-1)的值越过了unsigned值域最小值，
-// 因此sub取的是unsigned值域最小值0。
+// sub: 右侧表达式(0u-1)=-1， -1 < Min(R(unsigned))，
+//      因此sub = Min(R(unsigned)) = 0
 cr::ClampedNumeric<unsigned> sub = cr::ClampSub(0u, 1); // sub = 0;
 
-// sum右侧表达式(4294967295u+1-1) 
-// 在第一次运算过程中，其结果越过unsigned值域最大值, 因此sum = 4294967295。
-// 第二次运算-1, 其表达式为4294967295 - 1，在unsigned值域内，因此sum =  4294967294
+// sum： 右侧表达式(4294967295u+1-1) 
+//       - 第一次运算(4294967295u+1)>Max(R(unsigned))，
+//         因此sum = Max(R(unsigned)) = 4294967295
+//       - 第二次运算sum-1, 其表达式为(4294967295-1)，在unsigned值域内，
+//         因此sum = 4294967294
 cr::ClampedNumeric<unsigned> sum = cr::ClampAdd(4294967295u, 1, -1); // sum = 4294967294;
 ```
 

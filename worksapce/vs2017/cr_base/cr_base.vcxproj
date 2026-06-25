@@ -23,32 +23,32 @@
     <ProjectGuid>{7D78506E-5010-4D58-ADD8-C1B6DB9C5284}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>crbase</RootNamespace>
-    <WindowsTargetPlatformVersion>10.0.19041.0</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>7.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
-    <ConfigurationType>Application</ConfigurationType>
+    <ConfigurationType>StaticLibrary</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v141</PlatformToolset>
+    <PlatformToolset>v141_xp</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -244,13 +244,27 @@
     <ClCompile Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.cc" />
     <ClCompile Include="..\..\..\src\cr_base\synchronization\atomic_flag.cc" />
     <ClCompile Include="..\..\..\src\cr_base\synchronization\lock.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\condition_variable_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\lock_posix.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\waitable_event_posix.cc">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\win\condition_variable_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\synchronization\win\lock_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\win\waitable_event_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\system\cpu_info.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum-dtoa.cc" />
     <ClCompile Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum.cc" />
@@ -278,8 +292,10 @@
     <ClCompile Include="..\..\..\src\cr_base\threading\sequence\sequence_checker_impl.cc" />
     <ClCompile Include="..\..\..\src\cr_base\threading\sequence\sequence_token.cc" />
     <ClCompile Include="..\..\..\src\cr_base\threading\thread_local_storage.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\thread_tick.cc" />
     <ClCompile Include="..\..\..\src\cr_base\threading\win\platform_thread_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_local_storage_win.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_tick_win.cc" />
     <ClCompile Include="..\..\..\src\cr_base\time\elapsed_timer.cc" />
     <ClCompile Include="..\..\..\src\cr_base\time\posix\time_posix.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -396,7 +412,9 @@
     <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversions.h" />
     <ClInclude Include="..\..\..\src\cr_base\strings\utf_string_conversion_utils.h" />
     <ClInclude Include="..\..\..\src\cr_base\synchronization\atomic_flag.h" />
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\condition_variable.h" />
     <ClInclude Include="..\..\..\src\cr_base\synchronization\lock.h" />
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\waitable_event.h" />
     <ClInclude Include="..\..\..\src\cr_base\system\cpu_info.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum-dtoa.h" />
     <ClInclude Include="..\..\..\src\cr_base\third_party\double_conversion\double-conversion\bignum.h" />
@@ -420,6 +438,7 @@
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_local.h" />
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_internal.h" />
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_local_storage.h" />
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_tick.h" />
     <ClInclude Include="..\..\..\src\cr_base\time\elapsed_timer.h" />
     <ClInclude Include="..\..\..\src\cr_base\time\time.h" />
     <ClInclude Include="..\..\..\src\cr_base\token\token.h" />

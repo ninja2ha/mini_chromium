@@ -250,7 +250,7 @@ class CRBASE_EXPORT RegistryKeyIterator {
   // Current index of the iteration.
   int index_;
 
-  wchar_t name_[CR_MAX_PATH];
+  wchar_t name_[MAX_PATH];
 };
 
 }  // namespace win

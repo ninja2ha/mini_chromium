@@ -271,6 +271,24 @@
     <ClCompile Include="..\..\..\src\cr_base\process\win\kill_win.cc">
       <Filter>process\win</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\win\condition_variable_win.cc">
+      <Filter>synchronization\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\win\waitable_event_win.cc">
+      <Filter>synchronization\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\condition_variable_posix.cc">
+      <Filter>synchronization\posxi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\synchronization\posxi\waitable_event_posix.cc">
+      <Filter>synchronization\posxi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\thread_tick.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_tick_win.cc">
+      <Filter>threading\win</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -778,6 +796,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\process\process_iterator.h">
       <Filter>process</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\waitable_event.h">
+      <Filter>synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\synchronization\condition_variable.h">
+      <Filter>synchronization</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\threading\thread_tick.h">
+      <Filter>threading</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

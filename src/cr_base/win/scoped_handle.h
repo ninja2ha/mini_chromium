@@ -123,7 +123,7 @@ class HandleTraits {
 
   // Returns true if the handle value is valid.
   static bool IsHandleValid(Handle handle) {
-    return handle != nullptr && handle != CR_INVALID_HANDLE_VALUE;
+    return handle != nullptr && handle != INVALID_HANDLE_VALUE;
   }
 
   // Returns NULL handle value.

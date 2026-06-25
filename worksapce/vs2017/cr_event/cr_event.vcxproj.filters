@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="task">
+      <UniqueIdentifier>{3a21e7d6-c7f1-45ad-b959-d2945b07e1b8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="internal">
+      <UniqueIdentifier>{3dfed030-68de-4a3e-bb50-30a6daf0bacc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="containers">
+      <UniqueIdentifier>{0fb4ae56-5c7a-4877-bbad-16118a55cf70}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task\internal">
+      <UniqueIdentifier>{ef400022-b22c-4bb6-abb1-cf3c70d77dee}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message_pump">
+      <UniqueIdentifier>{1537a24d-13a1-4445-96c2-3724676de333}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="threading">
+      <UniqueIdentifier>{ba4a637e-a2be-4c26-b506-3a5fbbd4c21f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win">
+      <UniqueIdentifier>{c383c36a-b4b5-442b-a56c-1883312e9c8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message_pump\win">
+      <UniqueIdentifier>{18cea142-923c-4abe-86f5-37d85beb320f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task\sequence_manager">
+      <UniqueIdentifier>{3aafdfc0-be49-4a71-86ce-1c38c865820d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="time">
+      <UniqueIdentifier>{61b88c0e-9d9b-49f9-a8ac-7b0dd14516d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="task\common">
+      <UniqueIdentifier>{0f3077d8-b5e1-4fb3-a2b4-add115202334}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="message_pump\psoxi">
+      <UniqueIdentifier>{a1a7f438-3ee9-401f-b6bb-35a521802924}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="timer">
+      <UniqueIdentifier>{17a2f402-06bd-4fda-bbe3-56bffd561d0d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_event\task\pending_task.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\containers\intrusive_heap.cc">
+      <Filter>containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\task_runner.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\internal\post_task_and_reply_impl.cc">
+      <Filter>task\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequenced_task_runner.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequenced_task_runner_handle.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\containers\linked_list.cc">
+      <Filter>containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\observer_list_types.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\observer_list_threadsafe.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\work_id_provider.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread_checker_impl.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\run_loop.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\win\message_window.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\win\object_watcher.cc">
+      <Filter>win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump_default.cc">
+      <Filter>message_pump</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\win\message_pump_win.cc">
+      <Filter>message_pump\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\simple_task_executor.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\task_executor.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\tasks.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\work_deduplicator.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\work_queue.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\work_queue_sets.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\time_domain.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_with_message_pump_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_power_monitor.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\associated_thread_id.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\atomic_flag_set.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\enqueue_order_generator.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\lazy_now.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\real_time_domain.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_selector.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_impl.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\sequence_manager\task_queue.cc">
+      <Filter>task\sequence_manager</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\time\clock.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\time\tick_clock.cc">
+      <Filter>time</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\common\checked_lock_impl.cc">
+      <Filter>task\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\common\operations_controller.cc">
+      <Filter>task\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\common\scoped_defer_task_posting.cc">
+      <Filter>task\common</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\sequence_local_storage_slot.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\task_traits.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\current_thread.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\task\single_thread_task_executor.cc">
+      <Filter>task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread_task_runner_handle.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\posix\watchable_io_message_pump_posix.cc">
+      <Filter>message_pump\psoxi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\message_pump\posix\message_pump_epoll.cc">
+      <Filter>message_pump\psoxi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\timer\timer.cc">
+      <Filter>timer</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_event\task\pending_task.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\event_export.h" />
+    <ClInclude Include="..\..\..\src\cr_event\internal\parameter_pack.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\internal\traits_bag.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\containers\intrusive_heap.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\task_runner.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\internal\post_task_and_reply_impl.h">
+      <Filter>task\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\internal\post_task_and_reply_with_result_internal.h">
+      <Filter>task\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequenced_task_runner.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequenced_task_runner_helpers.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequenced_task_runner_handle.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\observer_list.h" />
+    <ClInclude Include="..\..\..\src\cr_event\internal\observer_list_internal.h">
+      <Filter>internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\containers\linked_list.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\observer_list_types.h" />
+    <ClInclude Include="..\..\..\src\cr_event\observer_list_threadsafe.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\work_id_provider.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_checker_impl.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_checker.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\run_loop.h" />
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\timer_slack.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\win\message_window.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\win\object_watcher.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_default.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_for_io.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_for_ui.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\message_pump_type.h">
+      <Filter>message_pump</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\win\message_pump_win.h">
+      <Filter>message_pump\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\simple_task_executor.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\task_executor.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\task_traits.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\task_traits_extension.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\tasks.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\work_queue_sets.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\work_deduplicator.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\work_queue.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\time_domain.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_with_message_pump_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_power_monitor.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\thread_controller.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\associated_thread_id.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\atomic_flag_set.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\enqueue_order.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\enqueue_order_generator.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\lazily_deallocated_deque.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\lazy_now.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\real_time_domain.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\sequence_manager_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\sequenced_task_source.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_time_observer.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_selector_logic.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_selector.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue_impl.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\sequence_manager\task_queue.h">
+      <Filter>task\sequence_manager</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\single_thread_task_runner.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\single_thread_task_runner_thread_mode.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\time\clock.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\time\tick_clock.h">
+      <Filter>time</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\task_observer.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\common\checked_lock.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\common\checked_lock_impl.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\common\intrusive_heap.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\common\operations_controller.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\common\scoped_defer_task_posting.h">
+      <Filter>task\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_slot.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\current_thread.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\task\single_thread_task_executor.h">
+      <Filter>task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_task_runner_handle.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\posix\watchable_io_message_pump_posix.h">
+      <Filter>message_pump\psoxi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\message_pump\posix\message_pump_epoll.h">
+      <Filter>message_pump\psoxi</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\timer\timer.h">
+      <Filter>timer</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
