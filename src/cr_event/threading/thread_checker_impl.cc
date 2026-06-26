@@ -9,7 +9,7 @@
 #include "cr_base/threading/thread_local.h"
 
 #include "cr_event/threading/thread_checker.h"
-#include "cr_event/thread_task_runner_handle.h"
+#include "cr_event/threading/thread_task_runner_handle.h"
 
 namespace {
 bool g_log_thread_and_sequence_checker_binding = false;

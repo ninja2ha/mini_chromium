@@ -321,6 +321,9 @@
     <ClInclude Include="..\..\..\src\cr_event\win\message_window.h" />
     <ClInclude Include="..\..\..\src\cr_event\win\object_watcher.h" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\cr_event\cr_event.example" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

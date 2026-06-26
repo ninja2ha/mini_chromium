@@ -410,4 +410,7 @@
       <Filter>timer</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\cr_event\cr_event.example" />
+  </ItemGroup>
 </Project>

@@ -144,7 +144,10 @@ void TaskQueue::ShutdownTaskQueueGracefully() {
   // If we've not been unregistered then this must occur on the main thread.
   CR_DCHECK_CALLED_ON_VALID_THREAD(associated_thread_->thread_checker);
   impl_->SetObserver(nullptr);
-  impl_->sequence_manager()->ShutdownTaskQueueGracefully(TakeTaskQueueImpl());
+
+  auto* impl_ptr = impl_.get();
+  impl_ptr->sequence_manager()->ShutdownTaskQueueGracefully(TakeTaskQueueImpl());
+  CR_DCHECK(impl_ == nullptr);
 }
 
 TaskQueue::TaskTiming::TaskTiming(bool has_wall_time, bool has_thread_time)
