@@ -4,6 +4,7 @@
 
 #include "cr_base/logging/logging.h"
 #include "cr_base/at_exit.h"
+#include "cr_base/net/ip_address.h"
 
 #include "cr_event/task/single_thread_task_executor.h"
 #include "cr_event/task/sequenced_task_runner_handle.h"
@@ -39,6 +40,10 @@ int main(int argc, char* argv) {
   cr::SequencedTaskRunnerHandle::Get()->PostTask(CR_FROM_HERE, cr::BindOnce([]{
     CR_LOG(Info) << "init..";
   }));
+
+  cr::net::IPAddress ip_address;
+  ip_address.AssignFromIPLiteral("2001:0db8:85a3:0000:0000:8a2e:0370:7334");
+  CR_LOG(Info) << "ip_address=" << ip_address.ToString();
 
   cr::RunLoop run_loop;
   run_loop.Run(CR_FROM_HERE);

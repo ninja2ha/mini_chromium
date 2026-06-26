@@ -215,6 +215,11 @@
     <ClCompile Include="..\..\..\src\cr_base\memory\ptr_util.cc" />
     <ClCompile Include="..\..\..\src\cr_base\memory\ref_counted.cc" />
     <ClCompile Include="..\..\..\src\cr_base\memory\weak_ptr.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\net\address_family.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\net\internal\ip_number_conversion.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\net\internal\parse_number.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\net\ip_address.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\net\ip_endpoint.cc" />
     <ClCompile Include="..\..\..\src\cr_base\process\kill.cc" />
     <ClCompile Include="..\..\..\src\cr_base\process\posix\process_handle_posix.cc">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -377,6 +382,11 @@
     <ClInclude Include="..\..\..\src\cr_base\memory\ref_ptr.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\singleton.h" />
     <ClInclude Include="..\..\..\src\cr_base\memory\weak_ptr.h" />
+    <ClInclude Include="..\..\..\src\cr_base\net\address_family.h" />
+    <ClInclude Include="..\..\..\src\cr_base\net\internal\ip_number_conversion.h" />
+    <ClInclude Include="..\..\..\src\cr_base\net\internal\parse_number.h" />
+    <ClInclude Include="..\..\..\src\cr_base\net\ip_address.h" />
+    <ClInclude Include="..\..\..\src\cr_base\net\ip_endpoint.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\bits.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\checked_math.h" />
     <ClInclude Include="..\..\..\src\cr_base\numerics\clamped_math.h" />

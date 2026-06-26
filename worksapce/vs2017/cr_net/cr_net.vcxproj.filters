@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="network">
+      <UniqueIdentifier>{86a15b8c-65d0-4fce-a389-273365320ce6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="network\win">
+      <UniqueIdentifier>{e7feedef-3ee0-4b6b-898f-e89a25059896}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="base">
+      <UniqueIdentifier>{6908cb2d-f20e-4e38-865d-a3b9e6d5fbda}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_net\network\network_activity_monitor.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\network_change_notifier.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\network_interfaces.cc">
+      <Filter>network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.cc">
+      <Filter>network\win</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\network\win\network_interfaces_win.cc">
+      <Filter>network\win</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_activity_monitor.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier_factory.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\network_interfaces.h">
+      <Filter>network</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.h">
+      <Filter>network\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\network\win\network_interfaces_win.h">
+      <Filter>network\win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\net_export.h">
+      <Filter>base</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>

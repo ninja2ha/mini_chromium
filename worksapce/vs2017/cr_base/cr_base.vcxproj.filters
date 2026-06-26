@@ -289,6 +289,21 @@
     <ClCompile Include="..\..\..\src\cr_base\threading\win\thread_tick_win.cc">
       <Filter>threading\win</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\net\ip_address.cc">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\net\internal\parse_number.cc">
+      <Filter>net\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\net\internal\ip_number_conversion.cc">
+      <Filter>net\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\net\ip_endpoint.cc">
+      <Filter>net</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\net\address_family.cc">
+      <Filter>net</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -422,6 +437,9 @@
     </Filter>
     <Filter Include="win\internal">
       <UniqueIdentifier>{c2dfa334-bd42-4073-ae80-2c28e5634ccf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="net\internal">
+      <UniqueIdentifier>{92f61ce0-a980-4efe-9b5e-0b1d8f0681af}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -805,6 +823,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\threading\thread_tick.h">
       <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\net\ip_address.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\net\internal\parse_number.h">
+      <Filter>net\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\net\internal\ip_number_conversion.h">
+      <Filter>net\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\net\ip_endpoint.h">
+      <Filter>net</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\net\address_family.h">
+      <Filter>net</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
