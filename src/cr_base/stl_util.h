@@ -132,6 +132,18 @@ constexpr const T* data(const std::array<T, N>& array) noexcept {
 
 ////////////////////////////////////////////////////////////////////////////////
 
+// C++14 implementation of C++17's std::as_const():
+// https://en.cppreference.com/w/cpp/utility/as_const
+template <typename T>
+constexpr std::add_const_t<T>& as_const(T& t) noexcept {
+  return t;
+}
+
+template <typename T>
+void as_const(const T&& t) = delete;
+
+////////////////////////////////////////////////////////////////////////////////
+
 // General purpose implementation to check if |container| contains |value|.
 template <typename Container,
           typename Value,
@@ -179,18 +191,6 @@ template <
 bool contains(const Container& container, const Value& value) {
   return container.contains(value);
 }
-
-////////////////////////////////////////////////////////////////////////////////
-
-// C++14 implementation of C++17's std::as_const():
-// https://en.cppreference.com/w/cpp/utility/as_const
-template <typename T>
-constexpr std::add_const_t<T>& as_const(T& t) noexcept {
-  return t;
-}
-
-template <typename T>
-void as_const(const T&& t) = delete;
 
 ////////////////////////////////////////////////////////////////////////////////
 

@@ -304,6 +304,8 @@
     <ClCompile Include="..\..\..\src\cr_base\net\address_family.cc">
       <Filter>net</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\values.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\value_iterators.cc" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -486,9 +488,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\memory\ptr_util.h">
       <Filter>memory</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\cr_base\containers\checked_iterators.h">
-      <Filter>containers\internal</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\contiguous_iterator.h">
       <Filter>containers\internal</Filter>
@@ -839,5 +838,19 @@
     <ClInclude Include="..\..\..\src\cr_base\net\address_family.h">
       <Filter>net</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\values.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\checked_range.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\checked_iterators.h">
+      <Filter>containers\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\flat_tree.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\containers\flat_map.h">
+      <Filter>containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\value_iterators.h" />
   </ItemGroup>
 </Project>

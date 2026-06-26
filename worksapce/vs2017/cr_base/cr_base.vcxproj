@@ -313,6 +313,8 @@
     <ClCompile Include="..\..\..\src\cr_base\token\token.cc" />
     <ClCompile Include="..\..\..\src\cr_base\token\unguessable_token.cc" />
     <ClCompile Include="..\..\..\src\cr_base\util\scoped_clear_last_error.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\values.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\value_iterators.cc" />
     <ClCompile Include="..\..\..\src\cr_base\version.cc" />
     <ClCompile Include="..\..\..\src\cr_base\win\internal\scoped_process_information.cc" />
     <ClCompile Include="..\..\..\src\cr_base\win\internal\startup_information.cc" />
@@ -340,8 +342,11 @@
     <ClInclude Include="..\..\..\src\cr_base\command_line.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_config.h" />
     <ClInclude Include="..\..\..\src\cr_base\compiler_specific.h" />
-    <ClInclude Include="..\..\..\src\cr_base\containers\checked_iterators.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\circular_deque.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\flat_map.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\flat_tree.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\checked_iterators.h" />
+    <ClInclude Include="..\..\..\src\cr_base\containers\internal\checked_range.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\contiguous_iterator.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\internal\vector_buffer.h" />
     <ClInclude Include="..\..\..\src\cr_base\containers\optional.h" />
@@ -456,6 +461,8 @@
     <ClInclude Include="..\..\..\src\cr_base\util\eintr_wrapper.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_clear_last_error.h" />
     <ClInclude Include="..\..\..\src\cr_base\util\scoped_generic.h" />
+    <ClInclude Include="..\..\..\src\cr_base\values.h" />
+    <ClInclude Include="..\..\..\src\cr_base\value_iterators.h" />
     <ClInclude Include="..\..\..\src\cr_base\version.h" />
     <ClInclude Include="..\..\..\src\cr_base\win\internal\scoped_process_information.h" />
     <ClInclude Include="..\..\..\src\cr_base\win\internal\startup_information.h" />

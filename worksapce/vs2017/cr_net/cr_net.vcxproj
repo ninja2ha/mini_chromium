@@ -155,20 +155,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\cr_net\network\network_activity_monitor.cc" />
-    <ClCompile Include="..\..\..\src\cr_net\network\network_change_notifier.cc" />
-    <ClCompile Include="..\..\..\src\cr_net\network\network_interfaces.cc" />
-    <ClCompile Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.cc" />
-    <ClCompile Include="..\..\..\src\cr_net\network\win\network_interfaces_win.cc" />
-  </ItemGroup>
-  <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_net\base\net_export.h" />
-    <ClInclude Include="..\..\..\src\cr_net\network\network_activity_monitor.h" />
-    <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier.h" />
-    <ClInclude Include="..\..\..\src\cr_net\network\network_change_notifier_factory.h" />
-    <ClInclude Include="..\..\..\src\cr_net\network\network_interfaces.h" />
-    <ClInclude Include="..\..\..\src\cr_net\network\win\network_change_notifier_win.h" />
-    <ClInclude Include="..\..\..\src\cr_net\network\win\network_interfaces_win.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

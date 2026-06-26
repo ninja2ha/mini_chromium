@@ -62,6 +62,14 @@ class CRBASE_EXPORT IPAddressBytes {
   const uint8_t* end() const { return data() + size_; }
   uint8_t* end() { return data() + size_; }
 
+  // Returns the address as a span.
+  constexpr cr::Span<const uint8_t> span() const {
+    return cr::MakeSpan(bytes_).first(size_);
+  }
+  constexpr cr::Span<uint8_t> span() {
+    return cr::MakeSpan(bytes_).first(size_);
+  }
+
   // Returns a reference to the last element.
   uint8_t& back() {
     CR_DCHECK(!empty());
