@@ -155,7 +155,32 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\cr_net\base\address_list.h" />
     <ClInclude Include="..\..\..\src\cr_net\base\net_export.h" />
+    <ClInclude Include="..\..\..\src\cr_net\base\sys_addrinfo.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_config.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_hosts.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_util.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_config_overrides.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_over_https_server_config.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_protocol.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_query_type.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\doh_provider_entry.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\secure_dns_mode.h" />
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\util.h" />
+    <ClInclude Include="..\..\..\src\cr_net\third_party\uri_template\uri_template.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_net\base\address_list.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_config.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_hosts.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_util.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_config_overrides.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_over_https_server_config.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_query_type.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\doh_provider_entry.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\util.cc" />
+    <ClCompile Include="..\..\..\src\cr_net\third_party\uri_template\uri_template.cc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

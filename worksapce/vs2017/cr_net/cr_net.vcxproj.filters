@@ -4,10 +4,93 @@
     <Filter Include="base">
       <UniqueIdentifier>{6908cb2d-f20e-4e38-865d-a3b9e6d5fbda}</UniqueIdentifier>
     </Filter>
+    <Filter Include="dns">
+      <UniqueIdentifier>{8000b2b5-a2dc-4733-855f-60316517eb47}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="dns\public">
+      <UniqueIdentifier>{009c3d1e-4506-44e7-aa31-e6ff5738568f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party">
+      <UniqueIdentifier>{75fe0112-ea70-4d22-b391-09f15b71fc8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="third_party\uri_template">
+      <UniqueIdentifier>{73e8bd69-e3e8-442a-9c5e-9505ca795b31}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_net\base\net_export.h">
       <Filter>base</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_config_overrides.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_over_https_server_config.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\secure_dns_mode.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_config.h">
+      <Filter>dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_hosts.h">
+      <Filter>dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_util.h">
+      <Filter>dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_protocol.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\doh_provider_entry.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\util.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\address_list.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\base\sys_addrinfo.h">
+      <Filter>base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\third_party\uri_template\uri_template.h">
+      <Filter>third_party\uri_template</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_query_type.h">
+      <Filter>dns\public</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_config_overrides.cc">
+      <Filter>dns\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_over_https_server_config.cc">
+      <Filter>dns\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_hosts.cc">
+      <Filter>dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_util.cc">
+      <Filter>dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\doh_provider_entry.cc">
+      <Filter>dns\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\util.cc">
+      <Filter>dns\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\base\address_list.cc">
+      <Filter>base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\third_party\uri_template\uri_template.cc">
+      <Filter>third_party\uri_template</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_query_type.cc">
+      <Filter>dns\public</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_config.cc">
+      <Filter>dns</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
