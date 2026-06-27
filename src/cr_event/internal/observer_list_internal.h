@@ -11,14 +11,13 @@
 #include "cr_base/memory/weak_ptr.h"
 
 #include "cr_event/containers/linked_list.h"
+#include "cr_event/observer_list_types.h"
 
 ///#if DCHECK_IS_ON()
 ///#include "base/debug/stack_trace.h"
 ///#endif
 
 namespace cr {
-
-class CheckedObserver;
 
 namespace internal {
 

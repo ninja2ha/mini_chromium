@@ -156,9 +156,6 @@
     <ClCompile Include="..\..\..\src\cr_base\files\file.cc">
       <Filter>files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\cr_base\win\scoped_handle.cc">
-      <Filter>win</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\location.cc" />
     <ClCompile Include="..\..\..\src\cr_base\files\scoped_file.cc">
       <Filter>files</Filter>
@@ -306,6 +303,27 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_base\values.cc" />
     <ClCompile Include="..\..\..\src\cr_base\value_iterators.cc" />
+    <ClCompile Include="..\..\..\src\cr_base\json\internal\json_parser.cc">
+      <Filter>json\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\json\json_reader.cc">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\json\internal\string_escape.cc">
+      <Filter>json\internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\json\json_writer.cc">
+      <Filter>json</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\com\scoped_bstr.cc">
+      <Filter>win\com</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\com\scoped_variant.cc">
+      <Filter>win\com</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_base\win\scoped_handle.cc">
+      <Filter>win</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="containers">
@@ -442,6 +460,15 @@
     </Filter>
     <Filter Include="net\internal">
       <UniqueIdentifier>{92f61ce0-a980-4efe-9b5e-0b1d8f0681af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json">
+      <UniqueIdentifier>{bd40a798-15ad-498b-9231-55acfadf2366}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="json\internal">
+      <UniqueIdentifier>{a2048faf-0970-4cfa-918e-a2233adf56ca}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="win\com">
+      <UniqueIdentifier>{7d6166d4-97cb-49e9-84fb-889c374a0cc2}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -716,9 +743,6 @@
     <ClInclude Include="..\..\..\src\cr_base\files\file.h">
       <Filter>files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\cr_base\win\scoped_handle.h">
-      <Filter>win</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\location.h" />
     <ClInclude Include="..\..\..\src\cr_base\files\platform_file.h">
       <Filter>files</Filter>
@@ -852,5 +876,44 @@
       <Filter>containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_base\value_iterators.h" />
+    <ClInclude Include="..\..\..\src\cr_base\json\internal\json_common.h">
+      <Filter>json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\json\internal\json_parser.h">
+      <Filter>json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\json\json_reader.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\json\internal\string_escape.h">
+      <Filter>json\internal</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\json\json_writer.h">
+      <Filter>json</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\com\scoped_bstr.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\com\scoped_co_mem.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\com\scoped_com_initializer.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\com\scoped_comptr.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\com\scoped_propvariant.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\com\scoped_variant.h">
+      <Filter>win\com</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\scoped_handle.h">
+      <Filter>win</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_base\win\windows_full.h">
+      <Filter>win</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

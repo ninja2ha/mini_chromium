@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// * VERSION: 81.0.4044.156
+
 #include "cr_base/json/internal/json_parser.h"
 
 #include <cmath>
@@ -9,7 +11,7 @@
 #include <vector>
 
 #include "cr_base/logging/logging.h"
-///#include "cr_base/json/json_reader.h"
+#include "cr_base/json/json_reader.h"
 #include "cr_base/numerics/safe_conversions.h"
 #include "cr_base/strings/string_number_conversions.h"
 #include "cr_base/strings/string_piece.h"
@@ -419,7 +421,8 @@ Optional<Value> JSONParser::ConsumeDictionary() {
       return nullopt;
     }
 
-    dict_storage.emplace_back(key.DestructiveAsString(), std::move(*value));
+    dict_storage.emplace_back(key.DestructiveAsString(), 
+                              std::make_unique<Value>(std::move(*value)));
 
     token = GetNextToken();
     if (token == T_LIST_SEPARATOR) {
@@ -438,7 +441,7 @@ Optional<Value> JSONParser::ConsumeDictionary() {
   ConsumeChar();  // Closing '}'.
   // Reverse |dict_storage| to keep the last of elements with the same key in
   // the input.
-  ranges::reverse(dict_storage);
+  std::reverse(dict_storage.begin(), dict_storage.end());
   return Value(Value::DictStorage(std::move(dict_storage)));
 }
 
@@ -503,12 +506,16 @@ bool JSONParser::ConsumeStringRaw(StringBuilder* out) {
   // std::string.
   StringBuilder string(pos());
 
-  while (PeekChar()) {
+  while (cr::Optional<char> c = PeekChar()) {
     uint32_t next_char = 0;
-    if (!ReadUnicodeCharacter(input_.data(),
-                              static_cast<int32_t>(input_.length()), &index_,
-                              &next_char) ||
-        !IsValidCodepoint(next_char)) {
+    if (static_cast<unsigned char>(*c) < kExtendedASCIIStart) {
+      // Fast path for ASCII.
+      next_char = *c;
+    } else if (!ReadUnicodeCharacter(input_.data(),
+                                     input_.length(), 
+                                     &index_,
+                                     &next_char) ||
+               !IsValidCodepoint(next_char)) {
       if ((options_ & JSON_REPLACE_INVALID_CHARACTERS) == 0) {
         ReportError(JSON_UNSUPPORTED_ENCODING, 0);
         return false;
@@ -685,8 +692,8 @@ bool JSONParser::DecodeUTF16(uint32_t* out_code_point) {
 
 Optional<Value> JSONParser::ConsumeNumber() {
   const char* num_start = pos();
-  const int start_index = index_;
-  int end_index = start_index;
+  const size_t start_index = index_;
+  size_t end_index = start_index;
 
   if (PeekChar() == '-')
     ConsumeChar();
@@ -725,7 +732,7 @@ Optional<Value> JSONParser::ConsumeNumber() {
   // so save off where the parser should be on exit (see Consume invariant at
   // the top of the header), then make sure the next token is one which is
   // valid.
-  int exit_index = index_;
+  size_t exit_index = index_;
 
   switch (GetNextToken()) {
     case T_OBJECT_END:
@@ -801,7 +808,7 @@ bool JSONParser::ConsumeIfMatch(StringPiece match) {
 void JSONParser::ReportError(JsonParseError code, int column_adjust) {
   error_code_ = code;
   error_line_ = line_number_;
-  error_column_ = index_ - index_last_line_ + column_adjust;
+  error_column_ = static_cast<int>(index_ - index_last_line_) + column_adjust;
 
   // For a final blank line ('\n' and then EOF), a negative column_adjust may
   // put us below 1, which doesn't really make sense for 1-based columns.

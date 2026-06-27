@@ -1,6 +1,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// * VERSION: 81.0.4044.156
+
 #include "cr_base/json/internal/string_escape.h"
 
 #include <stddef.h>
@@ -84,12 +86,9 @@ bool EscapeJSONStringImpl(const S& str, bool put_in_quotes, std::string* dest) {
   if (put_in_quotes)
     dest->push_back('"');
 
-  // Casting is necessary because ICU uses int32_t. Try and do so safely.
-  CR_CHECK(str.length() <=
-           static_cast<size_t>(std::numeric_limits<int32_t>::max()));
-  const int32_t length = static_cast<int32_t>(str.length());
 
-  for (int32_t i = 0; i < length; ++i) {
+  const size_t length = str.length();
+  for (size_t i = 0; i < length; ++i) {
     uint32_t code_point;
     if (!ReadUnicodeCharacter(str.data(), length, &i, &code_point) ||
         code_point == static_cast<decltype(code_point)>(CBU_SENTINEL) ||
@@ -103,7 +102,7 @@ bool EscapeJSONStringImpl(const S& str, bool put_in_quotes, std::string* dest) {
 
     // Escape non-printing characters.
     if (code_point < 32)
-      base::StringAppendF(dest, kU16EscapeFormat, code_point);
+      cr::StringAppendF(dest, kU16EscapeFormat, code_point);
     else
       WriteUnicodeCharacter(code_point, dest);
   }

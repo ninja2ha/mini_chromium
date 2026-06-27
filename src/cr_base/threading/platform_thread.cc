@@ -6,6 +6,17 @@
 
 #include <memory>
 
+#include "cr_base/time/time.h"
+
 namespace cr {
+
+// static
+void PlatformThread::SetCurrentThreadPriority(ThreadPriority priority) {
+    SetCurrentThreadPriorityImpl(priority);
+}
+
+TimeDelta PlatformThread::Delegate::GetRealtimePeriod() {
+  return TimeDelta();
+}
 
 }  // namespace cr

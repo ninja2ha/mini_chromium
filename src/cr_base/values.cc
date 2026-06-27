@@ -14,7 +14,7 @@
 
 #include "cr_base/logging/logging.h"
 #include "cr_base/bit_cast.h"
-///#include "cr_base/json/json_writer.h"
+#include "cr_base/json/json_writer.h"
 #include "cr_base/memory/ptr_util.h"
 #include "cr_base/stl_util.h"
 #include "cr_base/strings/string_util.h"
@@ -1060,11 +1060,15 @@ void DictionaryValue::Swap(DictionaryValue* other) {
 
 // static
 std::unique_ptr<ListValue> ListValue::From(std::unique_ptr<Value> value) {
-///  ListValue* out;
-///  if (value && value->GetAsList(&out)) {
-///    CR_IGNORE_RESULT(value.release());
-///    return WrapUnique(out);
-///  }
+  ListValue* out = nullptr;
+  if (value && value->is_list()) {
+    out = static_cast<ListValue*>(value.get());
+  }
+
+  if (out) {
+    CR_IGNORE_RESULT(value.release());
+    return WrapUnique(out);
+  }
   return nullptr;
 }
 
@@ -1075,14 +1079,16 @@ ListValue::ListValue(ListStorage&& in_list) noexcept
 
 bool ListValue::GetDictionary(size_t index,
                               const DictionaryValue** out_value) const {
-///  const Value* value;
-///  bool result = Get(index, &value);
-///  if (!result || !value->is_dict())
-///    return false;
-///
-///  if (out_value)
-///    *out_value = static_cast<const DictionaryValue*>(value);
-///
+  if (index >= GetList().size())
+    return false;
+
+  const Value* value = &GetList()[index];
+  if (!value->is_dict())
+    return false;
+
+  if (out_value)
+    *out_value = static_cast<const DictionaryValue*>(value);
+
   return true;
 }
 
@@ -1095,11 +1101,11 @@ ValueSerializer::~ValueSerializer() = default;
 
 ValueDeserializer::~ValueDeserializer() = default;
 
-///std::ostream& operator<<(std::ostream& out, const Value& value) {
-///  std::string json;
-///  JSONWriter::WriteWithOptions(value, JSONWriter::OPTIONS_PRETTY_PRINT, &json);
-///  return out << json;
-///}
+std::ostream& operator<<(std::ostream& out, const Value& value) {
+  std::string json;
+  JSONWriter::WriteWithOptions(value, JSONWriter::OPTIONS_PRETTY_PRINT, &json);
+  return out << json;
+}
 
 std::ostream& operator<<(std::ostream& out, const Value::Type& type) {
   if (static_cast<int>(type) < 0 ||

@@ -132,13 +132,13 @@ class VectorBuffer {
   static void MoveRange(T* from_begin, T* from_end, T* to) {
     CR_CHECK(!RangesOverlap(from_begin, from_end, to))
         // TODO(crbug.com/1172816): Remove logging once root cause is found.
-        << std::hex << "from_begin: 0x" << get_uintptr(from_begin)
-        << ", from_end: 0x" << get_uintptr(from_end) << ", to: 0x"
-        << get_uintptr(to);
+        << std::hex << "from_begin: 0x" << AsUIntPtr(from_begin)
+        << ", from_end: 0x" << AsUIntPtr(from_end) << ", to: 0x"
+        << AsUIntPtr(to);
 
     memcpy(
         to, from_begin,
-        CheckSub(get_uintptr(from_end), get_uintptr(from_begin)).ValueOrDie());
+        CheckSub(AsUIntPtr(from_end), AsUIntPtr(from_begin)).ValueOrDie());
   }
 
   // Not trivially copyable, but movable: call the move constructor and

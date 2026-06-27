@@ -163,6 +163,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_event\containers\intrusive_heap.cc" />
     <ClCompile Include="..\..\..\src\cr_event\containers\linked_list.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\internal\observer_list_internal.cc" />
     <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump.cc" />
     <ClCompile Include="..\..\..\src\cr_event\message_pump\message_pump_default.cc" />
     <ClCompile Include="..\..\..\src\cr_event\message_pump\posix\message_pump_epoll.cc">
@@ -221,7 +222,10 @@
     <ClCompile Include="..\..\..\src\cr_event\task\task_traits.cc" />
     <ClCompile Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.cc" />
     <ClCompile Include="..\..\..\src\cr_event\threading\sequence_local_storage_slot.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\simple_thread.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread.cc" />
     <ClCompile Include="..\..\..\src\cr_event\threading\thread_checker_impl.cc" />
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread_id_name_manager.cc" />
     <ClCompile Include="..\..\..\src\cr_event\threading\thread_task_runner_handle.cc" />
     <ClCompile Include="..\..\..\src\cr_event\timer\timer.cc" />
     <ClCompile Include="..\..\..\src\cr_event\time\clock.cc" />
@@ -312,8 +316,11 @@
     <ClInclude Include="..\..\..\src\cr_event\task\task_traits_extension.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_map.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\sequence_local_storage_slot.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\simple_thread.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\thread_checker.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\thread_checker_impl.h" />
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_id_name_manager.h" />
     <ClInclude Include="..\..\..\src\cr_event\threading\thread_task_runner_handle.h" />
     <ClInclude Include="..\..\..\src\cr_event\timer\timer.h" />
     <ClInclude Include="..\..\..\src\cr_event\time\clock.h" />

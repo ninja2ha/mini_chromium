@@ -10,9 +10,9 @@
 namespace cr {
 namespace debug {
 
-void ImmediateCrashBecauseOutofMemory(size_t size) {
-  size_t tmp_size = size;
-  cr::debug::Alias(&tmp_size);
+void ImmediateCrashWithReason(const char* reason, size_t i) {
+  cr::debug::Alias(&reason);
+  cr::debug::Alias(&i);
 
   // Note: Don't add anything that may allocate here. Depending on the
   // allocator, this may be called from within the allocator (e.g. with

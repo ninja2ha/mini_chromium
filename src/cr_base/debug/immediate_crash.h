@@ -6,9 +6,12 @@
 #ifndef MINI_CHROMIUM_SRC_CRBASE_DEBUG_IMMEDIATE_CRASH_H_
 #define MINI_CHROMIUM_SRC_CRBASE_DEBUG_IMMEDIATE_CRASH_H_
 
+#include <stdint.h>
+
 #include <cstddef>
 
 #include "cr_base/compiler_config.h"
+#include "cr_base/base_export.h"
 
 ////////////////////////////////////////////////////////////////////////////////
 
@@ -154,6 +157,8 @@ IMMEDIATE_CRASH_ALWAYS_INLINE void ImmediateCrash() {
   __builtin_unreachable();
 #endif  // defined(MINI_CHROMIUM_COMPILER_GCC) || defined(__clang__)
 }
+
+CRBASE_EXPORT void ImmediateCrashWithReason(const char* reason, size_t i);
 
 }  // namespace debug
 }  // namespace cr

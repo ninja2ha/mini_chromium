@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// * VERSION: 81.0.4044.156
+
 #ifndef MINI_CHROMIUM_SRC_CRBASE_JSON_JSON_WRITER_H_
 #define MINI_CHROMIUM_SRC_CRBASE_JSON_JSON_WRITER_H_
 

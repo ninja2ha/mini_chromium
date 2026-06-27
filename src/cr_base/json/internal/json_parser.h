@@ -2,6 +2,8 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
+// * VERSION: 81.0.4044.156
+
 #ifndef MINI_CHROMIUM_SRC_CRBASE_JSON_INTERNAL_JSON_PARSER_H_
 #define MINI_CHROMIUM_SRC_CRBASE_JSON_INTERNAL_JSON_PARSER_H_
 
@@ -149,7 +151,7 @@ class CRBASE_EXPORT JSONParser {
 
     // The copied string representation. Will be unset until Convert() is
     // called.
-    base::Optional<std::string> string_;
+    cr::Optional<std::string> string_;
   };
 
   // Returns the next |count| bytes of the input stream, or nullopt if fewer
@@ -246,7 +248,7 @@ class CRBASE_EXPORT JSONParser {
   StringPiece input_;
 
   // The index in the input stream to which the parser is wound.
-  int index_;
+  size_t index_;
 
   // The number of times the parser has recursed (current stack depth).
   size_t stack_depth_;
@@ -255,7 +257,7 @@ class CRBASE_EXPORT JSONParser {
   int line_number_;
 
   // The last value of |index_| on the previous line.
-  int index_last_line_;
+  size_t index_last_line_;
 
   // Error information.
   JsonParseError error_code_;

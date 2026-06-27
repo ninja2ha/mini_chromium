@@ -4,6 +4,9 @@
 
 #include "cr_base/logging/logging.h"
 #include "cr_base/at_exit.h"
+#include "cr_base/json/json_writer.h"
+#include "cr_base/json/json_reader.h"
+#include "cr_base/values.h"
 
 #include "cr_event/task/single_thread_task_executor.h"
 #include "cr_event/task/sequenced_task_runner_handle.h"
@@ -50,20 +53,17 @@ int main(int argc, char* argv) {
   }), cr::TimeDelta::FromSeconds(1));
 
   // timer
-  cr::RepeatingTimer timer;
-  timer.Start(CR_FROM_HERE, cr::TimeDelta::FromSeconds(1),
-    cr::BindRepeating([](cr::RepeatingTimer* this_timer, 
-                         cr::RepeatingClosure quit_closure) {
-      static int ticks = 10;
-      if (ticks-- <= 0) {
-        this_timer->Stop();
-        cr::SequencedTaskRunnerHandle::Get()->PostTask(
-            CR_FROM_HERE, quit_closure);
-        CR_LOG(Info) << "message loop exited.";
-      } else {
-        CR_LOG(Info) << "timer callback. ticks=" << ticks;
-      }
-    }, &timer, run_loop.QuitWhenIdleClosure()));
+  std::string output;
+  cr::DictionaryValue dict_value;
+  dict_value.SetStringKey("a", "123456");
+  dict_value.SetIntKey("b", 1);
+  cr::JSONWriter::Write(dict_value, &output);
+  CR_LOG(Info) << output;
+
+  cr::Optional<cr::Value> v = cr::JSONReader::Read(output);
+  const std::string* a = v->FindStringKey("a");
+  cr::Optional<int> b = v->FindIntKey("a");
+  CR_LOG(Info) << *a << ", " << b.value_or(0);
 
   run_loop.Run(CR_FROM_HERE);
   return 0;

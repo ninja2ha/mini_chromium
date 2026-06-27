@@ -192,6 +192,18 @@
     <ClCompile Include="..\..\..\src\cr_event\timer\timer.cc">
       <Filter>timer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\thread_id_name_manager.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\internal\observer_list_internal.cc">
+      <Filter>internal</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_event\threading\simple_thread.cc">
+      <Filter>threading</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\cr_event\task\pending_task.h">
@@ -408,6 +420,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_event\timer\timer.h">
       <Filter>timer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\thread_id_name_manager.h">
+      <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\threading\simple_thread.h">
+      <Filter>threading</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
