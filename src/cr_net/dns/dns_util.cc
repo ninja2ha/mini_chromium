@@ -14,14 +14,14 @@
 
 #include "cr_base/compiler_config.h"
 
-///#include "cr_base/big_endian.h"
+#include "cr_base/byte_order.h"
+#include "cr_base/data_stream/byte_buffer.h"
 #include "cr_base/containers/optional.h"
 #include "cr_base/stl_util.h"
 #include "cr_base/strings/string_number_conversions.h"
 #include "cr_base/strings/string_split.h"
 
 #include "cr_net/base/address_list.h"
-///#include "net/base/url_util.h"
 #include "cr_net/dns/public/dns_protocol.h"
 #include "cr_net/dns/public/doh_provider_entry.h"
 #include "cr_net/dns/public/util.h"
@@ -144,30 +144,30 @@ bool IsValidHostLabelCharacter(char c, bool is_first_char) {
 
 cr::Optional<std::string> DnsDomainToString(cr::StringPiece dns_name,
                                             bool require_complete) {
-  base::BigEndianReader reader(dns_name.data(), dns_name.length());
+  cr::NetByteBufferReader reader(dns_name.data(), dns_name.length());
   return DnsDomainToString(reader, require_complete);
 }
 
-cr::Optional<std::string> DnsDomainToString(cr::BigEndianReader& reader,
+cr::Optional<std::string> DnsDomainToString(cr::NetByteBufferReader& reader,
                                             bool require_complete) {
   std::string ret;
   size_t octets_read = 0;
-  while (reader.remaining() > 0) {
+  while (reader.Length() > 0) {
     // DNS name compression not allowed because it does not make sense without
     // the context of a full DNS message.
-    if ((*reader.ptr() & dns_protocol::kLabelMask) ==
+    if ((*reader.Data() & dns_protocol::kLabelMask) ==
         dns_protocol::kLabelPointer)
-      return base::nullopt;
+      return cr::nullopt;
 
     cr::StringPiece label;
     if (!reader.ReadU8LengthPrefixed(&label))
-      return base::nullopt;
+      return cr::nullopt;
     octets_read += label.size() + 1;
 
     if (label.size() > dns_protocol::kMaxLabelLength)
-      return base::nullopt;
+      return cr::nullopt;
     if (octets_read > dns_protocol::kMaxNameLength)
-      return base::nullopt;
+      return cr::nullopt;
 
     if (label.size() == 0)
       return ret;
@@ -179,7 +179,7 @@ cr::Optional<std::string> DnsDomainToString(cr::BigEndianReader& reader,
   }
 
   if (require_complete)
-    return base::nullopt;
+    return cr::nullopt;
 
   // If terminating zero-length label was not included in the input, it still
   // counts against the max name length.
@@ -196,40 +196,40 @@ std::string GetURLFromTemplateWithoutParameters(const string& server_template) {
   return url_string;
 }
 
-namespace {
-
-bool GetTimeDeltaForConnectionTypeFromFieldTrial(
-    const char* field_trial,
-    NetworkChangeNotifier::ConnectionType type,
-    cr::TimeDelta* out) {
-  std::string group = cr::FieldTrialList::FindFullName(field_trial);
-  if (group.empty())
-    return false;
-  std::vector<base::StringPiece> group_parts = base::SplitStringPiece(
-      group, ":", base::TRIM_WHITESPACE, base::SPLIT_WANT_ALL);
-  if (type < 0)
-    return false;
-  size_t type_size = static_cast<size_t>(type);
-  if (type_size >= group_parts.size())
-    return false;
-  int64_t ms;
-  if (!base::StringToInt64(group_parts[type_size], &ms))
-    return false;
-  *out = base::TimeDelta::FromMilliseconds(ms);
-  return true;
-}
-
-}  // namespace
-
-base::TimeDelta GetTimeDeltaForConnectionTypeFromFieldTrialOrDefault(
-    const char* field_trial,
-    base::TimeDelta default_delta,
-    NetworkChangeNotifier::ConnectionType type) {
-  base::TimeDelta out;
-  if (!GetTimeDeltaForConnectionTypeFromFieldTrial(field_trial, type, &out))
-    out = default_delta;
-  return out;
-}
+///namespace {
+///
+///bool GetTimeDeltaForConnectionTypeFromFieldTrial(
+///    const char* field_trial,
+///    NetworkChangeNotifier::ConnectionType type,
+///    cr::TimeDelta* out) {
+///  std::string group = cr::FieldTrialList::FindFullName(field_trial);
+///  if (group.empty())
+///    return false;
+///  std::vector<cr::StringPiece> group_parts = cr::SplitStringPiece(
+///      group, ":", cr::TRIM_WHITESPACE, cr::SPLIT_WANT_ALL);
+///  if (type < 0)
+///    return false;
+///  size_t type_size = static_cast<size_t>(type);
+///  if (type_size >= group_parts.size())
+///    return false;
+///  int64_t ms;
+///  if (!cr::StringToInt64(group_parts[type_size], &ms))
+///    return false;
+///  *out = cr::TimeDelta::FromMilliseconds(ms);
+///  return true;
+///}
+///
+///}  // namespace
+///
+///cr::TimeDelta GetTimeDeltaForConnectionTypeFromFieldTrialOrDefault(
+///    const char* field_trial,
+///    cr::TimeDelta default_delta,
+///    NetworkChangeNotifier::ConnectionType type) {
+///  cr::TimeDelta out;
+///  if (!GetTimeDeltaForConnectionTypeFromFieldTrial(field_trial, type, &out))
+///    out = default_delta;
+///  return out;
+///}
 
 AddressListDeltaType FindAddressListDeltaType(const AddressList& a,
                                               const AddressList& b) {
@@ -274,7 +274,7 @@ AddressListDeltaType FindAddressListDeltaType(const AddressList& a,
 std::string CreateNamePointer(uint16_t offset) {
   CR_DCHECK((offset & ~dns_protocol::kOffsetMask) == 0);
   char buf[2];
-  base::WriteBigEndian(buf, offset);
+  cr::SetBE16(buf, offset);
   buf[0] |= dns_protocol::kLabelPointer;
   return std::string(buf, sizeof(buf));
 }
@@ -282,7 +282,7 @@ std::string CreateNamePointer(uint16_t offset) {
 uint16_t DnsQueryTypeToQtype(DnsQueryType dns_query_type) {
   switch (dns_query_type) {
     case DnsQueryType::UNSPECIFIED:
-      NOTREACHED();
+      CR_NOTREACHED();
       return 0;
     case DnsQueryType::A:
       return dns_protocol::kTypeA;
@@ -299,6 +299,9 @@ uint16_t DnsQueryTypeToQtype(DnsQueryType dns_query_type) {
     case DnsQueryType::HTTPS:
       return dns_protocol::kTypeHttps;
   }
+
+  CR_NOTREACHED();
+  return 0;
 }
 
 DnsQueryType AddressFamilyToDnsQueryType(AddressFamily address_family) {
@@ -310,7 +313,7 @@ DnsQueryType AddressFamilyToDnsQueryType(AddressFamily address_family) {
     case ADDRESS_FAMILY_IPV6:
       return DnsQueryType::AAAA;
     default:
-      NOTREACHED();
+      CR_NOTREACHED();
       return DnsQueryType::UNSPECIFIED;
   }
 }
@@ -324,13 +327,13 @@ std::vector<DnsOverHttpsServerConfig> GetDohUpgradeServersFromDotHostname(
     return doh_servers;
 
   for (const auto* entry : DohProviderEntry::GetList()) {
-    if (base::Contains(excluded_providers, entry->provider))
+    if (cr::contains(excluded_providers, entry->provider))
       continue;
 
-    if (base::Contains(entry->dns_over_tls_hostnames, dot_server)) {
+    if (cr::contains(entry->dns_over_tls_hostnames, dot_server)) {
       std::string server_method;
-      CHECK(dns_util::IsValidDohTemplate(entry->dns_over_https_template,
-                                         &server_method));
+      CR_CHECK(dns_util::IsValidDohTemplate(entry->dns_over_https_template,
+                                            &server_method));
       doh_servers.emplace_back(entry->dns_over_https_template,
                                server_method == "POST");
     }
@@ -348,7 +351,7 @@ std::vector<DnsOverHttpsServerConfig> GetDohUpgradeServersFromNameservers(
   std::transform(entries.begin(), entries.end(),
                  std::back_inserter(doh_servers), [](const auto* entry) {
                    std::string server_method;
-                   CHECK(dns_util::IsValidDohTemplate(
+                   CR_CHECK(dns_util::IsValidDohTemplate(
                        entry->dns_over_https_template, &server_method));
                    return DnsOverHttpsServerConfig(
                        entry->dns_over_https_template, server_method == "POST");
@@ -381,6 +384,9 @@ std::string SecureDnsModeToString(const SecureDnsMode secure_dns_mode) {
     case SecureDnsMode::kSecure:
       return "Secure";
   }
+
+  CR_NOTREACHED();
+  return "";
 }
 
 }  // namespace net

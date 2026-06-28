@@ -49,23 +49,23 @@ class CRBASE_EXPORT ByteBufferWriter : public ByteBuffer {
     Construct(nullptr, kDefaultCapacity);
   }
 
-  ByteBufferWriter(const char* bytes, size_t len, ByteOrder byte_order)
+  ByteBufferWriter(const void* data, size_t data_len, ByteOrder byte_order)
       : ByteBuffer(byte_order) {
-    Construct(bytes, len);
+    Construct(data, data_len);
   }
 
-  const char* Data() const { return buffer_.data(); }
+  const uint8_t* Data() const { return buffer_.data(); }
   size_t Length() const { return buffer_.size(); }
   size_t Capacity() const { return buffer_.capacity(); }
 
   // Write value to the buffer. Resizes the buffer when it is
   // neccessary.
   void WriteUInt8(uint8_t val) {
-    WriteBytes(reinterpret_cast<const char*>(&val), 1);
+    WriteBytes(&val, 1);
   }
   void WriteUInt16(uint16_t val) {
     uint16_t v = (Order() == ORDER_NETWORK) ? cr::HostToNet16(val) : val;
-    WriteBytes(reinterpret_cast<const char*>(&v), 2);
+    WriteBytes(&v, 2);
   }
   void WriteUInt24(uint32_t val) {
     uint32_t v = (Order() == ORDER_NETWORK) ? cr::HostToNet32(val) : val;
@@ -77,11 +77,11 @@ class CRBASE_EXPORT ByteBufferWriter : public ByteBuffer {
   }
   void WriteUInt32(uint32_t val) {
     uint32_t v = (Order() == ORDER_NETWORK) ? cr::HostToNet32(val) : val;
-    WriteBytes(reinterpret_cast<const char*>(&v), 4);
+    WriteBytes(&v, 4);
   }
   void WriteUInt64(uint64_t val) {
     uint64_t v = (Order() == ORDER_NETWORK) ? cr::HostToNet64(val) : val;
-    WriteBytes(reinterpret_cast<const char*>(&v), 8);
+    WriteBytes(&v, 8);
   }
 
   // Serializes an unsigned varint in the format described by
@@ -103,12 +103,14 @@ class CRBASE_EXPORT ByteBufferWriter : public ByteBuffer {
     WriteBytes(val.data(), val.size());
   }
 
-  void WriteBytes(const char* val, size_t len) { buffer_.AppendData(val, len); }
+  void WriteBytes(const void* data, size_t data_len) {
+    buffer_.AppendData(static_cast<const uint8_t*>(data), data_len);
+  }
 
   // Reserves the given number of bytes and returns a char* that can be written
   // into. Useful for functions that require a char* buffer and not a
   // ByteBufferWriter.
-  char* ReserveWriteBuffer(size_t len) {
+  uint8_t* ReserveWriteBuffer(size_t len) {
     buffer_.SetSize(buffer_.size() + len);
     return buffer_.data();
   }
@@ -122,15 +124,15 @@ class CRBASE_EXPORT ByteBufferWriter : public ByteBuffer {
  private:
   static constexpr size_t kDefaultCapacity = 4096;
 
-  void Construct(const char* bytes, size_t size) {
-    if (bytes) {
-      buffer_.AppendData(bytes, size);
+  void Construct(const void* data, size_t data_size) {
+    if (data) {
+      buffer_.AppendData(static_cast<const uint8_t*>(data), data_size);
     } else {
-      buffer_.EnsureCapacity(size);
+      buffer_.EnsureCapacity(data_size);
     }
   }
 
-  BufferT<char> buffer_;
+  BufferT<uint8_t> buffer_;
 };
 
 // The ByteBufferReader references the passed data, i.e. the pointer must be
@@ -140,11 +142,11 @@ class CRBASE_EXPORT ByteBufferReader : public ByteBuffer {
   ByteBufferReader(const ByteBufferReader&) = delete;
   ByteBufferReader& operator=(const ByteBufferReader&) = delete;
 
-  ByteBufferReader(const char* bytes, size_t len, ByteOrder byte_order);
+  ByteBufferReader(const void* bytes, size_t len, ByteOrder byte_order);
   explicit ByteBufferReader(const ByteBufferWriter& buf);
 
   // Returns start of unprocessed data.
-  const char* Data() const { return bytes_ + start_; }
+  const uint8_t* Data() const { return bytes_ + start_; }
   // Returns number of unprocessed bytes.
   size_t Length() const { return end_ - start_; }
 
@@ -156,7 +158,11 @@ class CRBASE_EXPORT ByteBufferReader : public ByteBuffer {
   bool ReadUInt32(uint32_t* val);
   bool ReadUInt64(uint64_t* val);
   bool ReadUVarint(uint64_t* val);
-  bool ReadBytes(char* val, size_t len);
+  bool ReadBytes(void* data, size_t data_len);
+
+  bool ReadU8LengthPrefixed(cr::StringPiece* piece);
+  bool ReadU16LengthPrefixed(cr::StringPiece* piece);
+  bool ReadU32LengthPrefixed(cr::StringPiece* piece);
 
   // Appends next |len| bytes from the buffer to |val|. Returns false
   // if there is less than |len| bytes left.
@@ -169,9 +175,9 @@ class CRBASE_EXPORT ByteBufferReader : public ByteBuffer {
   bool Consume(size_t size);
 
  protected:
-  void Construct(const char* bytes, size_t size);
+  void Construct(const void* bytes, size_t size);
 
-  const char* bytes_;
+  const uint8_t* bytes_;
   size_t size_;
   size_t start_;
   size_t end_;
@@ -186,7 +192,7 @@ class NetByteBufferWriter : public ByteBufferWriter {
 
   NetByteBufferWriter() 
     : ByteBufferWriter(ByteBuffer::ORDER_NETWORK) {}
-  NetByteBufferWriter(const char* bytes, size_t len) 
+  NetByteBufferWriter(const void* bytes, size_t len)
     : ByteBufferWriter(bytes, len, ByteBuffer::ORDER_NETWORK) {}
 };
 
@@ -195,7 +201,7 @@ public:
   NetByteBufferReader(const NetByteBufferReader&) = delete;
   NetByteBufferReader& operator=(const NetByteBufferReader&) = delete;
 
-  NetByteBufferReader(const char* bytes, size_t len) 
+  NetByteBufferReader(const void* bytes, size_t len) 
       : ByteBufferReader(bytes, len, ByteBuffer::ORDER_NETWORK) {}
 };
 
@@ -208,7 +214,7 @@ class HostByteBufferWriter : public ByteBufferWriter {
 
   HostByteBufferWriter() 
     : ByteBufferWriter(ByteBuffer::ORDER_HOST) {}
-  HostByteBufferWriter(const char* bytes, size_t len)
+  HostByteBufferWriter(const void* bytes, size_t len)
     : ByteBufferWriter(bytes, len, ByteBuffer::ORDER_HOST) {}
 };
 
@@ -217,7 +223,7 @@ public:
   HostByteBufferReader(const HostByteBufferReader&) = delete;
   HostByteBufferReader& operator=(const HostByteBufferReader&) = delete;
 
-  HostByteBufferReader(const char* bytes, size_t len)
+  HostByteBufferReader(const void* bytes, size_t len)
       : ByteBufferReader(bytes, len, ByteBuffer::ORDER_HOST) {}
 };
 

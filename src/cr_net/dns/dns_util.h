@@ -22,7 +22,8 @@
 #include "cr_net/dns/public/secure_dns_mode.h"
 
 namespace cr {
-///class BigEndianReader;
+
+class NetByteBufferReader;
 
 namespace net {
 
@@ -82,9 +83,9 @@ CRNET_EXPORT bool IsValidHostLabelCharacter(char c, bool is_first_char);
 CRNET_EXPORT cr::Optional<std::string> DnsDomainToString(
     cr::StringPiece dns_name,
     bool require_complete = false);
-///CRNET_EXPORT cr::Optional<std::string> DnsDomainToString(
-///    cr::BigEndianReader& reader,
-///    bool require_complete = false);
+CRNET_EXPORT cr::Optional<std::string> DnsDomainToString(
+    cr::NetByteBufferReader& reader,
+    bool require_complete = false);
 
 // Return the expanded template when no variables have corresponding values.
 CRNET_EXPORT std::string GetURLFromTemplateWithoutParameters(

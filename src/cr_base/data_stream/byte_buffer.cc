@@ -12,13 +12,15 @@
 
 #include <string.h>
 
+#include "cr_base/numerics/safe_conversions.h"
+
 namespace cr {
 
-ByteBufferReader::ByteBufferReader(const char* bytes,
+ByteBufferReader::ByteBufferReader(const void* bytes,
                                    size_t len,
                                    ByteOrder byte_order)
     : ByteBuffer(byte_order) {
-  Construct(bytes, len);
+  Construct(static_cast<const uint8_t*>(bytes), len);
 }
 
 ByteBufferReader::ByteBufferReader(const ByteBufferWriter& buf)
@@ -26,8 +28,8 @@ ByteBufferReader::ByteBufferReader(const ByteBufferWriter& buf)
   Construct(buf.Data(), buf.Length());
 }
 
-void ByteBufferReader::Construct(const char* bytes, size_t len) {
-  bytes_ = bytes;
+void ByteBufferReader::Construct(const void* bytes, size_t len) {
+  bytes_ = static_cast<const uint8_t*>(bytes);
   size_ = len;
   start_ = 0;
   end_ = len;
@@ -37,7 +39,7 @@ bool ByteBufferReader::ReadUInt8(uint8_t* val) {
   if (!val)
     return false;
 
-  return ReadBytes(reinterpret_cast<char*>(val), 1);
+  return ReadBytes(val, 1);
 }
 
 bool ByteBufferReader::ReadUInt16(uint16_t* val) {
@@ -45,7 +47,7 @@ bool ByteBufferReader::ReadUInt16(uint16_t* val) {
     return false;
 
   uint16_t v;
-  if (!ReadBytes(reinterpret_cast<char*>(&v), 2)) {
+  if (!ReadBytes(&v, 2)) {
     return false;
   } else {
     *val = (Order() == ORDER_NETWORK) ? NetToHost16(v) : v;
@@ -76,7 +78,7 @@ bool ByteBufferReader::ReadUInt32(uint32_t* val) {
     return false;
 
   uint32_t v;
-  if (!ReadBytes(reinterpret_cast<char*>(&v), 4)) {
+  if (!ReadBytes(&v, 4)) {
     return false;
   } else {
     *val = (Order() == ORDER_NETWORK) ? NetToHost32(v) : v;
@@ -89,7 +91,7 @@ bool ByteBufferReader::ReadUInt64(uint64_t* val) {
     return false;
 
   uint64_t v;
-  if (!ReadBytes(reinterpret_cast<char*>(&v), 8)) {
+  if (!ReadBytes(&v, 8)) {
     return false;
   } else {
     *val = (Order() == ORDER_NETWORK) ? NetToHost64(v) : v;
@@ -127,20 +129,68 @@ bool ByteBufferReader::ReadString(std::string* val, size_t len) {
   if (len > Length()) {
     return false;
   } else {
-    val->append(bytes_ + start_, len);
+    val->append(reinterpret_cast<const char*>(bytes_ + start_), len);
     start_ += len;
     return true;
   }
 }
 
-bool ByteBufferReader::ReadBytes(char* val, size_t len) {
-  if (len > Length()) {
+bool ByteBufferReader::ReadBytes(void* data, size_t data_len) {
+  if (data_len > Length()) {
     return false;
   } else {
-    memcpy(val, bytes_ + start_, len);
-    start_ += len;
+    memcpy(data, bytes_ + start_, data_len);
+    start_ += data_len;
     return true;
   }
+}
+
+bool ByteBufferReader::ReadU8LengthPrefixed(cr::StringPiece* piece) {
+  uint8_t val;
+  if (!ReadUInt8(&val))
+    return false;
+  
+  size_t len = StrictCast<size_t>(val);
+  const char* original_ptr = reinterpret_cast<const char*>(
+      bytes_ + start_);
+
+  if (!Consume(len))
+    return false;
+
+  *piece = cr::StringPiece(original_ptr, len);
+  return true;
+}
+
+bool ByteBufferReader::ReadU16LengthPrefixed(cr::StringPiece* piece) {
+  uint16_t val;
+  if (!ReadUInt16(&val))
+    return false;
+  
+  size_t len = StrictCast<size_t>(val);
+  const char* original_ptr = reinterpret_cast<const char*>(
+      bytes_ + start_);
+
+  if (!Consume(len))
+    return false;
+
+  *piece = cr::StringPiece(original_ptr, len);
+  return true;
+}
+
+bool ByteBufferReader::ReadU32LengthPrefixed(cr::StringPiece* piece) {
+  uint32_t val;
+  if (!ReadUInt32(&val))
+    return false;
+  
+  size_t len = StrictCast<size_t>(val);
+  const char* original_ptr = reinterpret_cast<const char*>(
+      bytes_ + start_);
+
+  if (!Consume(len))
+    return false;
+
+  *piece = cr::StringPiece(original_ptr, len);
+  return true;
 }
 
 bool ByteBufferReader::Consume(size_t size) {
