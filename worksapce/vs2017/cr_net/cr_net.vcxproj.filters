@@ -60,6 +60,15 @@
     <ClInclude Include="..\..\..\src\cr_net\dns\public\dns_query_type.h">
       <Filter>dns\public</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\system_dns_config_change_notifier.h">
+      <Filter>dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\serial_worker.h">
+      <Filter>dns</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_net\dns\dns_config_service.h">
+      <Filter>dns</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_net\dns\public\dns_config_overrides.cc">
@@ -90,6 +99,15 @@
       <Filter>dns\public</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\cr_net\dns\dns_config.cc">
+      <Filter>dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\system_dns_config_change_notifier.cc">
+      <Filter>dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\serial_worker.cc">
+      <Filter>dns</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cr_net\dns\dns_config_service.cc">
       <Filter>dns</Filter>
     </ClCompile>
   </ItemGroup>

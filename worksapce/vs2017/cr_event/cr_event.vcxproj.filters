@@ -40,6 +40,9 @@
     <Filter Include="timer">
       <UniqueIdentifier>{17a2f402-06bd-4fda-bbe3-56bffd561d0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="memory">
+      <UniqueIdentifier>{45eca9f4-0028-4fd8-abaa-1c258e2bcd40}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\cr_event\task\pending_task.cc">
@@ -429,6 +432,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\cr_event\threading\simple_thread.h">
       <Filter>threading</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cr_event\memory\ref_counted_delete_on_sequence.h">
+      <Filter>memory</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
