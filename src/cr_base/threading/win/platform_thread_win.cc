@@ -318,9 +318,7 @@ void PlatformThread::SetCurrentThreadPriorityImpl(ThreadPriority priority) {
   }
   CR_DCHECK(desired_priority != THREAD_PRIORITY_ERROR_RETURN);
 
-#if CR_DCHECK_IS_ON()
   const BOOL success =
-#endif
       ::SetThreadPriority(thread_handle, desired_priority);
   CR_DPLOG_IF(Error, !success) << "Failed to set thread priority to "
                                << desired_priority;

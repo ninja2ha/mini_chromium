@@ -176,7 +176,7 @@ void IPAddressBytes::Append(const uint8_t* first, const uint8_t* last) {
   // and 255 so their sum must fit inside a ptrdiff_t type.
   CR_CHECK((ptrdiff_t{size_} + bytes_to_append) <= 16);
   std::copy(first, last, bytes_.data() + size_);
-  size_ += bytes_to_append;
+  size_ += static_cast<uint8_t>(bytes_to_append);
 }
 
 size_t IPAddressBytes::EstimateMemoryUsage() const {

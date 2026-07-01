@@ -39,12 +39,12 @@ const socklen_t kSockaddrIn6Size = sizeof(struct sockaddr_in6);
 
 // Extracts the address and port portions of a sockaddr.
 bool GetIPAddressFromSockAddr(const struct sockaddr* sock_addr,
-                              socklen_t sock_addr_len,
+                              size_t sock_addr_len,
                               const uint8_t** address,
                               size_t* address_len,
                               uint16_t* port) {
   if (sock_addr->sa_family == AF_INET) {
-    if (sock_addr_len < static_cast<socklen_t>(sizeof(struct sockaddr_in)))
+    if (sock_addr_len < sizeof(struct sockaddr_in))
       return false;
     const struct sockaddr_in* addr =
         reinterpret_cast<const struct sockaddr_in*>(sock_addr);
@@ -56,7 +56,7 @@ bool GetIPAddressFromSockAddr(const struct sockaddr* sock_addr,
   }
 
   if (sock_addr->sa_family == AF_INET6) {
-    if (sock_addr_len < static_cast<socklen_t>(sizeof(struct sockaddr_in6)))
+    if (sock_addr_len < sizeof(struct sockaddr_in6))
       return false;
     const struct sockaddr_in6* addr =
         reinterpret_cast<const struct sockaddr_in6*>(sock_addr);
